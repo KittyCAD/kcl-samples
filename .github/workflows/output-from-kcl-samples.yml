@@ -25,14 +25,26 @@ jobs:
             echo "#### [$fileName](STEP-output-of-samples/$fileName.step)" >> README.md
             echo "![$fileName](screenshots-of-samples/$fileName.png)" >> README.md
           done
-      - name: Commit files
+      - name: check for changes
+        id: git-check
         run: |
-          git config --local user.email "
-          git config --local user.name "github-actions[bot]"
           git add .
-          git commit -m "In the realm of scripts and screens, adding a dash of mechanical dreams."
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+          if git status | grep -q "Changes to be committed"
+          then
+            echo "::set-output name=modified::true"
+          else
+            echo "::set-output name=modified::false"
+          fi
+      - name: Commit changes, if any
+        if: steps.git-check.outputs.modified == 'true'
+        run: |
+          git add .
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git fetch origin
+          echo ${{ github.head_ref }}
+          git checkout ${{ github.head_ref }}
+          git commit -am "In the realm of scripts and screens, adding a dash of mechanical dreams." || true
+          git push
+          git push origin ${{ github.head_ref }}
