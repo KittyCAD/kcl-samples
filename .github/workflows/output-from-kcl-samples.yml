@@ -3,7 +3,7 @@ name: Output from KCL Samples
 on:
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   build:
