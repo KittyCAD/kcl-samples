@@ -27,7 +27,7 @@ jobs:
           done
       - name: Commit files
         run: |
-          git config --local user.email "
+          git config --local user.email "bot@kittycad.io"
           git config --local user.name "github-actions[bot]"
           git add .
           git commit -m "In the realm of scripts and screens, adding a dash of mechanical dreams."
