@@ -1,5 +1,5 @@
 # kcl-samples
-KCL sample files
+KCL sample files.
 
 ---
 #### [bracket](STEP-output-of-samples/bracket.step)
