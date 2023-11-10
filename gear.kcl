@@ -77,5 +77,3 @@ const gear = startSketchAt([0.0000000000, 5.0000000000])
   |> close(%)
   |> hole(circle([0, 0], 2), %)
   |> extrude(2, %)
-
-show(part001)
