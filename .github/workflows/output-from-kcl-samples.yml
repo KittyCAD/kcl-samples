@@ -13,7 +13,7 @@ jobs:
       - uses: KittyCAD/action-install-cli@v0.2.12
       - name: Get KCL Outputs
         env: 
-          KITTYCAD_TOKEN: ${{ secrets.KITTYCAD_TOKEN }}
+          KITTYCAD_TOKEN: 26364955-bc2b-4f1f-a22b-c3a258267d81
         run: |
           sed -i '/---/q' README.md
           for file in *.kcl; do
