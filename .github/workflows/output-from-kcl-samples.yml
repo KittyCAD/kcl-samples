@@ -1,0 +1,38 @@
+name: Output from KCL Samples
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: KittyCAD/action-install-cli@v0.2.12
+      - name: Get KCL Outputs
+        env: 
+          KITTYCAD_TOKEN: ${{ secrets.KITTYCAD_TOKEN }}
+        run: |
+          sed -i '/---/q' README.md
+          for file in *.kcl; do
+            echo "Processing $file..."
+            fileName="${file%.*}"
+            kittycad kcl snapshot $file ./screenshots-of-samples/$fileName.png
+            kittycad kcl export --output-format=step --src-unit=mm $file ./STEP-output-of-samples
+            mv ./STEP-output-of-samples/output.step ./STEP-output-of-samples/$fileName.step
+            echo "#### [$fileName](STEP-output-of-samples/$fileName.step)" >> README.md
+            echo "![$fileName](screenshots-of-samples/$fileName.png)" >> README.md
+          done
+      - name: Commit files
+        run: |
+          git config --local user.email "
+          git config --local user.name "github-actions[bot]"
+          git add .
+          git commit -m "In the realm of scripts and screens, adding a dash of mechanical dreams."
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}

@@ -34,5 +34,3 @@ const part = roundedRectangle([0, 0], 20, 20, 4)
   |> hole(circle([-holeIndex, -holeIndex], holeRadius), %)
   |> hole(circle([holeIndex, -holeIndex], holeRadius), %)
   |> extrude(2, %)
-
-show(part)
