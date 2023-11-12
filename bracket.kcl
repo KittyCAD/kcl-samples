@@ -2,7 +2,7 @@
 const sigmaAllow = 15000 // psi
 const width = 6 // inch
 const p = 150 // Force on shelf - lbs
-const distance = 6 // inches
+const distance = 8 // inches
 const FOS = 20
 const leg1 = 5 // inches
 const leg2 = 8 // inches
