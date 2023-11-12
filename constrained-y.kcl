@@ -6,6 +6,7 @@ const totalHeightHalf = 2
 const armThick = 0.5
 const totalLen = 9.5
 const _0 = 0
+const _180 = 180
 const part001 = startSketchOn('-XZ')
   |> startProfileAt([0, 0], %)
   |> yLine(baseHeight, %)
