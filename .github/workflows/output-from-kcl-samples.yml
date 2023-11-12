@@ -2,6 +2,8 @@ name: Output from KCL Samples
 
 on:
   pull_request:
+    paths:
+      - '**.kcl'
     branches:
       - main
 
