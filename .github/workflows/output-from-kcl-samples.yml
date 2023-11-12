@@ -1,11 +1,6 @@
 name: Output from KCL Samples
 
 on:
-  push:
-    paths:
-      - '**.kcl'
-    branches:
-      - main
   pull_request:
     paths:
       - '**.kcl'
