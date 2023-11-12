@@ -5,6 +5,8 @@ KCL sample files.
 ---
 #### [bracket](STEP-output-of-samples/bracket.step)
 ![bracket](screenshots-of-samples/bracket.png)
+#### [constrained-y](STEP-output-of-samples/constrained-y.step)
+![constrained-y](screenshots-of-samples/constrained-y.png)
 #### [gear](STEP-output-of-samples/gear.step)
 ![gear](screenshots-of-samples/gear.png)
 #### [kitt](STEP-output-of-samples/kitt.step)
