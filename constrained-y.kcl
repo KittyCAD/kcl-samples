@@ -18,7 +18,11 @@ const part001 = startSketchOn('-XZ')
      }, %)
   |> xLineTo({ to: totalLen, tag: 'seg03' }, %)
   |> yLine({ length: -armThick, tag: 'seg01' }, %)
-  |> xLine(-1.5, %)
+  |> angledLineThatIntersects({
+       angle: _180,
+       offset: -armThick,
+       intersectTag: 'seg04'
+     }, %)
   |> angledLineToY([segAng('seg04', %) + 180, _0], %)
   |> angledLineToY({
        angle: -bottomAng,
