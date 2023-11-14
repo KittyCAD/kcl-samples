@@ -7,7 +7,6 @@ const FOS = 20
 const leg1 = 5 // inches
 const leg2 = 8 // inches
 const thickness = sqrt(distance * p * FOS * 6 / (sigmaAllow * width))
-
 const bracket = startSketchAt([0, 0])
   |> line([0, leg1], %)
   |> line([leg2, 0], %)
