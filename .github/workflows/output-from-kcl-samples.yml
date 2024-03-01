@@ -11,9 +11,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: KittyCAD/action-install-cli@v0.2.12
-      - name: Get KCL Outputs
+      - uses: actions/checkout@v3
+      - uses: KittyCAD/action-install-cli@v0.2.21
+      - name: Get Zoo Outputs
         env: 
           ZOO_TOKEN: ${{ secrets.KITTYCAD_TOKEN }}
         run: |
