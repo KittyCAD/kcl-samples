@@ -35,9 +35,9 @@ jobs:
           git add .
           if git status | grep -q "Changes to be committed"
           then
-            echo "::set-output name=modified::true"
+            echo "modified=true" >> $GITHUB_OUTPUT
           else
-            echo "::set-output name=modified::false"
+            echo "modified=false" >> $GITHUB_OUTPUT
           fi
       - name: Commit changes, if any
         if: steps.git-check.outputs.modified == 'true'
