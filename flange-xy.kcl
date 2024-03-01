@@ -10,15 +10,6 @@ fn circle = (pos, radius) => {
   return sg
 }
 
-const circles = circle([6.5, 0], .5)
-  |> patternCircular({
-       arcDegrees: 360,
-       axis: [0, 1],
-       center: [0, 0, 0],
-       repetitions: 6,
-       rotateDuplicates: true
-     }, %)
-
 const flangeBase = startSketchOn('XY')
   |> startProfileAt([8, 0], %)
   |> arc({
@@ -27,8 +18,25 @@ const flangeBase = startSketchOn('XY')
        radius: 8
      }, %)
   |> close(%)
-  |> hole(circles, %)
   |> hole(circle([0, 0], 4), %)
+  |> hole(circle([6.5, 0], .5), %)
+  |> hole(circle([
+       6.5 * cos(60 * pi() / 180),
+       -6.5 * sin(60 * pi() / 180)
+     ], .5), %)
+  |> hole(circle([
+       -6.5 * sin(30 * pi() / 180),
+       -6.5 * cos(30 * pi() / 180)
+     ], .5), %)
+  |> hole(circle([-6.5, 0], .5), %)
+  |> hole(circle([
+       -6.5 * cos(60 * pi() / 180),
+       6.5 * sin(60 * pi() / 180)
+     ], .5), %)
+  |> hole(circle([
+       6.5 * sin(30 * pi() / 180),
+       6.5 * cos(30 * pi() / 180)
+     ], .5), %)
   |> extrude(3, %)
 
 const flangePipe = startSketchOn(flangeBase, "end")
