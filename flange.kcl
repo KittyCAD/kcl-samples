@@ -1,0 +1,43 @@
+fn circle = (pos, radius) => {
+  const sg = startSketchOn('XY')
+  |> startProfileAt([pos[0] + radius, pos[1]], %)
+  |> arc({
+       angle_end: 360,
+       angle_start: 0,
+       radius: radius
+     }, %)
+  |> close(%)
+  return sg
+}
+
+const circles = circle([6.5, 0], .5)
+  |> patternCircular({
+       arcDegrees: 360,
+       axis: [0, 1],
+       center: [0, 0, 0],
+       repetitions: 6,
+       rotateDuplicates: true
+     }, %)
+
+const flangeBase = startSketchOn('XY')
+  |> startProfileAt([8, 0], %)
+  |> arc({
+       angle_end: 360,
+       angle_start: 0,
+       radius: 8
+     }, %)
+  |> close(%)
+  |> hole(circles, %)
+  |> hole(circle([0, 0], 4), %)
+  |> extrude(3, %)
+
+const flangePipe = startSketchOn(flangeBase, "end")
+  |> startProfileAt([4.75, 0], %)
+  |> arc({
+       angle_end: 360,
+       angle_start: 0,
+       radius: 4.75
+     }, %)
+  |> close(%)
+  |> hole(circle([0, 0], 4), %)
+  |> extrude(5, %)
