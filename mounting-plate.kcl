@@ -1,27 +1,39 @@
-fn circle = (pos, radius) => {
-  const sg = startSketchOn('XY')
-    |> startProfileAt([pos[0] + radius, pos[1]], %)
-    |> arc({
-       angle_end: 360,
-       angle_start: 0,
-       radius: radius
-     }, %)
-    |> close(%)
-  return sg
-}
-
 fn roundedRectangle = (pos, w, l, cornerRadius) => {
   const rr = startSketchOn('XY')
-    |> startProfileAt([pos[0] - w/2, 0], %)
-    |> lineTo([pos[0] - w/2, pos[1] - l/2 + cornerRadius], %)
-    |> tangentialArcTo([pos[0] - w/2 + cornerRadius, pos[1] - l/2], %)
-    |> lineTo([pos[0] + w/2 - cornerRadius, pos[1] - l/2], %)
-    |> tangentialArcTo([pos[0] + w/2, pos[1] - l/2 + cornerRadius], %)
-    |> lineTo([pos[0] + w/2, pos[1] + l/2 - cornerRadius], %)
-    |> tangentialArcTo([pos[0] + w/2 - cornerRadius, pos[1] + l/2], %)
-    |> lineTo([pos[0] - w/2 + cornerRadius, pos[1] + l/2], %)
-    |> tangentialArcTo([pos[0] - w/2, pos[1] + l/2 - cornerRadius], %)
-    |> close(%)
+  |> startProfileAt([pos[0] - (w / 2), 0], %)
+  |> lineTo([
+       pos[0] - (w / 2),
+       pos[1] - (l / 2) + cornerRadius
+     ], %)
+  |> tangentialArcTo([
+       pos[0] - (w / 2) + cornerRadius,
+       pos[1] - (l / 2)
+     ], %)
+  |> lineTo([
+       pos[0] + w / 2 - cornerRadius,
+       pos[1] - (l / 2)
+     ], %)
+  |> tangentialArcTo([
+       pos[0] + w / 2,
+       pos[1] - (l / 2) + cornerRadius
+     ], %)
+  |> lineTo([
+       pos[0] + w / 2,
+       pos[1] + l / 2 - cornerRadius
+     ], %)
+  |> tangentialArcTo([
+       pos[0] + w / 2 - cornerRadius,
+       pos[1] + l / 2
+     ], %)
+  |> lineTo([
+       pos[0] - (w / 2) + cornerRadius,
+       pos[1] + l / 2
+     ], %)
+  |> tangentialArcTo([
+       pos[0] - (w / 2),
+       pos[1] + l / 2 - cornerRadius
+     ], %)
+  |> close(%)
   return rr
 }
 
@@ -29,8 +41,8 @@ const holeRadius = 1
 const holeIndex = 6
 
 const part = roundedRectangle([0, 0], 20, 20, 4)
-  |> hole(circle([-holeIndex, holeIndex], holeRadius), %)
-  |> hole(circle([holeIndex, holeIndex], holeRadius), %)
-  |> hole(circle([-holeIndex, -holeIndex], holeRadius), %)
-  |> hole(circle([holeIndex, -holeIndex], holeRadius), %)
+  |> hole(circle('XY', [-holeIndex, holeIndex], holeRadius), %)
+  |> hole(circle('XY', [holeIndex, holeIndex], holeRadius), %)
+  |> hole(circle('XY', [-holeIndex, -holeIndex], holeRadius), %)
+  |> hole(circle('XY', [holeIndex, -holeIndex], holeRadius), %)
   |> extrude(2, %)
