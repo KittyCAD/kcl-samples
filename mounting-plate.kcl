@@ -1,48 +1,37 @@
-fn roundedRectangle = (pos, w, l, cornerRadius) => {
+fn rectShape = (pos, w, l) => {
   const rr = startSketchOn('XY')
-  |> startProfileAt([pos[0] - (w / 2), 0], %)
-  |> lineTo([
-       pos[0] - (w / 2),
-       pos[1] - (l / 2) + cornerRadius
-     ], %)
-  |> tangentialArcTo([
-       pos[0] - (w / 2) + cornerRadius,
-       pos[1] - (l / 2)
-     ], %)
-  |> lineTo([
-       pos[0] + w / 2 - cornerRadius,
-       pos[1] - (l / 2)
-     ], %)
-  |> tangentialArcTo([
-       pos[0] + w / 2,
-       pos[1] - (l / 2) + cornerRadius
-     ], %)
-  |> lineTo([
-       pos[0] + w / 2,
-       pos[1] + l / 2 - cornerRadius
-     ], %)
-  |> tangentialArcTo([
-       pos[0] + w / 2 - cornerRadius,
-       pos[1] + l / 2
-     ], %)
-  |> lineTo([
-       pos[0] - (w / 2) + cornerRadius,
-       pos[1] + l / 2
-     ], %)
-  |> tangentialArcTo([
-       pos[0] - (w / 2),
-       pos[1] + l / 2 - cornerRadius
-     ], %)
-  |> close(%)
+  |> startProfileAt([pos[0] - (w / 2), pos[1] - (l / 2)], %)
+  |> lineTo({
+       to: [pos[0] + w / 2, pos[1] - (l / 2)],
+       tag: "edge1"
+     }, %)
+  |> lineTo({
+       to: [pos[0] + w / 2, pos[1] + l / 2],
+       tag: "edge2"
+     }, %)
+  |> lineTo({
+       to: [pos[0] - (w / 2), pos[1] + l / 2],
+       tag: "edge3"
+     }, %)
+  |> close(%, "edge4")
   return rr
 }
 
 const holeRadius = 1
 const holeIndex = 6
 
-const part = roundedRectangle([0, 0], 20, 20, 4)
+const part = rectShape([0, 0], 20, 20)
   |> hole(circle('XY', [-holeIndex, holeIndex], holeRadius), %)
   |> hole(circle('XY', [holeIndex, holeIndex], holeRadius), %)
   |> hole(circle('XY', [-holeIndex, -holeIndex], holeRadius), %)
   |> hole(circle('XY', [holeIndex, -holeIndex], holeRadius), %)
   |> extrude(2, %)
+  |> fillet({
+       radius: 4,
+       tags: [
+          getNextAdjacentEdge("edge1", %),
+          getNextAdjacentEdge("edge2", %),
+          getNextAdjacentEdge("edge3", %),
+          getNextAdjacentEdge("edge4", %)
+       ]
+     }, %)
