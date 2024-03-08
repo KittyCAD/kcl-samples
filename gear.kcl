@@ -1,79 +1,54 @@
-fn circle = (pos, radius) => {
-  const sg = startSketchOn('XY')
-  |> startProfileAt([pos[0] + radius, pos[1]], %)
-  |> arc({
-       angle_end: 360,
-       angle_start: 0,
-       radius: radius
-     }, %)
+// Gear
+// A rotating machine part having cut teeth or, in the case of a cogwheel, inserted teeth (called cogs), which mesh with another toothed part to transmit torque. Geared devices can change the speed, torque, and direction of a power source. The two elements that define a gear are its circular shape and the teeth that are integrated into its outer edge, which are designed to fit into the teeth of another gear.
+
+// Define constants
+const gearWidth = 0.5
+const toothScale = 0.33
+
+// Create the body of the gear
+const body = startSketchOn('YZ')
+  |> circle('YZ', [0,0], 5* 0.33)
+  |> hole(circle('YZ', [0,0], 1), %)
+  |> extrude(gearWidth, %)
+
+// Define the function for a single tooth
+fn tooth = (toothSize) => {
+  const singleTooth = startSketchOn('YZ')
+  |> startProfileAt([
+       0.0000000000 * toothSize,
+       5.0000000000 * toothSize
+     ], %)
+  |> line([
+       0.4900857016 * toothSize,
+       -0.0240763666 * toothSize
+     ], %)
+  |> line([
+       0.6804562304 * toothSize,
+       0.9087880491 * toothSize
+     ], %)
+  |> line([
+       0.5711661314 * toothSize,
+       -0.1430696680 * toothSize
+     ], %)
+  |> line([
+       0.1717090983 * toothSize,
+       -1.1222443518 * toothSize
+     ], %)
+  |> line([
+       0.4435665223 * toothSize,
+       -0.2097913408 * toothSize
+     ], %)
   |> close(%)
-  return sg
+  |> extrude(gearWidth, %)
+  return singleTooth
 }
 
-const gear = startSketchAt([0.0000000000, 5.0000000000])
-  |> line([0.4900857016, -0.0240763666], %)
-  |> line([0.6804562304, 0.9087880491], %)
-  |> line([0.5711661314, -0.1430696680], %)
-  |> line([0.1717090983, -1.1222443518], %)
-  |> line([0.4435665223, -0.2097913408], %)
-  |> line([0.9764377140, 0.5792113521], %)
-  |> line([0.4729383069, -0.3507549536], %)
-  |> line([-0.2708257990, -1.1025288142], %)
-  |> line([0.3295183609, -0.3635674851], %)
-  |> line([1.1237654070, 0.1614549773], %)
-  |> line([0.3027099123, -0.5050409772], %)
-  |> line([-0.6721299235, -0.9149632591], %)
-  |> line([0.1653040161, -0.4619937756], %)
-  |> line([1.1000100038, -0.2808814542], %)
-  |> line([0.0863966776, -0.5824390901], %)
-  |> line([-0.9711083600, -0.5881028420], %)
-  |> line([-0.0240763666, -0.4900857016], %)
-  |> line([0.9087880491, -0.6804562304], %)
-  |> line([-0.1430696680, -0.5711661314], %)
-  |> line([-1.1222443518, -0.1717090983], %)
-  |> line([-0.2097913408, -0.4435665223], %)
-  |> line([0.5792113521, -0.9764377140], %)
-  |> line([-0.3507549536, -0.4729383069], %)
-  |> line([-1.1025288142, 0.2708257990], %)
-  |> line([-0.3635674851, -0.3295183609], %)
-  |> line([0.1614549773, -1.1237654070], %)
-  |> line([-0.5050409772, -0.3027099123], %)
-  |> line([-0.9149632591, 0.6721299235], %)
-  |> line([-0.4619937756, -0.1653040161], %)
-  |> line([-0.2808814542, -1.1000100038], %)
-  |> line([-0.5824390901, -0.0863966776], %)
-  |> line([-0.5881028420, 0.9711083600], %)
-  |> line([-0.4900857016, 0.0240763666], %)
-  |> line([-0.6804562304, -0.9087880491], %)
-  |> line([-0.5711661314, 0.1430696680], %)
-  |> line([-0.1717090983, 1.1222443518], %)
-  |> line([-0.4435665223, 0.2097913408], %)
-  |> line([-0.9764377140, -0.5792113521], %)
-  |> line([-0.4729383069, 0.3507549536], %)
-  |> line([0.2708257990, 1.1025288142], %)
-  |> line([-0.3295183609, 0.3635674851], %)
-  |> line([-1.1237654070, -0.1614549773], %)
-  |> line([-0.3027099123, 0.5050409772], %)
-  |> line([0.6721299235, 0.9149632591], %)
-  |> line([-0.1653040161, 0.4619937756], %)
-  |> line([-1.1000100038, 0.2808814542], %)
-  |> line([-0.0863966776, 0.5824390901], %)
-  |> line([0.9711083600, 0.5881028420], %)
-  |> line([0.0240763666, 0.4900857016], %)
-  |> line([-0.9087880491, 0.6804562304], %)
-  |> line([0.1430696680, 0.5711661314], %)
-  |> line([1.1222443518, 0.1717090983], %)
-  |> line([0.2097913408, 0.4435665223], %)
-  |> line([-0.5792113521, 0.9764377140], %)
-  |> line([0.3507549536, 0.4729383069], %)
-  |> line([1.1025288142, -0.2708257990], %)
-  |> line([0.3635674851, 0.3295183609], %)
-  |> line([-0.1614549773, 1.1237654070], %)
-  |> line([0.5050409772, 0.3027099123], %)
-  |> line([0.9149632591, -0.6721299235], %)
-  |> line([0.4619937756, 0.1653040161], %)
-  |> line([0.2808814542, 1.1000100038], %)
-  |> line([0.5824390901, 0.0863966776], %)
-  |> close(%)
-  |> hole(circle([0, 0], 2), %)
-  |> extrude(2, %)
+// Extrude the first tooth and pattern around the x-axis
+const allGearTeeth = tooth(toothScale)
+  |> patternCircular({
+       arcDegrees: 360,
+       axis: [1, 0],
+       center: [0, 0, 0],
+       repetitions: 16,
+       rotateDuplicates: true
+     }, %)
