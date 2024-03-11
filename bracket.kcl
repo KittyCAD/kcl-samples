@@ -1,17 +1,36 @@
-// Material: 6061-T6 Aluminum
+// Bracket
+// This is a bracket that holds a shelf. It is made of aluminum and is designed to hold a force of 150 lbs. The bracket is 6 inches wide and the force is applied 6 inches from the wall. The bracket has a factor of safety of 20. The legs of the bracket are 5 inches and 8 inches long. The bracket is 1/4 inch thick. What is the minimum thickness of the bracket?
+
+
+// define constants
 const sigmaAllow = 15000 // psi
 const width = 6 // inch
 const p = 150 // Force on shelf - lbs
 const distance = 6 // inches
-const FOS = 20
+const FOS = 2
 const leg1 = 5 // inches
 const leg2 = 8 // inches
+const filletRadius = .375
+
+// calculate required thickness of bracket
 const thickness = sqrt(distance * p * FOS * 6 / (sigmaAllow * width))
-const bracket = startSketchAt([0, 0])
-  |> line([0, leg1], %)
-  |> line([leg2, 0], %)
-  |> line([0, -thickness], %)
-  |> line([-1 * leg2 + thickness, 0], %)
-  |> line([0, -1 * leg1 + thickness], %)
+
+// Sketch the bracket body and fillet the inner and outer edges of the bend
+const bracket = startSketchOn('XY')
+  |> startProfileAt([0,0], %)
+  |> line({to: [-leg2, 0], tag: 'outerFillet'}, %)
+  |> line([0, -leg1], %)
+  |> line([thickness, 0], %)
+  |> line({ to: [0, leg1-thickness], tag: 'innerFillet'}, %)
+  |> line([leg2-thickness, 0], %)
   |> close(%)
   |> extrude(width, %)
+  |> fillet({
+       radius: filletRadius,
+       tags: [getNextAdjacentEdge('innerFillet', %)]
+     }, %)
+  |> fillet({
+    radius: filletRadius + thickness,
+    tags: [getNextAdjacentEdge('outerFillet', %)]
+  }, %)
+  

@@ -1,52 +1,86 @@
+// Kitt is the KittyCAD mascot.
+
+// Define constants
 const l1 = 10
 const l2 = 10
 const arcR = 2
-const footH = 4
-const legW = 3
-const bodyHeight = 3
+const footH = 3.5
+const bodyHeight = 2.5
+const filletRadius = 0.25
 
+// Create a function for defining one of Kitt's legs
 fn kittLeg = (sk1, sk2) => {
   const legExtrude = startSketchAt([sk1, sk2])
-    |> line([3, 0], %)
-    |> line([0, -3], %)
-    |> line([-3, 0], %)
-    |> close(%)
-    |> extrude(3, %)
+  |> line([3, 0], %)
+  |> line([0, -3], %)
+  |> line([-3, 0], %)
+  |> close(%)
+  |> extrude(bodyHeight, %)
   return legExtrude
 }
 
+// Create a function to define an ear
 fn kittEar = (sk1, sk2) => {
   const earExtrude = startSketchAt([sk1, sk2])
-    |> bezierCurve({
-    control1: [0, 3],
-    control2: [3, 3], 
-    to: [3, 0]
-  }, %)
-    |> close(%)
-    |> extrude(legW, %)
+  |> bezierCurve({
+       control1: [0, 3],
+       control2: [3, 3],
+       to: [3, 0]
+     }, %)
+  |> close(%)
+  |> extrude(bodyHeight, %)
   return earExtrude
 }
 
+// Create a function to define a foot
 fn kittFoot = (sk1, sk2) => {
   const footExtrude = startSketchAt([sk1, sk2])
-    |> line([3, 0], %)
-    |> line([0, -1.5], %)
-    |> line([-3, 0], %)
-    |> close(%)
-    |> extrude(footH, %)
+  |> line([3, 0], %)
+  |> line([0, -1.5], %)
+  |> line([-3, 0], %)
+  |> close(%)
+  |> extrude(footH, %)
   return footExtrude
 }
 
-const kittBody = startSketchAt([0,0])
-  |> line([0, l1], %)
-  |> line([l2, 0], %)
-  |> line([0, -l1], %)
-  |> close(%)
+// Create the body
+const kittBody = startSketchAt([0, 0])
+  |> line({to: [0, l1], tag: 'fillet1'}, %)
+  |> line({to: [l2, 0], tag: 'fillet2'}, %)
+  |> line({to: [0, -l1], tag: 'fillet3'}, %)
+  |> close(%, 'fillet4')
   |> extrude(bodyHeight, %)
 
+// Create the legs, ears, and feet of Kitt
 const leg1 = kittLeg(1, 0)
 const leg2 = kittLeg(6, 0)
 const ear1 = kittEar(1, 10)
 const ear2 = kittEar(6, 10)
 const foot1 = kittFoot(1, -3)
 const foot2 = kittFoot(6, -3)
+
+// Create the face. This requires a small indentation into the body.
+const face = startSketchOn(kittBody, 'end')
+  |> startProfileAt([1, 1], %)
+  |> line([l1 - 2, 0], %)
+  |> line([0, l2 - 2], %)
+  |> line([(-l1+2), 0], %)
+  |> close(%)
+  |> extrude(-.5, %)
+
+// Create a function that defines a singular button
+fn button = (start1, start2, w, l, h) => {
+  const buttonSketch = startSketchOn(kittBody, 'end')
+  |> startProfileAt([start1, start2], %)
+  |> line([w, 0], %)
+  |> line([0, l], %)
+  |> line([-w, 0], %)
+  |> close(%)
+  |> extrude(h, %)
+  return buttonSketch
+}
+
+// Place three buttons on Kitt's body
+const button1 = button(0.25, 0.25, 1, .25, .125)
+const button2 = button(2, 0.25, 1, .25, .125)
+const button3 = button(3.75, 0.25, 1, .25, .125)
