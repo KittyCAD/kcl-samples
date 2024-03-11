@@ -1,3 +1,8 @@
+// Flange
+// A flange is a flat rim, collar, or rib, typically forged or cast, that is used to strengthen an object, guide it, or attach it to another object. Flanges are known for their use in various applications, including piping, plumbing, and mechanical engineering, among others. 
+
+
+// Create the flange base and the six mounting holes
 const flangeBase = startSketchOn('XY')
   |> circle('XY',[0,0], 8)
   |> hole(circle('XY',[0, 0], 4), %)
@@ -21,6 +26,7 @@ const flangeBase = startSketchOn('XY')
      ], .5), %)
   |> extrude(3, %)
 
+//Create the extrusion from the flange base
 const flangePipe = startSketchOn(flangeBase, "end")
   |> startProfileAt([4.75, 0], %)
   |> arc({

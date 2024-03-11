@@ -18,7 +18,7 @@ fn tooth = (toothSize) => {
        0.0000000000 * toothSize,
        5.0000000000 * toothSize
      ], %)
-  |> line([
+  |> line([ 
        0.4900857016 * toothSize,
        -0.0240763666 * toothSize
      ], %)
