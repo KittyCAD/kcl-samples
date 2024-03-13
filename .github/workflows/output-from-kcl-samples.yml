@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - '**.kcl'
+      - .github/workflows/output-from-kcl-samples.yml
     branches:
       - main
   workflow_dispatch:
@@ -18,6 +19,7 @@ jobs:
         env: 
           ZOO_TOKEN: ${{ secrets.KITTYCAD_TOKEN }}
         run: |
+          zoo version
           sed -i '/---/q' README.md
           for file in *.kcl; do
             echo "Processing $file..."
