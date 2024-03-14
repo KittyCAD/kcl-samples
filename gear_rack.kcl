@@ -35,8 +35,8 @@ fn tooth = () => {
 
 // Pattern the single tooth over the length of the rack body
 const teeth = tooth()
-  |> patternLinear({
-       axis: [10, 0],
+  |> patternLinear3d({
+       axis: [10, 0, 0],
        distance: 1.570796,
        repetitions: 62
      }, %)
