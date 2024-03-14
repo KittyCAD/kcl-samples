@@ -2,23 +2,26 @@
 // A rotating machine part having cut teeth or, in the case of a cogwheel, inserted teeth (called cogs), which mesh with another toothed part to transmit torque. Geared devices can change the speed, torque, and direction of a power source. The two elements that define a gear are its circular shape and the teeth that are integrated into its outer edge, which are designed to fit into the teeth of another gear.
 
 // Define constants
-const gearWidth = 0.5
-const toothScale = 0.33
+const gearWidth = 1
+const gearScale = 10
+const toothScale = gearScale / 5
+const boreDiameter = 5
+const teethNumber = 14
 
 // Create the body of the gear
-const body = startSketchOn('YZ')
-  |> circle('YZ', [0,0], 5* 0.33)
-  |> hole(circle('YZ', [0,0], 1), %)
+const body = startSketchOn('XY')
+  |> circle([0, 0], gearScale, %)
+  |> hole(circle([0, 0], boreDiameter, %), %)
   |> extrude(gearWidth, %)
 
-// Define the function for a single tooth
+  // Define the function for a single tooth
 fn tooth = (toothSize) => {
-  const singleTooth = startSketchOn('YZ')
+  const singleTooth = startSketchOn('XY')
   |> startProfileAt([
        0.0000000000 * toothSize,
        5.0000000000 * toothSize
      ], %)
-  |> line([ 
+  |> line([
        0.4900857016 * toothSize,
        -0.0240763666 * toothSize
      ], %)
@@ -45,10 +48,10 @@ fn tooth = (toothSize) => {
 
 // Extrude the first tooth and pattern around the x-axis
 const allGearTeeth = tooth(toothScale)
-  |> patternCircular({
+  |> patternCircular3d({
        arcDegrees: 360,
-       axis: [1, 0],
+       axis: [0, 0, 1],
        center: [0, 0, 0],
-       repetitions: 16,
+       repetitions: teethNumber,
        rotateDuplicates: true
      }, %)
