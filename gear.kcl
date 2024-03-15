@@ -8,13 +8,13 @@ const toothScale = gearScale / 5
 const boreDiameter = 5
 const teethNumber = 14
 
-// Create the body of the gear
+// Create the body of the gear with the hole in the center
 const body = startSketchOn('XY')
   |> circle([0, 0], gearScale, %)
   |> hole(circle([0, 0], boreDiameter, %), %)
   |> extrude(gearWidth, %)
 
-  // Define the function for a single tooth
+// Define the function for a single tooth
 fn tooth = (toothSize) => {
   const singleTooth = startSketchOn('XY')
   |> startProfileAt([
@@ -46,7 +46,7 @@ fn tooth = (toothSize) => {
   return singleTooth
 }
 
-// Extrude the first tooth and pattern around the x-axis
+// Extrude the first tooth and pattern around the z-axis
 const allGearTeeth = tooth(toothScale)
   |> patternCircular3d({
        arcDegrees: 360,
