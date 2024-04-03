@@ -26,9 +26,9 @@ const part = rectShape([0, 0], 20, 20)
   |> fillet({
        radius: 4,
        tags: [
-  getNextAdjacentEdge("edge1", %),
-  getNextAdjacentEdge("edge2", %),
-  getNextAdjacentEdge("edge3", %),
-  getNextAdjacentEdge("edge4", %)
+  getPreviousAdjacentEdge("edge1", %),
+  getPreviousAdjacentEdge("edge2", %),
+  getPreviousAdjacentEdge("edge3", %),
+  getPreviousAdjacentEdge("edge4", %)
 ]
      }, %)

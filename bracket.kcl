@@ -26,9 +26,9 @@ const bracket = startSketchOn('XY')
   |> extrude(width, %)
   |> fillet({
        radius: filletRadius,
-       tags: [getNextAdjacentEdge('innerFillet', %)]
+       tags: [getPreviousAdjacentEdge('innerFillet', %)]
      }, %)
   |> fillet({
     radius: filletRadius + thickness,
-    tags: [getNextAdjacentEdge('outerFillet', %)]
+    tags: [getPreviousAdjacentEdge('outerFillet', %)]
   }, %)
