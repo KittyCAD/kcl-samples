@@ -1,0 +1,9 @@
+fn washer = (plane, innerDia, outerDia, thk) => {
+  const washerSketch = startSketchOn(plane)
+    |> circle([0, 0], outerDia, %)
+    |> hole(circle([0,0], innerDia, %), %)
+    |> extrude(thk, %)
+  return washerSketch
+}
+
+washer('XY', 0.25, 0.5, 0.0625)
