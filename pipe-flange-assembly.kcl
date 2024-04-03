@@ -1,0 +1,218 @@
+// Pipe + Flange Assembly
+
+// A crucial component in various piping systems, designed to facilitate the connection, disconnection, and access to piping for inspection, cleaning, and modifications. This assembly combines pipes (long cylindrical conduits) with flanges (plate-like fittings) to create a secure yet detachable joint. 
+
+// Define Constants
+const hexCapRatio = 0.275
+const capRatio = 2 / 3
+const startingPoint = [1.375, 0, 0]
+const flangeThickness = .125
+const flangeBaseDia = 1.25
+const boreHeight = 1
+const flangePipeDia = 1
+const mountingHoleDia = 0.425
+const screwDia = 0.375
+const tol = 0.010
+const hexNutScale = 0.90
+
+// socket head cap screw function
+fn capScrew = (originStart, length, dia, capDia, capHeadLength) => {
+  const screwHead = startSketchOn({
+       plane: {
+  origin: {
+  x: originStart[0],
+  y: originStart[1],
+  z: originStart[2]
+},
+  x_axis: { x: 0, y: 0, z: 1 },
+  y_axis: { x: 1, y: 0, z: 0 },
+  z_axis: { x: 0, y: 1, z: 0 }
+}
+     })
+  |> circle([0, 0], capDia / 2, %)
+  |> extrude(capHeadLength, %)
+  const hexPattern = startSketchOn(screwHead, 'end')
+  |> startProfileAt([
+       0 + hexCapRatio * dia / capRatio,
+       originStart[1]
+     ], %)
+  |> angledLine({
+       angle: 240,
+       length: hexCapRatio * dia / capRatio
+     }, %)
+  |> angledLine({
+       angle: 180,
+       length: hexCapRatio * dia / capRatio
+     }, %)
+  |> angledLine({
+       angle: 120,
+       length: hexCapRatio * dia / capRatio
+     }, %)
+  |> angledLine({
+       angle: 60,
+       length: hexCapRatio * dia / capRatio
+     }, %)
+  |> angledLine({
+       angle: 0,
+       length: hexCapRatio * dia / capRatio
+     }, %)
+  |> close(%)
+  |> extrude(-0.0625, %)
+  const screw = startSketchOn(screwHead, "start")
+  |> circle([0, 0], dia / 2, %)
+  |> extrude(length, %)
+  return screw
+}
+
+// washer function
+fn washer = (originStart, thk, innerDia, outerDia) => {
+  const washerSketch = startSketchOn('XZ')
+  |> circle([originStart[0], originStart[1]], outerDia / 2, %)
+  |> hole(circle([originStart[0], originStart[1]], innerDia / 2, %), %)
+  |> extrude(thk, %)
+  return washerSketch
+}
+
+// hex nut function
+fn hexNut = (originStart, thk, innerDia) => {
+  const hexNutSketch = startSketchOn({
+       plane: {
+  origin: {
+  x: -originStart[0],
+  y: -flangeThickness - .5,
+  z: originStart[1]
+},
+  x_axis: { x: 0, y: 0, z: 1 },
+  y_axis: { x: 1, y: 0, z: 0 },
+  z_axis: { x: 0, y: 1, z: 0 }
+}
+     })
+  |> startProfileAt([0 + innerDia * hexNutScale, 0], %)
+  |> angledLine({
+       angle: 240,
+       length: innerDia * hexNutScale
+     }, %)
+  |> angledLine({
+       angle: 180,
+       length: innerDia * hexNutScale
+     }, %)
+  |> angledLine({
+       angle: 120,
+       length: innerDia * hexNutScale
+     }, %)
+  |> angledLine({
+       angle: 60,
+       length: innerDia * hexNutScale
+     }, %)
+  |> angledLine({ angle: 0, length: innerDia * .90 }, %)
+  |> close(%)
+  |> hole(circle([0, 0], innerDia / 2, %), %)
+  |> extrude(-thk, %)
+  return hexNutSketch
+}
+
+// mounting holes pattern 
+const mountingHolePattern = startSketchOn({
+       plane: {
+  origin: { x: 0, y: -flangeThickness, z: 0 },
+  x_axis: { x: 0, y: 0, z: 1 },
+  y_axis: { x: 1, y: 0, z: 0 },
+  z_axis: { x: 0, y: 1, z: 0 }
+}
+     })
+  |> circle([startingPoint[1], startingPoint[0]], screwDia / 2 + tol, %)
+  |> patternCircular2d({
+       arcDegrees: 360,
+       center: [0, 0],
+       repetitions: 6,
+       rotateDuplicates: true
+     }, %)
+
+// sketch the pipe
+const pipe = startSketchOn('XY')
+  |> startProfileAt([flangePipeDia / 2 - tol, 0], %)
+  |> line([0, -2], %)
+  |> angledLine({ angle: -60, length: .5 }, %)
+  |> line([0, -1], %)
+  |> line([-flangeThickness, 0], %)
+  |> line([0, 1], %)
+  |> angledLine({angle: -240, length: .5}, %)
+  |> line([0, 5], %)
+  |> angledLine({angle: 60, length: .5}, %)
+  |> line([0, 1], %)
+  |> line([flangeThickness, 0], %)
+  |> line([0, -1], %)
+  |> angledLine({angle: 240, length: .5}, %)
+  |> close(%)
+  |> revolve({axis: 'y'}, %)
+
+// sketch and extrude the wall
+const wall = startSketchOn({
+       plane: {
+  origin: { x: 0, y: -flangeThickness, z: 0 },
+  x_axis: { x: 0, y: 0, z: 1 },
+  y_axis: { x: 1, y: 0, z: 0 },
+  z_axis: { x: 0, y: 1, z: 0 }
+}
+     })
+  |> startProfileAt([-4, -4], %)
+  |> line([0, 8], %)
+  |> line([8, 0], %)
+  |> line([0, -8], %)
+  |> close(%)
+  |> hole(mountingHolePattern, %)
+  |> hole(circle([0, 0], flangePipeDia / 2, %), %)
+  |> extrude(-.5, %)
+
+// sketch and revolve the flange
+const flange = startSketchOn('XY')
+  |> startProfileAt([flangePipeDia / 2, boreHeight], %)
+  |> line([flangeThickness, 0], %)
+  |> line([0, -boreHeight], %)
+  |> line([flangeBaseDia, 0], %, 'revolveSketch')
+  |> line([0, -flangeThickness], %)
+  |> line([-flangeBaseDia - flangeThickness, 0], %)
+  |> close(%)
+  |> revolve({ axis: 'y' }, %)
+
+// extrude the mounting holes through the flange (currently not working)
+  // const holesOnFlange = startSketchOn(flange, 'revolveSketch')
+  // |> circle([.5, 0], mountingHoleDia / 2, %)
+  // |> extrude(-flangeThickness, %)
+  // |> patternCircular3d({
+  // axis: [0, 1, 0],
+  // center: [0, 0, 0],
+  // repetitions: 6,
+  // arcDegrees: 360,
+  // rotateDuplicates: true
+  // }, %)
+
+// create the washer and pattern around the flange
+washer([-startingPoint[0], startingPoint[1]], 0.0625, screwDia + tol, 0.625)
+  |> patternCircular3d({
+       axis: [0, 1, 0],
+       center: [0, 0, 0],
+       repetitions: 6,
+       arcDegrees: 360,
+       rotateDuplicates: true
+     }, %)
+
+// create the cap screw and pattern around the flange
+capScrew(startingPoint, 1.125, screwDia, 0.5, 0.25)
+  |> patternCircular3d({
+       axis: [0, 1, 0],
+       center: [0, 0, 0],
+       repetitions: 6,
+       arcDegrees: 360,
+       rotateDuplicates: true
+     }, %)
+
+// create the hex nut and pattern around the flange
+hexNut([-startingPoint[0], startingPoint[1]], .25, screwDia + tol)
+  |> patternCircular3d({
+       axis: [0, 1, 0],
+       center: [0, 0, 0],
+       repetitions: 6,
+       arcDegrees: 360,
+       rotateDuplicates: true
+     }, %)
