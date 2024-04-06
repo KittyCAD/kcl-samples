@@ -1,33 +1,41 @@
 // Flange with XY coordinates
 // A flange is a flat rim, collar, or rib, typically forged or cast, that is used to strengthen an object, guide it, or attach it to another object. Flanges are known for their use in various applications, including piping, plumbing, and mechanical engineering, among others. 
 
+// Define constants
+const mountingHoleDia = 2
+const baseDia = 45
+const pipeDia = 25
+const thickness = 5
+const extrusion = 30
+const baseThickness = 10
+const holeLocator = baseDia - 10
+
 // Create the flange base and the six mounting holes
 const flangeBase = startSketchOn('XY')
-  |> circle([0,0], 8, %)
-  |> hole(circle([0, 0], 4, %), %)
-  |> hole(circle([6.5, 0], .5, %), %)
+  |> circle([0,0], baseDia, %)
+  |> hole(circle([0, 0], pipeDia, %), %)
+  |> hole(circle([holeLocator, 0], mountingHoleDia, %), %)
   |> hole(circle([
-       6.5 * cos(60 * pi() / 180),
-       -6.5 * sin(60 * pi() / 180)
-     ], .5, %), %)
+       holeLocator * cos(60 * pi() / 180),
+       -holeLocator * sin(60 * pi() / 180)
+     ], mountingHoleDia, %), %)
   |> hole(circle([
-       -6.5 * sin(30 * pi() / 180),
-       -6.5 * cos(30 * pi() / 180)
-     ], .5, %), %)
-  |> hole(circle([-6.5, 0], .5, %), %)
+       -holeLocator * sin(30 * pi() / 180),
+       -holeLocator * cos(30 * pi() / 180)
+     ], mountingHoleDia, %), %)
+  |> hole(circle([-holeLocator, 0], mountingHoleDia, %), %)
   |> hole(circle([
-       -6.5 * cos(60 * pi() / 180),
-       6.5 * sin(60 * pi() / 180)
-     ], .5, %), %)
+       -holeLocator * cos(60 * pi() / 180),
+       holeLocator * sin(60 * pi() / 180)
+     ], mountingHoleDia, %), %)
   |> hole(circle([
-       6.5 * sin(30 * pi() / 180),
-       6.5 * cos(30 * pi() / 180)
-     ], .5, %), %)
-  |> extrude(3, %)
+       holeLocator * sin(30 * pi() / 180),
+       holeLocator * cos(30 * pi() / 180)
+     ], mountingHoleDia, %), %)
+  |> extrude(baseThickness, %)
 
 //Create the extrusion from the flange base
 const flangePipe = startSketchOn('XY')
-  |> startProfileAt([4.75, 0], %)
-  |> circle([0, 0], 4.75, %)
-  |> hole(circle([0, 0], 4, %), %)
-  |> extrude(8, %)
+  |> circle([0, 0], (pipeDia+thickness)/2, %)
+  |> hole(circle([0, 0], pipeDia, %), %)
+  |> extrude(extrusion, %)

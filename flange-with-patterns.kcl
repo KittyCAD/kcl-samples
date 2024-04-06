@@ -1,28 +1,36 @@
 // Flange
 // A flange is a flat rim, collar, or rib, typically forged or cast, that is used to strengthen an object, guide it, or attach it to another object. Flanges are known for their use in various applications, including piping, plumbing, and mechanical engineering, among others.
 
+// Define constants
+const mountingHoleDia = 2
+const holeCount = 8
+const baseDia = 60
+const pipeDia = 30
+const thickness = 5
+const extrusion = 30
+const baseThickness = 10
+
 // Create the circular pattern for the mounting holes
 const circles = startSketchOn('XY')
-  |> circle([6.5, 0], .5, %)
+  |> circle([baseDia/2 - 6, 0], mountingHoleDia, %)
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
-       repetitions: 6,
+       repetitions: holeCount,
        rotateDuplicates: true
      }, %)
 
 // Create the base of the flange and add the mounting holes
 const flangeBase = startSketchOn('XY')
-  |> startProfileAt([8, 0], %)
-  |> circle([0, 0], 8, %)
+  |> circle([0, 0], baseDia/2, %)
   |> hole(circles, %)
-  |> hole(circle([0, 0], 4, %), %)
-  |> extrude(3, %)
+  |> hole(circle([0, 0], pipeDia/2, %), %)
+  |> extrude(baseThickness, %)
 
 // Define the innerCircle radius
-const innerCircle = circle([0, 0], 4.0, startSketchOn(flangeBase, "end"))
+const innerCircle = circle([0, 0], pipeDia/2, startSketchOn(flangeBase, "end"))
 
 // Create the extrusion on the flange and cut the inner hole
-const flangePipe = circle([0, 0], 4.75, startSketchOn('XY'))
+const flangePipe = circle([0, 0], (pipeDia+thickness)/2, startSketchOn('XY'))
   |> hole(innerCircle, %)
-  |> extrude(8, %)
+  |> extrude(extrusion, %)

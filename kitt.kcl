@@ -45,7 +45,7 @@ fn kittFoot = (sk1, sk2) => {
 }
 
 // Create the body
-const kittBody = startSketchAt([0, 0])
+const kittBody = startSketchAt([-l2/2, -l1/2])
   |> line([0, l1], %)
   |> line([l2, 0], %)
   |> line([0, -l1], %)
@@ -53,16 +53,16 @@ const kittBody = startSketchAt([0, 0])
   |> extrude(bodyHeight, %)
 
   // Create the legs, ears, and feet of Kitt
-const leg1 = kittLeg(1, 0)
-const leg2 = kittLeg(6, 0)
-const ear1 = kittEar(1, 10, 3)
-const ear2 = kittEar(6, 10, 3)
-const foot1 = kittFoot(1, -3)
-const foot2 = kittFoot(6, -3)
+const leg1 = kittLeg(-4, -5)
+const leg2 = kittLeg(1, -5)
+const ear1 = kittEar(-4, 5, 3)
+const ear2 = kittEar(1, 5, 3)
+const foot1 = kittFoot(-4, -8)
+const foot2 = kittFoot(1, -8)
 
-// Create the face. This requires a small indentation into the body.
+// Create the face. This creates a small indentation into the body.
 const face = startSketchOn(kittBody, 'end')
-  |> startProfileAt([1, 1], %)
+  |> startProfileAt([-l2/2+1, -l1/2+1], %)
   |> line([l1 - 2, 0], %)
   |> line([0, l2 - 2], %)
   |> line([-l1 + 2, 0], %)
@@ -82,6 +82,6 @@ fn button = (start1, start2, w, l, h) => {
 }
 
 // Place three buttons on Kitt's body
-const button1 = button(0.25, 0.25, 1, .25, .125)
-const button2 = button(2, 0.25, 1, .25, .125)
-const button3 = button(3.75, 0.25, 1, .25, .125)
+const button1 = button(-4.75, -4.75, 1, .25, .125)
+const button2 = button(-3, -4.75, 1, .25, .125)
+const button3 = button(-1.25,-4.75, 1, .25, .125)

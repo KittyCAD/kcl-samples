@@ -2,14 +2,14 @@
 // A tubular section or hollow cylinder, usually but not necessarily of circular cross-section, used mainly to convey substances that can flow
 
 // Define constants
-const pipeLength = 16
-const pipeSmallDia = 3
-const pipeLargeDia = 5
+const pipeLength = 40
+const pipeSmallDia = 10
+const pipeLargeDia = 20
 const thickness = 0.5
 
 // Create the sketch to be revolved around the y-axis. Use the small diameter, large diameter, length, and thickness to define the sketch.
 const part001 = startSketchOn('XY')
-  |> startProfileAt([pipeLargeDia - (thickness / 2), 12], %)
+  |> startProfileAt([pipeLargeDia - (thickness / 2), 38], %)
   |> line([thickness, 0], %)
   |> line([0, -1], %)
   |> angledLineToX({
