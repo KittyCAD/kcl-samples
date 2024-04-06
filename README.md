@@ -15,6 +15,8 @@ KCL sample files.
 ![gear](screenshots-of-samples/gear.png)
 #### [gear_rack](STEP-output-of-samples/gear_rack.step)
 ![gear_rack](screenshots-of-samples/gear_rack.png)
+#### [hex-nut](STEP-output-of-samples/hex-nut.step)
+![hex-nut](screenshots-of-samples/hex-nut.png)
 #### [kitt](STEP-output-of-samples/kitt.step)
 ![kitt](screenshots-of-samples/kitt.png)
 #### [mounting-plate](STEP-output-of-samples/mounting-plate.step)
