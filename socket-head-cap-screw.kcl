@@ -1,28 +1,48 @@
 // Socket Head Cap Screw
 
+
 // a type of fastener that's widely used in a variety of applications requiring a high strength fastening solution. It is characterized by its cylindrical head and internal hexagonal drive, which allows for tightening with an Allen wrench or hex key
 
+
 const hexCapRatio = 0.357
-const capRatio = 2/3
+const capRatio = 2 / 3
 
 // Write a function that defines the Socket Head Cap Screw
 fn capScrew = (originStart, length, dia, capHeadLength) => {
-  const screwHead = startSketchOn('YZ')
-  |> circle([originStart[0], originStart[1]], (dia/capRatio) / 2, %)
+  const screwHead = startSketchOn('-XZ')
+  |> circle([originStart[0], originStart[1]], dia / capRatio / 2, %)
   |> extrude(capHeadLength, %)
   const hexPattern = startSketchOn(screwHead, 'end')
-  |> startProfileAt([originStart[0]+hexCapRatio*(dia/capRatio), originStart[1]], %)
-  |> angledLine({ angle: 240, length: hexCapRatio*(dia/capRatio) }, %)
-  |> angledLine({ angle: 180, length: hexCapRatio*(dia/capRatio) }, %)
-  |> angledLine({ angle: 120, length: hexCapRatio*(dia/capRatio) }, %)
-  |> angledLine({ angle: 60, length: hexCapRatio*(dia/capRatio) }, %)
-  |> angledLine({ angle: 0, length: hexCapRatio*(dia/capRatio) }, %)
+  |> startProfileAt([
+       originStart[0] + hexCapRatio * dia / capRatio,
+       originStart[1]
+     ], %)
+  |> angledLine({
+       angle: 240,
+       length: hexCapRatio * dia / capRatio
+     }, %)
+  |> angledLine({
+       angle: 180,
+       length: hexCapRatio * dia / capRatio
+     }, %)
+  |> angledLine({
+       angle: 120,
+       length: hexCapRatio * dia / capRatio
+     }, %)
+  |> angledLine({
+       angle: 60,
+       length: hexCapRatio * dia / capRatio
+     }, %)
+  |> angledLine({
+       angle: 0,
+       length: hexCapRatio * dia / capRatio
+     }, %)
   |> close(%)
-  |> extrude(-0.0625, %)
+  |> extrude(-10, %)
   const screw = startSketchOn(screwHead, "start")
   |> circle([originStart[0], originStart[1]], dia / 2, %)
   |> extrude(length, %, 'nice')
   return screw
 }
 
-capScrew([0, 0], 1.125, 0.25, .25)
+capScrew([0, 0], 30, 20, 22.5)

@@ -1,6 +1,10 @@
 // Mounting Plate
 // A flat piece of material, often metal or plastic, that serves as a support or base for attaching, securing, or mounting various types of equipment, devices, or components.
 
+// Define constants
+const plateLength = 40
+const plateWidth = 60
+
 // Create a function that defines the body width and length of the mounting plate. Tag the corners so they can be passed through the fillet function.
 fn rectShape = (pos, w, l) => {
   const rr = startSketchOn('XY')
@@ -17,11 +21,12 @@ const holeRadius = 1
 const holeIndex = 6
 
 // Create the mounting plate extrusion, holes, and fillets
-const part = rectShape([0, 0], 20, 20)
-  |> hole(circle([-holeIndex, holeIndex], holeRadius, %), %)
-  |> hole(circle([holeIndex, holeIndex], holeRadius, %), %)
-  |> hole(circle([-holeIndex, -holeIndex], holeRadius, %), %)
-  |> hole(circle([holeIndex, -holeIndex], holeRadius, %), %)
+const part = rectShape([0, 0], plateWidth, plateLength)
+  |> hole(circle([-plateWidth/2+4, plateLength/2-4], holeRadius, %), %)
+  |> hole(circle([plateWidth/2-4, plateLength/2-4], holeRadius, %), %)
+  |> hole(circle([-plateWidth/2+4, -plateLength/2+4], holeRadius, %), %)
+  |> hole(circle([plateWidth/2-4, -plateLength/2+4], holeRadius, %), %)
+  |> hole(circle([0,0], 15, %), %)
   |> extrude(2, %)
   |> fillet({
        radius: 4,
