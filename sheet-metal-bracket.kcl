@@ -1,0 +1,81 @@
+// Sheet Metal Bracket
+// A component typically made from flat sheet metal through various manufacturing processes such as bending, punching, cutting, and forming. These brackets are used to support, attach, or mount other hardware components, often providing a structural or functional base for assembly. 
+
+// Define constants such as sheet metal thickness, bend radius, flange length, bolt diameter size, etc.
+const thickness = 0.090
+const bendRad = 0.08
+const outsideBendRad = bendRad + thickness
+const flangeLength = 0.5
+const hatHeight = 3
+const hatWidth = 5
+const boltSize = 0.25
+
+// Sketch and extrude the base shape and fillet the inside and outside edges. 
+const baseExtrusion = startSketchOn('XZ')
+  |> startProfileAt([0, 0], %)
+  |> line([0, thickness], %, 'e1')
+  |> line([flangeLength, 0], %, 'e2')
+  |> line([0, hatHeight], %, 'e3')
+  |> line([hatWidth, 0], %, 'e4')
+  |> line([0, -hatHeight], %, 'e5')
+  |> line([flangeLength, 0], %, 'e6')
+  |> line([0, -thickness], %, 'e7')
+  |> line([-flangeLength - thickness, 0], %, 'e8')
+  |> line([0, hatHeight], %, 'e9')
+  |> line([-hatWidth + 2 * thickness, 0], %, 'e10')
+  |> line([0, -hatHeight], %, 'e11')
+  |> close(%, 'e12')
+  |> extrude(hatWidth, %)
+  |> fillet({
+       radius: bendRad,
+       tags: [getPreviousAdjacentEdge('e3', %)]
+     }, %)
+  |> fillet({
+       radius: outsideBendRad,
+       tags: [getPreviousAdjacentEdge('e4', %)]
+     }, %)
+  |> fillet({
+       radius: outsideBendRad,
+       tags: [getPreviousAdjacentEdge('e5', %)]
+     }, %)
+  |> fillet({
+       radius: bendRad,
+       tags: [getPreviousAdjacentEdge('e6', %)]
+     }, %)
+  |> fillet({
+       radius: outsideBendRad,
+       tags: [getPreviousAdjacentEdge('e9', %)]
+     }, %)
+  |> fillet({
+       radius: bendRad,
+       tags: [getPreviousAdjacentEdge('e10', %)]
+     }, %)
+  |> fillet({
+       radius: bendRad,
+       tags: [getPreviousAdjacentEdge('e11', %)]
+     }, %)
+  |> fillet({
+       radius: outsideBendRad,
+       tags: [getPreviousAdjacentEdge('e12', %)]
+     }, %)
+
+// Define the flanges and place the bolt holes
+const flange1 = startSketchOn('XY')
+  |> startProfileAt([0, 0], %)
+  |> line([0, hatWidth], %)
+  |> line([1.75, 0], %)
+  |> line([0, -hatWidth], %)
+  |> close(%)
+  |> hole(circle([0.75, 1.5], boltSize, %), %)
+  |> hole(circle([0.75, 3.5], boltSize, %), %)
+  |> extrude(thickness, %)
+
+const flange2 = startSketchOn('XY')
+  |> startProfileAt([-6, 0], %)
+  |> line([0, hatWidth], %)
+  |> line([-1.75, 0], %)
+  |> line([0, -hatWidth], %)
+  |> close(%)
+  |> hole(circle([-6.75, 1.5], boltSize, %), %)
+  |> hole(circle([-6.75, 3.5], boltSize, %), %)
+  |> extrude(thickness, %)
