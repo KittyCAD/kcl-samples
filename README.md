@@ -3,6 +3,8 @@ KCL sample files.
 
 
 ---
+#### [ball-bearing](STEP-output-of-samples/ball-bearing.step)
+![ball-bearing](screenshots-of-samples/ball-bearing.png)
 #### [bracket](STEP-output-of-samples/bracket.step)
 ![bracket](screenshots-of-samples/bracket.png)
 #### [constrained-y](STEP-output-of-samples/constrained-y.step)
@@ -25,6 +27,8 @@ KCL sample files.
 ![pipe-flange-assembly](screenshots-of-samples/pipe-flange-assembly.png)
 #### [pipe](STEP-output-of-samples/pipe.step)
 ![pipe](screenshots-of-samples/pipe.png)
+#### [sheet-metal-bracket](STEP-output-of-samples/sheet-metal-bracket.step)
+![sheet-metal-bracket](screenshots-of-samples/sheet-metal-bracket.png)
 #### [socket-head-cap-screw](STEP-output-of-samples/socket-head-cap-screw.step)
 ![socket-head-cap-screw](screenshots-of-samples/socket-head-cap-screw.png)
 #### [washer](STEP-output-of-samples/washer.step)
