@@ -3,6 +3,8 @@ KCL sample files.
 
 
 ---
+#### [a-parametric-bearing-pillow-block](STEP-output-of-samples/a-parametric-bearing-pillow-block.step)
+![a-parametric-bearing-pillow-block](screenshots-of-samples/a-parametric-bearing-pillow-block.png)
 #### [ball-bearing](STEP-output-of-samples/ball-bearing.step)
 ![ball-bearing](screenshots-of-samples/ball-bearing.png)
 #### [bracket](STEP-output-of-samples/bracket.step)
