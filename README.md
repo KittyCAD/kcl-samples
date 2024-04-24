@@ -23,6 +23,8 @@ KCL sample files.
 ![hex-nut](screenshots-of-samples/hex-nut.png)
 #### [kitt](STEP-output-of-samples/kitt.step)
 ![kitt](screenshots-of-samples/kitt.png)
+#### [lego](STEP-output-of-samples/lego.step)
+![lego](screenshots-of-samples/lego.png)
 #### [mounting-plate](STEP-output-of-samples/mounting-plate.step)
 ![mounting-plate](screenshots-of-samples/mounting-plate.png)
 #### [pipe-flange-assembly](STEP-output-of-samples/pipe-flange-assembly.step)
