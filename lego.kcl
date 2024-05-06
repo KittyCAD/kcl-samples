@@ -12,11 +12,11 @@ const bumpHeight = 1.8
 const height = 3.2
 const t = (pitch - (2 * clearance) - bumpDiam) / 2.0
 const postDiam = pitch - t // works out to 6.5
-const total_length = lbumps * pitch - (2.0 * clearance)
-const total_width = wbumps * pitch - (2.0 * clearance)
+const totalLength = lbumps * pitch - (2.0 * clearance)
+const totalWidth = wbumps * pitch - (2.0 * clearance)
 
-const lSegments = total_length / (lbumps)
-const wSegments = total_width / (wbumps)
+const lSegments = totalLength / (lbumps)
+const wSegments = totalWidth / (wbumps)
 
 // Create the plane for the pegs. This is a hack so that the pegs can be patterned along the face of the lego base.
 const pegFace = {
@@ -40,22 +40,22 @@ const tubeFace = {
 
 // make the base
 const s = startSketchOn('XY')
-  |> startProfileAt([-total_width / 2, -total_length / 2], %)
-  |> line([total_width, 0], %)
-  |> line([0, total_length], %)
-  |> line([-total_width, 0], %)
+  |> startProfileAt([-totalWidth / 2, -totalLength / 2], %)
+  |> line([totalWidth, 0], %)
+  |> line([0, totalLength], %)
+  |> line([-totalWidth, 0], %)
   |> close(%)
   |> extrude(height, %)
 
 // Sketch and extrude a rectangular shape to create the shell underneath the lego. This is a hack until we have a shell function.
 const shellExtrude = startSketchOn(s, "start")
   |> startProfileAt([
-       -(total_width / 2 - t),
-       -(total_length / 2 - t)
+       -(totalWidth / 2 - t),
+       -(totalLength / 2 - t)
      ], %)
-  |> line([total_width - (2 * t), 0], %)
-  |> line([0, total_length - (2 * t)], %)
-  |> line([-(total_width - (2 * t)), 0], %)
+  |> line([totalWidth - (2 * t), 0], %)
+  |> line([0, totalLength - (2 * t)], %)
+  |> line([-(totalWidth - (2 * t)), 0], %)
   |> close(%)
   |> extrude(-(height - t), %)
 
