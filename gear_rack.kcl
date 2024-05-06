@@ -3,16 +3,16 @@
 
 // Define constants
 const length = 100
-const pitch_height = 11.5
+const pitchHeight = 11.5
 const width = 5
 const height = 12
-const min_height = 10.875
+const minHeight = 10.875
 
 // Create the body of the rack
 const rackBody = startSketchOn('XY')
   |> startProfileAt([-length / 2, 0], %)
   |> line([length, 0], %)
-  |> line([0, min_height], %)
+  |> line([0, minHeight], %)
   |> line([-length, 0], %)
   |> close(%)
   |> extrude(width, %)
@@ -20,7 +20,7 @@ const rackBody = startSketchOn('XY')
 // Create a function for sketch of a single tooth
 fn tooth = () => {
   const toothSketch = startSketchOn('XY')
-  |> startProfileAt([-length / 2 + 0.567672, min_height], %)
+  |> startProfileAt([-length / 2 + 0.567672, minHeight], %)
   |> tangentialArc([0.157636, 0.110378], %)
   |> line([0.329118, 0.904244], %)
   |> tangentialArc([0.157636, 0.110378], %)
@@ -46,7 +46,7 @@ const endCapTooth = startSketchOn('XY')
   |> startProfileAt([-length / 2, 11.849525], %)
   |> line([0.314524, -0.864147], %)
   |> tangentialArc([0.157636, -0.110378], %)
-  |> lineTo([-length / 2, min_height], %)
+  |> lineTo([-length / 2, minHeight], %)
   |> close(%)
   |> extrude(width, %)
 
@@ -55,6 +55,6 @@ const endCapTooth2 = startSketchOn('XY')
   |> startProfileAt([length / 2, 11.849525], %)
   |> line([-0.314524, -0.864147], %)
   |> tangentialArc([-0.157636, -0.110378], %)
-  |> lineTo([length / 2, min_height], %)
+  |> lineTo([length / 2, minHeight], %)
   |> close(%)
   |> extrude(width, %)
