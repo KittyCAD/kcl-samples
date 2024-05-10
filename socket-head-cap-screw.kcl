@@ -1,9 +1,7 @@
 // Socket Head Cap Screw
+// A type of fastener that is widely used in a variety of applications requiring a high strength fastening solution. It is characterized by its cylindrical head and internal hexagonal drive, which allows for tightening with an Allen wrench or hex key.
 
-
-// a type of fastener that's widely used in a variety of applications requiring a high strength fastening solution. It is characterized by its cylindrical head and internal hexagonal drive, which allows for tightening with an Allen wrench or hex key
-
-
+// Define constants
 const hexCapRatio = 0.357
 const capRatio = 2 / 3
 

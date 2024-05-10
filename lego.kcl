@@ -1,6 +1,5 @@
 // Lego Brick
-
-// A standard lego brick. There are a lot of hacks used to product this
+// A standard Lego brick. This is a small, plastic construction block toy that can be interlocked with other blocks to build various structures, models, and figures. There are a lot of hacks used in this code.
 
 // Define constants
 const lbumps = 5 // number of bumps long
@@ -21,24 +20,24 @@ const wSegments = totalWidth / (wbumps)
 // Create the plane for the pegs. This is a hack so that the pegs can be patterned along the face of the lego base.
 const pegFace = {
   plane: {
-  origin: { x: 0, y: 0, z: height },
-  x_axis: { x: 1, y: 0, z: 0 },
-  y_axis: { x: 0, y: 1, z: 0 },
-  z_axis: { x: 0, y: 0, z: 1 }
-}
+    origin: { x: 0, y: 0, z: height },
+    x_axis: { x: 1, y: 0, z: 0 },
+    y_axis: { x: 0, y: 1, z: 0 },
+    z_axis: { x: 0, y: 0, z: 1 }
+  }
 }
 
 // Create the plane for the tubes underneath the lego. This is a hack so that the tubes can be patterned underneath the lego.
 const tubeFace = {
-  plane: {
-  origin: { x: 0, y: 0, z: height - t },
-  x_axis: { x: 1, y: 0, z: 0 },
-  y_axis: { x: 0, y: 1, z: 0 },
-  z_axis: { x: 0, y: 0, z: 1 }
-}
+    plane: {
+    origin: { x: 0, y: 0, z: height - t },
+    x_axis: { x: 1, y: 0, z: 0 },
+    y_axis: { x: 0, y: 1, z: 0 },
+    z_axis: { x: 0, y: 0, z: 1 }
+  }
 }
 
-// make the base
+// Make the base
 const s = startSketchOn('XY')
   |> startProfileAt([-totalWidth / 2, -totalLength / 2], %)
   |> line([totalWidth, 0], %)

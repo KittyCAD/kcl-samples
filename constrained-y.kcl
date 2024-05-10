@@ -1,7 +1,7 @@
 // Constrained Y Demo
 // This is a simple example of a 3D model that is created using the constrained Y feature.
 
-// Define Constants
+// Define constants
 const topAng = 25
 const bottomAng = 35
 const baseLen = 3.5

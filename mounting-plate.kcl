@@ -29,11 +29,11 @@ const part = rectShape([0, 0], plateWidth, plateLength)
   |> hole(circle([0,0], 15, %), %)
   |> extrude(2, %)
   |> fillet({
-       radius: 4,
-       tags: [
-  getPreviousAdjacentEdge("edge1", %),
-  getPreviousAdjacentEdge("edge2", %),
-  getPreviousAdjacentEdge("edge3", %),
-  getPreviousAdjacentEdge("edge4", %)
-]
+      radius: 4,
+      tags: [
+        getPreviousAdjacentEdge("edge1", %),
+        getPreviousAdjacentEdge("edge2", %),
+        getPreviousAdjacentEdge("edge3", %),
+        getPreviousAdjacentEdge("edge4", %)
+      ]
      }, %)
