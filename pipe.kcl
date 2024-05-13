@@ -1,5 +1,5 @@
 // Pipe
-// A tubular section or hollow cylinder, usually but not necessarily of circular cross-section, used mainly to convey substances that can flow
+// A tubular section or hollow cylinder, usually but not necessarily of circular cross-section, used mainly to convey substances that can flow.
 
 // Define constants
 const pipeLength = 40

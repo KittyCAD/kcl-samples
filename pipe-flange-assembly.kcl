@@ -1,5 +1,4 @@
-// Pipe + Flange Assembly
-
+// Pipe and Flange Assembly
 // A crucial component in various piping systems, designed to facilitate the connection, disconnection, and access to piping for inspection, cleaning, and modifications. This assembly combines pipes (long cylindrical conduits) with flanges (plate-like fittings) to create a secure yet detachable joint.
 
 // Define Constants
@@ -15,20 +14,20 @@ const screwDia = 0.375
 const tol = 0.010
 const hexNutScale = 0.90
 
-// socket head cap screw function
+// Socket head cap screw function
 fn capScrew = (originStart, length, dia, capDia, capHeadLength) => {
   const screwHead = startSketchOn({
-         plane: {
-  origin: {
-  x: originStart[0],
-  y: originStart[1],
-  z: originStart[2]
-},
-  x_axis: { x: 0, y: 0, z: 1 },
-  y_axis: { x: 1, y: 0, z: 0 },
-  z_axis: { x: 0, y: 1, z: 0 }
-}
-       })
+          plane: {
+            origin: {
+              x: originStart[0],
+              y: originStart[1],
+              z: originStart[2]
+            },
+            x_axis: { x: 0, y: 0, z: 1 },
+            y_axis: { x: 1, y: 0, z: 0 },
+            z_axis: { x: 0, y: 1, z: 0 }
+          }
+        })
     |> circle([0, 0], capDia / 2, %)
     |> extrude(capHeadLength, %)
   const hexPattern = startSketchOn(screwHead, 'end')
@@ -61,7 +60,7 @@ fn capScrew = (originStart, length, dia, capDia, capHeadLength) => {
   return hexPattern
 }
 
-// washer function
+// Washer function
 fn washer = (originStart, thk, innerDia, outerDia) => {
   const washerSketch = startSketchOn('XZ')
     |> circle([originStart[0], originStart[1]], outerDia / 2, %)
@@ -70,20 +69,20 @@ fn washer = (originStart, thk, innerDia, outerDia) => {
   return washerSketch
 }
 
-// hex nut function
+// Hex nut function
 fn hexNut = (originStart, thk, innerDia) => {
   const hexNutSketch = startSketchOn({
-         plane: {
-  origin: {
-  x: -originStart[0],
-  y: -flangeThickness - .5,
-  z: originStart[1]
-},
-  x_axis: { x: 0, y: 0, z: 1 },
-  y_axis: { x: 1, y: 0, z: 0 },
-  z_axis: { x: 0, y: 1, z: 0 }
-}
-       })
+          plane: {
+            origin: {
+              x: -originStart[0],
+              y: -flangeThickness - .5,
+              z: originStart[1]
+            },
+            x_axis: { x: 0, y: 0, z: 1 },
+            y_axis: { x: 1, y: 0, z: 0 },
+            z_axis: { x: 0, y: 1, z: 0 }
+          }
+        })
     |> startProfileAt([0 + innerDia * hexNutScale, 0], %)
     |> angledLine({
          angle: 240,
@@ -108,24 +107,24 @@ fn hexNut = (originStart, thk, innerDia) => {
   return hexNutSketch
 }
 
-// mounting holes pattern
+// Mounting holes pattern
 const mountingHolePattern = startSketchOn({
-       plane: {
-  origin: { x: 0, y: -flangeThickness, z: 0 },
-  x_axis: { x: 0, y: 0, z: 1 },
-  y_axis: { x: 1, y: 0, z: 0 },
-  z_axis: { x: 0, y: 1, z: 0 }
-}
-     })
+        plane: {
+          origin: { x: 0, y: -flangeThickness, z: 0 },
+          x_axis: { x: 0, y: 0, z: 1 },
+          y_axis: { x: 1, y: 0, z: 0 },
+          z_axis: { x: 0, y: 1, z: 0 }
+        }
+      })
   |> circle([startingPoint[1], startingPoint[0]], screwDia / 2 + tol, %)
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
        repetitions: 6,
        rotateDuplicates: true
-     }, %)
+      }, %)
 
-  // sketch the pipe
+// Sketch and revolve the pipe
 const pipe = startSketchOn('XY')
   |> startProfileAt([flangePipeDia / 2 - tol, 0], %)
   |> line([0, -2], %)
@@ -143,15 +142,15 @@ const pipe = startSketchOn('XY')
   |> close(%)
   |> revolve({ axis: 'y' }, %)
 
-  // sketch and extrude the wall
+// Sketch and extrude the wall
 const wall = startSketchOn({
-       plane: {
-  origin: { x: 0, y: -flangeThickness, z: 0 },
-  x_axis: { x: 0, y: 0, z: 1 },
-  y_axis: { x: 1, y: 0, z: 0 },
-  z_axis: { x: 0, y: 1, z: 0 }
-}
-     })
+        plane: {
+          origin: { x: 0, y: -flangeThickness, z: 0 },
+          x_axis: { x: 0, y: 0, z: 1 },
+          y_axis: { x: 1, y: 0, z: 0 },
+          z_axis: { x: 0, y: 1, z: 0 }
+        }
+      })
   |> startProfileAt([-4, -4], %)
   |> line([0, 8], %)
   |> line([8, 0], %)
@@ -161,7 +160,7 @@ const wall = startSketchOn({
   |> hole(circle([0, 0], flangePipeDia / 2, %), %)
   |> extrude(-.5, %)
 
-  // sketch and revolve the flange
+// Sketch and revolve the flange
 const flange = startSketchOn('XY')
   |> startProfileAt([flangePipeDia / 2, boreHeight], %)
   |> line([flangeThickness, 0], %)
@@ -172,19 +171,19 @@ const flange = startSketchOn('XY')
   |> close(%)
   |> revolve({ axis: 'y' }, %)
 
-  // extrude the mounting holes through the flange (currently not working)
-  // const holesOnFlange = startSketchOn(flange, 'revolveSketch')
-  // |> circle([.5, 0], mountingHoleDia / 2, %)
-  // |> extrude(-flangeThickness, %)
-  // |> patternCircular3d({
-  // axis: [0, 1, 0],
-  // center: [0, 0, 0],
-  // repetitions: 6,
-  // arcDegrees: 360,
-  // rotateDuplicates: true
-  // }, %)
+// Extrude the mounting holes through the flange (currently not working)
+// const holesOnFlange = startSketchOn(flange, 'revolveSketch')
+// |> circle([.5, 0], mountingHoleDia / 2, %)
+// |> extrude(-flangeThickness, %)
+// |> patternCircular3d({
+// axis: [0, 1, 0],
+// center: [0, 0, 0],
+// repetitions: 6,
+// arcDegrees: 360,
+// rotateDuplicates: true
+// }, %)
 
-  // create the washer and pattern around the flange
+// Create the washer and pattern around the flange
 washer([-startingPoint[0], startingPoint[1]], 0.0625, screwDia + tol, 0.625)
   |> patternCircular3d({
        axis: [0, 1, 0],
@@ -194,7 +193,7 @@ washer([-startingPoint[0], startingPoint[1]], 0.0625, screwDia + tol, 0.625)
        rotateDuplicates: true
      }, %)
 
-  // create the cap screw and pattern around the flange
+// Create the cap screw and pattern around the flange
 capScrew(startingPoint, 1.125, screwDia, 0.5, 0.25)
   |> patternCircular3d({
        axis: [0, 1, 0],
@@ -204,17 +203,17 @@ capScrew(startingPoint, 1.125, screwDia, 0.5, 0.25)
        rotateDuplicates: true
      }, %)
 const screw = startSketchOn({
-         plane: {
-  origin: {
-  x: startingPoint[0],
-  y: startingPoint[1],
-  z: startingPoint[2]
-},
-  x_axis: { x: 0, y: 0, z: -1 },
-  y_axis: { x: 1, y: 0, z: 0 },
-  z_axis: { x: 0, y: 1, z: 0 }
-}
-       })
+        plane: {
+          origin: {
+            x: startingPoint[0],
+            y: startingPoint[1],
+            z: startingPoint[2]
+          },
+          x_axis: { x: 0, y: 0, z: -1 },
+          y_axis: { x: 1, y: 0, z: 0 },
+          z_axis: { x: 0, y: 1, z: 0 }
+        }
+      })
   |> circle([0, 0], screwDia / 2, %)
   |> extrude(1.125, %)
   |> patternCircular3d({
@@ -225,7 +224,7 @@ const screw = startSketchOn({
        rotateDuplicates: true
      }, %)
 
-  // create the hex nut and pattern around the flange
+// Create the hex nut and pattern around the flange
 hexNut([-startingPoint[0], startingPoint[1]], .25, screwDia + tol)
   |> patternCircular3d({
        axis: [0, 1, 0],
