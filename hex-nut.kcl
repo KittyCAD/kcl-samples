@@ -4,7 +4,7 @@
 const hexNutScale = 0.90
 
 fn hexNut = (originStart, thk, innerDia) => {
-  const hexNutSketch = startSketchOn('XZ')
+  const hexNutSketch = startSketchOn('-XZ')
   |> startProfileAt([originStart[0] + innerDia * hexNutScale, originStart[1]], %)
   |> angledLine({
        angle: 240,

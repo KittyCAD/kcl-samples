@@ -11,7 +11,7 @@ const armThick = 0.5
 const totalLen = 9.5
 
 // Create the Sketch with constraining Y
-const part001 = startSketchOn('-XZ')
+const part001 = startSketchOn('XZ')
   |> startProfileAt([0, 0], %)
   |> yLine(baseHeight, %)
   |> xLine(baseLen, %)
