@@ -15,6 +15,8 @@ KCL sample files.
 ![flange-with-patterns](screenshots-of-samples/flange-with-patterns.png)
 #### [flange-xy](STEP-output-of-samples/flange-xy.step)
 ![flange-xy](screenshots-of-samples/flange-xy.png)
+#### [focusrite_scarlett_mounting_bracket](STEP-output-of-samples/focusrite_scarlett_mounting_bracket.step)
+![focusrite_scarlett_mounting_bracket](screenshots-of-samples/focusrite_scarlett_mounting_bracket.png)
 #### [gear](STEP-output-of-samples/gear.step)
 ![gear](screenshots-of-samples/gear.png)
 #### [gear_rack](STEP-output-of-samples/gear_rack.step)
