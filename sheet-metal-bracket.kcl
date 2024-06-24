@@ -11,7 +11,7 @@ const hatWidth = 5
 const boltSize = 0.25
 
 // Sketch and extrude the base shape and fillet the inside and outside edges. 
-const baseExtrusion = startSketchOn('XZ')
+const baseExtrusion = startSketchOn('-XZ')
   |> startProfileAt([0, 0], %)
   |> line([0, thickness], %, 'e1')
   |> line([flangeLength, 0], %, 'e2')

@@ -7,7 +7,7 @@ const capRatio = 2 / 3
 
 // Write a function that defines the Socket Head Cap Screw
 fn capScrew = (originStart, length, dia, capHeadLength) => {
-  const screwHead = startSketchOn('-XZ')
+  const screwHead = startSketchOn('XZ')
   |> circle([originStart[0], originStart[1]], dia / capRatio / 2, %)
   |> extrude(capHeadLength, %)
   const hexPattern = startSketchOn(screwHead, 'end')
