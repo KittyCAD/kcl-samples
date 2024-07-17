@@ -21,7 +21,8 @@ const holeRadius = 1
 const holeIndex = 6
 
 // Create the mounting plate extrusion, holes, and fillets
-const part = rectShape([0, 0], plateWidth, plateLength)
+const rs = rectShape([0, 0], plateWidth, plateLength)
+const part = rs
   |> hole(circle([-plateWidth/2+4, plateLength/2-4], holeRadius, %), %)
   |> hole(circle([plateWidth/2-4, plateLength/2-4], holeRadius, %), %)
   |> hole(circle([-plateWidth/2+4, -plateLength/2+4], holeRadius, %), %)
@@ -31,9 +32,9 @@ const part = rectShape([0, 0], plateWidth, plateLength)
   |> fillet({
       radius: 4,
       tags: [
-        getPreviousAdjacentEdge(edge1, %),
-        getPreviousAdjacentEdge(edge2, %),
-        getPreviousAdjacentEdge(edge3, %),
-        getPreviousAdjacentEdge(edge4, %)
+        getPreviousAdjacentEdge(rs.tags.edge1, %),
+        getPreviousAdjacentEdge(rs.tags.edge2, %),
+        getPreviousAdjacentEdge(rs.tags.edge3, %),
+        getPreviousAdjacentEdge(rs.tags.edge4, %)
       ]
      }, %)
