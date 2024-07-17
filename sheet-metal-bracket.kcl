@@ -13,50 +13,50 @@ const boltSize = 0.25
 // Sketch and extrude the base shape and fillet the inside and outside edges. 
 const baseExtrusion = startSketchOn('-XZ')
   |> startProfileAt([0, 0], %)
-  |> line([0, thickness], %, 'e1')
-  |> line([flangeLength, 0], %, 'e2')
-  |> line([0, hatHeight], %, 'e3')
-  |> line([hatWidth, 0], %, 'e4')
-  |> line([0, -hatHeight], %, 'e5')
-  |> line([flangeLength, 0], %, 'e6')
-  |> line([0, -thickness], %, 'e7')
-  |> line([-flangeLength - thickness, 0], %, 'e8')
-  |> line([0, hatHeight], %, 'e9')
-  |> line([-hatWidth + 2 * thickness, 0], %, 'e10')
-  |> line([0, -hatHeight], %, 'e11')
-  |> close(%, 'e12')
+  |> line([0, thickness], %, $e1)
+  |> line([flangeLength, 0], %, $e2)
+  |> line([0, hatHeight], %, $e3)
+  |> line([hatWidth, 0], %, $e4)
+  |> line([0, -hatHeight], %, $e5)
+  |> line([flangeLength, 0], %, $e6)
+  |> line([0, -thickness], %, $e7)
+  |> line([-flangeLength - thickness, 0], %, $e8)
+  |> line([0, hatHeight], %, $e9)
+  |> line([-hatWidth + 2 * thickness, 0], %, $e10)
+  |> line([0, -hatHeight], %, $e11)
+  |> close(%, $e12)
   |> extrude(hatWidth, %)
   |> fillet({
        radius: bendRad,
-       tags: [getPreviousAdjacentEdge('e3', %)]
+       tags: [getPreviousAdjacentEdge(e3, %)]
      }, %)
   |> fillet({
        radius: outsideBendRad,
-       tags: [getPreviousAdjacentEdge('e4', %)]
+       tags: [getPreviousAdjacentEdge(e4, %)]
      }, %)
   |> fillet({
        radius: outsideBendRad,
-       tags: [getPreviousAdjacentEdge('e5', %)]
+       tags: [getPreviousAdjacentEdge(e5, %)]
      }, %)
   |> fillet({
        radius: bendRad,
-       tags: [getPreviousAdjacentEdge('e6', %)]
+       tags: [getPreviousAdjacentEdge(e6, %)]
      }, %)
   |> fillet({
        radius: outsideBendRad,
-       tags: [getPreviousAdjacentEdge('e9', %)]
+       tags: [getPreviousAdjacentEdge(e9, %)]
      }, %)
   |> fillet({
        radius: bendRad,
-       tags: [getPreviousAdjacentEdge('e10', %)]
+       tags: [getPreviousAdjacentEdge(e10, %)]
      }, %)
   |> fillet({
        radius: bendRad,
-       tags: [getPreviousAdjacentEdge('e11', %)]
+       tags: [getPreviousAdjacentEdge(e11, %)]
      }, %)
   |> fillet({
        radius: outsideBendRad,
-       tags: [getPreviousAdjacentEdge('e12', %)]
+       tags: [getPreviousAdjacentEdge(e12, %)]
      }, %)
 
 // Define the flanges and place the bolt holes

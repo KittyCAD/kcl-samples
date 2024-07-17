@@ -9,10 +9,10 @@ const plateWidth = 60
 fn rectShape = (pos, w, l) => {
   const rr = startSketchOn('XY')
   |> startProfileAt([pos[0] - (w / 2), pos[1] - (l / 2)], %)
-  |> lineTo([pos[0] + w / 2, pos[1] - (l / 2)], %, 'edge1')
-  |> lineTo([pos[0] + w / 2, pos[1] + l / 2], %, 'edge2')
-  |> lineTo([pos[0] - (w / 2), pos[1] + l / 2], %, 'edge3')
-  |> close(%, "edge4")
+  |> lineTo([pos[0] + w / 2, pos[1] - (l / 2)], %, $edge1)
+  |> lineTo([pos[0] + w / 2, pos[1] + l / 2], %, $edge2)
+  |> lineTo([pos[0] - (w / 2), pos[1] + l / 2], %, $edge3)
+  |> close(%, $edge4)
   return rr
 }
 
@@ -31,9 +31,9 @@ const part = rectShape([0, 0], plateWidth, plateLength)
   |> fillet({
       radius: 4,
       tags: [
-        getPreviousAdjacentEdge("edge1", %),
-        getPreviousAdjacentEdge("edge2", %),
-        getPreviousAdjacentEdge("edge3", %),
-        getPreviousAdjacentEdge("edge4", %)
+        getPreviousAdjacentEdge(edge1, %),
+        getPreviousAdjacentEdge(edge2, %),
+        getPreviousAdjacentEdge(edge3, %),
+        getPreviousAdjacentEdge(edge4, %)
       ]
      }, %)
