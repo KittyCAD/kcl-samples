@@ -1,5 +1,8 @@
 name: Output from KCL Samples
 
+permissions:
+  contents: write
+
 on:
   pull_request:
     paths:
