@@ -1,19 +1,19 @@
 // Car Wheel
 // A parametric example of a sports car wheel
 
+
 // Define constants
-const lugDia = 16
 const lugCount = 5
-const lugSpacing = 114.3
-const baseThickness = 10
+const lugSpacing = 114.3 // millimeters
 const offset = -35 // millimeters
 const backSpacing = 6.38 // inches
 const wheelWidth = 9.5 // inches
 const wheelDiameter = 19 // inches
 
+
 // Create the circular pattern for the lug holes
 const circles = startSketchOn('XZ')
-  |> circle([lugSpacing / 2, 0], lugDia / 2, %)
+  |> circle([lugSpacing / 2, 0], 16 / 2, %)
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
@@ -23,26 +23,23 @@ const circles = startSketchOn('XZ')
 
 // Create the wheel center and add lug holes
 const flangeBase = startSketchOn('XZ')
-  |> circle([0, 0], lugSpacing / 2 + lugDia + 5, %)
+  |> circle([0, 0], lugSpacing / 2 + 16 + 5, %)
   |> hole(circles, %)
-  |> extrude(baseThickness, %)
+  |> extrude(10, %)
 
 // Remove the interior of the wheel center
 const sketch001 = startSketchOn(flangeBase, 'END')
   |> circle([0, 0], 20, %)
-  |> extrude(-baseThickness, %)
+  |> extrude(-10, %)
 
 // Add more material to the wheel center
 const sketch002 = startSketchOn(flangeBase, 'END')
-  |> circle([0, 0], lugSpacing / 2 + lugDia + 8, %)
+  |> circle([0, 0], lugSpacing / 2 + 16 + 8, %)
   |> extrude(30, %)
 
 // Edge treatment around center
 const sketch003 = startSketchOn('XY')
-  |> startProfileAt([
-       lugSpacing / 2 + lugDia + 8,
-       -baseThickness - 30
-     ], %)
+  |> startProfileAt([lugSpacing / 2 + 16 + 8, -10 - 30], %)
   |> yLine(30, %)
   |> line([6, -2], %)
   |> lineTo([profileStartX(%), profileStartY(%)], %)
@@ -92,72 +89,66 @@ const plane002 = {
 
 // Spoke cross sections
 const sketch007 = startSketchOn(plane001)
-  |> startProfileAt([
-       lugSpacing / 2 + lugDia + 1,
-       -baseThickness - 26
-     ], %)
+  |> startProfileAt([lugSpacing / 2 + 17, -36], %)
   |> bezierCurve({
        to: [
-         wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - lugDia - 23,
+         wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 35,
          12
        ],
        control1: [
-         (wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - lugDia - 23) / 2,
+         (wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 35) / 2,
          0
        ],
        control2: [
-         (wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - lugDia - 23) / 2,
+         (wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 35) / 2,
          15
        ]
      }, %)
   |> yLine(12, %)
   |> bezierCurve({
        to: [
-         -wheelDiameter * 25.4 / 2 + lugSpacing / 2 + lugDia + 23,
+         -wheelDiameter * 25.4 / 2 + lugSpacing / 2 + 35,
          -12
        ],
        control1: [
-         -(wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - lugDia) / 2,
+         -(wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 16) / 2,
          0
        ],
        control2: [
-         -(wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - lugDia) / 2,
+         -(wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 16) / 2,
          -15
        ]
      }, %)
   |> close(%)
 
 const sketch008 = startSketchOn(plane002)
-  |> startProfileAt([
-       lugSpacing / 2 + lugDia + 1,
-       -baseThickness - 26
-     ], %)
+  |> startProfileAt([lugSpacing / 2 + 17, -36], %)
   |> bezierCurve({
        to: [
-         wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - lugDia - 23,
+         wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 35,
          12
        ],
        control1: [
-         (wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - lugDia - 23) / 2,
+         (wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 35) / 2,
          0
        ],
        control2: [
-         (wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - lugDia - 23) / 2,
+         (wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 35) / 2,
          15
        ]
      }, %)
   |> yLine(12, %)
   |> bezierCurve({
        to: [
-         -wheelDiameter * 25.4 / 2 + lugSpacing / 2 + lugDia + 23,
+         -wheelDiameter * 25.4 / 2 + lugSpacing / 2 + 35,
          -12
        ],
        control1: [
-         -(wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - lugDia) / 2,
+         -(wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 16) / 2,
          0
        ],
        control2: [
-         -(wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - lugDia) / 2,
+         -(wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 16) / 2,
          -15
        ]
      }, %)
