@@ -1,6 +1,7 @@
 // Constrained Y Demo
 // This is a simple example of a 3D model that is created using the constrained Y feature.
 
+
 // Define constants
 const topAng = 25
 const bottomAng = 35
@@ -15,17 +16,14 @@ const part001 = startSketchOn('XZ')
   |> startProfileAt([0, 0], %)
   |> yLine(baseHeight, %)
   |> xLine(baseLen, %)
-  |> angledLineToY({
-       angle: topAng,
-       to: totalHeightHalf,
-     }, %, $seg04)
+  |> angledLineToY({ angle: topAng, to: totalHeightHalf }, %, $seg04)
   |> xLineTo(totalLen, %, $seg03)
   |> yLine(-armThick, %, $seg01)
   |> xLine(-1.5, %)
   |> angledLineToY([segAng(seg04, %) + 180, 0], %)
   |> angledLineToY({
        angle: -bottomAng,
-       to: -totalHeightHalf - armThick,
+       to: -totalHeightHalf - armThick
      }, %, $seg02)
   |> xLineTo(segEndX(seg03, %) + 0, %)
   |> yLine(-segLen(seg01, %), %)
@@ -36,5 +34,5 @@ const part001 = startSketchOn('XZ')
      }, %)
   |> angledLineToY([segAng(seg02, %) + 180, -baseHeight], %)
   |> xLineTo(0, %)
-  |> close(%) 
+  |> close(%)
   |> extrude(4, %)
