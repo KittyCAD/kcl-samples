@@ -17,18 +17,18 @@ const thickness = sqrt(distance * p * factorOfSafety * 6 / (sigmaAllow * width))
 // Sketch the bracket body and fillet the inner and outer edges of the bend
 const bracket = startSketchOn('XY')
   |> startProfileAt([0,0], %)
-  |> line([-leg2, 0], %, 'outerFillet')
+  |> line([-leg2, 0], %, $outerFillet)
   |> line([0, -leg1], %)
   |> line([thickness, 0], %)
-  |> line([0, leg1-thickness], %, 'innerFillet')
+  |> line([0, leg1-thickness], %, $innerFillet)
   |> line([leg2-thickness, 0], %)
   |> close(%)
   |> extrude(width, %)
   |> fillet({
        radius: filletRadius,
-       tags: [getPreviousAdjacentEdge('innerFillet', %)]
+       tags: [getPreviousAdjacentEdge(innerFillet, %)]
      }, %)
   |> fillet({
     radius: filletRadius + thickness,
-    tags: [getPreviousAdjacentEdge('outerFillet', %)]
+    tags: [getPreviousAdjacentEdge(outerFillet, %)]
   }, %)
