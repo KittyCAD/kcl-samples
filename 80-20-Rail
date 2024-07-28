@@ -1,0 +1,68 @@
+// 80/20 Rail
+// An 80/20 extruded aluminum linear rail. T-slot profile adjustable by rail height, length, and base position
+
+
+// define function
+fn rail8020 = (originStart, railHeight, height) => {
+  const plane001 = {
+    plane: {
+      origin: [originStart[0], originStart[1], 0],
+      x_axis: [1.0, 0.0, 0.0],
+      y_axis: [0.0, 1.0, 0.0],
+      z_axis: [0.0, 0.0, 1.0]
+    }
+  }
+
+  // sketch rail center
+  const sketch001 = startSketchOn(plane001)
+    |> startProfileAt([0.322 * railHeight, 0.322 * railHeight], %)
+    |> angledLine([0, 0.356 * railHeight], %, $rectangleSegmentA001)
+    |> angledLine([
+         segAng(rectangleSegmentA001, %) + 90,
+         0.356 * railHeight
+       ], %, $rectangleSegmentB001)
+    |> angledLine([
+         segAng(rectangleSegmentA001, %),
+         -segLen(rectangleSegmentA001, %)
+       ], %, $rectangleSegmentC001)
+    |> lineTo([profileStartX(%), profileStartY(%)], %)
+    |> close(%)
+    |> hole(circle([.5 * railHeight, .5 * railHeight], .205 * railHeight / 2, %), %)
+    |> extrude(height, %)
+
+  // sketch T-slot corner
+  const sketch002 = startSketchOn(plane001)
+    |> startProfileAt([0, 0.372 * railHeight], %)
+    |> yLine(-0.372 * railHeight, %)
+    |> xLine(0.372 * railHeight, %)
+    |> yLine(0.087 * railHeight, %)
+    |> xLine(-0.2 * railHeight, %)
+    |> angledLineToY({ angle: 45, to: 0.322 * railHeight }, %)
+    |> angledLineToX({ angle: 180, to: 0.322 * railHeight }, %)
+    |> yLine(0.1 * railHeight, %)
+    |> angledLineToX({ angle: -135, to: 0.087 * railHeight }, %)
+    |> angledLineToY({ angle: 90, to: 0.372 * railHeight }, %)
+    |> lineTo([profileStartX(%), profileStartY(%)], %)
+    |> close(%)
+  const pattern001 = extrude(height, sketch002)
+  
+  // circular pattern 3D T-slot corner feature
+    |> patternCircular3d({
+         axis: [0, 0, 1],
+         center: [
+           railHeight / 2 + originStart[0],
+           railHeight / 2 + originStart[1],
+           0
+         ],
+         repetitions: 3,
+         arcDegrees: 360,
+         rotateDuplicates: true
+       }, %)
+  return pattern001
+}
+
+// generate 4 adjustable rails
+rail8020([0, 0], 1.5, 50)
+rail8020([0, 20], 1, 60)
+rail8020([30, 0], 1, 70)
+rail8020([30, 20], 1, 80)
