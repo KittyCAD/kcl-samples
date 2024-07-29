@@ -1,64 +1,64 @@
 name: Output from KCL Samples
 
 permissions:
-  contents: write
+    contents: write
 
 on:
-  pull_request:
-    paths:
-      - '**.kcl'
-      - .github/workflows/output-from-kcl-samples.yml
-    branches:
-      - main
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+    pull_request:
+        paths:
+            - '**.kcl'
+            - .github/workflows/output-from-kcl-samples.yml
+        branches:
+            - main
+    push:
+        branches:
+            - main
+    workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: KittyCAD/action-install-cli@main
-      - name: Get Zoo Outputs
-        env:
-          ZOO_TOKEN: ${{ secrets.KITTYCAD_TOKEN }}
-        run: |
-          zoo version
-          sed -i '/---/q' README.md
-          mkdir -p {screenshots,step}
-          for file in *.kcl; do
-            echo "Processing $file..."
-            fileName="${file%.*}"
-            zoo kcl snapshot $file ./screenshots/$fileName.png
-            zoo kcl export --output-format=step --src-unit=in $file ./step
-            mv ./step/output.step ./step/$fileName.step
-            # stabiles date (otherwise there will always be a diff)
-            sed -E -i 's/[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]+[0-9]+[0-9]\+[0-9]{2}:[0-9]{2}/1970-01-01T00:00:00.0+00:00/g' ./step/$fileName.step
-            echo "#### [$fileName]($fileName.kcl) ([step](step/$fileName.step)) ([screenshot](screenshots/$fileName.png))" >> README.md
-            echo "[![$fileName](screenshots/$fileName.png)]($fileName.kcl)" >> README.md
-          done
-      - name: check for changes
-        id: git-check
-        run: |
-          git add .
-          if git status | grep -q "Changes to be committed"
-          then
-            echo "modified=true" >> $GITHUB_OUTPUT
-          else
-            echo "modified=false" >> $GITHUB_OUTPUT
-          fi
-      - name: Commit changes, if any
-        if: steps.git-check.outputs.modified == 'true'
-        run: |
-          git add .
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          git fetch origin
-          echo ${{ github.head_ref }}
-          git checkout ${{ github.head_ref }}
-          git commit -am "In the realm of scripts and screens, adding a dash of mechanical dreams." || true
-          git push
-          git push origin ${{ github.head_ref }}
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: KittyCAD/action-install-cli@main
+            - name: Get Zoo Outputs
+              env:
+                  ZOO_TOKEN: ${{ secrets.KITTYCAD_TOKEN }}
+              run: |
+                  zoo version
+                  sed -i '/---/q' README.md
+                  mkdir -p {screenshots,step}
+                  for file in *.kcl; do
+                    echo "Processing $file..."
+                    fileName="${file%.*}"
+                    zoo kcl snapshot $file ./screenshots/$fileName.png
+                    zoo kcl export --output-format=step --src-unit=in $file ./step
+                    mv ./step/output.step ./step/$fileName.step
+                    # stabiles date (otherwise there will always be a diff)
+                    sed -E -i 's/[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]+[0-9]+[0-9]\+[0-9]{2}:[0-9]{2}/1970-01-01T00:00:00.0+00:00/g' ./step/$fileName.step
+                    echo "#### [$fileName]($fileName.kcl) ([step](step/$fileName.step)) ([screenshot](screenshots/$fileName.png))" >> README.md
+                    echo "[![$fileName](screenshots/$fileName.png)]($fileName.kcl)" >> README.md
+                  done
+            - name: check for changes
+              id: git-check
+              run: |
+                  git add .
+                  if git status | grep -q "Changes to be committed"
+                  then
+                    echo "modified=true" >> $GITHUB_OUTPUT
+                  else
+                    echo "modified=false" >> $GITHUB_OUTPUT
+                  fi
+            - name: Commit changes, if any
+              if: steps.git-check.outputs.modified == 'true'
+              run: |
+                  git add .
+                  git config --local user.email "github-actions[bot]@users.noreply.github.com"
+                  git config --local user.name "github-actions[bot]"
+                  git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+                  git fetch origin
+                  echo ${{ github.head_ref }}
+                  git checkout ${{ github.head_ref }}
+                  git commit -am "In the realm of scripts and screens, adding a dash of mechanical dreams." || true
+                  git push
+                  git push origin ${{ github.head_ref }}
