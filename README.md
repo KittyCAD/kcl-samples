@@ -23,6 +23,8 @@ KCL samples conform to a set of style guidelines to ensure consistency and reada
 When you submit a PR to add or modify KCL samples, images and STEP files will be generated and added to the repository automatically.
 
 ---
+#### [80-20-rail](80-20-rail.kcl) ([step](STEP-output-of-samples/80-20-rail.step)) ([screenshot](screenshots-of-samples/80-20-rail.png))
+[![80-20-rail](screenshots-of-samples/80-20-rail.png)](80-20-rail.kcl)
 #### [a-parametric-bearing-pillow-block](a-parametric-bearing-pillow-block.kcl) ([step](STEP-output-of-samples/a-parametric-bearing-pillow-block.step)) ([screenshot](screenshots-of-samples/a-parametric-bearing-pillow-block.png))
 [![a-parametric-bearing-pillow-block](screenshots-of-samples/a-parametric-bearing-pillow-block.png)](a-parametric-bearing-pillow-block.kcl)
 #### [ball-bearing](ball-bearing.kcl) ([step](STEP-output-of-samples/ball-bearing.step)) ([screenshot](screenshots-of-samples/ball-bearing.png))
