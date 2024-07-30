@@ -29,8 +29,8 @@ const sphere = startSketchOn('XZ')
      ], %)
   |> line([sphereDia - 0.1, 0], %)
   |> arc({
-       angle_start: 0,
-       angle_end: -180,
+       angleStart: 0,
+       angleEnd: -180,
        radius: sphereDia / 2 - 0.05
      }, %)
   |> close(%)

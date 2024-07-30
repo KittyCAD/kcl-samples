@@ -28,12 +28,12 @@ const bracket = startSketchOn('XY')
   |> fillet({
        radius: filletRadius,
        tags: [
-         getPreviousAdjacentEdge(innerFillet, %)
+         getPreviousAdjacentEdge(innerFillet)
        ]
      }, %)
   |> fillet({
        radius: filletRadius + thickness,
        tags: [
-         getPreviousAdjacentEdge(outerFillet, %)
+         getPreviousAdjacentEdge(outerFillet)
        ]
      }, %)

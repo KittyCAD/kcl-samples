@@ -33,8 +33,6 @@ When you submit a PR to add or modify KCL samples, images and STEP files will be
 [![bracket](screenshots/bracket.png)](bracket.kcl)
 #### [car-wheel](car-wheel.kcl) ([step](step/car-wheel.step)) ([screenshot](screenshots/car-wheel.png))
 [![car-wheel](screenshots/car-wheel.png)](car-wheel.kcl)
-#### [constrained-y](constrained-y.kcl) ([step](step/constrained-y.step)) ([screenshot](screenshots/constrained-y.png))
-[![constrained-y](screenshots/constrained-y.png)](constrained-y.kcl)
 #### [flange-with-patterns](flange-with-patterns.kcl) ([step](step/flange-with-patterns.step)) ([screenshot](screenshots/flange-with-patterns.png))
 [![flange-with-patterns](screenshots/flange-with-patterns.png)](flange-with-patterns.kcl)
 #### [flange-xy](flange-xy.kcl) ([step](step/flange-xy.step)) ([screenshot](screenshots/flange-xy.png))

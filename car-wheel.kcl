@@ -72,18 +72,18 @@ const sketch006 = extrude(-30, sketch005)
 const plane001 = {
   plane: {
     origin: [0.0, 0.0, 5.0],
-    x_axis: [1.0, 0.0, 0.0],
-    y_axis: [0.0, 1.0, 0.0],
-    z_axis: [0.0, 0.0, 1.0]
+    xAxis: [1.0, 0.0, 0.0],
+    yAxis: [0.0, 1.0, 0.0],
+    zAxis: [0.0, 0.0, 1.0]
   }
 }
 
 const plane002 = {
   plane: {
     origin: [0.0, 0.0, -5.0],
-    x_axis: [1.0, 0.0, 0.0],
-    y_axis: [0.0, 1.0, 0.0],
-    z_axis: [0.0, 0.0, 1.0]
+    xAxis: [1.0, 0.0, 0.0],
+    yAxis: [0.0, 1.0, 0.0],
+    zAxis: [0.0, 0.0, 1.0]
   }
 }
 

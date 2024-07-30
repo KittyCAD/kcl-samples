@@ -21,9 +21,9 @@ const washerThickness = 0.0625
 const workingPlane = {
   plane: {
     origin: { x: 0, y: flangeThickness, z: 0 },
-    x_axis: { x: 0, y: 0, z: 1 },
-    y_axis: { x: 1, y: 0, z: 0 },
-    z_axis: { x: 0, y: 1, z: 0 }
+    xAxis: { x: 0, y: 0, z: 1 },
+    yAxis: { x: 1, y: 0, z: 0 },
+    zAxis: { x: 0, y: 1, z: 0 }
   }
 }
 
@@ -36,9 +36,9 @@ fn capScrew = (originStart, length, dia, capDia, capHeadLength) => {
              y: originStart[1],
              z: originStart[0]
            },
-           x_axis: { x: 1, y: 0, z: 0 },
-           y_axis: { x: 0, y: 0, z: 1 },
-           z_axis: { x: 0, y: 1, z: 0 }
+           xAxis: { x: 1, y: 0, z: 0 },
+           yAxis: { x: 0, y: 0, z: 1 },
+           zAxis: { x: 0, y: 1, z: 0 }
          }
        })
     |> circle([0, 0], capDia / 2, %)
@@ -91,9 +91,9 @@ fn hexNut = (originStart, thk, innerDia) => {
              y: -wallThickness - washerThickness,
              z: originStart[1]
            },
-           x_axis: { x: 0, y: 0, z: 1 },
-           y_axis: { x: 1, y: 0, z: 0 },
-           z_axis: { x: 0, y: 1, z: 0 }
+           xAxis: { x: 0, y: 0, z: 1 },
+           yAxis: { x: 1, y: 0, z: 0 },
+           zAxis: { x: 0, y: 1, z: 0 }
          }
        })
     |> startProfileAt([0 + innerDia * hexNutScale, 0], %)
@@ -190,21 +190,22 @@ capScrew([
        rotateDuplicates: true
      }, %)
 
+// Pattern the screw body around the flange
 const screwBody = startSketchOn({
-         plane: {
-           origin: {
-             x: startingPoint[2],
-             y: startingPoint[1],
-             z: startingPoint[0]
-           },
-           x_axis: { x: 0, y: 0, z: 1 },
-           y_axis: { x: 1, y: 0, z: 0 },
-           z_axis: { x: 0, y: 1, z: 0 }
-         }
-       })
-    |> circle([0, 0], screwDia / 2, %)
-    |> extrude(-screwLength, %)
-    |> patternCircular3d({
+       plane: {
+         origin: {
+           x: startingPoint[2],
+           y: startingPoint[1],
+           z: startingPoint[0]
+         },
+         xAxis: { x: 0, y: 0, z: 1 },
+         yAxis: { x: 1, y: 0, z: 0 },
+         zAxis: { x: 0, y: 1, z: 0 }
+       }
+     })
+  |> circle([0, 0], screwDia / 2, %)
+  |> extrude(-screwLength, %)
+  |> patternCircular3d({
        axis: [0, 1, 0],
        center: [0, 0, 0],
        repetitions: 6,
@@ -212,15 +213,21 @@ const screwBody = startSketchOn({
        rotateDuplicates: true
      }, %)
 
+// Create a plane for the washers on the back side of the wall
 const backSideWasherPlane = {
   plane: {
-    origin: { x: 0, y: -wallThickness - washerThickness, z: 0 },
-    x_axis: { x: 0, y: 0, z: 1 },
-    y_axis: { x: 1, y: 0, z: 0 },
-    z_axis: { x: 0, y: 1, z: 0 }
+    origin: {
+      x: 0,
+      y: -wallThickness - washerThickness,
+      z: 0
+    },
+    xAxis: { x: 0, y: 0, z: 1 },
+    yAxis: { x: 1, y: 0, z: 0 },
+    zAxis: { x: 0, y: 1, z: 0 }
   }
 }
 
+// Create the washers on the backside of the wall
 washer(backSideWasherPlane, [startingPoint[0], startingPoint[1]], 0.0625, screwDia + tol, 0.625)
   |> patternCircular3d({
        axis: [0, 1, 0],
@@ -229,13 +236,13 @@ washer(backSideWasherPlane, [startingPoint[0], startingPoint[1]], 0.0625, screwD
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
-  
-  // Create the hex nut and pattern around the flange
-  hexNut([startingPoint[1], startingPoint[0]], .25, screwDia + tol)
+
+// Create the hex nut and pattern around the flange
+hexNut([startingPoint[1], startingPoint[0]], .25, screwDia + tol)
   |> patternCircular3d({
-  axis: [0, 1, 0],
-  center: [0, 0, 0],
-  repetitions: 6,
-  arcDegrees: 360,
-  rotateDuplicates: true
-}, %)
+       axis: [0, 1, 0],
+       center: [0, 0, 0],
+       repetitions: 6,
+       arcDegrees: 360,
+       rotateDuplicates: true
+     }, %)

@@ -39,8 +39,8 @@ fn capScrew = (originStart, length, dia, capHeadLength) => {
   |> extrude(-10, %)
   const screw = startSketchOn(screwHead, "start")
   |> circle([originStart[0], originStart[1]], dia / 2, %)
-  |> extrude(length, %, $nice)
+  |> extrude(length, %)
   return screw
 }
 
-capScrew([0, 0], 30, 20, 22.5)
+capScrew([0, 0], 50, 20, 22.5)
