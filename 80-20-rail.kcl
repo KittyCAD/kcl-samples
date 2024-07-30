@@ -7,9 +7,9 @@ fn rail8020 = (originStart, railHeight, height) => {
   const plane001 = {
     plane: {
       origin: [originStart[0], originStart[1], 0],
-      x_axis: [1.0, 0.0, 0.0],
-      y_axis: [0.0, 1.0, 0.0],
-      z_axis: [0.0, 0.0, 1.0]
+      xAxis: [1.0, 0.0, 0.0],
+      yAxis: [0.0, 1.0, 0.0],
+      zAxis: [0.0, 0.0, 1.0]
     }
   }
 
@@ -18,12 +18,12 @@ fn rail8020 = (originStart, railHeight, height) => {
     |> startProfileAt([0.322 * railHeight, 0.322 * railHeight], %)
     |> angledLine([0, 0.356 * railHeight], %, $rectangleSegmentA001)
     |> angledLine([
-         segAng(rectangleSegmentA001, %) + 90,
+         segAng(rectangleSegmentA001) + 90,
          0.356 * railHeight
        ], %, $rectangleSegmentB001)
     |> angledLine([
-         segAng(rectangleSegmentA001, %),
-         -segLen(rectangleSegmentA001, %)
+         segAng(rectangleSegmentA001),
+         -segLen(rectangleSegmentA001)
        ], %, $rectangleSegmentC001)
     |> lineTo([profileStartX(%), profileStartY(%)], %)
     |> close(%)

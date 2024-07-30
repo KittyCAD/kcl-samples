@@ -24,8 +24,8 @@ fn kittLeg = (sk1, sk2) => {
 fn kittEar = (sk1, sk2, size) => {
   const earExtrude = startSketchAt([sk1, sk2])
   |> arc({
-       angle_start: 180,
-       angle_end: 180,
+       angleStart: 180,
+       angleEnd: 0,
        radius: 1.5
      }, %)
   |> close(%)

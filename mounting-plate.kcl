@@ -32,9 +32,9 @@ const part = rs
   |> fillet({
       radius: 4,
       tags: [
-        getPreviousAdjacentEdge(rs.tags.edge1, %),
-        getPreviousAdjacentEdge(rs.tags.edge2, %),
-        getPreviousAdjacentEdge(rs.tags.edge3, %),
-        getPreviousAdjacentEdge(rs.tags.edge4, %)
+        getPreviousAdjacentEdge(rs.tags.edge1),
+        getPreviousAdjacentEdge(rs.tags.edge2),
+        getPreviousAdjacentEdge(rs.tags.edge3),
+        getPreviousAdjacentEdge(rs.tags.edge4)
       ]
      }, %)

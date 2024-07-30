@@ -27,9 +27,9 @@ fn rectShape = (pos, w, l) => {
 const bracketPlane = {
   plane: {
     origin: { x: 0, y: length / 2 + thk, z: 0 },
-    x_axis: { x: 1, y: 0, z: 0 },
-    y_axis: { x: 0, y: 0, z: 1 },
-    z_axis: { x: 0, y: -1, z: 0 }
+    xAxis: { x: 1, y: 0, z: 0 },
+    yAxis: { x: 0, y: 0, z: 1 },
+    zAxis: { x: 0, y: -1, z: 0 }
   }
 }
 
@@ -55,10 +55,10 @@ const bracketBody = bs
   |> fillet({
        radius: radius,
        tags: [
-         getNextAdjacentEdge(bs.tags.edge7, %),
-         getNextAdjacentEdge(bs.tags.edge2, %),
-         getNextAdjacentEdge(bs.tags.edge3, %),
-         getNextAdjacentEdge(bs.tags.edge6, %)
+         getNextAdjacentEdge(bs.tags.edge7),
+         getNextAdjacentEdge(bs.tags.edge2),
+         getNextAdjacentEdge(bs.tags.edge3),
+         getNextAdjacentEdge(bs.tags.edge6)
        ]
      }, %)
 
@@ -66,9 +66,9 @@ const bracketBody = bs
 const tabPlane = {
   plane: {
     origin: { x: 0, y: 0, z: depth + thk },
-    x_axis: { x: 1, y: 0, z: 0 },
-    y_axis: { x: 0, y: 1, z: 0 },
-    z_axis: { x: 0, y: 0, z: 1 }
+    xAxis: { x: 1, y: 0, z: 0 },
+    yAxis: { x: 0, y: 1, z: 0 },
+    zAxis: { x: 0, y: 0, z: 1 }
   }
 }
 
@@ -87,8 +87,8 @@ const tabsR = startSketchOn(tabPlane)
   |> fillet({
        radius: holeDiam / 2,
        tags: [
-         getNextAdjacentEdge(edge12, %),
-         getNextAdjacentEdge(edge13, %)
+         getNextAdjacentEdge(edge12),
+         getNextAdjacentEdge(edge13)
        ]
      }, %)
   |> patternLinear3d({
@@ -112,8 +112,8 @@ const tabsL = startSketchOn(tabPlane)
   |> fillet({
        radius: holeDiam / 2,
        tags: [
-         getNextAdjacentEdge(edge21, %),
-         getNextAdjacentEdge(edge22, %)
+         getNextAdjacentEdge(edge21),
+         getNextAdjacentEdge(edge22)
        ]
      }, %)
   |> patternLinear3d({
@@ -126,9 +126,9 @@ const tabsL = startSketchOn(tabPlane)
 const retPlane = {
   plane: {
     origin: { x: -width / 2 + 20, y: 0, z: 0 },
-    x_axis: { x: 0, y: 1, z: 0 },
-    y_axis: { x: 0, y: 0, z: 1 },
-    z_axis: { x: 1, y: 0, z: 0 }
+    xAxis: { x: 0, y: 1, z: 0 },
+    yAxis: { x: 0, y: 0, z: 1 },
+    zAxis: { x: 1, y: 0, z: 0 }
   }
 }
 

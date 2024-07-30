@@ -28,35 +28,35 @@ const baseExtrusion = startSketchOn('-XZ')
   |> extrude(hatWidth, %)
   |> fillet({
        radius: bendRad,
-       tags: [getPreviousAdjacentEdge(e3, %)]
+       tags: [getPreviousAdjacentEdge(e3)]
      }, %)
   |> fillet({
        radius: outsideBendRad,
-       tags: [getPreviousAdjacentEdge(e4, %)]
+       tags: [getPreviousAdjacentEdge(e4)]
      }, %)
   |> fillet({
        radius: outsideBendRad,
-       tags: [getPreviousAdjacentEdge(e5, %)]
+       tags: [getPreviousAdjacentEdge(e5)]
      }, %)
   |> fillet({
        radius: bendRad,
-       tags: [getPreviousAdjacentEdge(e6, %)]
+       tags: [getPreviousAdjacentEdge(e6)]
      }, %)
   |> fillet({
        radius: outsideBendRad,
-       tags: [getPreviousAdjacentEdge(e9, %)]
+       tags: [getPreviousAdjacentEdge(e9)]
      }, %)
   |> fillet({
        radius: bendRad,
-       tags: [getPreviousAdjacentEdge(e10, %)]
+       tags: [getPreviousAdjacentEdge(e10)]
      }, %)
   |> fillet({
        radius: bendRad,
-       tags: [getPreviousAdjacentEdge(e11, %)]
+       tags: [getPreviousAdjacentEdge(e11)]
      }, %)
   |> fillet({
        radius: outsideBendRad,
-       tags: [getPreviousAdjacentEdge(e12, %)]
+       tags: [getPreviousAdjacentEdge(e12)]
      }, %)
 
 // Define the flanges and place the bolt holes

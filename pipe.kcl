@@ -4,7 +4,7 @@
 // Define constants
 const pipeLength = 40
 const pipeSmallDia = 10
-const pipeLargeDia = 20
+const pipeLargeDia = 15
 const thickness = 0.5
 
 // Create the sketch to be revolved around the y-axis. Use the small diameter, large diameter, length, and thickness to define the sketch.
