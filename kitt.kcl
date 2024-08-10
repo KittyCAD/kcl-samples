@@ -1,87 +1,257 @@
-// Kitt
-// The KittyCAD mascot.
+// Kitt2
 
-// Define constants
-const l1 = 10
-const l2 = 10
-const arcR = 2
-const footH = 3.5
-const bodyHeight = 2.5
-const filletRadius = 0.25
-
-// Create a function for defining one of Kitt's legs
-fn kittLeg = (sk1, sk2) => {
-  const legExtrude = startSketchAt([sk1, sk2])
-  |> line([3, 0], %)
-  |> line([0, -3], %)
-  |> line([-3, 0], %)
-  |> close(%)
-  |> extrude(bodyHeight, %)
-  return legExtrude
+// pixel box function
+fn pixelBox = (kitExtrude, extrudeTag, positionY, positionZ, width, height, depth) => {
+  const pixelBoxBody = startSketchOn(kitExtrude, extrudeTag)
+    |> startProfileAt([positionY, positionZ], %)
+    |> line([0, height], %)
+    |> line([width, 0], %)
+    |> line([0, -height], %)
+    |> lineTo([profileStartX(%), profileStartY(%)], %)
+    |> close(%)
+    |> extrude(depth, %)
+  return pixelBoxBody
 }
 
-// Create a function to define an ear
-fn kittEar = (sk1, sk2, size) => {
-  const earExtrude = startSketchAt([sk1, sk2])
-  |> arc({
-       angleStart: 180,
-       angleEnd: 0,
-       radius: 1.5
-     }, %)
+// 1. Kitty Body
+const kitBodyElevation = 6
+const kitBodyWidth = 26
+const kitBodyHeight = 25
+const kitBodyDepth = 18
+
+const kitBody = startSketchOn('YZ')
+  |> startProfileAt([-kitBodyWidth / 2, kitBodyElevation], %)
+  |> line([0, kitBodyHeight], %)
+  |> line([kitBodyWidth, 0], %, $seg01)
+  |> line([0, -kitBodyHeight], %, $seg02)
+  |> lineTo([profileStartX(%), profileStartY(%)], %)
   |> close(%)
-  |> extrude(bodyHeight, %)
-  return earExtrude
+  |> extrude(kitBodyDepth, %)
+
+// 2. Kitty Head (Frame of display)
+const kitHeadOffset = 1
+const kitHeadHeight = 16
+
+const kitHeadElevation = kitBodyElevation + kitBodyHeight - kitHeadOffset - kitHeadHeight
+
+
+const kitHeadWidth = kitBodyWidth - (kitHeadOffset * 2)
+const kitHeadDepth = 3
+const kitHead = pixelBox(kitBody, 'END', -kitHeadWidth / 2, kitHeadElevation, kitHeadWidth, kitHeadHeight, kitHeadDepth)
+const kitFaceElevation = kitHeadElevation + 2
+
+// 3. Kitty Face
+const kitFaceWidth = kitHeadWidth - 4
+const kitFaceHeight = kitHeadElevation + kitHeadHeight - kitFaceElevation - 3
+const kitFaceDepth = 2
+
+const kitFace = startSketchOn(kitHead, 'END')
+  |> startProfileAt([-kitFaceWidth / 2, kitFaceElevation], %)
+  |> line([0, 1], %) // left lower corner up
+  |> line([-1, 0], %) // left lower corner left
+  |> line([0, kitFaceHeight], %) // left side up
+  |> line([1, 0], %) // left upper corner right
+  |> line([0, 1], %) // left upper corner up
+  |> line([kitFaceWidth, 0], %) // upper side right
+  |> line([0, -1], %) // right upper corner down
+  |> line([1, 0], %) // right upper corner right
+  |> line([0, -kitFaceHeight], %) // right side down
+  |> line([-1, 0], %) // right lower corner left
+  |> line([0, -1], %) // right lower corner down
+  |> lineTo([profileStartX(%), profileStartY(%)], %)
+  |> close(%)
+  |> extrude(-kitFaceDepth, %)
+
+// Kitty Face Features:
+// 3.1 Kitty Eyes
+
+// 3.1.1 Kitty Left Eye
+const kitEyeDepth = 0.5
+const kitEyeHeihgt = kitFaceElevation + 7
+const kitEyeOffset = 7
+
+// 3.1.2 Kitty Right Eye
+const kitLeftEye1 = pixelBox(kitFace, 'START', -kitEyeOffset, kitEyeHeihgt, 1, 1, kitEyeDepth)
+
+// 3.2 Kitty Nose
+const kitLeftEye2 = pixelBox(kitFace, 'START', -kitEyeOffset + 1, kitEyeHeihgt + 1, 3, 1, kitEyeDepth)
+const kitLeftEye3 = pixelBox(kitFace, 'START', -kitEyeOffset + 4, kitEyeHeihgt, 1, 1, kitEyeDepth)
+const kitRightEye = pixelBox(kitFace, 'START', kitEyeOffset - 3, kitEyeHeihgt - 1, 2, 4, kitEyeDepth)
+const kitNoseElevation = kitEyeHeihgt - 5
+const kitNose = startSketchOn(kitFace, 'START')
+  |> startProfileAt([-2, kitNoseElevation], %) // H V
+  |> line([0, 1], %) // lower-left up
+  |> line([2, 0], %) // lower-left right
+  |> line([0, 2], %) // mid-left up
+  |> line([-1, 0], %) // upper-left left
+  |> line([0, 1], %) // upper-left up
+  |> line([3, 0], %) // upper-mid right
+  |> line([0, -1], %) // upper-right down
+  |> line([-1, 0], %) // upper-right left
+  |> line([0, -2], %) // mid-left down
+  |> line([2, 0], %) // lower-right right
+  |> line([0, -1], %) // lower-right down
+  |> lineTo([profileStartX(%), profileStartY(%)], %)
+  |> close(%)
+  |> extrude(kitEyeDepth, %)
+
+// 3.3 Kitty Mouth
+const kitMouthOffset = 4
+const kitMouthHeight = kitEyeHeihgt - 3
+const kitMouthUpLeft = pixelBox(kitFace, 'START', -kitMouthOffset, kitMouthHeight, 1, 1, kitEyeDepth)
+
+// 4. Kitty Belly
+const kitMouthDownLeft = pixelBox(kitFace, 'START', -kitMouthOffset + 1, kitMouthHeight - 1, 1, 1, kitEyeDepth)
+const kitMouthUpRight = pixelBox(kitFace, 'START', kitMouthOffset, kitMouthHeight, 1, 1, kitEyeDepth)
+const kitMouthDownRight = pixelBox(kitFace, 'START', kitMouthOffset - 1, kitMouthHeight - 1, 1, 1, kitEyeDepth)
+const kitBellyElevation = kitBodyElevation + 1
+
+const kitBellyHeight = kitHeadElevation - kitBellyElevation - 1
+
+// 4.1 Kitty VHS
+const kitBellyWidth = kitHeadWidth
+const kitBellyDepth = kitHeadDepth
+const kitBelly = pixelBox(kitBody, 'END', -kitBellyWidth / 2, kitBellyElevation, kitBellyWidth, kitBellyHeight, kitBellyDepth)
+const kitVHSelevation = kitBellyElevation + 1
+
+const kitVHSheight = 2
+
+// 4.2 Kitty Floppy
+const kitVHSwidth = 8
+const kitVHSdepth = 1
+const kitVHS = pixelBox(kitBelly, 'END', -kitVHSwidth / 2, kitVHSelevation, kitVHSwidth, kitVHSheight, kitVHSdepth)
+const kitFloppyElevation = kitBellyElevation + 1
+const kitFloppyHeight = 1
+
+const kitFloppyWidth = 5
+const kitFloppyOffset = kitBellyWidth / 2 - 1
+const kitFloppyDepth = 2
+
+// 4.3 Kitty Belly Button
+const kitFloppy1 = pixelBox(kitBelly, 'END', -kitFloppyOffset, kitFloppyElevation, kitFloppyWidth, kitFloppyHeight, -kitFloppyDepth)
+const kitFloppy2 = pixelBox(kitBelly, 'END', -kitFloppyOffset, kitFloppyElevation + 2, kitFloppyWidth, kitFloppyHeight, -kitFloppyDepth)
+const kitFloppy3 = pixelBox(kitBelly, 'END', kitFloppyOffset, kitFloppyElevation, -kitFloppyWidth, kitFloppyHeight, -kitFloppyDepth)
+const kitBellyButtonOffset = kitHeadWidth / 2 - 3
+const kitBellyButtonElevation = kitHeadElevation - 1
+
+const kitBellyButtonWidth = 2
+
+// 4.4 Kitty Buttons
+const kitBellyButtonHeight = 1
+const kitBellyButtonDepth = kitHeadDepth + 1
+const kitBellyButton = pixelBox(kitBody, 'END', -kitBellyButtonOffset, kitBellyButtonElevation, kitBellyButtonWidth, kitBellyButtonHeight, kitBellyButtonDepth)
+
+const kitButtonWidth = 1
+const kitButtonHeight = 2
+const kitButtonDepth = kitFloppyDepth
+const kitButtonElevation = kitFloppyElevation + 2
+
+const kitButton1 = pixelBox(kitBelly, 'END', kitFloppyOffset, kitFloppyElevation + 2, -kitButtonWidth, kitButtonHeight, -kitButtonDepth)
+
+// 5. Kitty Legs
+const kitButton2 = pixelBox(kitBelly, 'END', kitFloppyOffset - kitButtonWidth - 1, kitFloppyElevation + 2, -kitButtonWidth, kitButtonHeight, -kitButtonDepth)
+const kitButton3 = pixelBox(kitBelly, 'END', kitFloppyOffset - (2 * (kitButtonWidth + 1)), kitFloppyElevation + 2, -kitButtonWidth, kitButtonHeight, -kitButtonDepth)
+
+const kitShoeWidth = 7
+const kitShoeLength = 10
+const kitShoeHeight = 3
+
+fn kitLeg = (offsetFront, offsetSide) => {
+  const kitShoeOffsetFront = offsetFront + kitBodyDepth / 2 - (kitShoeLength / 2)
+
+  const kitFootPrint = startSketchOn('XY')
+    |> startProfileAt([kitShoeOffsetFront, offsetSide], %)
+    |> line([0, kitShoeWidth], %)
+    |> line([kitShoeLength, 0], %)
+    |> line([0, -kitShoeWidth], %)
+    |> lineTo([profileStartX(%), profileStartY(%)], %)
+    |> close(%)
+
+  const kitShoe = extrude(kitShoeHeight, kitFootPrint)
+
+  const kitPantsOffsetSide = offsetSide + 1
+  const kitPantsOffsetFront = kitShoeOffsetFront + 1
+  const kitPantsWidth = kitShoeWidth - 2
+  const kitPantsFrontWidth = kitPantsWidth
+  const kitPantsHeight = kitBodyElevation - kitShoeHeight
+
+  const kitPants = pixelBox(kitShoe, 'END', kitPantsOffsetFront, kitPantsOffsetSide, kitPantsFrontWidth, kitPantsWidth, kitPantsHeight)
+
+  return kitShoe
 }
+const kitLegOffset = 3
 
-// Create a function to define a foot
-fn kittFoot = (sk1, sk2) => {
-  const footExtrude = startSketchAt([sk1, sk2])
-  |> line([3, 0], %)
-  |> line([0, -1.5], %)
-  |> line([-3, 0], %)
-  |> close(%)
-  |> extrude(footH, %)
-  return footExtrude
+const kitRightLeg = kitLeg(0, kitLegOffset)
+const kitLeftLeg = kitLeg(0, -kitLegOffset - kitShoeWidth)
+
+// 6. Kitty Ears
+const kitEarWidth = 8
+const kitEarDepth = 8
+const kitEarHeight = 2
+
+fn kitEar = (earOffsetFront, earOffsetSide) => {
+  const kitNewEarOffsetFront = kitBodyDepth - earOffsetFront
+  const kitNewEarOffsetSide = -(kitBodyWidth / 2 - earOffsetSide)
+  const baseVolume = pixelBox(kitBody, seg01, kitNewEarOffsetSide, kitNewEarOffsetFront, kitEarWidth, -kitEarDepth, kitEarHeight)
+
+  const secondOffset = 1
+  
+  const secondLevel = pixelBox(baseVolume, 'END', kitNewEarOffsetSide + secondOffset, kitNewEarOffsetFront - 0.01, kitEarWidth - (secondOffset * 2), -kitEarDepth + secondOffset * 2, kitEarHeight)
+
+  const thirdOffset = 2
+  const thirdLevel = pixelBox(secondLevel, 'END', kitNewEarOffsetSide + thirdOffset, kitNewEarOffsetFront - 0.02, kitEarWidth - (thirdOffset * 2), -kitEarDepth + thirdOffset * 2, kitEarHeight)
+
+  const fourthOffset = 3
+  const fourthLevel = pixelBox(thirdLevel, 'END', kitNewEarOffsetSide + fourthOffset, kitNewEarOffsetFront - 0.03, kitEarWidth - (fourthOffset * 2), -kitEarDepth + fourthOffset * 2, kitEarHeight)
+
+  return baseVolume
 }
+const kitEarOffsetFront = 4
+const kitEarOffsetSide = 1
 
-// Create the body
-const kittBody = startSketchAt([-l2/2, -l1/2])
-  |> line([0, l1], %)
-  |> line([l2, 0], %)
-  |> line([0, -l1], %)
-  |> close(%)
-  |> extrude(bodyHeight, %)
+const kitRightEar = kitEar(kitEarOffsetFront, kitEarOffsetSide)
+const kitLeftEar = kitEar(kitEarOffsetFront, kitBodyWidth - kitEarWidth - kitEarOffsetSide)
 
-  // Create the legs, ears, and feet of Kitt
-const leg1 = kittLeg(-4, -5)
-const leg2 = kittLeg(1, -5)
-const ear1 = kittEar(-4, 5, 3)
-const ear2 = kittEar(1, 5, 3)
-const foot1 = kittFoot(-4, -8)
-const foot2 = kittFoot(1, -8)
+// 7. Kitty Side
+// 7.1 Grill
+const grillOffset = 4
 
-// Create the face. This creates a small indentation into the body.
-const face = startSketchOn(kittBody, 'end')
-  |> startProfileAt([-l2/2+1, -l1/2+1], %)
-  |> line([l1 - 2, 0], %)
-  |> line([0, l2 - 2], %)
-  |> line([-l1 + 2, 0], %)
-  |> close(%)
-  |> extrude(-.25, %)
+const grillRowA = kitBodyElevation + kitBodyHeight - grillOffset
+const grillRowB = grillRowA - 2
+const grillRowC = grillRowA - 4
 
-  // Create a function that defines a singular button
-fn button = (start1, start2, w, l, h) => {
-  const buttonSketch = startSketchOn(kittBody, 'end')
-  |> startProfileAt([start1, start2], %)
-  |> line([w, 0], %)
-  |> line([0, l], %)
-  |> line([-w, 0], %)
-  |> close(%)
-  |> extrude(h, %)
-  return buttonSketch
-}
+const grillColumnA = kitBodyDepth - grillOffset
+const grillColumnB = grillColumnA - 1
+const grillColumnC = grillColumnA - 2
+const grillColumnD = grillColumnA - 3
+const grillColumnE = grillColumnA - 4
 
-// Place three buttons on Kitt's body
-const button1 = button(-4.75, -4.75, 1, .25, .125)
-const button2 = button(-3, -4.75, 1, .25, .125)
-const button3 = button(-1.25,-4.75, 1, .25, .125)
+const grillHoleSize = 1
+const grillHoleDepth = -2
+
+const grillHoleAB = pixelBox(kitBody, 'seg02', grillRowA, grillColumnB, grillHoleSize, grillHoleSize, grillHoleDepth)
+
+const grillHoleAD = pixelBox(kitBody, 'seg02', grillRowA, grillColumnD, grillHoleSize, grillHoleSize, grillHoleDepth)
+
+const grillHoleBA = pixelBox(kitBody, 'seg02', grillRowB, grillColumnA, grillHoleSize, grillHoleSize, grillHoleDepth)
+
+const grillHoleBC = pixelBox(kitBody, 'seg02', grillRowB, grillColumnC, grillHoleSize, grillHoleSize, grillHoleDepth)
+
+const grillHoleBE = pixelBox(kitBody, 'seg02', grillRowB, grillColumnE, grillHoleSize, grillHoleSize, grillHoleDepth)
+
+const grillHoleCB = pixelBox(kitBody, 'seg02', grillRowC, grillColumnB, grillHoleSize, grillHoleSize, grillHoleDepth)
+
+const grillHoleCD = pixelBox(kitBody, 'seg02', grillRowC, grillColumnD, grillHoleSize, grillHoleSize, grillHoleDepth)
+
+// 7.2 Kitty Vent
+const kitVentElevation = kitBodyElevation + 1
+const kitVentOffset = 1
+const kitVentHoleWidth = 1
+const kitVentHoleHeight = 4
+const kitVentHoleDepth = grillHoleDepth
+
+const kitVentA = pixelBox(kitBody, 'seg02', kitVentElevation, kitVentOffset, kitVentHoleHeight, kitVentHoleWidth, kitVentHoleDepth)
+
+const kitVentB = pixelBox(kitBody, 'seg02', kitVentElevation, kitVentOffset + 2, kitVentHoleHeight, kitVentHoleWidth, kitVentHoleDepth)
+
+const kitVentC = pixelBox(kitBody, 'seg02', kitVentElevation, kitVentOffset + 4, kitVentHoleHeight, kitVentHoleWidth, kitVentHoleDepth)
