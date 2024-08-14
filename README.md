@@ -45,6 +45,8 @@ When you submit a PR to add or modify KCL samples, images and STEP files will be
 [![gear](screenshots/gear.png)](gear.kcl)
 #### [hex-nut](hex-nut.kcl) ([step](step/hex-nut.step)) ([screenshot](screenshots/hex-nut.png))
 [![hex-nut](screenshots/hex-nut.png)](hex-nut.kcl)
+#### [kitt](kitt.kcl) ([step](step/kitt.step)) ([screenshot](screenshots/kitt.png))
+[![kitt](screenshots/kitt.png)](kitt.kcl)
 #### [lego](lego.kcl) ([step](step/lego.step)) ([screenshot](screenshots/lego.png))
 [![lego](screenshots/lego.png)](lego.kcl)
 #### [mounting-plate](mounting-plate.kcl) ([step](step/mounting-plate.step)) ([screenshot](screenshots/mounting-plate.png))
