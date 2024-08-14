@@ -22,7 +22,7 @@ jobs:
 
       - name: Check KCL files for header comment block and blank line
         run: |
-          files=$(git diff --name-only --diff-filter=AMR HEAD^ HEAD | grep '\.kcl$')
+          files=$(find . -name '*.kcl')
           failed_files=()
 
           for file in $files; do
