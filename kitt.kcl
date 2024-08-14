@@ -229,19 +229,19 @@ const grillColumnE = grillColumnA - 4
 const grillHoleSize = 1
 const grillHoleDepth = -2
 
-const grillHoleAB = pixelBox(kitBody, 'seg02', grillRowA, grillColumnB, grillHoleSize, grillHoleSize, grillHoleDepth)
+const grillHoleAB = pixelBox(kitBody, seg02, grillRowA, grillColumnB, grillHoleSize, grillHoleSize, grillHoleDepth)
 
-const grillHoleAD = pixelBox(kitBody, 'seg02', grillRowA, grillColumnD, grillHoleSize, grillHoleSize, grillHoleDepth)
+const grillHoleAD = pixelBox(kitBody, seg02, grillRowA, grillColumnD, grillHoleSize, grillHoleSize, grillHoleDepth)
 
-const grillHoleBA = pixelBox(kitBody, 'seg02', grillRowB, grillColumnA, grillHoleSize, grillHoleSize, grillHoleDepth)
+const grillHoleBA = pixelBox(kitBody, seg02, grillRowB, grillColumnA, grillHoleSize, grillHoleSize, grillHoleDepth)
 
-const grillHoleBC = pixelBox(kitBody, 'seg02', grillRowB, grillColumnC, grillHoleSize, grillHoleSize, grillHoleDepth)
+const grillHoleBC = pixelBox(kitBody, seg02, grillRowB, grillColumnC, grillHoleSize, grillHoleSize, grillHoleDepth)
 
-const grillHoleBE = pixelBox(kitBody, 'seg02', grillRowB, grillColumnE, grillHoleSize, grillHoleSize, grillHoleDepth)
+const grillHoleBE = pixelBox(kitBody, seg02, grillRowB, grillColumnE, grillHoleSize, grillHoleSize, grillHoleDepth)
 
-const grillHoleCB = pixelBox(kitBody, 'seg02', grillRowC, grillColumnB, grillHoleSize, grillHoleSize, grillHoleDepth)
+const grillHoleCB = pixelBox(kitBody, seg02, grillRowC, grillColumnB, grillHoleSize, grillHoleSize, grillHoleDepth)
 
-const grillHoleCD = pixelBox(kitBody, 'seg02', grillRowC, grillColumnD, grillHoleSize, grillHoleSize, grillHoleDepth)
+const grillHoleCD = pixelBox(kitBody, seg02, grillRowC, grillColumnD, grillHoleSize, grillHoleSize, grillHoleDepth)
 
 // 7.2 Kitty Vent
 const kitVentElevation = kitBodyElevation + 1
@@ -250,8 +250,8 @@ const kitVentHoleWidth = 1
 const kitVentHoleHeight = 4
 const kitVentHoleDepth = grillHoleDepth
 
-const kitVentA = pixelBox(kitBody, 'seg02', kitVentElevation, kitVentOffset, kitVentHoleHeight, kitVentHoleWidth, kitVentHoleDepth)
+const kitVentA = pixelBox(kitBody, seg02, kitVentElevation, kitVentOffset, kitVentHoleHeight, kitVentHoleWidth, kitVentHoleDepth)
 
-const kitVentB = pixelBox(kitBody, 'seg02', kitVentElevation, kitVentOffset + 2, kitVentHoleHeight, kitVentHoleWidth, kitVentHoleDepth)
+const kitVentB = pixelBox(kitBody, seg02, kitVentElevation, kitVentOffset + 2, kitVentHoleHeight, kitVentHoleWidth, kitVentHoleDepth)
 
-const kitVentC = pixelBox(kitBody, 'seg02', kitVentElevation, kitVentOffset + 4, kitVentHoleHeight, kitVentHoleWidth, kitVentHoleDepth)
+const kitVentC = pixelBox(kitBody, seg02, kitVentElevation, kitVentOffset + 4, kitVentHoleHeight, kitVentHoleWidth, kitVentHoleDepth)
