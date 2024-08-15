@@ -20,7 +20,7 @@ const kitBodyWidth = 26
 const kitBodyHeight = 25
 const kitBodyDepth = 18
 
-const kitBody = startSketchOn('YZ')
+const kitBody = startSketchOn('XZ')
   |> startProfileAt([-kitBodyWidth / 2, kitBodyElevation], %)
   |> line([0, kitBodyHeight], %)
   |> line([kitBodyWidth, 0], %, $seg01)
@@ -158,25 +158,25 @@ const kitShoeLength = 10
 const kitShoeHeight = 3
 
 fn kitLeg = (offsetFront, offsetSide) => {
-  const kitShoeOffsetFront = offsetFront + kitBodyDepth / 2 - (kitShoeLength / 2)
+  const kitShoeOffsetFront = (kitShoeLength / 2) - (kitBodyDepth / 2) - offsetFront
 
   const kitFootPrint = startSketchOn('XY')
-    |> startProfileAt([kitShoeOffsetFront, offsetSide], %)
-    |> line([0, kitShoeWidth], %)
-    |> line([kitShoeLength, 0], %)
-    |> line([0, -kitShoeWidth], %)
+    |> startProfileAt([offsetSide, kitShoeOffsetFront], %)
+    |> line([kitShoeWidth, 0], %)
+    |> line([0, -kitShoeLength], %)
+    |> line([-kitShoeWidth, 0], %)
     |> lineTo([profileStartX(%), profileStartY(%)], %)
     |> close(%)
 
   const kitShoe = extrude(kitShoeHeight, kitFootPrint)
 
   const kitPantsOffsetSide = offsetSide + 1
-  const kitPantsOffsetFront = kitShoeOffsetFront + 1
+  const kitPantsOffsetFront = 2 * kitShoeOffsetFront - 2
   const kitPantsWidth = kitShoeWidth - 2
   const kitPantsFrontWidth = kitPantsWidth
   const kitPantsHeight = kitBodyElevation - kitShoeHeight
 
-  const kitPants = pixelBox(kitShoe, 'END', kitPantsOffsetFront, kitPantsOffsetSide, kitPantsFrontWidth, kitPantsWidth, kitPantsHeight)
+  const kitPants = pixelBox(kitShoe, 'END', kitPantsOffsetSide, kitPantsOffsetFront, kitPantsFrontWidth, kitPantsWidth, kitPantsHeight)
 
   return kitShoe
 }
