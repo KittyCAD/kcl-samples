@@ -1,3 +1,6 @@
+// Router template for a slate
+// A guide for routing a slate for a cross bar.
+
 const routerDiameter = 12.7
 const mmInInch = 25.4
 const templateDiameter = mmInInch * 11 / 16
