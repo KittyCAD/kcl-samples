@@ -1,57 +1,84 @@
-// Gear
-// A rotating machine part having cut teeth or, in the case of a cogwheel, inserted teeth (called cogs), which mesh with another toothed part to transmit torque. Geared devices can change the speed, torque, and direction of a power source. The two elements that define a gear are its circular shape and the teeth that are integrated into its outer edge, which are designed to fit into the teeth of another gear.
+// 100mm Gear Rack
+// A flat bar or rail that is engraved with teeth along its length. These teeth are designed to mesh with the teeth of a gear, known as a pinion. When the pinion, a small cylindrical gear, rotates, its teeth engage with the teeth on the rack, causing the rack to move linearly. Conversely, linear motion applied to the rack will cause the pinion to rotate.
+
 
 // Define constants
-const gearWidth = 3
-const gearScale = 20
-const toothScale = gearScale / 5
-const boreDiameter = 9
-const teethNumber = 14
+const gearRadius = 2
+const nTeeth = 8
+const width = 2
 
-// Create the body of the gear with the hole in the center
-const body = startSketchOn('XY')
-  |> circle([0, 0], gearScale, %)
-  |> hole(circle([0, 0], boreDiameter, %), %)
-  |> extrude(gearWidth, %)
-
-// Define the function for a single tooth
-fn tooth = (toothSize) => {
-  const singleTooth = startSketchOn('XY')
-  |> startProfileAt([
-       0.0000000000 * toothSize,
-       5.0000000000 * toothSize
-     ], %)
-  |> line([
-       0.4900857016 * toothSize,
-       -0.0240763666 * toothSize
-     ], %)
-  |> line([
-       0.6804562304 * toothSize,
-       0.9087880491 * toothSize
-     ], %)
-  |> line([
-       0.5711661314 * toothSize,
-       -0.1430696680 * toothSize
-     ], %)
-  |> line([
-       0.1717090983 * toothSize,
-       -1.1222443518 * toothSize
-     ], %)
-  |> line([
-       0.4435665223 * toothSize,
-       -0.2097913408 * toothSize
-     ], %)
-  |> close(%)
-  |> extrude(gearWidth, %)
-  return singleTooth
+// Create a function for sketch of a single tooth
+fn tooth = () => {
+  const toothSketch = startSketchOn('XY')
+    |> startProfileAt([0, gearRadius], %)
+    |> arc({
+         angleStart: 90,
+         angleEnd: 90 - (180 / pi() * asin(0.7376425 / gearRadius)),
+         radius: gearRadius
+       }, %, $base)
+    |> angledLine({
+         angle: 180 - (180 / pi() * asin(0.7376425 / gearRadius)),
+         length: 0.0001
+       }, %)
+    |> tangentialArc({
+         offset: -70 + 180 / pi() * asin(0.7376425 / gearRadius),
+         radius: 0.389854023
+       }, %, $philly)
+    |> line([-0.329118, 0.904244], %)
+    |> tangentialArcTo([
+         lastSegX(%) - 0.157636,
+         lastSegY(%) + 0.110378
+       ], %, $corner)
+    |> xLineTo(0, %)
+    |> xLineTo(-1 * segEndX(corner), %)
+    |> tangentialArcTo([
+         lastSegX(%) - 0.157636,
+         lastSegY(%) - 0.110378
+       ], %)
+    |> lineTo([-1 * segEndX(philly), segEndY(philly)], %, $tag2)
+    |> tangentialArcTo([-1 * segEndX(base), segEndY(base)], %)
+    |> arc({
+         angleEnd: 90,
+         angleStart: 90 + 180 / pi() * asin(0.7376425 / gearRadius),
+         radius: gearRadius
+       }, %)
+    |> close(%)
+    |> extrude(width, %)
+  return [toothSketch]
 }
 
-// Extrude the first tooth and pattern around the z-axis
-const allGearTeeth = tooth(toothScale)
+const teeth = tooth()
   |> patternCircular3d({
        arcDegrees: 360,
        axis: [0, 0, 1],
        center: [0, 0, 0],
-       repetitions: teethNumber,
+       repetitions: nTeeth - 1,
        rotateDuplicates: true
      }, %)
+
+const body = startSketchOn('XY')
+  |> circle([0, 0], gearRadius, %)
+  |> extrude(width, %)
+
+const keywayWidth = 0.250
+const keywayDepth = keywayWidth/2
+const holeDiam = 2
+const holeRadius = 1
+const startAngle = asin(keywayWidth/2/holeRadius)
+const sketch001 = startSketchOn(body, 'END')
+  |> startProfileAt([holeRadius*cos(startAngle), holeRadius*sin(startAngle)], %)
+  |> xLine(keywayDepth, %)
+  |> yLine(-keywayWidth,%)
+  |> xLine(-keywayDepth,%)
+  |> arc({
+    angleEnd: 180,
+    angleStart: -1*180/pi()*startAngle+360,
+    radius: holeRadius,
+  }, %)
+  |> arc({
+    angleEnd: 180/pi()*startAngle,
+    angleStart: 180,
+    radius: holeRadius,
+  }, %)
+  |> close(%)
+  |> extrude(-width, %)

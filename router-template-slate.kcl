@@ -16,8 +16,8 @@ const sketch001 = startSketchOn('XZ')
   |> startProfileAt([0, depth - templateGap], %)
   |> xLine(length001, %, $seg01)
   |> arc({
-       angle_end: 0,
-       angle_start: 90,
+       angleEnd: 0,
+       angleStart: 90,
        radius: radius - templateGap
      }, %)
   |> yLineTo(-templateGap * 2 - (templateDiameter / 2), %, $seg05)
@@ -25,13 +25,13 @@ const sketch001 = startSketchOn('XZ')
   |> yLine(-length002, %, $seg03)
   |> xLineTo(ZERO, %, $seg02)
   // |> line([7.78, 11.16], %)
-  |> xLine(-segLen(seg02, %), %)
-  |> yLine(segLen(seg03, %), %)
-  |> xLine(segLen(seg04, %), %)
-  |> yLine(segLen(seg05, %), %)
+  |> xLine(-segLen(seg02), %)
+  |> yLine(segLen(seg03), %)
+  |> xLine(segLen(seg04), %)
+  |> yLine(segLen(seg05), %)
   |> arc({
-       angle_end: 90,
-       angle_start: 180,
+       angleEnd: 90,
+       angleStart: 180,
        radius: radius - templateGap
      }, %)
   |> lineTo([profileStartX(%), profileStartY(%)], %)
@@ -44,12 +44,12 @@ const sketch002 = startSketchOn(extrude001, 'START')
      ], %)
   |> xLine(-7, %, $rectangleSegmentA001)
   |> angledLine([
-       segAng(rectangleSegmentA001, %) + 90,
+       segAng(rectangleSegmentA001) + 90,
        minClampingDistance
      ], %, $rectangleSegmentB001)
   |> angledLine([
-       segAng(rectangleSegmentA001, %),
-       -segLen(rectangleSegmentA001, %)
+       segAng(rectangleSegmentA001),
+       -segLen(rectangleSegmentA001)
      ], %, $rectangleSegmentC001)
   |> lineTo([profileStartX(%), profileStartY(%)], %)
   |> close(%)
@@ -61,12 +61,12 @@ const sketch003 = startSketchOn(extrude001, 'START')
      ], %)
   |> xLine(7, %, $rectangleSegmentA002)
   |> angledLine([
-       segAng(rectangleSegmentA002, %) - 90,
+       segAng(rectangleSegmentA002) - 90,
        minClampingDistance
      ], %)
   |> angledLine([
-       segAng(rectangleSegmentA002, %),
-       -segLen(rectangleSegmentA002, %)
+       segAng(rectangleSegmentA002),
+       -segLen(rectangleSegmentA002)
      ], %)
   |> lineTo([profileStartX(%), profileStartY(%)], %)
   |> close(%)
