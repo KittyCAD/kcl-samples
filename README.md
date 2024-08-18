@@ -65,6 +65,8 @@ When you submit a PR to add or modify KCL samples, images and STEP files will be
 [![sheet-metal-bracket](screenshots/sheet-metal-bracket.png)](sheet-metal-bracket.kcl)
 #### [socket-head-cap-screw](socket-head-cap-screw.kcl) ([step](step/socket-head-cap-screw.step)) ([screenshot](screenshots/socket-head-cap-screw.png))
 [![socket-head-cap-screw](screenshots/socket-head-cap-screw.png)](socket-head-cap-screw.kcl)
+#### [tire](tire.kcl) ([step](step/tire.step)) ([screenshot](screenshots/tire.png))
+[![tire](screenshots/tire.png)](tire.kcl)
 #### [washer](washer.kcl) ([step](step/washer.step)) ([screenshot](screenshots/washer.png))
 [![washer](screenshots/washer.png)](washer.kcl)
 #### [wheel-rotor](wheel-rotor.kcl) ([step](step/wheel-rotor.step)) ([screenshot](screenshots/wheel-rotor.png))
