@@ -1,0 +1,20 @@
+// Tire
+// A tire is a critical component of a vehicle that provides the necessary traction and grip between the car and the road. It supports the vehicle's weight and absorbs shocks from road irregularities.
+
+
+// Define constants
+const tireInnerDiameter = 19 * 25.4 // mm
+const tireOuterDiameter = 26 * 25.4 // mm
+const tireDepth = 280 // mm
+
+
+// Create the sketch of the tire
+const tireSketch = startSketchOn("XY")
+  |> startProfileAt([tireInnerDiameter / 2, tireDepth / 2], %)
+  |> lineTo([tireOuterDiameter / 2, tireDepth / 2], %)
+  |> lineTo([tireOuterDiameter / 2, -tireDepth / 2], %)
+  |> lineTo([tireInnerDiameter / 2, -tireDepth / 2], %)
+  |> close(%)
+
+// Revolve the tire sketch
+const tire = revolve({ axis: "Y" }, tireSketch)
