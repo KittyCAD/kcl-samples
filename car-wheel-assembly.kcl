@@ -1,0 +1,362 @@
+// Car Wheel Assy //
+
+// Car Wheel
+// A sports car wheel with a circular lug pattern and spokes.
+
+
+// Define constants
+const lugCount = 5
+const lugSpacing = 114.3 // millimeters
+const offset = -35 // millimeters
+const backSpacing = 6.38 // inches
+const wheelWidth = 9.5 // inches
+const wheelDiameter = 19 // inches
+
+
+// Create the circular pattern for the lug holes
+const circles = startSketchOn('XZ')
+  |> circle([lugSpacing / 2, 0], 16 / 2, %)
+  |> patternCircular2d({
+       arcDegrees: 360,
+       center: [0, 0],
+       repetitions: lugCount - 1,
+       rotateDuplicates: true
+     }, %)
+
+// Create the wheel center and add lug holes
+const flangeBase = startSketchOn('XZ')
+  |> circle([0, 0], lugSpacing / 2 + 16 + 5, %)
+  |> hole(circles, %)
+  |> extrude(10, %)
+
+// Remove the interior of the wheel center
+const sketch001 = startSketchOn(flangeBase, 'END')
+  |> circle([0, 0], 20, %)
+  |> extrude(-10, %)
+
+// Add more material to the wheel center
+const sketch002 = startSketchOn(flangeBase, 'END')
+  |> circle([0, 0], lugSpacing / 2 + 16 + 8, %)
+  |> extrude(30, %)
+
+// Edge treatment around center
+const sketch003 = startSketchOn('XY')
+  |> startProfileAt([lugSpacing / 2 + 16 + 8, -10 - 30], %)
+  |> yLine(30, %)
+  |> line([6, -2], %)
+  |> lineTo([profileStartX(%), profileStartY(%)], %)
+  |> close(%)
+  |> revolve({ axis: 'y' }, %)
+
+// Center cap
+const sketch004 = startSketchOn('XY')
+  |> startProfileAt([15, -40], %)
+  |> xLine(15, %)
+  |> line([-3.01, -3.54], %)
+  |> line([-8.8, 0.17], %)
+  |> lineTo([profileStartX(%), profileStartY(%)], %)
+  |> close(%)
+  |> revolve({ axis: 'y' }, %)
+
+// Holes for lug nut heads
+const sketch005 = startSketchOn(sketch002, 'END')
+  |> circle([lugSpacing / 2, 0], 17, %)
+  |> patternCircular2d({
+       arcDegrees: 360,
+       center: [0, 0],
+       repetitions: lugCount - 1,
+       rotateDuplicates: true
+     }, %)
+
+const sketch006 = extrude(-30, sketch005)
+
+// Seperating the spoke base planes
+const plane001 = {
+  plane: {
+    origin: [0.0, 0.0, 5.0],
+    xAxis: [1.0, 0.0, 0.0],
+    yAxis: [0.0, 1.0, 0.0],
+    zAxis: [0.0, 0.0, 1.0]
+  }
+}
+
+const plane002 = {
+  plane: {
+    origin: [0.0, 0.0, -5.0],
+    xAxis: [1.0, 0.0, 0.0],
+    yAxis: [0.0, 1.0, 0.0],
+    zAxis: [0.0, 0.0, 1.0]
+  }
+}
+
+// Spoke cross sections
+const sketch007 = startSketchOn(plane001)
+  |> startProfileAt([lugSpacing / 2 + 17, -36], %)
+  |> bezierCurve({
+       to: [
+         wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 35,
+         12
+       ],
+       control1: [
+         (wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 35) / 2,
+         0
+       ],
+       control2: [
+         (wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 35) / 2,
+         15
+       ]
+     }, %)
+  |> yLine(12, %)
+  |> bezierCurve({
+       to: [
+         -wheelDiameter * 25.4 / 2 + lugSpacing / 2 + 35,
+         -12
+       ],
+       control1: [
+         -(wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 16) / 2,
+         0
+       ],
+       control2: [
+         -(wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 16) / 2,
+         -15
+       ]
+     }, %)
+  |> close(%)
+
+const sketch008 = startSketchOn(plane002)
+  |> startProfileAt([lugSpacing / 2 + 17, -36], %)
+  |> bezierCurve({
+       to: [
+         wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 35,
+         12
+       ],
+       control1: [
+         (wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 35) / 2,
+         0
+       ],
+       control2: [
+         (wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 35) / 2,
+         15
+       ]
+     }, %)
+  |> yLine(12, %)
+  |> bezierCurve({
+       to: [
+         -wheelDiameter * 25.4 / 2 + lugSpacing / 2 + 35,
+         -12
+       ],
+       control1: [
+         -(wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 16) / 2,
+         0
+       ],
+       control2: [
+         -(wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 16) / 2,
+         -15
+       ]
+     }, %)
+  |> close(%)
+
+// Circular pattern spokes
+const sketch009 = extrude(20, sketch007)
+  |> patternCircular3d({
+       axis: [0, 1, 0],
+       center: [0, -2000, 0],
+       repetitions: 5,
+       arcDegrees: 360,
+       rotateDuplicates: true
+     }, %)
+
+const sketch0010 = extrude(-20, sketch008)
+  |> patternCircular3d({
+       axis: [0, 1, 0],
+       center: [0, -2000, 0],
+       repetitions: 5,
+       arcDegrees: 360,
+       rotateDuplicates: true
+     }, %)
+
+// Wheel exterior
+const sketch0011 = startSketchOn('XY')
+  |> startProfileAt([
+       wheelDiameter * 25.4 / 2,
+       -wheelWidth * 25.4 + backSpacing * 25.4 + offset
+     ], %)
+  |> line([wheelWidth * 2, -wheelWidth], %)
+  |> yLine(-wheelWidth * 2, %)
+  |> xLine(-wheelWidth, %)
+  |> yLine(wheelWidth * 1.5, %)
+  |> line([-wheelWidth * 2, wheelWidth], %)
+  |> yLine(wheelWidth * 2.7, %)
+  |> line([-wheelWidth, wheelWidth], %)
+  |> yLine(wheelWidth * 9, %)
+  |> line([wheelWidth, wheelWidth], %)
+  |> yLine(wheelWidth * 11, %)
+  |> line([wheelWidth * 2, wheelWidth], %)
+  |> yLine(wheelWidth * 2, %)
+  |> xLine(wheelWidth, %)
+  |> yLine(-wheelWidth * 2.7, %)
+  |> line([-wheelWidth * 2, -wheelWidth], %)
+  |> yLine(-wheelWidth * 11, %)
+  |> line([-wheelWidth, -wheelWidth], %)
+  |> yLine(-wheelWidth * 7.7, %)
+  |> line([wheelWidth, -wheelWidth], %)
+  |> lineTo([profileStartX(%), profileStartY(%)], %)
+  |> close(%)
+  |> revolve({ axis: 'y' }, %)
+
+  
+const rotorDiameter = 12 // inches
+const rotorInnerDiameter = 6 // inches
+const rotorSinglePlateThickness = 6.3 // mm
+const rotorInnerDiameterThickness = 12.6 // mm
+const lugHolePatternDia = 3 // inches
+
+const rotorTotalThickness = 25.4 // mm
+const spacerPatternDiameter = 11 // inches
+const spacerDiameter = 6.3 // mm
+const spacerLength = rotorTotalThickness - 2*rotorSinglePlateThickness
+const spacerCount = 16
+const wheeldiameter = 19 // inches
+
+const rotorPlane = {
+  plane: {
+    origin: { x: 0, y: 10, z: 0 },
+    xAxis: { x: -1, y: 0, z: 0 },
+    yAxis: { x: 0, y: 0, z: 1 },
+    zAxis: { x: 0, y: 1, z: 0 }
+  }
+}
+
+fn lugPattern = (plane) => {
+  const lugHolePattern = circle([-lugSpacing/2, 0], 8, plane) 
+  |> patternCircular2d({
+    arcDegrees: 360,
+    center: [0, 0],
+    repetitions: lugCount - 1,
+    rotateDuplicates: true,
+  }, %)
+  return lugHolePattern
+}
+
+const rotorSketch = startSketchOn(rotorPlane)
+  |> circle([0, 0], rotorDiameter/2 * 25.4, %)
+  |> hole(lugPattern(%), %)
+  
+const rotor = extrude(rotorSinglePlateThickness, rotorSketch)
+
+const rotorBumpSketch = startSketchOn(rotorPlane)
+  |> circle([0, 0], rotorInnerDiameter/2 * 25.4, %)
+  |> hole(lugPattern(%), %)
+  
+const rotorBump = extrude(-rotorInnerDiameterThickness, rotorBumpSketch)
+
+const rotorSecondaryPlatePlane = {
+  plane: {
+    origin: { x: 0, y: 10 + rotorTotalThickness*0.75, z: 0 },
+    xAxis: { x: -1, y: 0, z: 0 },
+    yAxis: { x: 0, y: 0, z: 1 },
+    zAxis: { x: 0, y: 1, z: 0 }
+  }
+}
+
+const secondaryRotorSketch = startSketchOn(rotorSecondaryPlatePlane)
+  |> circle([0, 0], rotorDiameter/2 * 25.4, %)
+  |> hole(lugPattern(%), %)
+
+const secondRotor = extrude(rotorSinglePlateThickness, secondaryRotorSketch)
+
+const spacerSketch = startSketchOn(rotorSecondaryPlatePlane)
+  |> circle([spacerPatternDiameter/2 * 25.4, 0], spacerDiameter, %)
+  |> patternCircular2d({
+    arcDegrees: 360,
+    center: [0, 0],
+    repetitions: spacerCount,
+    rotateDuplicates: true,
+  }, %)
+
+const spacers = extrude(-spacerLength, spacerSketch)
+
+// Lug Nut
+// lug Nuts are essential components used to create secure connections, whether for electrical purposes, like terminating wires or grounding, or for mechanical purposes, such as providing mounting points or reinforcing structural joints. 
+
+// Define the plane the lug lives on
+
+
+// Define constants
+const lugDiameter = 24 // mm
+const lugHeadLength = lugDiameter * .5 // mm
+const lugThreadDiameter = lugDiameter/2 * .85 //mm
+const lugLength = 30 //mm
+const lugThreadDepth = lugLength - 12.7 //mm
+
+const customPlane = {
+      plane: {
+        origin: { x: lugSpacing/2, y: -30, z: 0 },
+        xAxis: { x: 1, y: 0, z: 0 },
+        yAxis: { x: 0, y: -1, z: 0 },
+        zAxis: { x: 0, y: 0, z: 1 }
+      }
+    }
+
+fn lug = (plane, length, diameter) => {
+
+    const lugSketch = startSketchOn(customPlane)
+      |> startProfileAt([0 + diameter/2, 0], %)
+      |> angledLineOfYLength({
+        angle: 70,
+        length: lugHeadLength,
+      }, %)
+      |> xLineTo(lugDiameter/2, %)
+      |> yLineTo(lugLength, %)
+      |> tangentialArc({
+        offset: 90,
+        radius: 3,
+      }, %)
+      |> xLineTo(0+.001, %, $c1)
+      |> yLineTo(lugThreadDepth, %)
+      |> xLineTo(lugThreadDiameter, %)
+      |> yLineTo(0, %)
+      |> close(%)
+      |> revolve({
+        axis: "Y",
+      }, %)
+    return lugSketch
+}
+
+lug(customPlane, lugLength, lugDiameter)
+  |> patternCircular3d({
+      arcDegrees: 360,
+      axis: [0, 1, 0],
+      center: [0, 0, 0],
+      repetitions: 4,
+      rotateDuplicates: false,
+    }, %)
+
+// Tire
+// A tire is a critical component of a vehicle that provides the necessary traction and grip between the car and the road. It supports the vehicle's weight and absorbs shocks from road irregularities.
+
+
+// Define constants
+const tireInnerDiameter = 19 * 25.4 // mm
+const tireOuterDiameter = 26 * 25.4 // mm
+const tireDepth = 280 // mm
+const bendRadius = 40
+
+
+// Create the sketch of the tire
+const tireSketch = startSketchOn("XY")
+  |> startProfileAt([tireInnerDiameter / 2, tireDepth / 2], %)
+  |> lineTo([tireOuterDiameter / 2 - bendRadius, tireDepth / 2], %, $edge1)
+  |> tangentialArc({
+    offset: -90,
+    radius: bendRadius,
+  }, %)
+  |> lineTo([tireOuterDiameter / 2, -tireDepth / 2 + bendRadius], %)
+  |> tangentialArc({
+    offset: -90,
+    radius: bendRadius,
+  }, %)
+  |> lineTo([tireInnerDiameter / 2, -tireDepth / 2], %, $edge2)
+  |> close(%)
+  
+const tire = revolve({ axis: "Y" }, tireSketch)
