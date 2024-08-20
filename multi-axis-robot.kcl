@@ -1,5 +1,6 @@
 // Robot Arm
 // A 4 axis robotic arm for industrial use. These machines can be used for assembly, packaging, organization of goods, and quality inspection processes
+
 const axisJ4 = 25
 const axisJ3 = 60
 const axisJ2 = 110
