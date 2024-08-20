@@ -31,6 +31,8 @@ When you submit a PR to add or modify KCL samples, images and STEP files will be
 [![ball-bearing](screenshots/ball-bearing.png)](ball-bearing.kcl)
 #### [bracket](bracket.kcl) ([step](step/bracket.step)) ([screenshot](screenshots/bracket.png))
 [![bracket](screenshots/bracket.png)](bracket.kcl)
+#### [brake-caliper](brake-caliper.kcl) ([step](step/brake-caliper.step)) ([screenshot](screenshots/brake-caliper.png))
+[![brake-caliper](screenshots/brake-caliper.png)](brake-caliper.kcl)
 #### [car-wheel-assembly](car-wheel-assembly.kcl) ([step](step/car-wheel-assembly.step)) ([screenshot](screenshots/car-wheel-assembly.png))
 [![car-wheel-assembly](screenshots/car-wheel-assembly.png)](car-wheel-assembly.kcl)
 #### [car-wheel](car-wheel.kcl) ([step](step/car-wheel.step)) ([screenshot](screenshots/car-wheel.png))
