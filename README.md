@@ -55,6 +55,8 @@ When you submit a PR to add or modify KCL samples, images and STEP files will be
 [![lug-nut](screenshots/lug-nut.png)](lug-nut.kcl)
 #### [mounting-plate](mounting-plate.kcl) ([step](step/mounting-plate.step)) ([screenshot](screenshots/mounting-plate.png))
 [![mounting-plate](screenshots/mounting-plate.png)](mounting-plate.kcl)
+#### [multi-axis-robot](multi-axis-robot.kcl) ([step](step/multi-axis-robot.step)) ([screenshot](screenshots/multi-axis-robot.png))
+[![multi-axis-robot](screenshots/multi-axis-robot.png)](multi-axis-robot.kcl)
 #### [pipe-flange-assembly](pipe-flange-assembly.kcl) ([step](step/pipe-flange-assembly.step)) ([screenshot](screenshots/pipe-flange-assembly.png))
 [![pipe-flange-assembly](screenshots/pipe-flange-assembly.png)](pipe-flange-assembly.kcl)
 #### [pipe](pipe.kcl) ([step](step/pipe.step)) ([screenshot](screenshots/pipe.png))
