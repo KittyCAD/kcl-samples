@@ -63,6 +63,8 @@ When you submit a PR to add or modify KCL samples, images and STEP files will be
 [![pipe-flange-assembly](screenshots/pipe-flange-assembly.png)](pipe-flange-assembly.kcl)
 #### [pipe](pipe.kcl) ([step](step/pipe.step)) ([screenshot](screenshots/pipe.png))
 [![pipe](screenshots/pipe.png)](pipe.kcl)
+#### [poopy-shoe](poopy-shoe.kcl) ([step](step/poopy-shoe.step)) ([screenshot](screenshots/poopy-shoe.png))
+[![poopy-shoe](screenshots/poopy-shoe.png)](poopy-shoe.kcl)
 #### [router-template-cross-bar](router-template-cross-bar.kcl) ([step](step/router-template-cross-bar.step)) ([screenshot](screenshots/router-template-cross-bar.png))
 [![router-template-cross-bar](screenshots/router-template-cross-bar.png)](router-template-cross-bar.kcl)
 #### [router-template-slate](router-template-slate.kcl) ([step](step/router-template-slate.step)) ([screenshot](screenshots/router-template-slate.png))
