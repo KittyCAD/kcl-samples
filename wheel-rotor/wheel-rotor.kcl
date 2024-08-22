@@ -1,19 +1,18 @@
 // Wheel rotor
-// A component of a disc brake system. It provides a surface for brake pads to press
-// against, generating the friction needed to slow or stop the vehicle.
+// A component of a disc brake system. It provides a surface for brake pads to press against, generating the friction needed to slow or stop the vehicle.
 
-const rotorDiameter = 12 // inches
-const rotorInnerDiameter = 6 // inches
+const rotorDiameter = 304.8 // mm (12 inches)
+const rotorInnerDiameter = 152.4 // mm (6 inches)
 const rotorSinglePlateThickness = 6.3 // mm
 const rotorInnerDiameterThickness = 12.6 // mm
-const lugHolePatternDia = 3 // inches
+const lugHolePatternDia = 76.4 // mm (3 inches)
 const lugSpacing = 114.3 // millimeters
 const rotorTotalThickness = 25.4 // mm
-const spacerPatternDiameter = 11 // inches
+const spacerPatternDiameter = 279.4 // mm (11 inches)
 const spacerDiameter = 6.3 // mm
 const spacerLength = rotorTotalThickness - 2*rotorSinglePlateThickness
 const spacerCount = 16
-const wheeldiameter = 19 // inches
+const wheeldiameter = 482.6 // mm (19 inches)
 const lugCount = 5
 const yAxisOffset = 10
 
@@ -38,13 +37,13 @@ fn lugPattern = (plane) => {
 }
 
 const rotorSketch = startSketchOn(rotorPlane)
-  |> circle([0, 0], rotorDiameter/2 * 25.4, %)
+  |> circle([0, 0], rotorDiameter/2, %)
   |> hole(lugPattern(%), %)
   
 const rotor = extrude(rotorSinglePlateThickness, rotorSketch)
 
 const rotorBumpSketch = startSketchOn(rotorPlane)
-  |> circle([0, 0], rotorInnerDiameter/2 * 25.4, %)
+  |> circle([0, 0], rotorInnerDiameter/2, %)
   |> hole(lugPattern(%), %)
   
 const rotorBump = extrude(-rotorInnerDiameterThickness, rotorBumpSketch)
@@ -59,13 +58,13 @@ const rotorSecondaryPlatePlane = {
 }
 
 const secondaryRotorSketch = startSketchOn(rotorSecondaryPlatePlane)
-  |> circle([0, 0], rotorDiameter/2 * 25.4, %)
+  |> circle([0, 0], rotorDiameter/2, %)
   |> hole(lugPattern(%), %)
 
 const secondRotor = extrude(rotorSinglePlateThickness, secondaryRotorSketch)
 
 const spacerSketch = startSketchOn(rotorSecondaryPlatePlane)
-  |> circle([spacerPatternDiameter/2 * 25.4, 0], spacerDiameter, %)
+  |> circle([spacerPatternDiameter/2, 0], spacerDiameter, %)
   |> patternCircular2d({
     arcDegrees: 360,
     center: [0, 0],

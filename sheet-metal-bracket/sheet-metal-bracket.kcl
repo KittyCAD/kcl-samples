@@ -2,13 +2,13 @@
 // A component typically made from flat sheet metal through various manufacturing processes such as bending, punching, cutting, and forming. These brackets are used to support, attach, or mount other hardware components, often providing a structural or functional base for assembly. 
 
 // Define constants such as sheet metal thickness, bend radius, flange length, bolt diameter size, etc.
-const thickness = 0.090
-const bendRad = 0.08
-const outsideBendRad = bendRad + thickness
-const flangeLength = 0.5
-const hatHeight = 3
-const hatWidth = 5
-const boltSize = 0.25
+const thickness = 0.090 // inches
+const bendRad = 0.08 // inches
+const outsideBendRad = bendRad + thickness // inches
+const flangeLength = 0.5 // inches
+const hatHeight = 3 // inches
+const hatWidth = 5 // inches
+const boltSize = 0.25 // inches
 
 // Sketch and extrude the base shape and fillet the inside and outside edges. 
 const baseExtrusion = startSketchOn('-XZ')

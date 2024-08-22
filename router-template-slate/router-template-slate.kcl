@@ -1,18 +1,21 @@
 // Router template for a slate
 // A guide for routing a slate for a cross bar.
 
-const routerDiameter = 12.7
-const mmInInch = 25.4
-const templateDiameter = mmInInch * 11 / 16
-const templateGap = ((templateDiameter - routerDiameter) / 2) -0.5
-const slateWidthHalf = 41.5 / 2
-const minClampingDistance = 50 + 30
-const templateThickness = 10
-const radius = 10
-const depth = 30
-const length001 = slateWidthHalf - radius
-const length002 = depth + minClampingDistance
-const sketch001 = startSketchOn('XZ')
+// Define constants
+const routerDiameter = 12.7 // mm
+const mmInInch = 25.4 // mm
+const templateDiameter = mmInInch * 11 / 16 // mm
+const templateGap = ((templateDiameter - routerDiameter) / 2) -0.5 // mm
+const slateWidthHalf = 41.5 / 2 // mm
+const minClampingDistance = 50 + 30 // mm
+const templateThickness = 10 // mm
+const radius = 10 // mm
+const depth = 30 // mm
+const length001 = slateWidthHalf - radius // mm
+const length002 = depth + minClampingDistance // mm
+
+// Create the first sketch
+const sketch001 = startSketchOn('XZ') 
   |> startProfileAt([0, depth - templateGap], %)
   |> xLine(length001, %, $seg01)
   |> arc({
@@ -36,7 +39,11 @@ const sketch001 = startSketchOn('XZ')
      }, %)
   |> lineTo([profileStartX(%), profileStartY(%)], %)
   |> close(%)
+
+// Extrude the first sketch
 const extrude001 = extrude(5, sketch001)
+
+// Create the second sketch
 const sketch002 = startSketchOn(extrude001, 'START')
   |> startProfileAt([
        -slateWidthHalf,
@@ -53,7 +60,11 @@ const sketch002 = startSketchOn(extrude001, 'START')
      ], %, $rectangleSegmentC001)
   |> lineTo([profileStartX(%), profileStartY(%)], %)
   |> close(%)
+
+// Extrude the second sketch
 const extrude002 = extrude(7.5, sketch002)
+
+// Create the third sketch
 const sketch003 = startSketchOn(extrude001, 'START')
   |> startProfileAt([
        slateWidthHalf,
@@ -70,4 +81,6 @@ const sketch003 = startSketchOn(extrude001, 'START')
      ], %)
   |> lineTo([profileStartX(%), profileStartY(%)], %)
   |> close(%)
+
+// Extrude the third Sketch
 const extrude003 = extrude(7.5, sketch003)

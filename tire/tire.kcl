@@ -3,8 +3,8 @@
 
 
 // Define constants
-const tireInnerDiameter = 19 * 25.4 // mm
-const tireOuterDiameter = 26 * 25.4 // mm
+const tireInnerDiameter = 482.6 // mm (19 in)
+const tireOuterDiameter = 660.4 // mm (26 in)
 const tireDepth = 280 // mm
 const bendRadius = 40 // mm
 const tireTreadWidth = 10 // mm

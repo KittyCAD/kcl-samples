@@ -30,7 +30,7 @@ const pillarBlockStartY = 1 / sqrt(3) * pillarBlockStartX // in
 const pillarBlockStartZ = 7.5 // in
 const pillarBlockWidth = 2.0 // in
 const pillarBlockDepth = 2.0 // in
-const pillarRadius = .5
+const pillarRadius = .5 // in
 
 // create bottom plate for tray
 const trayPlateSketch = startSketchOn("XY")
