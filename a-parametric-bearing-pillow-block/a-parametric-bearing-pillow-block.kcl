@@ -2,14 +2,14 @@
 // A bearing pillow block, also known as a plummer block or pillow block bearing, is a pedestal used to provide support for a rotating shaft with the help of compatible bearings and various accessories. Housing a bearing, the pillow block provides a secure and stable foundation that allows the shaft to rotate smoothly within its machinery setup. These components are essential in a wide range of mechanical systems and machinery, playing a key role in reducing friction and supporting radial and axial loads. 
 
 // Define constants such as length, width, height, counter-bore depth and diameter, bearing diameter, hole location padding, and more
-const length = 40
-const width = 30
-const height = 10
-const cbDepth = 2.1
-const cbDia = 4.4
-const holeDia = 2.4
-const padding = 8
-const bearingDia = 22
+const length = 6
+const width = 4
+const height = 1
+const cbDepth = .25
+const cbDia = .7
+const holeDia = .375
+const padding = 1.5
+const bearingDia = 3
 
 // (Needs to be updated). Sketch the block and extrude up to where the counterbore diameter starts.
 const block = startSketchOn('XY')

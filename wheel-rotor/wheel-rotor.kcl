@@ -38,12 +38,12 @@ fn lugPattern = (plane) => {
 }
 
 const rotorSketch = startSketchOn(rotorPlane)
-  |> circle([0, 0], rotorDiameter / 2 * 25.4, %)
+  |> circle([0, 0], rotorDiameter / 2, %)
   |> hole(lugPattern(%), %)
 const rotor = extrude(rotorSinglePlateThickness, rotorSketch)
 
 const rotorBumpSketch = startSketchOn(rotorPlane)
-  |> circle([0, 0], rotorInnerDiameter / 2 * 25.4, %)
+  |> circle([0, 0], rotorInnerDiameter / 2, %)
   |> hole(lugPattern(%), %)
 const rotorBump = extrude(-rotorInnerDiameterThickness, rotorBumpSketch)
 
@@ -93,13 +93,13 @@ const rotorSecondaryPlatePlane = {
 }
 
 const secondaryRotorSketch = startSketchOn(rotorSecondaryPlatePlane)
-  |> circle([0, 0], rotorDiameter / 2 * 25.4, %)
+  |> circle([0, 0], rotorDiameter / 2, %)
   |> hole(lugPattern(%), %)
 
 const secondRotor = extrude(rotorSinglePlateThickness, secondaryRotorSketch)
 
 const spacerSketch = startSketchOn(rotorSecondaryPlatePlane)
-  |> circle([spacerPatternDiameter / 2 * 25.4, 0], spacerDiameter, %)
+  |> circle([spacerPatternDiameter / 2, 0], spacerDiameter, %)
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
