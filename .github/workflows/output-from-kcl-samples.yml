@@ -52,11 +52,16 @@ jobs:
                     fi
                   done
 
-                  # Report failed files
+                  # Report failed files and create a commit message if needed
                   if [ ${#failed_files[@]} -ne 0 ]; then
                     echo "The following files failed to export to STEP format:"
                     printf '%s\n' "${failed_files[@]}"
-                    exit 1
+                    # Create a commit message with the list of failed files
+                    commit_message="failed to export the following files to STEP:\n"
+                    for file in "${failed_files[@]}"; do
+                      commit_message+="$file\n"
+                    done
+                    echo "$commit_message" > commit_message.txt
                   fi
             - name: check for changes
               id: git-check
@@ -78,6 +83,11 @@ jobs:
                   git fetch origin
                   echo ${{ github.head_ref }}
                   git checkout ${{ github.head_ref }}
-                  git commit -am "In the realm of scripts and screens, adding a dash of mechanical dreams." || true
+                  # Use the generated commit message if files failed to export, else use a default message
+                  if [ -f commit_message.txt ]; then
+                    git commit -F commit_message.txt
+                  else
+                    git commit -am "In the realm of scripts and screens, adding a dash of mechanical dreams." || true
+                  fi
                   git push
                   git push origin ${{ github.head_ref }}
