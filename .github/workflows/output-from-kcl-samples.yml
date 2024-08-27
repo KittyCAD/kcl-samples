@@ -69,6 +69,13 @@ jobs:
                          -d "{\"body\": \"$comment_body\"}" \
                          "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments"
                   fi
+            - name: Debug - Output Comment Body
+              run: |
+                if [ ${#failed_files[@]} -ne 0 ]; then
+                    echo "Comment Body:"
+                    echo "$comment_body"
+                fi
+                
             - name: check for changes
               id: git-check
               run: |
