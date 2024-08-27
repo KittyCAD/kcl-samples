@@ -22,7 +22,7 @@ jobs:
 
       - name: Check KCL files for header comment block and blank line
         run: |
-          files=$(find . -type -f -name '*.kcl')
+          files=$(find . -type f -name '*.kcl')
           failed_files=()
 
           for file in $files; do
