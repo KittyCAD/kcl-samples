@@ -2,30 +2,27 @@
 // A tubular section or hollow cylinder, usually but not necessarily of circular cross-section, used mainly to convey substances that can flow.
 
 // Define constants
-const pipeLength = 40
-const pipeSmallDia = 10
-const pipeLargeDia = 15
-const thickness = 0.5
+const pipeLength = 1.5
+const pipeLargeDia = 1
+const pipeSmallDia = .75
+const thickness = 0.125
 
 // Create the sketch to be revolved around the y-axis. Use the small diameter, large diameter, length, and thickness to define the sketch.
-const part001 = startSketchOn('XY')
-  |> startProfileAt([pipeLargeDia - (thickness / 2), 38], %)
+const pipeSketch = startSketchOn('XY')
+  |> startProfileAt([pipeSmallDia - (thickness / 2), 38], %)
   |> line([thickness, 0], %)
-  |> line([0, -1], %)
+  |> line([0, -3], %)
   |> angledLineToX({
-       angle: 60,
-       to: pipeSmallDia + thickness
-     }, %)
-  |> line([0, -pipeLength], %)
-  |> angledLineToX({
-       angle: -60,
+       angle: 110,
        to: pipeLargeDia + thickness
      }, %)
-  |> line([0, -1], %)
-  |> line([-thickness, 0], %)
-  |> line([0, 1], %)
-  |> angledLineToX({ angle: 120, to: pipeSmallDia }, %)
+  |> line([0, -pipeLength], %)
+  |> xLine(-thickness, %)
   |> line([0, pipeLength], %)
-  |> angledLineToX({ angle: 60, to: pipeLargeDia }, %)
+  |> angledLineToX({
+    angle: 110,
+    to: pipeSmallDia - thickness/2,
+  }, %)
   |> close(%)
-  |> revolve({ axis: 'y' }, %)
+
+const pipe = revolve({ axis: 'y' }, pipeSketch)

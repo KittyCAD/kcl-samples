@@ -2,13 +2,13 @@
 // This is a bracket that holds an audio device underneath a desk or shelf. The audio device has dimensions of 144mm wide, 80mm length and 45mm depth with fillets of 6mm. This mounting bracket is designed to be 3D printed with PLA material
 
 // define constants in mm
-const radius = 6.0
-const width = 144.0
-const length = 80.0
-const depth = 45.0
-const thk = 4
-const holeDiam = 5
-const tabLength = 25
+const radius = 6.0 
+const width = 144.0 
+const length = 80.0 
+const depth = 45.0 
+const thk = 4 
+const holeDiam = 5 
+const tabLength = 25 
 const tabWidth = 12
 const tabThk = 4
 

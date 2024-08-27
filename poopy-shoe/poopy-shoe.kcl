@@ -1,335 +1,141 @@
-// poopy shoe 
-// poop shute for bambu labs printer
+// Poopy Shoe
+// poop shute for bambu labs printer - optimized for printing.
 
-// define tray constants
-const wallThickness = 0.125 // in
-const trayWidth = 3.75 // in
-const trayHeight = 3.2 // in
-const trayToSlideLength = 7.0 // in
+const wallThickness = 0.125 // inches
+const wallsWidth = 3 // inches
+const height = 5.125 // inches
+const filletRadius = 0.050 // inches
+const backLength = 6 // inches
+const exitHeight = 1 // inches
+const frontLength = 7 // inches
 
-// define slide constants
-const slideWidth = 3.0 // in
-const slideAngle = 30 // degrees
-const slideFrontHeight = 5.125 // in
-const slideStartingHeight = 1.5 // in
-const slideInteriorLength = 2.75 // in
-const slideFrontWallBendRadius = 1.0 // in 
-
-// define overall size constants
-const totalWidth = 10.0 // in
-const totalLength = 10.0 // in
-const totalHeight = 8.0 // in
-
-// define bend constants
-const lengthToBend = 2.85 // in
-const largeBendXLength = 5.0 // in
-
-// define pillar constants
-const pillarBlockStartX = 3 // in
-const pillarBlockStartY = 1 / sqrt(3) * pillarBlockStartX // in
-const pillarBlockStartZ = 7.5 // in
-const pillarBlockWidth = 2.0 // in
-const pillarBlockDepth = 2.0 // in
-const pillarRadius = .5 // in
-
-// create bottom plate for tray
-const trayPlateSketch = startSketchOn("XY")
-  |> startProfileAt([0, 0], %)
-  |> lineTo([0, totalLength], %)
-  |> lineTo([trayWidth, totalLength], %)
-  |> lineTo([trayWidth, 0], %)
-  |> close(%)
-
-const trayPlate = extrude(wallThickness, trayPlateSketch)
-
-// create the plane for the first wall of the tray
-const wallOnePlane = {
-  plane: {
-    origin: { x: 0, y: 0, z: wallThickness },
-    xAxis: { x: 1, y: 0, z: 0 },
-    yAxis: { x: 0, y: 1, z: 0 },
-    zAxis: { x: 0, y: 0, z: 1 }
-  }
-}
-
-/// create the sketch for the first wall
-const wallOneSketch = startSketchOn(wallOnePlane)
-  |> startProfileAt([0, 0], %)
-  |> line([0, totalLength], %)
-  |> line([trayWidth, 0], %)
-  |> line([0, -wallThickness], %)
-  |> lineTo([
-       wallThickness,
-       totalLength - wallThickness
-     ], %)
-  |> lineTo([wallThickness, wallThickness], %)
-  |> lineTo([
-       trayWidth - wallThickness,
-       wallThickness
-     ], %)
-  |> lineTo([
-       trayWidth - wallThickness,
-       trayToSlideLength
-     ], %)
-  |> lineTo([trayWidth, trayToSlideLength], %)
-  |> lineTo([trayWidth, 0], %)
-  |> lineTo([profileStartX(%), profileStartY(%)], %)
-  |> close(%)
-
-// extrude the first wall
-const wallOne = extrude(trayHeight, wallOneSketch)
-
-// create the plane for the second wall
-const wallTwoPlane = {
-  plane: {
-    origin: { x: trayWidth, y: 0, z: 0 },
-    xAxis: { x: 0, y: 1, z: 0 },
-    yAxis: { x: 0, y: 0, z: 1 },
-    zAxis: { x: 1, y: 0, z: 0 }
-  }
-}
-
-// create the sketch for the second wall
-const wallTwoSketch = startSketchOn(wallTwoPlane)
-  |> startProfileAt([
-       lengthToBend,
-       wallThickness + trayHeight
-     ], %)
-  |> bezierCurve({
-       control1: [2, 0],
-       control2: [2.5, 1.75],
-       to: [
-         trayToSlideLength - lengthToBend - wallThickness,
-         slideFrontHeight - trayHeight - wallThickness
-       ]
+const sketch001 = startSketchOn("-YZ")
+  |> startProfileAt([wallsWidth / 2, 0], %)
+  |> xLine(wallThickness / 2, %)
+  |> angledLineToX({ angle: 60, to: wallsWidth }, %, $seg01)
+  |> yLineTo(height, %)
+  |> xLine(-wallThickness, %)
+  |> yLineTo(segEndY(seg01), %)
+  |> angledLineToX({
+       angle: 60,
+       to: wallsWidth / 2 + wallThickness / 2
      }, %)
-  |> line([wallThickness, 0], %)
-  |> lineTo([
-       trayToSlideLength,
-       wallThickness + trayHeight
-     ], %)
+  |> xLine(-wallThickness, %)
+  |> angledLineToX({ angle: 180 - 60, to: wallThickness }, %)
+  |> yLineTo(height, %)
+  |> xLineTo(0, %)
+  |> yLineTo(segEndY(seg01), %)
+  |> angledLineToY({ angle: 180 - 60, to: 0 }, %)
   |> close(%)
-
-// extrude wall two
-const wallTwo = extrude(-wallThickness, wallTwoSketch)
-
-// create the sketch for the wall at the bottom of the slide
-const startingSlideWallSketch = startSketchOn(wallTwoPlane)
-  |> startProfileAt([trayToSlideLength, wallThickness], %)
-  |> line([0, slideStartingHeight], %)
-  |> lineTo([
-       totalLength - wallThickness,
-       slideStartingHeight + wallThickness
-     ], %)
-  |> lineTo([
-       totalLength - wallThickness,
-       wallThickness
-     ], %)
+const part001 = revolve({
+  angle: 90,
+  axis: {
+    custom: {
+      axis: [1.0, 0.0, 0.0],
+      origin: [0.0, height + .0001, 0]
+    }
+  }
+}, sketch001)
+const sketch002 = startSketchOn('-YZ')
+  |> startProfileAt([wallsWidth / 2, 0], %)
+  |> xLine(wallThickness / 2, %)
+  |> angledLineToX({ angle: 60, to: wallsWidth }, %, $seg02)
+  |> yLineTo(height, %)
+  |> xLine(-wallThickness, %)
+  |> yLineTo(segEndY(seg01), %)
+  |> angledLineToX({
+       angle: 60,
+       to: wallsWidth / 2 + wallThickness / 2
+     }, %)
+  |> xLine(-wallThickness, %)
+  |> angledLineToX({ angle: 180 - 60, to: wallThickness }, %)
+  |> yLineTo(height, %)
+  |> xLineTo(0, %)
+  |> yLineTo(segEndY(seg02), %)
+  |> angledLineToY({ angle: 180 - 60, to: 0 }, %)
   |> close(%)
-
-// extrude the wall at the bottom of the slide
-const startingSlideWall = extrude(-wallThickness, startingSlideWallSketch)
-
-// create the plane for the first side wall fo the slide
-const slideWallOnePlane = {
+  |> extrude(backLength - height, %)
+const customPlane = {
   plane: {
     origin: {
-      x: trayWidth,
-      y: trayToSlideLength,
+      x: 0,
+      y: -(wallsWidth / 2 - (wallThickness / 2)),
       z: 0
     },
     xAxis: { x: 1, y: 0, z: 0 },
     yAxis: { x: 0, y: 0, z: 1 },
-    zAxis: { x: 0, y: 1, z: 0 }
+    zAxis: { x: 0, y: -1, z: 0 }
   }
 }
-
-// create the sketch for the first wall of the slide
-const slideWallOneSketch = startSketchOn(slideWallOnePlane)
-  |> startProfileAt([0, slideStartingHeight + wallThickness], %)
-  |> angledLineToY({
-       angle: slideAngle,
-       to: slideFrontHeight - wallThickness
-     }, %)
-  |> line([0, wallThickness], %)
-  |> lineTo([0, slideFrontHeight], %, $slideXLength)
+const sketch003 = startSketchOn(customPlane)
+  |> startProfileAt([0, 0], %)
+  |> tangentialArc({ offset: 60, radius: height }, %)
+  |> angledLineToY({ angle: 60, to: 0 }, %)
   |> close(%)
-
-// extrude the first wall of the slide
-const slideWallOne = extrude(-wallThickness, slideWallOneSketch)
-
-// sketch the slide
-const slideSketch = startSketchOn(slideWallOnePlane)
-  |> startProfileAt([0, slideStartingHeight + wallThickness], %)
-  |> line([-wallThickness, 0], %)
-  |> line([0, wallThickness], %)
-  |> line([wallThickness, 0], %)
-  |> angledLineToY({
-       angle: slideAngle,
-       to: slideFrontHeight
-     }, %, $slideEnd)
-  |> line([0, -wallThickness], %)
-  |> angledLineToY({
-       angle: slideAngle,
-       to: slideStartingHeight + wallThickness
+  |> extrude(wallThickness, %)
+const sketch004 = startSketchOn(sketch002, 'END')
+  |> startProfileAt([0, 0], %)
+  |> yLineTo(height, %)
+  |> xLineTo(wallThickness, %)
+  |> yLineTo(segEndY(seg01), %)
+  |> angledLineToX({
+       angle: 180 - 60,
+       to: wallsWidth / 2 - (wallThickness / 2)
      }, %)
-  |> close(%)
-
-// extrude the slide
-const slide = extrude(slideInteriorLength + wallThickness, slideSketch)
-
-// create the plane for the second wall of the slide
-const slideWallTwoPlane = {
-  plane: {
-    origin: { x: trayWidth, y: totalLength, z: 0 },
-    xAxis: { x: 1, y: 0, z: 0 },
-    yAxis: { x: 0, y: 0, z: 1 },
-    zAxis: { x: 0, y: 1, z: 0 }
-  }
-}
-
-// create the sketch for wall two
-const slideWallTwoSketch = startSketchOn(slideWallTwoPlane)
-  |> startProfileAt([0, slideStartingHeight + wallThickness], %)
-  |> angledLineToY({
-       angle: slideAngle,
-       to: slideFrontHeight - wallThickness
-     }, %)
-  |> line([0, wallThickness], %)
-  |> lineTo([0, slideFrontHeight], %)
-  |> close(%)
-
-// extrude the second wall
-const slidWallTwo = extrude(-wallThickness, slideWallTwoSketch)
-
-// create the plane for the upper walls of the slide
-const slideUpperPlane = {
-  plane: {
-    origin: { x: 0, y: 0, z: slideFrontHeight },
-    xAxis: { x: 1, y: 0, z: 0 },
-    yAxis: { x: 0, y: 1, z: 0 },
-    zAxis: { x: 0, y: 0, z: 1 }
-  }
-}
-
-// create a sketch for the upper walls of the slide
-const slideBackWallSketch = startSketchOn(slideUpperPlane)
-  |> startProfileAt([trayWidth, totalLength], %)
-  |> lineTo([
-       trayWidth + segLen(slideXLength),
-       totalLength
+  |> xLine(wallThickness, %)
+  |> angledLineToY({ angle: 60, to: segEndY(seg01) }, %)
+  |> yLineTo(height, %)
+  |> xLine(wallThickness, %)
+  |> tangentialArcTo([
+       (frontLength - wallsWidth) / 2 + wallsWidth,
+       height - ((height - exitHeight) / 2)
      ], %)
-  |> line([0, -slideWidth - wallThickness], %)
-  |> line([-wallThickness, 0], %)
-  |> line([0, slideWidth], %)
-  |> lineTo([trayWidth, totalLength - wallThickness], %)
-  |> close(%)
-
-// extrude the upper walls of the slide
-const slideBackWall = extrude(totalHeight - slideFrontHeight, slideBackWallSketch)
-
-// create the plane for the third wall of the tray
-const wallThreePlane = {
+  |> tangentialArcTo([frontLength, exitHeight], %)
+  |> yLineTo(0, %)
+  |> close(%, $seg04)
+  |> extrude(wallThickness, %)
+const customPlane2 = {
   plane: {
-    origin: { x: 0, y: 0, z: 0 },
-    xAxis: { x: 0, y: 1, z: 0 },
+    origin: {
+      x: -1 * (backLength - height + wallsWidth),
+      y: 0,
+      z: 0
+    },
+    xAxis: { x: 0, y: -1, z: 0 },
     yAxis: { x: 0, y: 0, z: 1 },
     zAxis: { x: 1, y: 0, z: 0 }
   }
 }
-
-// create a sketch for the third wall of the tray
-const wallThreeSketch = startSketchOn(wallThreePlane)
-  |> startProfileAt([
-       lengthToBend,
-       trayHeight + wallThickness
+const sketch005 = startSketchOn(customPlane2)
+  |> startProfileAt([0, 0], %)
+  |> yLineTo(height, %)
+  |> xLineTo(wallsWidth, %)
+  |> tangentialArcTo([
+       (frontLength - wallsWidth) / 2 + wallsWidth,
+       height - ((height - exitHeight) / 2)
      ], %)
-  |> bezierCurve({
-       control1: [2, 0],
-       control2: [3, 5],
-       to: [
-         largeBendXLength,
-         totalHeight - trayHeight
-       ]
-     }, %)
-  |> lineTo([totalLength, totalHeight], %)
-  |> lineTo([
-       totalLength,
-       trayHeight + wallThickness
-     ], %)
+  |> tangentialArcTo([frontLength, exitHeight], %)
+  |> yLineTo(0, %, $seg03)
   |> close(%)
-
-// extrude the third wall of the tray
-const wallThree = extrude(wallThickness, wallThreeSketch)
-
-// create a plane for the fourth wall of the tray
-const wallFourPlane = {
-  plane: {
-    origin: { x: 0, y: totalLength, z: 0 },
-    xAxis: { x: 1, y: 0, z: 0 },
-    yAxis: { x: 0, y: 0, z: 1 },
-    zAxis: { x: 0, y: 1, z: 0 }
-  }
-}
-
-// create a sketch for the fourth wall of the tray
-const wallFourSketch = startSketchOn(wallFourPlane)
-  |> startProfileAt([
-       wallThickness,
-       trayHeight + wallThickness
-     ], %)
-  |> lineTo([trayWidth, trayHeight + wallThickness], %)
-  |> lineTo([trayWidth, totalHeight], %)
-  |> lineTo([wallThickness, totalHeight], %)
+  |> extrude(wallThickness, %)
+const sketch006 = startSketchOn(sketch005, seg03)
+  |> startProfileAt([0, -1 * (backLength - height)], %)
+  |> xLineTo(-exitHeight, %)
+  |> yLine(-wallsWidth, %)
+  |> xLineTo(0, %)
   |> close(%)
-
-// extrude the fourth wall of the tray
-const wallFour = extrude(-wallThickness, wallFourSketch)
-
-// create the plane for the pillar block
-const pillarBlockPlane = {
-  plane: {
-    origin: { x: 0, y: pillarBlockStartZ, z: 0 },
-    xAxis: { x: 1, y: 0, z: 0 },
-    yAxis: { x: 0, y: 0, z: 1 },
-    zAxis: { x: 0, y: 1, z: 0 }
-  }
-}
-
-// create the sketch for the pillar block
-const pillarBlockSketch = startSketchOn(pillarBlockPlane)
-  |> startProfileAt([
-       trayWidth + pillarBlockStartX,
-       slideStartingHeight + pillarBlockStartY + wallThickness
-     ], %)
-  |> angledLineOfXLength({
-       angle: slideAngle,
-       length: pillarBlockWidth
-     }, %)
-  |> lineTo([
-       profileStartX(%) + pillarBlockWidth,
-       profileStartY(%)
-     ], %)
-  |> close(%, $seg01)
-
-// extrude the pillar block 
-const pillarBlock = extrude(pillarBlockDepth, pillarBlockSketch)
-
-// create the sketch for the pillar
-const pillarSketch = startSketchOn(pillarBlock, seg01)
-  |> circle([-7.75, 8.5], pillarRadius, %)
-
-// extrude the pillar
-const pillar = extrude(slideStartingHeight + pillarBlockStartY + wallThickness, pillarSketch)
-
-const slideFrontWallBendSketch = startSketchOn(slideWallOnePlane)
-  |> startProfileAt([segLen(slideXLength) - wallThickness - slideFrontWallBendRadius, slideFrontHeight], %)
-  |> arc({
-    angleEnd: 360,
-    angleStart: 270,
-    radius: slideFrontWallBendRadius,
-  }, %)
-  |> line([0, -slideFrontWallBendRadius], %)
+  |> extrude(wallThickness, %)
+const sketch007 = startSketchOn(sketch004, 'END')
+  |> startProfileAt([0, 0], %)
+  |> xLineTo(wallThickness, %)
+  |> yLineTo(height, %)
+  |> xLineTo(0, %)
   |> close(%)
-
-const slideFrontWallBend = extrude(-wallThickness, slideFrontWallBendSketch)
+  |> extrude(wallsWidth - (2 * wallThickness), %)
+  const sketch008 = startSketchOn(sketch004, seg04)
+    |> startProfileAt([wallThickness,wallThickness+backLength-height], %)
+    |> xLineTo(frontLength, %)
+    |> yLine(wallsWidth-2*wallThickness, %)
+    |> xLineTo(wallThickness, %)
+    |> close(%)
+    |> extrude(-wallThickness, %)

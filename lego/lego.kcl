@@ -45,18 +45,22 @@ const s = startSketchOn('XY')
   |> line([-totalWidth, 0], %)
   |> close(%)
   |> extrude(height, %)
+  |> shell({
+    faces: ["start"],
+    thickness: t,
+  }, %)
 
 // Sketch and extrude a rectangular shape to create the shell underneath the lego. This is a hack until we have a shell function.
-const shellExtrude = startSketchOn(s, "start")
-  |> startProfileAt([
-       -(totalWidth / 2 - t),
-       -(totalLength / 2 - t)
-     ], %)
-  |> line([totalWidth - (2 * t), 0], %)
-  |> line([0, totalLength - (2 * t)], %)
-  |> line([-(totalWidth - (2 * t)), 0], %)
-  |> close(%)
-  |> extrude(-(height - t), %)
+// const shellExtrude = startSketchOn(s, "start")
+//   |> startProfileAt([
+//        -(totalWidth / 2 - t),
+//        -(totalLength / 2 - t)
+//      ], %)
+//   |> line([totalWidth - (2 * t), 0], %)
+//   |> line([0, totalLength - (2 * t)], %)
+//   |> line([-(totalWidth - (2 * t)), 0], %)
+//   |> close(%)
+//   |> extrude(-(height - t), %)
 
 // Create the pegs on the top of the base
 const peg = startSketchOn(s, 'end')

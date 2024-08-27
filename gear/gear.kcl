@@ -2,9 +2,9 @@
 // A rotating machine part having cut teeth or, in the case of a cogwheel, inserted teeth (called cogs), which mesh with another toothed part to transmit torque. Geared devices can change the speed, torque, and direction of a power source. The two elements that define a gear are its circular shape and the teeth that are integrated into its outer edge, which are designed to fit into the teeth of another gear.
 
 // Define constants
-const gearRadius = 2
-const nTeeth = 8
-const width = 2
+const gearRadius = 2 // inches
+const nTeeth = 8 
+const width = 2 // inches
 
 // Create a function for sketch of a single tooth
 fn tooth = () => {
@@ -46,6 +46,12 @@ fn tooth = () => {
   return [toothSketch]
 }
 
+// Create  the body
+const body = startSketchOn('XY')
+  |> circle([0, 0], gearRadius, %)
+  |> extrude(width, %)
+
+// Pattern the teeth around the body
 const teeth = tooth()
   |> patternCircular3d({
        arcDegrees: 360,
@@ -55,15 +61,14 @@ const teeth = tooth()
        rotateDuplicates: true
      }, %)
 
-const body = startSketchOn('XY')
-  |> circle([0, 0], gearRadius, %)
-  |> extrude(width, %)
-
+// Define the constants of the keyway and the bore hole
 const keywayWidth = 0.250
 const keywayDepth = keywayWidth/2
 const holeDiam = 2
 const holeRadius = 1
 const startAngle = asin(keywayWidth/2/holeRadius)
+
+// sketch the keyway and center hole and extrude
 const sketch001 = startSketchOn(body, 'END')
   |> startProfileAt([holeRadius*cos(startAngle), holeRadius*sin(startAngle)], %)
   |> xLine(keywayDepth, %)

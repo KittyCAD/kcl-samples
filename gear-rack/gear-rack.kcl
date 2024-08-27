@@ -2,11 +2,11 @@
 // A flat bar or rail that is engraved with teeth along its length. These teeth are designed to mesh with the teeth of a gear, known as a pinion. When the pinion, a small cylindrical gear, rotates, its teeth engage with the teeth on the rack, causing the rack to move linearly. Conversely, linear motion applied to the rack will cause the pinion to rotate.
 
 // Define constants
-const length = 100
-const pitchHeight = 11.5
-const width = 5
-const height = 12
-const minHeight = 10.875
+const length = 100 // mm
+const pitchHeight = 11.5 // mm
+const width = 5 // mm
+const height = 12 // mm
+const minHeight = 10.875 // mm
 
 // Create the body of the rack
 const rackBody = startSketchOn('XY')
