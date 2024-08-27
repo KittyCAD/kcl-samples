@@ -50,6 +50,7 @@ jobs:
                     else
                       echo "Failed to export $file to STEP format."
                       failed_files+=("$file")
+                      echo "Added $file to failed_files array."
                     fi
                   done
 
@@ -69,12 +70,28 @@ jobs:
                          -d "{\"body\": \"$comment_body\"}" \
                          "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments"
                   fi
-            - name: Debug - Output Comment Body
+            - name: Post a comment on the PR if files failed to export
+              if: always()
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
-                if [ ${#failed_files[@]} -ne 0 ]; then
-                    echo "Comment Body:"
-                    echo "$comment_body"
-                fi
+                  if [ ${#failed_files[@]} -ne 0 ]; then
+                      echo "Constructing the comment body."
+                      comment_body="The following files failed to export to STEP format:%0A"
+                      for file in "${failed_files[@]}"; do
+                          comment_body+="$file%0A"
+                      done
+                      echo "Comment Body:"
+                      echo "$comment_body"
+                      # Post the comment to the PR
+                      curl -s -H "Authorization: token $GITHUB_TOKEN" \
+                            -H "Content-Type: application/json" \
+                            -X POST \
+                            -d "{\"body\": \"$comment_body\"}" \
+                            "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments"
+                  else
+                      echo "No failed files to report."
+                  fi
                 
             - name: check for changes
               id: git-check
