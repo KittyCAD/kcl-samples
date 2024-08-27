@@ -54,45 +54,25 @@ jobs:
                     fi
                   done
 
-                  # Report failed files and create a comment on the PR if needed
+                  # Check for any failed files and post a comment if needed
                   if [ ${#failed_files[@]} -ne 0 ]; then
-                    echo "The following files failed to export to STEP format:"
-                    printf '%s\n' "${failed_files[@]}"
-                    # Create the comment body with the list of failed files
-                    comment_body="The following files failed to export to STEP format:\n"
+                    echo "Constructing the comment body."
+                    comment_body="The following files failed to export to STEP format:%0A"
                     for file in "${failed_files[@]}"; do
-                      comment_body+="$file\n"
+                        comment_body+="$file%0A"
                     done
-                    commen_body+="\nPlease contact the file format extroardinaire(David) for assistance."
+                    echo "Comment Body:"
+                    echo "$comment_body"
                     # Post the comment to the PR
                     curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                         -H "Content-Type: application/json" \
                          -X POST \
                          -d "{\"body\": \"$comment_body\"}" \
                          "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments"
-                  fi
-            - name: Post a comment on the PR if files failed to export
-              if: always()
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              run: |
-                  if [ ${#failed_files[@]} -ne 0 ]; then
-                      echo "Constructing the comment body."
-                      comment_body="The following files failed to export to STEP format:%0A"
-                      for file in "${failed_files[@]}"; do
-                          comment_body+="$file%0A"
-                      done
-                      echo "Comment Body:"
-                      echo "$comment_body"
-                      # Post the comment to the PR
-                      curl -s -H "Authorization: token $GITHUB_TOKEN" \
-                            -H "Content-Type: application/json" \
-                            -X POST \
-                            -d "{\"body\": \"$comment_body\"}" \
-                            "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments"
                   else
-                      echo "No failed files to report."
+                    echo "No failed files to report."
                   fi
-                
+                  
             - name: check for changes
               id: git-check
               run: |
