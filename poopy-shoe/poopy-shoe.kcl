@@ -36,6 +36,7 @@ const part001 = revolve({
     }
   }
 }, sketch001)
+
 const sketch002 = startSketchOn('-YZ')
   |> startProfileAt([wallsWidth / 2, 0], %)
   |> xLine(wallThickness / 2, %)
@@ -55,6 +56,7 @@ const sketch002 = startSketchOn('-YZ')
   |> angledLineToY({ angle: 180 - 60, to: 0 }, %)
   |> close(%)
   |> extrude(backLength - height, %)
+
 const customPlane = {
   plane: {
     origin: {
@@ -73,6 +75,7 @@ const sketch003 = startSketchOn(customPlane)
   |> angledLineToY({ angle: 60, to: 0 }, %)
   |> close(%)
   |> extrude(wallThickness, %)
+
 const sketch004 = startSketchOn(sketch002, 'END')
   |> startProfileAt([0, 0], %)
   |> yLineTo(height, %)
@@ -94,6 +97,7 @@ const sketch004 = startSketchOn(sketch002, 'END')
   |> yLineTo(0, %)
   |> close(%, $seg04)
   |> extrude(wallThickness, %)
+
 const customPlane2 = {
   plane: {
     origin: {
@@ -118,6 +122,7 @@ const sketch005 = startSketchOn(customPlane2)
   |> yLineTo(0, %, $seg03)
   |> close(%)
   |> extrude(wallThickness, %)
+
 const sketch006 = startSketchOn(sketch005, seg03)
   |> startProfileAt([0, -1 * (backLength - height)], %)
   |> xLineTo(-exitHeight, %)
@@ -125,6 +130,7 @@ const sketch006 = startSketchOn(sketch005, seg03)
   |> xLineTo(0, %)
   |> close(%)
   |> extrude(wallThickness, %)
+
 const sketch007 = startSketchOn(sketch004, 'END')
   |> startProfileAt([0, 0], %)
   |> xLineTo(wallThickness, %)
@@ -132,6 +138,7 @@ const sketch007 = startSketchOn(sketch004, 'END')
   |> xLineTo(0, %)
   |> close(%)
   |> extrude(wallsWidth - (2 * wallThickness), %)
+
   const sketch008 = startSketchOn(sketch004, seg04)
     |> startProfileAt([wallThickness,wallThickness+backLength-height], %)
     |> xLineTo(frontLength, %)
