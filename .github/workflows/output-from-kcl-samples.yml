@@ -29,17 +29,17 @@ jobs:
                   zoo version
                   sed -i '/---/q' README.md
                   mkdir -p {screenshots,step}
-                  failed_files=()
-            
                   # Find all .kcl files in subdirectories
-                  find . -type f -name '*.kcl' | while read -r file; do
+                  failed_files=()
+
+                  while IFS= read -r -d '' file; do
                     echo "Processing $file..."
                     fileName=$(basename "${file%.*}")
                     fileDir=$(dirname "$file")
                     
                     # Take a snapshot
                     zoo kcl snapshot "$file" "./screenshots/$fileName.png"
-            
+
                     # Try to export to STEP format
                     if zoo kcl export --output-format=step --src-unit=in "$file" "./step"; then
                       mv "./step/output.step" "./step/$fileName.step"
@@ -52,7 +52,11 @@ jobs:
                       failed_files+=("$file")
                       echo "Added $file to failed_files array: $file"
                     fi
-                  done
+                  done < <(find . -type f -name '*.kcl' -print0)
+
+                  # Output the contents of the failed_files array for debugging
+                  echo "Failed files array contains: ${failed_files[@]}"
+
             
                   # Output the contents of the failed_files array for debugging
                   echo "Failed files array contains: ${failed_files[@]}"
