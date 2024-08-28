@@ -64,9 +64,9 @@ jobs:
                   # Check for any failed files and post a comment if needed
                   if [ ${#failed_files[@]} -ne 0 ]; then
                     echo "Constructing the comment body."
-                    comment_body="The following files failed to export to STEP format:"
+                    comment_body="The following files failed to export to STEP format:\n"
                     for file in "${failed_files[@]}"; do
-                        comment_body+="$file"
+                        comment_body+="$file\n"
                     done
                     echo "Comment Body:"
                     echo "$comment_body"
