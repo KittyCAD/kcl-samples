@@ -28,14 +28,14 @@ const bracketLeg1Sketch = startSketchOn('XY')
   |> hole(circle([leg1Length-1.5, width-1], mountingHoleDiameter/2, %), %)
   |> hole(circle([1, width-1], mountingHoleDiameter/2, %), %)
   |> hole(circle([leg1Length-1.5, 1], mountingHoleDiameter/2, %), %)
-  
+
 // Extrude the leg 2 bracket sketch
 const bracketLeg1Extrude = extrude(thickness, bracketLeg1Sketch)
   |> fillet({
     radius: extFilletRadius,
     tags: [
-      getPreviousAdjacentEdge(fillet1),
-      getPreviousAdjacentEdge(fillet2)
+      getNextAdjacentEdge(fillet1),
+      getNextAdjacentEdge(fillet2)
     ],
   }, %)
 
@@ -55,7 +55,7 @@ const filletSketch = startSketchOn('XZ')
     radius: filletRadius,
   }, %)
 
-// Sketch the bend  
+// Sketch the bend
 const filletExtrude = extrude(-width, filletSketch)
 
 // Create a custom plane for the leg that sits on the wall
@@ -83,7 +83,7 @@ const bracketLeg2Extrude = extrude(-thickness, bracketLeg2Sketch)
   |> fillet({
     radius: extFilletRadius,
     tags: [
-      getPreviousAdjacentEdge(fillet3),
-      getPreviousAdjacentEdge(fillet4)
+      getNextAdjacentEdge(fillet3),
+      getNextAdjacentEdge(fillet4)
     ],
   }, %)
