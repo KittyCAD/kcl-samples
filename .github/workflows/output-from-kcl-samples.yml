@@ -2,11 +2,12 @@ name: Output from KCL Samples
 
 permissions:
     contents: write
+    pull-requests: write
 
 on:
     pull_request:
         paths:
-            - '**.kcl'
+            - '**/*.kcl'
             - .github/workflows/output-from-kcl-samples.yml
         branches:
             - main
@@ -28,17 +29,57 @@ jobs:
                   zoo version
                   sed -i '/---/q' README.md
                   mkdir -p {screenshots,step}
-                  for file in *.kcl; do
+                  # Find all .kcl files in subdirectories
+                  failed_files=()
+
+                  while IFS= read -r -d '' file; do
                     echo "Processing $file..."
-                    fileName="${file%.*}"
-                    zoo kcl snapshot $file ./screenshots/$fileName.png
-                    zoo kcl export --output-format=step --src-unit=in $file ./step
-                    mv ./step/output.step ./step/$fileName.step
-                    # stabiles date (otherwise there will always be a diff)
-                    sed -E -i 's/[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]+[0-9]+[0-9]\+[0-9]{2}:[0-9]{2}/1970-01-01T00:00:00.0+00:00/g' ./step/$fileName.step
-                    echo "#### [$fileName]($fileName.kcl) ([step](step/$fileName.step)) ([screenshot](screenshots/$fileName.png))" >> README.md
-                    echo "[![$fileName](screenshots/$fileName.png)]($fileName.kcl)" >> README.md
-                  done
+                    fileName=$(basename "${file%.*}")
+                    fileDir=$(dirname "$file")
+                    
+                    # Take a snapshot
+                    zoo kcl snapshot "$file" "./screenshots/$fileName.png"
+
+                    # Try to export to STEP format
+                    if zoo kcl export --output-format=step --src-unit=in "$file" "./step"; then
+                      mv "./step/output.step" "./step/$fileName.step"
+                      # Stabilize the date
+                      sed -E -i 's/[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]+[0-9]+[0-9]\+[0-9]{2}:[0-9]{2}/1970-01-01T00:00:00.0+00:00/g' "./step/$fileName.step"
+                      echo "#### [$fileName]($fileDir/$fileName.kcl) ([step](step/$fileName.step)) ([screenshot](screenshots/$fileName.png))" >> README.md
+                      echo "[![$fileName](screenshots/$fileName.png)]($fileDir/$fileName.kcl)" >> README.md
+                    else
+                      echo "Failed to export $file to STEP format."
+                      failed_files+=("$file")
+                      echo "Added $file to failed_files array: $file"
+                    fi
+                  done < <(find . -type f -name '*.kcl' -print0)
+
+                  # Output the contents of the failed_files array for debugging
+                  echo "Failed files array contains: ${failed_files[@]}"
+
+            
+                  # Output the contents of the failed_files array for debugging
+                  echo "Failed files array contains: ${failed_files[@]}"
+            
+                  # Check for any failed files and post a comment if needed
+                  if [ ${#failed_files[@]} -ne 0 ]; then
+                    echo "Constructing the comment body."
+                    comment_body="The following files failed to export to STEP format:\n"
+                    for file in "${failed_files[@]}"; do
+                        comment_body+="$file\n"
+                    done
+                    echo "Comment Body:"
+                    echo "$comment_body"
+                    # Post the comment to the PR
+                    curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                        -H "Content-Type: application/json" \
+                        -X POST \
+                        -d "{\"body\": \"$comment_body\"}" \
+                        "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments"
+                  else
+                    echo "No failed files to report."
+                  fi
+
             - name: check for changes
               id: git-check
               run: |
