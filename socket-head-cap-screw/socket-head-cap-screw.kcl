@@ -1,0 +1,63 @@
+// Socket Head Cap Screw
+// This is for a #10-24 screw that is 1.00 inches long. A socket head cap screw is a type of fastener that is widely used in a variety of applications requiring a high strength fastening solution. It is characterized by its cylindrical head and internal hexagonal drive, which allows for tightening with an Allen wrench or hex key.
+
+// Define constants
+const screwLength = 1.000 // inch
+const screwDiameter = .190 // inch
+const headDiameter = .313 // inch
+const headLength = screwDiameter // inch
+const hexWallToWall = 5 / 32 //inch
+const capRatio = screwDiameter / headDiameter
+const hexRatio = hexWallToWall / headDiameter
+const hexWallLength = hexWallToWall / 2 * (1 / cos(toRadians(30))) // inch
+const hexStartingAngle = 210 // first angle of hex pattern (degrees)
+const hexInteriorAngle = 120 // degrees
+const hexChangeAngle = 180 - hexInteriorAngle // degrees
+
+// Write a function that defines the Socket Head Cap Screw 
+fn capScrew = (start, length, dia, capHeadLength) => {
+
+  // Create the head of the cap screw
+  const screwHeadSketch = startSketchOn('XZ')
+  |> circle([start[0], start[1]], dia / capRatio / 2, %)
+
+  // Extrude the screw head sketch
+  const screwHead = extrude(capHeadLength, screwHeadSketch)
+
+  // Define the sketch of the hex pattern on the screw head
+  const hexPatternSketch = startSketchOn(screwHead, 'end')
+    |> startProfileAt([hexWallToWall / 2, 0], %)
+    |> yLine(-hexWallLength / 2, %)
+    |> angledLine({
+      angle: hexStartingAngle,
+      length: hexWallLength,
+    }, %)
+    |> angledLine({
+      angle: hexStartingAngle - hexChangeAngle,
+      length: hexWallLength,
+    }, %)
+    |> angledLine({
+      angle: hexStartingAngle - 2 * hexChangeAngle,
+      length: hexWallLength
+    }, %)
+    |> angledLine({
+      angle: hexStartingAngle - 3 * hexChangeAngle,
+      length: hexWallLength
+    }, %)
+    |> angledLine({
+      angle: hexStartingAngle - 4 * hexChangeAngle,
+      length: hexWallLength,
+    }, %)
+  |> close(%)
+  
+  const hexPattern = extrude(-headLength * 0.75, hexPatternSketch)
+
+
+  const screwBodySketch = startSketchOn(screwHead, "start")
+  |> circle([start[0], start[1]], dia / 2, %)
+  
+  const screwBody = extrude(length, screwBodySketch)
+  return screwBody
+}
+
+capScrew([0, 0], screwLength, screwDiameter, screwDiameter)

@@ -1,0 +1,43 @@
+// Mounting Plate
+// A flat piece of material, often metal or plastic, that serves as a support or base for attaching, securing, or mounting various types of equipment, devices, or components.
+
+// Define constants
+const plateLength = 10
+const plateWidth = 6
+const filletRadius = 0.5
+const plateThickness = .5
+const centerHoleDiameter = 2
+
+// Create a function that defines the body width and length of the mounting plate. Tag the corners so they can be passed through the fillet function.
+fn rectShape = (pos, w, l) => {
+  const rr = startSketchOn('XY')
+  |> startProfileAt([pos[0] - (w / 2), pos[1] - (l / 2)], %)
+  |> lineTo([pos[0] + w / 2, pos[1] - (l / 2)], %, $edge1)
+  |> lineTo([pos[0] + w / 2, pos[1] + l / 2], %, $edge2)
+  |> lineTo([pos[0] - (w / 2), pos[1] + l / 2], %, $edge3)
+  |> close(%, $edge4)
+  return rr
+}
+
+// Define the hole radius and x, y location constants
+const holeRadius = .25
+const holeIndex = .75
+
+// Create the mounting plate extrusion, holes, and fillets
+const rs = rectShape([0, 0], plateWidth, plateLength)
+const part = rs
+  |> hole(circle([-plateWidth/2+holeIndex, plateLength/2-holeIndex], holeRadius, %), %)
+  |> hole(circle([plateWidth/2-holeIndex, plateLength/2-holeIndex], holeRadius, %), %)
+  |> hole(circle([-plateWidth/2+holeIndex, -plateLength/2+holeIndex], holeRadius, %), %)
+  |> hole(circle([plateWidth/2-holeIndex, -plateLength/2+holeIndex], holeRadius, %), %)
+  |> hole(circle([0,0], centerHoleDiameter, %), %)
+  |> extrude(plateThickness, %)
+  |> fillet({
+      radius: filletRadius,
+      tags: [
+        getPreviousAdjacentEdge(rs.tags.edge1),
+        getPreviousAdjacentEdge(rs.tags.edge2),
+        getPreviousAdjacentEdge(rs.tags.edge3),
+        getPreviousAdjacentEdge(rs.tags.edge4)
+      ]
+     }, %)

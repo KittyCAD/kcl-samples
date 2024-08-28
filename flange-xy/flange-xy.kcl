@@ -1,0 +1,65 @@
+// Flange with XY coordinates
+// A flange is a flat rim, collar, or rib, typically forged or cast, that is used to strengthen an object, guide it, or attach it to another object. Flanges are known for their use in various applications, including piping, plumbing, and mechanical engineering, among others. 
+
+// Define constants
+const mountingHoleDia = .625 // inches
+const baseDia = 4.625 // inches
+const pipeDia = 1.25 // inches
+const thickness = .625 // inches
+const totalThickness = 0.813 // inches
+const topTotalDiameter = 2.313 // inches
+const bottomThickness = 0.06 // inches
+const bottomTotalDiameter = 2.5 // inches
+const mountingHolePlacementDiameter = 3.5 // inches
+const baseThickness = .625 // inches
+const topTotalThickness = totalThickness - (bottomThickness+baseThickness) // inches
+const holeLocator = baseDia - 8
+const nHoles = 4
+
+// Create the flange base and the six mounting holes
+const flangeBase = startSketchOn('XY')
+  |> circle([0,0], baseDia / 2, %)
+  |> hole(circle([
+       mountingHolePlacementDiameter / 2,
+       0
+     ], mountingHoleDia / 2, %), %)
+  |> hole(circle([
+       0,
+       mountingHolePlacementDiameter / 2
+     ], mountingHoleDia / 2, %), %)
+  |> hole(circle([
+       -mountingHolePlacementDiameter / 2,
+       0
+     ], mountingHoleDia / 2, %), %)
+  |> hole(circle([
+       0,
+       -mountingHolePlacementDiameter / 2
+     ], mountingHoleDia / 2, %), %)
+  |> hole(circle([0, 0], pipeDia/2, %), %)
+  |> extrude(baseThickness, %)
+
+// Plane for top face
+const topFacePlane = {
+  plane: {
+    origin: {
+      x: 0,
+      y: 0,
+      z: baseThickness
+    },
+    xAxis: { x: 1, y: 0, z: 0 },
+    yAxis: { x: 0, y: 1, z: 0 },
+    zAxis: { x: 0, y: 0, z: 1 }
+  }
+}
+
+// Create the extrusion on the top of the flange base
+const topExtrusion = startSketchOn(topFacePlane, 'end')
+  |> circle([0, 0], topTotalDiameter/2, %)
+  |> hole(circle([0, 0], pipeDia/2, %), %)
+  |> extrude(topTotalThickness, %)
+
+// Create the extrusion on the bottom of the flange base
+const bottomExtrusion = startSketchOn("XY")
+  |> circle([0, 0], bottomTotalDiameter/2, %)
+  |> hole(circle([0, 0], pipeDia/2, %), %)
+  |> extrude(-bottomThickness, %)
