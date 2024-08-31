@@ -2,9 +2,9 @@
 // An 80/20 extruded aluminum linear rail. T-slot profile adjustable by profile height, rail length, and origin position
 
 
-// define function
+// Define function
 fn rail8020 = (originStart, railHeight, railLength) => {
-  // Sketch Side 1 of Profile
+  // Sketch side 1 of profile
   const sketch001 = startSketchOn('-XZ')
     |> startProfileAt([
          originStart[0],
@@ -58,7 +58,7 @@ fn rail8020 = (originStart, railHeight, railLength) => {
          radius: 0.1 * railHeight
        }, %)
 
-    // Sketch Side 2 of Profile
+    // Sketch side 2 of profile
     |> arc({
          angleStart: 270,
          angleEnd: 90,
@@ -97,7 +97,7 @@ fn rail8020 = (originStart, railHeight, railLength) => {
          radius: 0.072 / 4 * railHeight
        }, %)
 
-    // Sketch Side 3 of Profile
+    // Sketch side 3 of profile
     |> arc({
          angleStart: 0,
          angleEnd: 90,
@@ -146,7 +146,7 @@ fn rail8020 = (originStart, railHeight, railLength) => {
          radius: 0.1 * railHeight
        }, %)
 
-    // Sketch Side 4 of Profile
+    // Sketch side 4 of profile
     |> arc({
          angleStart: 90,
          angleEnd: -90,
@@ -184,17 +184,59 @@ fn rail8020 = (originStart, railHeight, railLength) => {
          angleEnd: -90,
          radius: 0.072 / 4 * railHeight
        }, %)
-    |> lineTo([profileStartX(%), profileStartY(%)], %)
     |> close(%)
 
-    // Sketch Center Hole of Profile
+    // Sketch center hole of profile
     |> hole(circle([
          .5 * railHeight + originStart[0],
          .5 * railHeight + originStart[1]
        ], .205 * railHeight / 2, %), %)
     |> extrude(railLength, %)
+    |> fillet({
+         radius: 0.06,
+         tags: [
+           getPreviousAdjacentEdge(edge3),
+           getPreviousAdjacentEdge(edge4),
+           getPreviousAdjacentEdge(edge5),
+           getPreviousAdjacentEdge(edge6),
+           getPreviousAdjacentEdge(edge11),
+           getPreviousAdjacentEdge(edge12),
+           getPreviousAdjacentEdge(edge13),
+           getPreviousAdjacentEdge(edge14),
+           getPreviousAdjacentEdge(edge19),
+           getPreviousAdjacentEdge(edge20),
+           getPreviousAdjacentEdge(edge21),
+           getPreviousAdjacentEdge(edge22),
+           getPreviousAdjacentEdge(edge27),
+           getPreviousAdjacentEdge(edge28),
+           getPreviousAdjacentEdge(edge29),
+           getPreviousAdjacentEdge(edge30)
+         ]
+       }, %)
+       
+    |> fillet({
+         radius: 0.03,
+         tags: [
+           getPreviousAdjacentEdge(edge1),
+           getPreviousAdjacentEdge(edge2),
+           getPreviousAdjacentEdge(edge7),
+           getPreviousAdjacentEdge(edge8),
+           getPreviousAdjacentEdge(edge9),
+           getPreviousAdjacentEdge(edge10),
+           getPreviousAdjacentEdge(edge15),
+           getPreviousAdjacentEdge(edge16),
+           getPreviousAdjacentEdge(edge17),
+           getPreviousAdjacentEdge(edge18),
+           getPreviousAdjacentEdge(edge23),
+           getPreviousAdjacentEdge(edge24),
+           getPreviousAdjacentEdge(edge25),
+           getPreviousAdjacentEdge(edge26),
+           getPreviousAdjacentEdge(edge31),
+           getPreviousAdjacentEdge(edge32)
+         ]
+       }, %)
   return sketch001
 }
 
-// generate one adjustable rail of 80/20
+// Generate one adjustable rail of 80/20
 rail8020([0, 0], 1.5, 48)
