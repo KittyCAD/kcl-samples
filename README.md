@@ -39,6 +39,8 @@ When you submit a PR to add or modify KCL samples, images and STEP files will be
 [![bracket](screenshots/bracket.png)](./bracket/bracket.kcl)
 #### [car-wheel-assembly](./car-wheel-assembly/car-wheel-assembly.kcl) ([step](step/car-wheel-assembly.step)) ([screenshot](screenshots/car-wheel-assembly.png))
 [![car-wheel-assembly](screenshots/car-wheel-assembly.png)](./car-wheel-assembly/car-wheel-assembly.kcl)
+#### [80-20-rail](./80-20-rail/80-20-rail.kcl) ([step](step/80-20-rail.step)) ([screenshot](screenshots/80-20-rail.png))
+[![80-20-rail](screenshots/80-20-rail.png)](./80-20-rail/80-20-rail.kcl)
 #### [washer](./washer/washer.kcl) ([step](step/washer.step)) ([screenshot](screenshots/washer.png))
 [![washer](screenshots/washer.png)](./washer/washer.kcl)
 #### [lego](./lego/lego.kcl) ([step](step/lego.step)) ([screenshot](screenshots/lego.png))
