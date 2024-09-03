@@ -184,7 +184,6 @@ fn rail8020 = (originStart, railHeight, railLength) => {
          angleEnd: -90,
          radius: 0.072 / 4 * railHeight
        }, %)
-    |> lineTo([profileStartX(%), profileStartY(%)], %)
     |> close(%)
 
     // Sketch Center Hole of Profile
