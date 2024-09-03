@@ -2,13 +2,13 @@
 // A standard Lego brick. This is a small, plastic construction block toy that can be interlocked with other blocks to build various structures, models, and figures. There are a lot of hacks used in this code.
 
 // Define constants
-const lbumps = 5 // number of bumps long
+const lbumps = 2 // number of bumps long
 const wbumps = 3 // number of bumps wide
-const pitch = 8.0
-const clearance = 0.1
-const bumpDiam = 4.8
-const bumpHeight = 1.8
-const height = 3.2
+const pitch = 8.0 // mm
+const clearance = 0.1 // mm
+const bumpDiam = 4.8 // mm
+const bumpHeight = 1.8 // mm
+const height = 3.2 // mm
 const t = (pitch - (2 * clearance) - bumpDiam) / 2.0
 const postDiam = pitch - t // works out to 6.5
 const totalLength = lbumps * pitch - (2.0 * clearance)
@@ -17,15 +17,8 @@ const totalWidth = wbumps * pitch - (2.0 * clearance)
 const lSegments = totalLength / (lbumps)
 const wSegments = totalWidth / (wbumps)
 
-// Create the plane for the pegs. This is a hack so that the pegs can be patterned along the face of the lego base.
-const pegFace = {
-  plane: {
-    origin: { x: 0, y: 0, z: height },
-    xAxis: { x: 1, y: 0, z: 0 },
-    yAxis: { x: 0, y: 1, z: 0 },
-    zAxis: { x: 0, y: 0, z: 1 }
-  }
-}
+assertGreaterThan(lbumps, 1, "lbumps must be greater than 1")
+assertGreaterThan(wbumps, 1, "wbumps must be greater than 1")
 
 // Create the plane for the tubes underneath the lego. This is a hack so that the tubes can be patterned underneath the lego.
 const tubeFace = {
