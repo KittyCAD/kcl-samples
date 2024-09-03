@@ -33,9 +33,9 @@ jobs:
                   failed_files=()
 
                   while IFS= read -r -d '' file; do
-                    echo "Processing $file..."
-                    fileName=$(basename "${file%.*}")
-                    fileDir=$(dirname "$file")
+                  fileName=$(basename "${file%.*}")
+                  fileDir=$(dirname "$file")
+                  echo "Processing $fileName..."
                     
                     # Take a snapshot
                     zoo kcl snapshot "$file" "./screenshots/$fileName.png"

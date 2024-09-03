@@ -1,6 +1,7 @@
 // Poopy Shoe
-// poop shute for bambu labs printer - optimized for printing.
+// poop shute for X1C Bambu Labs printer - optimized for printing
 
+// Define constants
 const wallThickness = 0.125 // inches
 const wallsWidth = 3 // inches
 const height = 5.125 // inches
@@ -9,7 +10,7 @@ const backLength = 6 // inches
 const exitHeight = 1 // inches
 const frontLength = 7 // inches
 
-const sketch001 = startSketchOn("-YZ")
+const sketch001 = startSketchOn('-YZ')
   |> startProfileAt([wallsWidth / 2, 0], %)
   |> xLine(wallThickness / 2, %)
   |> angledLineToX({ angle: 60, to: wallsWidth }, %, $seg01)
@@ -27,6 +28,7 @@ const sketch001 = startSketchOn("-YZ")
   |> yLineTo(segEndY(seg01), %)
   |> angledLineToY({ angle: 180 - 60, to: 0 }, %)
   |> close(%)
+  
 const part001 = revolve({
   angle: 90,
   axis: {
@@ -56,7 +58,7 @@ const sketch002 = startSketchOn('-YZ')
   |> angledLineToY({ angle: 180 - 60, to: 0 }, %)
   |> close(%)
   |> extrude(backLength - height, %)
-
+  
 const customPlane = {
   plane: {
     origin: {
@@ -69,13 +71,14 @@ const customPlane = {
     zAxis: { x: 0, y: -1, z: 0 }
   }
 }
+
 const sketch003 = startSketchOn(customPlane)
   |> startProfileAt([0, 0], %)
   |> tangentialArc({ offset: 60, radius: height }, %)
   |> angledLineToY({ angle: 60, to: 0 }, %)
   |> close(%)
   |> extrude(wallThickness, %)
-
+  
 const sketch004 = startSketchOn(sketch002, 'END')
   |> startProfileAt([0, 0], %)
   |> yLineTo(height, %)
@@ -97,7 +100,7 @@ const sketch004 = startSketchOn(sketch002, 'END')
   |> yLineTo(0, %)
   |> close(%, $seg04)
   |> extrude(wallThickness, %)
-
+  
 const customPlane2 = {
   plane: {
     origin: {
@@ -110,6 +113,7 @@ const customPlane2 = {
     zAxis: { x: 1, y: 0, z: 0 }
   }
 }
+
 const sketch005 = startSketchOn(customPlane2)
   |> startProfileAt([0, 0], %)
   |> yLineTo(height, %)
@@ -122,7 +126,7 @@ const sketch005 = startSketchOn(customPlane2)
   |> yLineTo(0, %, $seg03)
   |> close(%)
   |> extrude(wallThickness, %)
-
+  
 const sketch006 = startSketchOn(sketch005, seg03)
   |> startProfileAt([0, -1 * (backLength - height)], %)
   |> xLineTo(-exitHeight, %)
@@ -130,7 +134,7 @@ const sketch006 = startSketchOn(sketch005, seg03)
   |> xLineTo(0, %)
   |> close(%)
   |> extrude(wallThickness, %)
-
+  
 const sketch007 = startSketchOn(sketch004, 'END')
   |> startProfileAt([0, 0], %)
   |> xLineTo(wallThickness, %)
@@ -139,10 +143,25 @@ const sketch007 = startSketchOn(sketch004, 'END')
   |> close(%)
   |> extrude(wallsWidth - (2 * wallThickness), %)
 
-  const sketch008 = startSketchOn(sketch004, seg04)
-    |> startProfileAt([wallThickness,wallThickness+backLength-height], %)
-    |> xLineTo(frontLength, %)
-    |> yLine(wallsWidth-2*wallThickness, %)
-    |> xLineTo(wallThickness, %)
-    |> close(%)
-    |> extrude(-wallThickness, %)
+const sketch008Plane = {
+  plane: {
+    origin: {
+      x: -1 * (backLength - height + wallsWidth - wallThickness),
+      y: 0,
+      z: wallThickness
+    },
+    xAxis: { x: 0, y: -1, z: 0 },
+    yAxis: { x: 1, y: 0, z: 0 },
+    zAxis: { x: 0, y: 0, z: 1 }
+  }
+}
+
+const sketch008 = startSketchOn(sketch008Plane)
+  |> startProfileAt([0, 0], %)
+  |> xLineTo(frontLength, %)
+  |> yLine(wallsWidth-2*wallThickness, %)
+  |> xLineTo(0, %)
+  |> close(%)
+  |> extrude(-wallThickness, %)
+
+// Author: Jordan Noone
