@@ -87,8 +87,8 @@ const tabsR = startSketchOn(tabPlane)
   |> fillet({
        radius: holeDiam / 2,
        tags: [
-         getNextAdjacentEdge(edge12),
-         getNextAdjacentEdge(edge13)
+         getNextAdjacentEdge(edge11),
+         getNextAdjacentEdge(edge12)
        ]
      }, %)
   |> patternLinear3d({
