@@ -1,202 +1,161 @@
 // Car Wheel
 // A sports car wheel with a circular lug pattern and spokes.
 
+
 // Define constants
 const lugCount = 5
-const lugSpacing = 114.3 // mm
-const offset = -35 // mm
+const lugSpacing = 114.3 * mm()
+const offset = -35 * mm()
 const backSpacing = 6.38 // inches
 const wheelWidth = 9.5 // inches
 const wheelDiameter = 19 // inches
 
+const spokeGap = 0.1
+const spokeAngle = 0.05
+const spokeThickness = 0.85
+
+// Create the wheel center
+const lugBase = startSketchOn('XZ')
+  |> circle([0, 0], (lugSpacing + 1.5) / 2, %)
+  |> extrude(wheelWidth / 20, %)
+
+const baseCenter = startSketchOn(lugBase, 'END')
+  |> circle([0, 0], (lugSpacing - 1.5) / 2, %)
+  |> extrude(-wheelWidth / 20, %)
+
+const lugExtrusion = startSketchOn(lugBase, 'END')
+  |> circle([0, 0], (lugSpacing + 1.5) / 2, %)
+  |> extrude(wheelWidth / 10, %)
+
+const baseCenter1 = startSketchOn(lugExtrusion, 'END')
+  |> circle([0, 0], (lugSpacing - 1.5) / 2, %)
+  |> extrude(-wheelWidth / 10, %)
 
 // Create the circular pattern for the lug holes
-const circles = startSketchOn('XZ')
-  |> circle([lugSpacing / 2, 0], 16 / 2, %)
+const lugClearance = startSketchOn(lugExtrusion, 'END')
+  |> circle([lugSpacing / 2, 0], 1.2 / 2, %)
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
        repetitions: lugCount - 1,
        rotateDuplicates: true
      }, %)
+  |> extrude(-wheelWidth / 10, %)
 
-// Create the wheel center and add lug holes
-const flangeBase = startSketchOn('XZ')
-  |> circle([0, 0], lugSpacing / 2 + 16 + 5, %)
-  |> hole(circles, %)
-  |> extrude(10, %)
-
-// Remove the interior of the wheel center
-const sketch001 = startSketchOn(flangeBase, 'END')
-  |> circle([0, 0], 20, %)
-  |> extrude(-10, %)
-
-// Add more material to the wheel center
-const sketch002 = startSketchOn(flangeBase, 'END')
-  |> circle([0, 0], lugSpacing / 2 + 16 + 8, %)
-  |> extrude(30, %)
-
-// Edge treatment around center
-const sketch003 = startSketchOn('XY')
-  |> startProfileAt([lugSpacing / 2 + 16 + 8, -10 - 30], %)
-  |> yLine(30, %)
-  |> line([6, -2], %)
-  |> lineTo([profileStartX(%), profileStartY(%)], %)
-  |> close(%)
-  |> revolve({ axis: 'y' }, %)
-
-// Center cap
-const sketch004 = startSketchOn('XY')
-  |> startProfileAt([15, -40], %)
-  |> xLine(15, %)
-  |> line([-3.01, -3.54], %)
-  |> line([-8.8, 0.17], %)
-  |> lineTo([profileStartX(%), profileStartY(%)], %)
-  |> close(%)
-  |> revolve({ axis: 'y' }, %)
-
-// Holes for lug nut heads
-const sketch005 = startSketchOn(sketch002, 'END')
-  |> circle([lugSpacing / 2, 0], 17, %)
+const lugHoles = startSketchOn(lugBase, 'END')
+  |> circle([lugSpacing / 2, 0], 16 * mm() / 2, %)
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
        repetitions: lugCount - 1,
        rotateDuplicates: true
      }, %)
+  |> extrude(-wheelWidth / 20, %)
 
-const sketch006 = extrude(-30, sketch005)
+// Add detail to the wheel center by revolving curved edge profiles
+const wheelCenterInner = startSketchOn('XY')
+  |> startProfileAt([(lugSpacing - 1.5) / 2, 0], %)
+  |> yLine(-wheelWidth / 10 - (wheelWidth / 20), %)
+  |> bezierCurve({
+       to: [-0.4, 0.3],
+       control1: [-0.3, 0],
+       control2: [0, 0.3]
+     }, %)
+  |> yLineTo(0, %)
+  |> lineTo([profileStartX(%), profileStartY(%)], %)
+  |> close(%)
+  |> revolve({ axis: 'y' }, %)
 
-// Seperating the spoke base planes
-const plane001 = {
-  plane: {
-    origin: [0.0, 0.0, 5.0],
-    xAxis: [1.0, 0.0, 0.0],
-    yAxis: [0.0, 1.0, 0.0],
-    zAxis: [0.0, 0.0, 1.0]
+const wheelCenterOuter = startSketchOn('XY')
+  |> startProfileAt([(lugSpacing + 1.5) / 2, 0], %)
+  |> yLine(-wheelWidth / 10 - (wheelWidth / 20), %)
+  |> bezierCurve({
+       to: [0.4, -0.1],
+       control1: [0.3, 0],
+       control2: [0.2, -0.3]
+     }, %)
+  |> yLineTo(-wheelWidth / 20, %)
+  |> lineTo([profileStartX(%), profileStartY(%)], %)
+  |> close(%)
+  |> revolve({ axis: 'y' }, %)
+
+// Write a function that defines the spoke geometry, patterns and extrudes it
+fn spoke = (spokeGap, spokeAngle, spokeThickness) => {
+  // Seperating the spoke base planes
+  const plane001 = {
+    plane: {
+      origin: [0.0, 0.0, spokeGap / 2],
+      xAxis: [1.0, 0.0, spokeAngle],
+      yAxis: [0.0, 1.0, 0.0],
+      zAxis: [0.0, 0.0, 1.0]
+    }
   }
+
+  // Spoke cross sections
+  const spokeProfile = startSketchOn(plane001)
+    |> startProfileAt([(lugSpacing + 2) / 2, -0.7], %)
+    |> yLine(-wheelWidth / 13, %)
+    |> line([
+         (wheelDiameter - lugSpacing - 2.9) / 2,
+         offset
+       ], %)
+    |> yLine(wheelWidth / 15, %)
+    |> lineTo([profileStartX(%), profileStartY(%)], %)
+    |> close(%)
+
+  // Circular pattern spokes
+  const spokePattern = extrude(spokeThickness, spokeProfile)
+    |> patternCircular3d({
+         axis: [0, 1, 0],
+         center: [0, -2000, 0],
+         repetitions: 5,
+         arcDegrees: 360,
+         rotateDuplicates: true
+       }, %)
+
+  return spokePattern
 }
 
-const plane002 = {
-  plane: {
-    origin: [0.0, 0.0, -5.0],
-    xAxis: [1.0, 0.0, 0.0],
-    yAxis: [0.0, 1.0, 0.0],
-    zAxis: [0.0, 0.0, 1.0]
-  }
-}
+spoke(spokeGap, spokeAngle, spokeThickness)
+spoke(-spokeGap, -spokeAngle, -spokeThickness)
 
-// Spoke cross sections
-const sketch007 = startSketchOn(plane001)
-  |> startProfileAt([lugSpacing / 2 + 17, -36], %)
-  |> bezierCurve({
-       to: [
-         wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 35,
-         12
-       ],
-       control1: [
-         (wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 35) / 2,
-         0
-       ],
-       control2: [
-         (wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 35) / 2,
-         15
-       ]
-     }, %)
-  |> yLine(12, %)
-  |> bezierCurve({
-       to: [
-         -wheelDiameter * 25.4 / 2 + lugSpacing / 2 + 35,
-         -12
-       ],
-       control1: [
-         -(wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 16) / 2,
-         0
-       ],
-       control2: [
-         -(wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 16) / 2,
-         -15
-       ]
-     }, %)
-  |> close(%)
-
-const sketch008 = startSketchOn(plane002)
-  |> startProfileAt([lugSpacing / 2 + 17, -36], %)
-  |> bezierCurve({
-       to: [
-         wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 35,
-         12
-       ],
-       control1: [
-         (wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 35) / 2,
-         0
-       ],
-       control2: [
-         (wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 35) / 2,
-         15
-       ]
-     }, %)
-  |> yLine(12, %)
-  |> bezierCurve({
-       to: [
-         -wheelDiameter * 25.4 / 2 + lugSpacing / 2 + 35,
-         -12
-       ],
-       control1: [
-         -(wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 16) / 2,
-         0
-       ],
-       control2: [
-         -(wheelDiameter * 25.4 / 2 - (lugSpacing / 2) - 16) / 2,
-         -15
-       ]
-     }, %)
-  |> close(%)
-
-// Circular pattern spokes
-const sketch009 = extrude(20, sketch007)
-  |> patternCircular3d({
-       axis: [0, 1, 0],
-       center: [0, -2000, 0],
-       repetitions: 5,
-       arcDegrees: 360,
-       rotateDuplicates: true
-     }, %)
-
-const sketch0010 = extrude(-20, sketch008)
-  |> patternCircular3d({
-       axis: [0, 1, 0],
-       center: [0, -2000, 0],
-       repetitions: 5,
-       arcDegrees: 360,
-       rotateDuplicates: true
-     }, %)
-
-// Wheel exterior
-const sketch0011 = startSketchOn('XY')
+// Define and revolve wheel exterior
+const wheelOuterRevolve = startSketchOn('XY')
   |> startProfileAt([
-       wheelDiameter * 25.4 / 2,
-       -wheelWidth * 25.4 + backSpacing * 25.4 + offset
+       wheelDiameter / 2,
+       -wheelWidth + backSpacing + offset
      ], %)
-  |> line([wheelWidth * 2, -wheelWidth], %)
-  |> yLine(-wheelWidth * 2, %)
-  |> xLine(-wheelWidth, %)
-  |> yLine(wheelWidth * 1.5, %)
-  |> line([-wheelWidth * 2, wheelWidth], %)
-  |> yLine(wheelWidth * 2.7, %)
-  |> line([-wheelWidth, wheelWidth], %)
-  |> yLine(wheelWidth * 9, %)
-  |> line([wheelWidth, wheelWidth], %)
-  |> yLine(wheelWidth * 11, %)
-  |> line([wheelWidth * 2, wheelWidth], %)
-  |> yLine(wheelWidth * 2, %)
-  |> xLine(wheelWidth, %)
-  |> yLine(-wheelWidth * 2.7, %)
-  |> line([-wheelWidth * 2, -wheelWidth], %)
-  |> yLine(-wheelWidth * 11, %)
-  |> line([-wheelWidth, -wheelWidth], %)
-  |> yLine(-wheelWidth * 7.7, %)
-  |> line([wheelWidth, -wheelWidth], %)
-  |> lineTo([profileStartX(%), profileStartY(%)], %)
+  |> yLine(wheelWidth * 0.25, %)
+  |> line([-wheelWidth * 0.02, wheelWidth * 0.02], %)
+  |> yLine(wheelWidth * 0.25, %)
+  |> line([wheelWidth * 0.02, wheelWidth * 0.02], %)
+  |> yLineTo(backSpacing + offset, %)
+  |> line([wheelWidth * 0.05, wheelWidth * .01], %)
+  |> yLine(wheelWidth * 0.05, %)
+  |> xLine(-wheelWidth * 0.03, %)
+  |> yLine(-wheelWidth * 0.02, %)
+  |> line([-wheelWidth * 0.05, -wheelWidth * 0.01], %)
+  |> yLine(-backSpacing * 0.7, %)
+  |> line([
+       -wheelDiameter * 0.01,
+       -wheelWidth * 0.02
+     ], %)
+  |> yLineTo(offset - 0.2, %)
+  |> line([
+       -wheelDiameter * 0.03,
+       -wheelWidth * 0.02
+     ], %)
+  |> yLine(-wheelWidth * 0.02, %)
+  |> line([
+       wheelDiameter * 0.03,
+       -wheelWidth * 0.1
+     ], %)
+  |> yLine(-wheelWidth * 0.05, %)
+  |> line([wheelWidth * 0.02, -wheelWidth * 0.02], %)
+  |> yLineTo(-wheelWidth + backSpacing + offset - 0.28, %)
+  |> line([wheelWidth * 0.05, -wheelWidth * 0.01], %)
+  |> yLine(-wheelWidth * 0.02, %)
+  |> xLine(wheelWidth * 0.03, %)
+  |> yLine(wheelWidth * 0.05, %)
   |> close(%)
   |> revolve({ axis: 'y' }, %)
