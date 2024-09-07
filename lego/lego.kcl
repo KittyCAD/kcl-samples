@@ -14,9 +14,11 @@ const postDiam = pitch - t // works out to 6.5
 const totalLength = lbumps * pitch - (2.0 * clearance)
 const totalWidth = wbumps * pitch - (2.0 * clearance)
 
+// Calculate the number of segments in the length and width
 const lSegments = totalLength / (lbumps)
 const wSegments = totalWidth / (wbumps)
 
+// Add assertions to ensure that the number of bumps are greater than 1
 assertGreaterThan(lbumps, 1, "lbumps must be greater than 1")
 assertGreaterThan(wbumps, 1, "wbumps must be greater than 1")
 
