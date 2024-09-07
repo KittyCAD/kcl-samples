@@ -1,21 +1,24 @@
 // Wheel rotor
 // A component of a disc brake system. It provides a surface for brake pads to press against, generating the friction needed to slow or stop the vehicle.
 
-const rotorDiameter = 304.8 // mm (12 inches)
-const rotorInnerDiameter = 152.4 // mm (6 inches)
-const rotorSinglePlateThickness = 6.3 // mm
-const rotorInnerDiameterThickness = 12.6 // mm
-const lugHolePatternDia = 76.4 // mm (3 inches)
-const lugSpacing = 114.3 // millimeters
-const rotorTotalThickness = 25.4 // mm
-const spacerPatternDiameter = 279.4 // mm (11 inches)
-const spacerDiameter = 6.3 // mm
+
+// Define constants
+// Base units for this model are in inches
+const rotorDiameter = 12
+const rotorInnerDiameter = 6
+const rotorSinglePlateThickness = 0.25
+const rotorInnerDiameterThickness = 0.5
+const lugHolePatternDia = 3
+const lugSpacing = 114.3 * mm()
+const rotorTotalThickness = 1
+const spacerPatternDiameter = 11
+const spacerDiameter = 0.25
 const spacerLength = rotorTotalThickness - (2 * rotorSinglePlateThickness)
 const spacerCount = 16
-const wheeldiameter = 482.6 // mm (19 inches)
+const wheelDiameter = 19
 const lugCount = 5
-const yAxisOffset = 10
-const drillAndSlotCount = 7
+const yAxisOffset = 0.5
+const drillAndSlotCount = 5
 
 const rotorPlane = {
   plane: {
@@ -27,7 +30,7 @@ const rotorPlane = {
 }
 
 fn lugPattern = (plane) => {
-  const lugHolePattern = circle([-lugSpacing / 2, 0], 8, plane)
+  const lugHolePattern = circle([-lugSpacing / 2, 0], 0.315, plane)
     |> patternCircular2d({
          arcDegrees: 360,
          center: [0, 0],
@@ -46,38 +49,6 @@ const rotorBumpSketch = startSketchOn(rotorPlane)
   |> circle([0, 0], rotorInnerDiameter / 2, %)
   |> hole(lugPattern(%), %)
 const rotorBump = extrude(-rotorInnerDiameterThickness, rotorBumpSketch)
-
-const rotorSlottedSketch = startSketchOn(rotor, 'START')
-  |> startProfileAt([55, 65], %)
-  |> xLine(3, %)
-  |> yLine(65, %)
-  |> xLine(-3, %)
-  |> lineTo([profileStartX(%), profileStartY(%)], %)
-  |> close(%)
-  |> patternCircular2d({
-       center: [0, 0],
-       repetitions: drillAndSlotCount - 1,
-       arcDegrees: 360,
-       rotateDuplicates: true
-     }, %)
-
-const rotorSlotted = extrude(-rotorSinglePlateThickness / 2, rotorSlottedSketch)
-
-const rotorDrilledSketch = startSketchOn(rotor, 'START')
-  |> circle([34, 82], 3, %)
-  |> patternLinear2d({
-       axis: [-0.4, 1],
-       repetitions: 2,
-       distance: 28
-     }, %)
-  |> patternCircular2d({
-       center: [0, 0],
-       repetitions: drillAndSlotCount - 1,
-       arcDegrees: 360,
-       rotateDuplicates: true
-     }, %)
-
-const rotorDrilled = extrude(-rotorSinglePlateThickness, rotorDrilledSketch)
 
 const rotorSecondaryPlatePlane = {
   plane: {
@@ -109,11 +80,43 @@ const spacerSketch = startSketchOn(rotorSecondaryPlatePlane)
 
 const spacers = extrude(-spacerLength, spacerSketch)
 
+const rotorSlottedSketch = startSketchOn(rotor, 'START')
+  |> startProfileAt([2.17, 2.56], %)
+  |> xLine(0.12, %)
+  |> yLine(2.56, %)
+  |> xLine(-0.12, %)
+  |> lineTo([profileStartX(%), profileStartY(%)], %)
+  |> close(%)
+  |> patternCircular2d({
+       center: [0, 0],
+       repetitions: drillAndSlotCount - 1,
+       arcDegrees: 360,
+       rotateDuplicates: true
+     }, %)
+
+const rotorSlotted = extrude(-rotorSinglePlateThickness / 2, rotorSlottedSketch)
+
+const rotorDrilledSketch = startSketchOn(rotor, 'START')
+  |> circle([1.34, 3.23], 0.12, %)
+  |> patternLinear2d({
+       axis: [-0.02, 0.04],
+       repetitions: 2,
+       distance: 1.1
+     }, %)
+  |> patternCircular2d({
+       center: [0, 0],
+       repetitions: drillAndSlotCount - 1,
+       arcDegrees: 360,
+       rotateDuplicates: true
+     }, %)
+
+const rotorDrilled = extrude(-rotorSinglePlateThickness, rotorDrilledSketch)
+
 const secondRotorSlottedSketch = startSketchOn(secondRotor, 'END')
-  |> startProfileAt([-55, 65], %)
-  |> xLine(-3, %)
-  |> yLine(65, %)
-  |> xLine(3, %)
+  |> startProfileAt([-2.17, 2.56], %)
+  |> xLine(-0.12, %)
+  |> yLine(2.56, %)
+  |> xLine(0.12, %)
   |> lineTo([profileStartX(%), profileStartY(%)], %)
   |> close(%)
   |> patternCircular2d({
@@ -126,11 +129,11 @@ const secondRotorSlottedSketch = startSketchOn(secondRotor, 'END')
 const secondRotorSlotted = extrude(-rotorSinglePlateThickness / 2, secondRotorSlottedSketch)
 
 const secondRotorDrilledSketch = startSketchOn(secondRotor, 'START')
-  |> circle([34, 82], 3, %)
+  |> circle([1.34, 3.23], 0.12, %)
   |> patternLinear2d({
-       axis: [-0.4, 1],
+       axis: [-0.02, 0.04],
        repetitions: 2,
-       distance: 28
+       distance: 1.1
      }, %)
   |> patternCircular2d({
        center: [0, 0],
