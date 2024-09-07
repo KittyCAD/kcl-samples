@@ -11,7 +11,6 @@ const tireTreadWidth = 10 // mm
 const tireTreadDepth = 10 // mm
 const tireTreadOffset = 80 // mm
 
-
 // Create the sketch of the tire
 const tireSketch = startSketchOn("XY")
   |> startProfileAt([tireInnerDiameter / 2, tireDepth / 2], %)
@@ -35,6 +34,7 @@ const tireSketch = startSketchOn("XY")
   }, %)
   |> lineTo([tireInnerDiameter / 2, -tireDepth / 2], %, $edge2)
   |> close(%)
-  
+
+// Revolve the sketch to create the tire
 const tire = revolve({ axis: "Y" }, tireSketch)
 
