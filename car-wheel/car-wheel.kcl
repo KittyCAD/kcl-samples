@@ -3,12 +3,14 @@
 
 
 // Define constants
+// Base units for this model are in inches
 const lugCount = 5
 const lugSpacing = 114.3 * mm()
 const offset = -35 * mm()
 const backSpacing = 6.38 // inches
 const wheelWidth = 9.5 // inches
 const wheelDiameter = 19 // inches
+
 
 const spokeGap = 0.1
 const spokeAngle = 0.05
