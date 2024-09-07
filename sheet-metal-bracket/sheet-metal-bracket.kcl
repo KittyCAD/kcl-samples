@@ -9,6 +9,7 @@ const flangeLength = 0.5 // inches
 const hatHeight = 3 // inches
 const hatWidth = 5 // inches
 const boltSize = 0.25 // inches
+const flangeWidth = 1.5 // inches
 
 // Sketch and extrude the base shape and fillet the inside and outside edges. 
 const baseExtrusion = startSketchOn('-XZ')
@@ -28,54 +29,62 @@ const baseExtrusion = startSketchOn('-XZ')
   |> extrude(hatWidth, %)
   |> fillet({
        radius: bendRad,
-       tags: [getPreviousAdjacentEdge(e3)]
+       tags: [getNextAdjacentEdge(e2)]
      }, %)
   |> fillet({
        radius: outsideBendRad,
-       tags: [getPreviousAdjacentEdge(e4)]
+       tags: [getNextAdjacentEdge(e3)]
      }, %)
   |> fillet({
        radius: outsideBendRad,
-       tags: [getPreviousAdjacentEdge(e5)]
+       tags: [getNextAdjacentEdge(e4)]
      }, %)
   |> fillet({
        radius: bendRad,
-       tags: [getPreviousAdjacentEdge(e6)]
+       tags: [getNextAdjacentEdge(e5)]
      }, %)
   |> fillet({
        radius: outsideBendRad,
-       tags: [getPreviousAdjacentEdge(e9)]
+       tags: [getNextAdjacentEdge(e8)]
      }, %)
   |> fillet({
        radius: bendRad,
-       tags: [getPreviousAdjacentEdge(e10)]
+       tags: [getNextAdjacentEdge(e9)]
      }, %)
   |> fillet({
        radius: bendRad,
-       tags: [getPreviousAdjacentEdge(e11)]
+       tags: [getNextAdjacentEdge(e10)]
      }, %)
   |> fillet({
        radius: outsideBendRad,
-       tags: [getPreviousAdjacentEdge(e12)]
+       tags: [getNextAdjacentEdge(e11)]
      }, %)
 
 // Define the flanges and place the bolt holes
 const flange1 = startSketchOn('XY')
   |> startProfileAt([0, 0], %)
   |> line([0, hatWidth], %)
-  |> line([1.75, 0], %)
-  |> line([0, -hatWidth], %)
+  |> line([flangeWidth, 0], %, $e13)
+  |> line([0, -hatWidth], %, $e14)
   |> close(%)
-  |> hole(circle([0.75, 1.5], boltSize, %), %)
-  |> hole(circle([0.75, 3.5], boltSize, %), %)
+  |> hole(circle([0.75, 1], boltSize, %), %)
+  |> hole(circle([0.75, 4], boltSize, %), %)
   |> extrude(thickness, %)
+  |> fillet({
+    radius: 0.5,
+    tags: [getNextAdjacentEdge(e13), getNextAdjacentEdge(e14)],
+  }, %)
 
 const flange2 = startSketchOn('XY')
   |> startProfileAt([-6, 0], %)
   |> line([0, hatWidth], %)
-  |> line([-1.75, 0], %)
-  |> line([0, -hatWidth], %)
+  |> line([-flangeWidth, 0], %, $e15)
+  |> line([0, -hatWidth], %, $e16)
   |> close(%)
-  |> hole(circle([-6.75, 1.5], boltSize, %), %)
-  |> hole(circle([-6.75, 3.5], boltSize, %), %)
+  |> hole(circle([-6.75, 1], boltSize, %), %)
+  |> hole(circle([-6.75, 4], boltSize, %), %)
   |> extrude(thickness, %)
+  |> fillet({
+    radius: 0.25,
+    tags: [getNextAdjacentEdge(e15), getNextAdjacentEdge(e16)],
+  }, %)

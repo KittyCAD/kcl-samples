@@ -3,7 +3,7 @@
 
 
 // Define constants
-const sigmaAllow = 15000 // psi
+const sigmaAllow = 15000 // psi (6061-T6 aluminum)
 const width = 6 // inch
 const p = 150 // Force on shelf - lbs
 const distance = 6 // inches
@@ -15,7 +15,7 @@ const extFilletRadius = .25 // inches
 const mountingHoleDiameter = 0.5 // inches
 
 // Calculate required thickness of bracket
-const thickness = sqrt(distance * p * factorOfSafety * 6 / (sigmaAllow * width))
+const thickness = sqrt(distance * p * factorOfSafety * 6 / (sigmaAllow * width)) // in
 
 // Sketch the bracket body and fillet the inner and outer edges of the bend
 const bracketLeg1Sketch = startSketchOn('XY')
