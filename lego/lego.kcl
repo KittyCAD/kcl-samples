@@ -17,6 +17,9 @@ const totalWidth = wbumps * pitch - (2.0 * clearance)
 const lSegments = totalLength / (lbumps)
 const wSegments = totalWidth / (wbumps)
 
+assertGreaterThan(lbumps, 1, "lbumps must be greater than 1")
+assertGreaterThan(wbumps, 1, "wbumps must be greater than 1")
+
 // Create the plane for the pegs. This is a hack so that the pegs can be patterned along the face of the lego base.
 const pegFace = {
   plane: {
