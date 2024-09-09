@@ -2,6 +2,7 @@
 color = 41.0
 
 [settings.modeling]
+base_unit = "in"
 
 [settings.text_editor]
 
