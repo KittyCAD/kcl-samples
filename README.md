@@ -71,8 +71,6 @@ When you submit a PR to add or modify KCL samples, images and STEP files will be
 [![wheel-rotor](screenshots/wheel-rotor.png)](./wheel-rotor/wheel-rotor.kcl)
 #### [gear](./gear/gear.kcl) ([step](step/gear.step)) ([screenshot](screenshots/gear.png))
 [![gear](screenshots/gear.png)](./gear/gear.kcl)
-#### [multi-axis-robot](./multi-axis-robot/multi-axis-robot.kcl) ([step](step/multi-axis-robot.step)) ([screenshot](screenshots/multi-axis-robot.png))
-[![multi-axis-robot](screenshots/multi-axis-robot.png)](./multi-axis-robot/multi-axis-robot.kcl)
 #### [car-wheel](./car-wheel/car-wheel.kcl) ([step](step/car-wheel.step)) ([screenshot](screenshots/car-wheel.png))
 [![car-wheel](screenshots/car-wheel.png)](./car-wheel/car-wheel.kcl)
 #### [pipe](./pipe/pipe.kcl) ([step](step/pipe.step)) ([screenshot](screenshots/pipe.png))
