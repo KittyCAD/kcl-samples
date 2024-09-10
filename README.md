@@ -63,6 +63,8 @@ When you submit a PR to add or modify KCL samples, images and STEP files will be
 [![mounting-plate](screenshots/mounting-plate.png)](./mounting-plate/mounting-plate.kcl)
 #### [pipe-flange-assembly](./pipe-flange-assembly/pipe-flange-assembly.kcl) ([step](step/pipe-flange-assembly.step)) ([screenshot](screenshots/pipe-flange-assembly.png))
 [![pipe-flange-assembly](screenshots/pipe-flange-assembly.png)](./pipe-flange-assembly/pipe-flange-assembly.kcl)
+#### [enclosure](./enclosure.kcl) ([step](step/enclosure.step)) ([screenshot](screenshots/enclosure.png))
+[![enclosure](screenshots/enclosure.png)](./enclosure.kcl)
 #### [gear-rack](./gear-rack/gear-rack.kcl) ([step](step/gear-rack.step)) ([screenshot](screenshots/gear-rack.png))
 [![gear-rack](screenshots/gear-rack.png)](./gear-rack/gear-rack.kcl)
 #### [socket-head-cap-screw](./socket-head-cap-screw/socket-head-cap-screw.kcl) ([step](step/socket-head-cap-screw.step)) ([screenshot](screenshots/socket-head-cap-screw.png))
