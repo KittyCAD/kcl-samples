@@ -1,0 +1,159 @@
+// Enclosure
+// An enclosure body and sealing lid for storing items
+
+
+const length = 175
+const width = 125
+const height = 70
+const wallThickness = 3
+const holeDia = 4
+
+const sketch001 = startSketchOn('XY')
+  |> startProfileAt([0, 0], %)
+  |> angledLine([0, width], %, $rectangleSegmentA001)
+  |> angledLine([
+       segAng(rectangleSegmentA001) + 90,
+       length
+     ], %, $rectangleSegmentB001)
+  |> angledLine([
+       segAng(rectangleSegmentA001),
+       -segLen(rectangleSegmentA001)
+     ], %, $rectangleSegmentC001)
+  |> lineTo([profileStartX(%), profileStartY(%)], %, $rectangleSegmentD001)
+  |> close(%)
+const extrude001 = extrude(height, sketch001)
+  |> fillet({
+       radius: wallThickness * 4,
+       tags: [
+         getNextAdjacentEdge(rectangleSegmentA001),
+         getNextAdjacentEdge(rectangleSegmentB001),
+         getNextAdjacentEdge(rectangleSegmentC001),
+         getNextAdjacentEdge(rectangleSegmentD001)
+       ]
+     }, %)
+  |> shell({
+       faces: ["end"],
+       thickness: wallThickness
+     }, %)
+
+fn function001 = (originStart) => {
+  // Defining a plane to sketch on shell
+  const plane001 = {
+    plane: {
+      origin: [0.0, 0.0, wallThickness],
+      xAxis: [1.0, 0.0, 0.0],
+      yAxis: [0.0, 1.0, 0.0],
+      zAxis: [0.0, 0.0, 1.0]
+    }
+  }
+
+  // Define interior bodies to secure fasteners
+  const sketch002 = startSketchOn(plane001)
+    |> circle([originStart[0], originStart[1]], holeDia + wallThickness, %)
+    |> hole(circle([originStart[0], originStart[1]], holeDia, %), %)
+  const extrude002 = extrude(height - wallThickness, sketch002)
+
+  return extrude002
+}
+
+function001([
+  wallThickness * 3 + holeDia,
+  wallThickness * 3 + holeDia
+])
+function001([
+  wallThickness * 3 + holeDia,
+  length - (wallThickness * 3 + holeDia)
+])
+function001([
+  width - (wallThickness * 3 + holeDia),
+  wallThickness * 3 + holeDia
+])
+function001([
+  width - (wallThickness * 3 + holeDia),
+  length - (wallThickness * 3 + holeDia)
+])
+
+// Define lid position and outer surface
+const sketch003 = startSketchOn('XY')
+  |> startProfileAt([width * 1.2, 0], %)
+  |> angledLine([0, width], %, $rectangleSegmentA002)
+  |> angledLine([
+       segAng(rectangleSegmentA001) + 90,
+       length
+     ], %, $rectangleSegmentB002)
+  |> angledLine([
+       segAng(rectangleSegmentA001),
+       -segLen(rectangleSegmentA001)
+     ], %, $rectangleSegmentC002)
+  |> lineTo([profileStartX(%), profileStartY(%)], %, $rectangleSegmentD002)
+  |> close(%)
+  |> hole(circle([
+       width * 1.2 + wallThickness * 3 + holeDia,
+       wallThickness * 3 + holeDia
+     ], holeDia, %), %)
+  |> hole(circle([
+       width * 1.2 + wallThickness * 3 + holeDia,
+       length - (wallThickness * 3 + holeDia)
+     ], holeDia, %), %)
+  |> hole(circle([
+       width * 2.2 - (wallThickness * 3 + holeDia),
+       wallThickness * 3 + holeDia
+     ], holeDia, %), %)
+  |> hole(circle([
+       width * 2.2 - (wallThickness * 3 + holeDia),
+       length - (wallThickness * 3 + holeDia)
+     ], holeDia, %), %)
+const extrude003 = extrude(wallThickness, sketch003)
+  |> fillet({
+       radius: wallThickness * 4,
+       tags: [
+         getNextAdjacentEdge(rectangleSegmentA002),
+         getNextAdjacentEdge(rectangleSegmentB002),
+         getNextAdjacentEdge(rectangleSegmentC002),
+         getNextAdjacentEdge(rectangleSegmentD002)
+       ]
+     }, %)
+
+// Define lid inner and sealing surfaces
+const sketch004 = startSketchOn(extrude003, 'END')
+  |> startProfileAt([
+       width * 1.2 + wallThickness,
+       wallThickness
+     ], %)
+  |> angledLine([0, width - (2 * wallThickness)], %, $rectangleSegmentA003)
+  |> angledLine([
+       segAng(rectangleSegmentA003) + 90,
+       length - (2 * wallThickness)
+     ], %, $rectangleSegmentB003)
+  |> angledLine([
+       segAng(rectangleSegmentA003),
+       -segLen(rectangleSegmentA003)
+     ], %, $rectangleSegmentC003)
+  |> lineTo([profileStartX(%), profileStartY(%)], %, $rectangleSegmentD003)
+  |> close(%)
+  |> hole(circle([
+       width * 1.2 + wallThickness * 3 + holeDia,
+       wallThickness * 3 + holeDia
+     ], holeDia + wallThickness, %), %)
+  |> hole(circle([
+       width * 1.2 + wallThickness * 3 + holeDia,
+       length - (wallThickness * 3 + holeDia)
+     ], holeDia + wallThickness, %), %)
+  |> hole(circle([
+       width * 2.2 - (wallThickness * 3 + holeDia),
+       wallThickness * 3 + holeDia
+     ], holeDia + wallThickness, %), %)
+  |> hole(circle([
+       width * 2.2 - (wallThickness * 3 + holeDia),
+       length - (wallThickness * 3 + holeDia)
+     ], holeDia + wallThickness, %), %)
+const extrude004 = extrude(wallThickness, sketch004)
+  |> fillet({
+       radius: wallThickness * 3,
+       tags: [
+         getNextAdjacentEdge(rectangleSegmentA003),
+         getNextAdjacentEdge(rectangleSegmentB003),
+         getNextAdjacentEdge(rectangleSegmentC003),
+         getNextAdjacentEdge(rectangleSegmentD003)
+       ]
+     }, %)
