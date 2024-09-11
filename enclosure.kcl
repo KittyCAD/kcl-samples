@@ -60,6 +60,7 @@ fn function001 = (originStart) => {
   return extrude002
 }
 
+// Place the internal pillar at each corner
 function001([
   wallThickness * 3 + holeDia,
   wallThickness * 3 + holeDia
