@@ -8,6 +8,7 @@ const height = 70
 const wallThickness = 3
 const holeDia = 4
 
+// Model a box with base enclosure dimensions
 const sketch001 = startSketchOn('XY')
   |> startProfileAt([0, 0], %)
   |> angledLine([0, width], %, $rectangleSegmentA001)
@@ -31,13 +32,16 @@ const extrude001 = extrude(height, sketch001)
          getNextAdjacentEdge(rectangleSegmentD001)
        ]
      }, %)
+
+  // Apply a shell to the enclosure base to create the internal storage
   |> shell({
        faces: ["end"],
        thickness: wallThickness
      }, %)
 
+// Define a function to create the internal structure to secure a fastener at each corner
 fn function001 = (originStart) => {
-  // Defining a plane to sketch on shell
+  // Create a plane to sketch on shell interior
   const plane001 = {
     plane: {
       origin: [0.0, 0.0, wallThickness],
@@ -47,7 +51,7 @@ fn function001 = (originStart) => {
     }
   }
 
-  // Define interior bodies to secure fasteners
+  // Create a pillar with a fasterner hole at the center
   const sketch002 = startSketchOn(plane001)
     |> circle([originStart[0], originStart[1]], holeDia + wallThickness, %)
     |> hole(circle([originStart[0], originStart[1]], holeDia, %), %)
