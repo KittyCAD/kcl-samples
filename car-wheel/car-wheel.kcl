@@ -7,33 +7,27 @@
 const lugCount = 5
 const lugSpacing = 114.3 * mm()
 const offset = -35 * mm()
-const backSpacing = 6.38 // inches
-const wheelWidth = 9.5 // inches
-const wheelDiameter = 19 // inches
+const backSpacing = 6.38
+const wheelWidth = 9.5
+const wheelDiameter = 19
 
-
-const spokeGap = 0.1
-const spokeAngle = 0.05
-const spokeThickness = 0.85
+const spokeGap = 0.2
+const spokeAngle = 0.02
+const spokeThickness = 0.95
 
 // Create the wheel center
 const lugBase = startSketchOn('XZ')
   |> circle([0, 0], (lugSpacing + 1.5) / 2, %)
+  |> hole(circle([0, 0], (lugSpacing - 1.5) / 2, %), %)
   |> extrude(wheelWidth / 20, %)
 
-const baseCenter = startSketchOn(lugBase, 'END')
-  |> circle([0, 0], (lugSpacing - 1.5) / 2, %)
-  |> extrude(-wheelWidth / 20, %)
-
+// Extend the wheel center and bore holes to accomidate the lug heads
 const lugExtrusion = startSketchOn(lugBase, 'END')
   |> circle([0, 0], (lugSpacing + 1.5) / 2, %)
+  |> hole(circle([0, 0], (lugSpacing - 1.5) / 2, %), %)
   |> extrude(wheelWidth / 10, %)
 
-const baseCenter1 = startSketchOn(lugExtrusion, 'END')
-  |> circle([0, 0], (lugSpacing - 1.5) / 2, %)
-  |> extrude(-wheelWidth / 10, %)
-
-// Create the circular pattern for the lug holes
+// Create the circular pattern for the lugs
 const lugClearance = startSketchOn(lugExtrusion, 'END')
   |> circle([lugSpacing / 2, 0], 1.2 / 2, %)
   |> patternCircular2d({
@@ -44,6 +38,7 @@ const lugClearance = startSketchOn(lugExtrusion, 'END')
      }, %)
   |> extrude(-wheelWidth / 10, %)
 
+// Create the circular pattern for the lug holes
 const lugHoles = startSketchOn(lugBase, 'END')
   |> circle([lugSpacing / 2, 0], 16 * mm() / 2, %)
   |> patternCircular2d({
@@ -96,12 +91,35 @@ fn spoke = (spokeGap, spokeAngle, spokeThickness) => {
   // Spoke cross sections
   const spokeProfile = startSketchOn(plane001)
     |> startProfileAt([(lugSpacing + 2) / 2, -0.7], %)
-    |> yLine(-wheelWidth / 13, %)
-    |> line([
-         (wheelDiameter - lugSpacing - 2.9) / 2,
-         offset
-       ], %)
-    |> yLine(wheelWidth / 15, %)
+    |> bezierCurve({
+         to: [
+           (wheelDiameter - lugSpacing - 2.9) / 2,
+           offset
+         ],
+         control1: [
+           (wheelDiameter - lugSpacing - 2.9) / 3.5,
+           offset / 7
+         ],
+         control2: [
+           (wheelDiameter - lugSpacing - 2.9) / 4,
+           offset / 1.5
+         ]
+       }, %)
+    |> yLine(-wheelWidth / 15, %)
+    |> bezierCurve({
+         to: [
+           -(wheelDiameter - lugSpacing - 2.9) / 2,
+           -offset
+         ],
+         control1: [
+           -(wheelDiameter - lugSpacing - 2.9) / 5,
+           -offset / 7
+         ],
+         control2: [
+           -(wheelDiameter - lugSpacing - 2.9) / 5,
+           -offset / 1.5
+         ]
+       }, %)
     |> lineTo([profileStartX(%), profileStartY(%)], %)
     |> close(%)
 
