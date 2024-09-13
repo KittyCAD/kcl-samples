@@ -37,12 +37,23 @@ jobs:
                   fileName=$(basename "${file%.*}")
                   fileDir=$(dirname "$file")
                   echo "Processing $fileName..."
-                    
+
+                    if [ -f "$fileDir/project.toml" ]; then
+                      base_unit=$(grep -oP '(?<=^base_unit\s*=\s*")[^"]*' "$fileDir/project.toml")
+                      
+                      # If base_unit is blank, set it to "mm"
+                      if [ -z "$base_unit" ]; then
+                        base_unit="mm"
+                    else
+                      echo "No project.toml file found in $fileDir"
+                      base_unit="mm"
+                    fi
+
                     # Take a snapshot
-                    zoo kcl snapshot "$file" "./screenshots/$fileName.png"
+                    zoo kcl snapshot --src-unit=$base_unit "$file" "./screenshots/$fileName.png"
                     
                     # Try to export to STEP format
-                    if zoo kcl export --output-format=step --src-unit=in "$file" "./step"; then
+                    if zoo kcl export --output-format=step --src-unit=$base_unit "$file" "./step"; then
                       mv "./step/output.step" "./step/$fileName.step"
                       # Stabilize the date
                       sed -E -i 's/[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]+[0-9]+[0-9]\+[0-9]{2}:[0-9]{2}/1970-01-01T00:00:00.0+00:00/g' "./step/$fileName.step"
