@@ -49,6 +49,8 @@ When you submit a PR to add or modify KCL samples, images and STEP files will be
 [![bracket](screenshots/bracket.png)](./bracket/bracket.kcl)
 #### [sheet-metal-bracket](./sheet-metal-bracket/sheet-metal-bracket.kcl) ([step](step/sheet-metal-bracket.step)) ([screenshot](screenshots/sheet-metal-bracket.png))
 [![sheet-metal-bracket](screenshots/sheet-metal-bracket.png)](./sheet-metal-bracket/sheet-metal-bracket.kcl)
+#### [french-press](./french-press/french-press.kcl) ([step](step/french-press.step)) ([screenshot](screenshots/french-press.png))
+[![french-press](screenshots/french-press.png)](./french-press/french-press.kcl)
 #### [washer](./washer/washer.kcl) ([step](step/washer.step)) ([screenshot](screenshots/washer.png))
 [![washer](screenshots/washer.png)](./washer/washer.kcl)
 #### [a-parametric-bearing-pillow-block](./a-parametric-bearing-pillow-block/a-parametric-bearing-pillow-block.kcl) ([step](step/a-parametric-bearing-pillow-block.step)) ([screenshot](screenshots/a-parametric-bearing-pillow-block.png))
