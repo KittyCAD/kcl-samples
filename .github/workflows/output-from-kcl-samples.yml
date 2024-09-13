@@ -39,7 +39,7 @@ jobs:
                   echo "Processing $fileName..."
 
                     if [ -f "$fileDir/project.toml" ]; then
-                      base_unit=$(grep -oP '(?<=^base_unit\s*=\s*")[^"]*' "$fileDir/project.toml")
+                      base_unit=$(grep '^base_unit' "$fileDir/project.toml" | cut -d '=' -f2 | tr -d ' "')
                       
                       # If base_unit is blank, set it to "mm"
                       if [ -z "$base_unit" ]; then
