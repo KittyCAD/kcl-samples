@@ -44,8 +44,9 @@ jobs:
                       # If base_unit is blank, set it to "mm"
                       if [ -z "$base_unit" ]; then
                         base_unit="mm"
+                      fi
                     else
-                      echo "No project.toml file found in $fileDir"
+                      echo "No project.toml found in $fileDir. Using default base_unit: mm"
                       base_unit="mm"
                     fi
 
