@@ -3,7 +3,7 @@
 
 
 const carafeDiameter = 4.41
-const carafeHeight = 7.52
+const carafeHeight = 7.32
 const handleThickness = 0.65
 
 // Upper ring of the metal structure
