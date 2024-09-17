@@ -38,26 +38,12 @@ jobs:
                   fileDir=$(dirname "$file")
                   echo "Processing $fileName..."
 
-                    if [ -f "$fileDir/project.toml" ]; then
-                      base_unit=$(grep '^base_unit' "$fileDir/project.toml" | cut -d '=' -f2 | tr -d ' "')
-                      
-                      # If base_unit is blank, set it to "mm"
-                      if [ -z "$base_unit" ]; then
-                        base_unit="mm"
-                      fi
-                    else
-                      echo "No project.toml found in $fileDir. Using default base_unit: mm"
-                      base_unit="mm"
-                    fi
-
                     # Take a snapshot
-                    zoo kcl snapshot --src-unit=$base_unit "$file" "./screenshots/$fileName.png"
-                    
+                    zoo kcl snapshot "$file" "./screenshots/$fileName.png"
+
                     # Try to export to STEP format
-                    if zoo kcl export --output-format=step --src-unit=$base_unit "$file" "./step"; then
+                    if zoo kcl export --deterministic --output-format=step "$file" "./step"; then
                       mv "./step/output.step" "./step/$fileName.step"
-                      # Stabilize the date
-                      sed -E -i 's/[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]+[0-9]+[0-9]\+[0-9]{2}:[0-9]{2}/1970-01-01T00:00:00.0+00:00/g' "./step/$fileName.step"
                       echo "#### [$fileName]($fileDir/$fileName.kcl) ([step](step/$fileName.step)) ([screenshot](screenshots/$fileName.png))" >> README.md
                       echo "[![$fileName](screenshots/$fileName.png)]($fileDir/$fileName.kcl)" >> README.md
                     else
@@ -70,10 +56,10 @@ jobs:
                   # Output the contents of the failed_files array for debugging
                   echo "Failed files array contains: ${failed_files[@]}"
 
-            
+
                   # Output the contents of the failed_files array for debugging
                   echo "Failed files array contains: ${failed_files[@]}"
-            
+
                   # Check for any failed files and post a comment if needed
                   if [ ${#failed_files[@]} -ne 0 ]; then
                     echo "Constructing the comment body."
