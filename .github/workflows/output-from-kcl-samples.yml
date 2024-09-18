@@ -51,7 +51,7 @@ jobs:
                       failed_files+=("$file")
                       echo "Added $file to failed_files array: $file"
                     fi
-                  done < <(find . -type f -name '*.kcl' -print0)
+                  done < <(find . -type f -name '*.kcl' -print0 | sort -z)
 
                   # Output the contents of the failed_files array for debugging
                   echo "Failed files array contains: ${failed_files[@]}"
