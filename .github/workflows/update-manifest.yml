@@ -18,11 +18,15 @@ jobs:
       # Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
       # Run the script to generate the manifest.json
+      # Shoutout to https://github.com/orgs/community/discussions/26248#discussioncomment-4766974
+      # for finding the correct way to run the script wow this was hard to find
       - name: Run manifest generation script
-        uses: ./
-        run: node generateManifest.js
+        run: node ${{ github.action_path }}generateManifest.js
+        shell: bash
 
       # Check if the manifest.json has changed
       - name: Check for changes
