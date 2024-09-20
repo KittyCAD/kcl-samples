@@ -22,7 +22,7 @@ jobs:
       # Run the script to generate the manifest.json
       - name: Run manifest generation script
         uses: ./
-        run: node generateManifest.js
+        run: node generate-manifest.js
 
       # Check if the manifest.json has changed
       - name: Check for changes
