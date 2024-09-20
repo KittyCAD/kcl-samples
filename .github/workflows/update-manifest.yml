@@ -21,7 +21,6 @@ jobs:
 
       # Run the script to generate the manifest.json
       - name: Run manifest generation script
-        uses: ./
         run: node generate-manifest.js
 
       # Check if the manifest.json has changed
