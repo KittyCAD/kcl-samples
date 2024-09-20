@@ -1,0 +1,39 @@
+name: Generate Manifest
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allows manual triggering from the Actions tab
+
+jobs:
+  generate-manifest:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+
+      # Run the script to generate the manifest.json
+      - name: Run manifest generation script
+        run: node generate-manifest.js
+
+      # Check if the manifest.json has changed
+      - name: Check for changes
+        run: |
+          git diff --exit-code ./manifest.json || echo "Changes detected"
+
+      # Stage and commit the changes if any were made
+      - name: Commit and push changes
+        if: ${{ success() && (steps.Check_for_changes.outputs.changed == 'true') }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add ./manifest.json
+          git commit -m "Update manifest.json"
+          git push
