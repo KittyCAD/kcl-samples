@@ -17,19 +17,34 @@ const spokeThickness = 0.95
 
 // Create the wheel center
 const lugBase = startSketchOn('XZ')
-  |> circle({center: [0, 0], (lugSpacing + 1.5) / 2, %)
-  |> hole(circle({center: [0, 0], (lugSpacing - 1.5) / 2, %), %)
+  |> circle({
+       center: [0, 0],
+       radius: (lugSpacing + 1.5) / 2
+     }, %)
+  |> hole(circle({
+       center: [0, 0],
+       radius: (lugSpacing - 1.5) / 2
+     }, %), %)
   |> extrude(wheelWidth / 20, %)
 
 // Extend the wheel center and bore holes to accomidate the lug heads
 const lugExtrusion = startSketchOn(lugBase, 'END')
-  |> circle({center: [0, 0], (lugSpacing + 1.5) / 2, %)
-  |> hole(circle({center: [0, 0], (lugSpacing - 1.5) / 2, %), %)
+  |> circle({
+       center: [0, 0],
+       radius: (lugSpacing + 1.5) / 2
+     }, %)
+  |> hole(circle({
+       center: [0, 0],
+       radius: (lugSpacing - 1.5) / 2
+     }, %), %)
   |> extrude(wheelWidth / 10, %)
 
 // Create the circular pattern for the lugs
 const lugClearance = startSketchOn(lugExtrusion, 'END')
-  |> circle({center: [lugSpacing / 2, 0], 1.2 / 2, %)
+  |> circle({
+       center: [lugSpacing / 2, 0],
+       radius: 1.2 / 2
+     }, %)
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
@@ -40,7 +55,10 @@ const lugClearance = startSketchOn(lugExtrusion, 'END')
 
 // Create the circular pattern for the lug holes
 const lugHoles = startSketchOn(lugBase, 'END')
-  |> circle({center: [lugSpacing / 2, 0], 16 * mm() / 2, %)
+  |> circle({
+       center: [lugSpacing / 2, 0],
+       radius: 16 * mm() / 2
+     }, %)
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
