@@ -1,6 +1,7 @@
 // Pipe with bend
 // A tubular section or hollow cylinder, usually but not necessarily of circular cross-section, used mainly to convey substances that can flow.
 
+
 // Define constants in inches (in)
 const innerDiameter = 10
 const outerDiameter = 20
@@ -11,17 +12,20 @@ const bendAngle = 90
 const sketch000 = startSketchOn("XZ")
 
 // create a profile for the outer diameter
-const outerProfile = circle([bendRadius, 0], outerDiameter / 2, sketch000)
+const outerProfile = circle({
+  center: [bendRadius, 0],
+  radius: outerDiameter / 2
+}, sketch000)
 
 // create a profile for the inner diameter
-const innerProfile = circle([bendRadius, 0], innerDiameter / 2, sketch000)
+const innerProfile = circle({
+  center: [bendRadius, 0],
+  radius: innerDiameter / 2
+}, sketch000)
 
 // create the profile of the pipe
 const pipeProfile = outerProfile
   |> hole(innerProfile, %)
 
 // revolve the pipe profile at the desired angle
-const pipe = revolve({
-  axis: "Y",
-  angle: bendAngle
-}, pipeProfile)
+const pipe = revolve({ axis: "Y", angle: bendAngle }, pipeProfile)
