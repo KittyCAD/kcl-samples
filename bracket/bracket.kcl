@@ -76,8 +76,8 @@ const bracketLeg2Sketch = startSketchOn(customPlane)
   |> line([0, -wallMountL], %, $fillet3)
   |> line([-width, 0], %, $fillet4)
   |> close(%)
-  |> hole(circle({center: [[1, -1.5], radius: mountingHoleDiameter / 2}, %), %)
-  |> hole(circle({center: [[5, -1.5], radius: mountingHoleDiameter / 2}, %), %)
+  |> hole(circle({center: [1, -1.5], radius: mountingHoleDiameter / 2}, %), %)
+  |> hole(circle({center: [5, -1.5], radius: mountingHoleDiameter / 2}, %), %)
 
 // Extrude the second leg
 const bracketLeg2Extrude = extrude(-thickness, bracketLeg2Sketch)
