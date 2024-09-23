@@ -16,7 +16,7 @@ const wheelDiameter = 19 // inches
 
 // Create the circular pattern for the lug holes
 const circles = startSketchOn('XZ')
-  |> circle([lugSpacing / 2, 0], 16 / 2, %)
+  |> circle({center: [lugSpacing / 2, 0], radius: 16 / 2}, %)
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
@@ -26,18 +26,18 @@ const circles = startSketchOn('XZ')
 
 // Create the wheel center and add lug holes
 const flangeBase = startSketchOn('XZ')
-  |> circle([0, 0], lugSpacing / 2 + 16 + 5, %)
+  |> circle({center: [0, 0], radius: lugSpacing / 2 + 16 + 5}, %)
   |> hole(circles, %)
   |> extrude(10, %)
 
 // Remove the interior of the wheel center
 const sketch001 = startSketchOn(flangeBase, 'END')
-  |> circle([0, 0], 20, %)
+  |> circle({center: [0, 0], radius: 20}, %)
   |> extrude(-10, %)
 
 // Add more material to the wheel center
 const sketch002 = startSketchOn(flangeBase, 'END')
-  |> circle([0, 0], lugSpacing / 2 + 16 + 8, %)
+  |> circle({center: [0, 0], radius: lugSpacing / 2 + 16 + 8}, %)
   |> extrude(30, %)
 
 // Edge treatment around center
@@ -61,7 +61,7 @@ const sketch004 = startSketchOn('XY')
 
 // Holes for lug nut heads
 const sketch005 = startSketchOn(sketch002, 'END')
-  |> circle([lugSpacing / 2, 0], 17, %)
+  |> circle({center: [lugSpacing / 2, 0], radius: 17}, %)
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
@@ -229,7 +229,7 @@ const rotorPlane = {
 }
 
 fn lugPattern = (plane) => {
-  const lugHolePattern = circle([-lugSpacing/2, 0], 8, plane) 
+  const lugHolePattern = circle({center: [-lugSpacing/2, 0], radius: 8}, plane)
   |> patternCircular2d({
     arcDegrees: 360,
     center: [0, 0],
@@ -240,13 +240,13 @@ fn lugPattern = (plane) => {
 }
 
 const rotorSketch = startSketchOn(rotorPlane)
-  |> circle([0, 0], rotorDiameter/2 * 25.4, %)
+  |> circle({center: [0, 0], radius: rotorDiameter/2 * 25.4}, %)
   |> hole(lugPattern(%), %)
   
 const rotor = extrude(rotorSinglePlateThickness, rotorSketch)
 
 const rotorBumpSketch = startSketchOn(rotorPlane)
-  |> circle([0, 0], rotorInnerDiameter/2 * 25.4, %)
+  |> circle({center: [0, 0], radius: rotorInnerDiameter/2 * 25.4}, %)
   |> hole(lugPattern(%), %)
   
 const rotorBump = extrude(-rotorInnerDiameterThickness, rotorBumpSketch)
@@ -261,13 +261,13 @@ const rotorSecondaryPlatePlane = {
 }
 
 const secondaryRotorSketch = startSketchOn(rotorSecondaryPlatePlane)
-  |> circle([0, 0], rotorDiameter/2 * 25.4, %)
+  |> circle({center: [0, 0], radius: rotorDiameter/2 * 25.4}, %)
   |> hole(lugPattern(%), %)
 
 const secondRotor = extrude(rotorSinglePlateThickness, secondaryRotorSketch)
 
 const spacerSketch = startSketchOn(rotorSecondaryPlatePlane)
-  |> circle([spacerPatternDiameter/2 * 25.4, 0], spacerDiameter, %)
+  |> circle({center: [spacerPatternDiameter/2 * 25.4, 0], radius: spacerDiameter}, %)
   |> patternCircular2d({
     arcDegrees: 360,
     center: [0, 0],

@@ -93,7 +93,10 @@ const sketch002 = startSketchOn(plane001)
 
 // Cross plate
 const sketch003 = startSketchOn(offsetPlane('XY', 1))
-  |> circle([0, 0], carafeDiameter / 2 - 0.15, %)
+  |> circle({
+       center: [0, 0],
+       radius: carafeDiameter / 2 - 0.15
+     }, %)
 
 const extrude001 = extrude(0.050, sketch003)
 
@@ -146,14 +149,17 @@ const sketch006 = startSketchOn('XZ')
 
 // Spiral plate
 const sketch007 = startSketchOn(offsetPlane('XY', 1.12))
-  |> circle([0, 0], carafeDiameter / 2 - 0.24, %)
-  |> hole(circle([0, 0], .15, %), %)
+  |> circle({
+       center: [0, 0],
+       radius: carafeDiameter / 2 - 0.24
+     }, %)
+  |> hole(circle({ center: [0, 0], radius: .15 }, %), %)
 
 const extrude003 = extrude(0.050, sketch007)
 
 // Pattern holes in the spiral plate
 const sketch008 = startSketchOn(extrude003, 'END')
-  |> circle([1.4, 0], .3, %)
+  |> circle({ center: [1.4, 0], radius: .3 }, %)
   |> patternCircular2d({
        center: [0, 0],
        repetitions: 7,
@@ -165,7 +171,7 @@ const extrude004 = extrude(-0.050, sketch008)
 
 // Pattern holes in the spiral plate
 const sketch009 = startSketchOn(extrude003, 'END')
-  |> circle([0.6, 0], .2, %)
+  |> circle({ center: [0.6, 0], radius: .2 }, %)
   |> patternCircular2d({
        center: [0, 0],
        repetitions: 3,
@@ -177,7 +183,10 @@ const extrude005 = extrude(-0.050, sketch009)
 
 // Extrude a glass carafe body
 const sketch010 = startSketchOn("XY")
-  |> circle([0, 0], carafeDiameter / 2, %)
+  |> circle({
+       center: [0, 0],
+       radius: carafeDiameter / 2
+     }, %)
 
 // Perform a shell operation to hollow the carafe body with the top face removed
 const extrude006 = extrude(carafeHeight, sketch010)

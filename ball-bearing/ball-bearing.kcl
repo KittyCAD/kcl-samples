@@ -24,8 +24,14 @@ const customPlane = {
 
 // Sketch the inside bearing piece
 const insideWallSketch = startSketchOn(customPlane)
-  |> circle([0, 0], shaftDia/2 + wallThickness, %)
-  |> hole(circle([0, 0], shaftDia/2, %), %)
+  |> circle({
+       center: [0, 0],
+       radius: shaftDia/2 + wallThickness
+     }, %)
+  |> hole(circle({
+       center: [0, 0],
+       radius: shaftDia/2
+     }, %), %)
 
 // Extrude the inside bearing piece
 const insideWall = extrude(overallThickness, insideWallSketch)
@@ -78,7 +84,10 @@ const chainHead = revolve({
 
 // Create the sketch for the links in between the chains 
 const linkSketch = startSketchOn("XZ")
-  |> circle([shaftDia/2 + wallThickness + sphereDia/2, 0], linkDiameter/2, %)
+  |> circle({
+       center: [shaftDia/2 + wallThickness + sphereDia/2, 0],
+       radius: linkDiameter/2
+     }, %)
 
 // Revolve the link sketch
 const linkRevolve = revolve({
@@ -95,8 +104,14 @@ const linkRevolve = revolve({
 
 // Create the sketch for the outside walls
 const outsideWallSketch = startSketchOn(customPlane)
-  |> circle([0, 0], outsideDiameter/2, %)
-  |> hole(circle([0, 0], shaftDia/2 + wallThickness + sphereDia, %), %)
+  |> circle({
+       center: [0, 0],
+       radius: outsideDiameter/2
+     }, %)
+  |> hole(circle({
+       center: [0, 0],
+       radius: shaftDia/2 + wallThickness + sphereDia
+     }, %), %)
 
 const outsideWall = extrude(overallThickness, outsideWallSketch)
 

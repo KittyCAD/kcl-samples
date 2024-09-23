@@ -1,6 +1,7 @@
 // Lego Brick
 // A standard Lego brick. This is a small, plastic construction block toy that can be interlocked with other blocks to build various structures, models, and figures. There are a lot of hacks used in this code.
 
+
 // Define constants
 const lbumps = 5 // number of bumps long
 const wbumps = 3 // number of bumps wide
@@ -15,8 +16,8 @@ const totalLength = lbumps * pitch - (2.0 * clearance)
 const totalWidth = wbumps * pitch - (2.0 * clearance)
 
 // Calculate the number of segments in the length and width
-const lSegments = totalLength / (lbumps)
-const wSegments = totalWidth / (wbumps)
+const lSegments = totalLength / lbumps
+const wSegments = totalWidth / wbumps
 
 // Add assertions to ensure that the number of bumps are greater than 1
 assertGreaterThan(lbumps, 1, "lbumps must be greater than 1")
@@ -34,7 +35,7 @@ const pegFace = {
 
 // Create the plane for the tubes underneath the lego. This is a hack so that the tubes can be patterned underneath the lego.
 const tubeFace = {
-    plane: {
+  plane: {
     origin: { x: 0, y: 0, z: height - t },
     xAxis: { x: 1, y: 0, z: 0 },
     yAxis: { x: 0, y: 1, z: 0 },
@@ -65,36 +66,42 @@ const shellExtrude = startSketchOn(s, "start")
 
 // Create the pegs on the top of the base
 const peg = startSketchOn(s, 'end')
-  |> circle([
-       -(pitch*(wbumps-1)/2),
-       -(pitch*(lbumps-1)/2)
-     ], bumpDiam / 2, %)
+  |> circle({
+       center: [
+         -(pitch * (wbumps - 1) / 2),
+         -(pitch * (lbumps - 1) / 2)
+       ],
+       radius: bumpDiam / 2
+     }, %)
   |> patternLinear2d({
        axis: [1, 0],
-       repetitions: wbumps-1,
+       repetitions: wbumps - 1,
        distance: pitch
      }, %)
   |> patternLinear2d({
        axis: [0, 1],
-       repetitions: lbumps-1,
+       repetitions: lbumps - 1,
        distance: pitch
      }, %)
   |> extrude(bumpHeight, %)
 
 // Create the pegs on the bottom of the base
 const tubePattern = startSketchOn(tubeFace)
-  |> circle([
-    -(pitch*(wbumps-1)/2-pitch/2),
-    -(pitch*(lbumps-1)/2-pitch/2)
-  ], bumpDiam/2, %)
+  |> circle({
+       center: [
+         -(pitch * (wbumps - 1) / 2 - (pitch / 2)),
+         -(pitch * (lbumps - 1) / 2 - (pitch / 2))
+       ],
+       radius: bumpDiam / 2
+     }, %)
   |> patternLinear2d({
        axis: [1, 0],
-       repetitions: wbumps-2,
+       repetitions: wbumps - 2,
        distance: pitch
      }, %)
   |> patternLinear2d({
        axis: [0, 1],
-       repetitions: lbumps-2,
+       repetitions: lbumps - 2,
        distance: pitch
      }, %)
   |> extrude(-bumpHeight, %)
