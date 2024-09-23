@@ -48,7 +48,7 @@ fn tooth = () => {
 
 // Create  the body
 const body = startSketchOn('XY')
-  |> circle([0, 0], gearRadius, %)
+  |> circle({center: [0, 0], radius: gearRadius}, %)
   |> extrude(width, %)
 
 // Pattern the teeth around the body

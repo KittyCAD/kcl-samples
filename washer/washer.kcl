@@ -1,20 +1,20 @@
 // Washer
 // A small, typically disk-shaped component with a hole in the middle, used in a wide range of applications, primarily in conjunction with fasteners like bolts and screws. Washers distribute the load of a fastener across a broader area. This is especially important when the fastening surface is soft or uneven, as it helps to prevent damage to the surface and ensures the load is evenly distributed, reducing the risk of the fastener becoming loose over time.
 
-  
+
 // Define constants
 const innerDiameter = 0.203 // inches
 const outerDiameter = 0.438 // inches
 const thicknessMax = 0.038 // inches
 const thicknessMin = 0.024 // inches
 
+
 // Write a function that defines the washer and extrude it.
 fn washer = (plane, innerDia, outerDia, thk) => {
-
   // Define the sketch of the washer
   const washerSketch = startSketchOn(plane)
-    |> circle([0, 0], outerDia, %)
-    |> hole(circle([0,0], innerDia, %), %)
+    |> circle({ center: [0, 0], radius: outerDia }, %)
+    |> hole(circle({ center: [0, 0], radius: innerDia }, %), %)
 
   const washer = extrude(thk, washerSketch)
   return washer

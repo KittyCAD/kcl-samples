@@ -1,6 +1,7 @@
 // Robot Arm
 // A 4 axis robotic arm for industrial use. These machines can be used for assembly, packaging, organization of goods, and quality inspection processes
 
+
 const axisJ4 = 25
 const axisJ3 = 60
 const axisJ2 = 110
@@ -38,22 +39,25 @@ const extrude001 = extrude(basePlateThickness, sketch001)
 
 // Base Motor for actuating first joint
 const sketch002 = startSketchOn(extrude001, 'END')
-  |> circle([0, 0], 4, %, $referenceEdge)
+  |> circle({ center: [0, 0], radius: 4 }, %, $referenceEdge)
 const extrude002 = extrude(baseHeight - basePlateThickness - 1.5, sketch002)
   |> fillet({
        radius: 0.1,
        tags: [getOppositeEdge(referenceEdge)]
      }, %)
 const sketch003 = startSketchOn(extrude002, 'END')
-  |> circle([0, 0], 0.5, %)
+  |> circle({ center: [0, 0], radius: 0.5 }, %)
 const extrude003 = extrude(1, sketch003)
 
 // Pattern M8 mounting bolts in base
 const sketch4A = startSketchOn(extrude001, 'END')
-  |> circle([
-       -basePlateRadius + 1,
-       -basePlateRadius + baseChamfer + 0.5
-     ], 0.4, %)
+  |> circle({
+       center: [
+         -basePlateRadius + 1,
+         -basePlateRadius + baseChamfer + 0.5
+       ],
+       radius: 0.4
+     }, %)
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
@@ -64,10 +68,13 @@ const sketch4A = startSketchOn(extrude001, 'END')
 const extrude4A = extrude(-basePlateThickness, sketch4A)
 
 const sketch4B = startSketchOn(extrude001, 'END')
-  |> circle([
-       -basePlateRadius + 0.5 + baseChamfer,
-       -basePlateRadius + 1
-     ], 0.4, %)
+  |> circle({
+       center: [
+         -basePlateRadius + 0.5 + baseChamfer,
+         -basePlateRadius + 1
+       ],
+       radius: 0.4
+     }, %)
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
@@ -91,8 +98,8 @@ const plane002 = {
   plane: {
     origin: [0.0, 0.0, 0.0],
     xAxis: [
-          sin(    toRadians(axisJ1)),
-          cos(    toRadians(axisJ1)),
+      sin(toRadians(axisJ1)),
+      cos(toRadians(axisJ1)),
       0.0
     ],
     yAxis: [0.0, 0.0, 1.0],
@@ -102,7 +109,7 @@ const plane002 = {
 
 // Create Rotating Base
 const sketch005 = startSketchOn(plane001)
-  |> circle([0, 0], 3.9, %, $referenceEdge1)
+  |> circle({ center: [0, 0], radius: 3.9 }, %, $referenceEdge1)
 const extrude005 = extrude(1.5 - 0.1, sketch005)
   |> fillet({
        radius: 0.1,
@@ -123,10 +130,13 @@ const sketch006 = startSketchOn(plane002)
 const extrude006 = extrude(1, sketch006)
 
 const sketch007 = startSketchOn(extrude006, 'END')
-  |> circle([
-       1.75 * cos(toRadians(axisJ1)) / abs(cos(toRadians(axisJ1))),
-       8
-     ], 2.75, %, $referenceEdge2)
+  |> circle({
+       center: [
+         1.75 * cos(toRadians(axisJ1)) / abs(cos(toRadians(axisJ1))),
+         8
+       ],
+       radius: 2.75
+     }, %, $referenceEdge2)
 const extrude007 = extrude(1.5, sketch007)
   |> fillet({
        radius: 0.1,
@@ -135,10 +145,13 @@ const extrude007 = extrude(1.5, sketch007)
 
 // Draw Bolt Pattern on Rotating Base
 const sketch008 = startSketchOn(extrude007, 'END')
-  |> circle([
-       1.75 * cos(toRadians(axisJ1)) / abs(cos(toRadians(axisJ1))),
-       6.75
-     ], 0.2, %)
+  |> circle({
+       center: [
+         1.75 * cos(toRadians(axisJ1)) / abs(cos(toRadians(axisJ1))),
+         6.75
+       ],
+       radius: 0.2
+     }, %)
   |> patternCircular2d({
        center: [
          1.75 * cos(toRadians(axisJ1)) / abs(cos(toRadians(axisJ1))),
@@ -151,10 +164,13 @@ const sketch008 = startSketchOn(extrude007, 'END')
 const extrude008 = extrude(0.2, sketch008)
 
 const sketch009 = startSketchOn(extrude007, 'END')
-  |> circle([
-       1.75 * cos(toRadians(axisJ1)) / abs(cos(toRadians(axisJ1))),
-       8
-     ], 0.5, %, $referenceEdge3)
+  |> circle({
+       center: [
+         1.75 * cos(toRadians(axisJ1)) / abs(cos(toRadians(axisJ1))),
+         8
+       ],
+       radius: 0.5
+     }, %, $referenceEdge3)
 const extrude009 = extrude(0.15, sketch009)
   |> fillet({
        radius: 0.1,
@@ -162,7 +178,7 @@ const extrude009 = extrude(0.15, sketch009)
      }, %)
 
 const sketch010 = startSketchOn(plane002)
-  |> circle([1.75, 8], 0.3, %)
+  |> circle({ center: [1.75, 8], radius: 0.3 }, %)
 const extrude010 = extrude(-1, sketch010)
 
 // J2 Axis for Robot Arm
@@ -176,8 +192,8 @@ const plane003 = {
   plane: {
     origin: [-0.1, 0.0, 0.0],
     xAxis: [
-          sin(    toRadians(axisJ1)),
-          cos(    toRadians(axisJ1)),
+      sin(toRadians(axisJ1)),
+      cos(toRadians(axisJ1)),
       0.0
     ],
     yAxis: [0.0, 0.0, 1.0],
@@ -210,7 +226,7 @@ const sketch011 = startSketchOn(plane003)
 const extrude011 = extrude(-axisJ2ArmThickness, sketch011)
 
 const sketch012 = startSketchOn(extrude011, 'START')
-  |> circle([-1.75, 8], 1.9, %, $referenceEdge4)
+  |> circle({ center: [-1.75, 8], radius: 1.9 }, %, $referenceEdge4)
 
 const extrude012 = extrude(0.15, sketch012)
   |> fillet({
@@ -218,10 +234,13 @@ const extrude012 = extrude(0.15, sketch012)
        tags: [getOppositeEdge(referenceEdge4)]
      }, %)
 const sketch013 = startSketchOn(extrude011, 'START')
-  |> circle([
-       -1.75 - (axisJ2ArmLength * cos(toRadians(axisJ2))),
-       8 + axisJ2ArmLength * sin(toRadians(axisJ2))
-     ], 1.9, %, $referenceEdge5)
+  |> circle({
+       center: [
+         -1.75 - (axisJ2ArmLength * cos(toRadians(axisJ2))),
+         8 + axisJ2ArmLength * sin(toRadians(axisJ2))
+       ],
+       radius: 1.9
+     }, %, $referenceEdge5)
 
 const extrude013 = extrude(1, sketch013)
   |> fillet({
@@ -231,7 +250,7 @@ const extrude013 = extrude(1, sketch013)
 
 // Draw Bolt Patterns on J2 Robot Arm
 const sketch014 = startSketchOn(extrude012, 'END')
-  |> circle([-1.75, 6.75], 0.2, %)
+  |> circle({ center: [-1.75, 6.75], radius: 0.2 }, %)
   |> patternCircular2d({
        center: [-1.75, 8],
        repetitions: 7,
@@ -242,10 +261,13 @@ const sketch014 = startSketchOn(extrude012, 'END')
 const extrude014 = extrude(0.15, sketch014)
 
 const sketch015 = startSketchOn(extrude013, 'END')
-  |> circle([
-       -1.75 - ((axisJ2ArmLength - 1) * cos(toRadians(axisJ2))),
-       8 + (axisJ2ArmLength - 1.5) * sin(toRadians(axisJ2))
-     ], 0.2, %)
+  |> circle({
+       center: [
+         -1.75 - ((axisJ2ArmLength - 1) * cos(toRadians(axisJ2))),
+         8 + (axisJ2ArmLength - 1.5) * sin(toRadians(axisJ2))
+       ],
+       radius: 0.2
+     }, %)
   |> patternCircular2d({
        center: [
          -1.75 - (axisJ2ArmLength * cos(toRadians(axisJ2))),
@@ -259,10 +281,13 @@ const sketch015 = startSketchOn(extrude013, 'END')
 const extrude015 = extrude(0.15, sketch015)
 
 const sketch016 = startSketchOn(extrude011, 'END')
-  |> circle([
-       1.75 + axisJ2ArmLength * cos(toRadians(axisJ2)),
-       8 + axisJ2ArmLength * sin(toRadians(axisJ2))
-     ], 0.3, %)
+  |> circle({
+       center: [
+         1.75 + axisJ2ArmLength * cos(toRadians(axisJ2)),
+         8 + axisJ2ArmLength * sin(toRadians(axisJ2))
+       ],
+       radius: 0.3
+     }, %)
 
 const extrude016 = extrude(1, sketch016)
 
@@ -297,10 +322,13 @@ const sketch017 = startSketchOn(plane002)
 const extrude017 = extrude(axisJ3CArmThickness, sketch017)
 
 const sketch018 = startSketchOn(extrude017, 'END')
-  |> circle([
-       1.75 + axisJ2ArmLength * cos(toRadians(axisJ2)),
-       8 + axisJ2ArmLength * sin(toRadians(axisJ2))
-     ], 3.7 / 2, %, $referenceEdge6)
+  |> circle({
+       center: [
+         1.75 + axisJ2ArmLength * cos(toRadians(axisJ2)),
+         8 + axisJ2ArmLength * sin(toRadians(axisJ2))
+       ],
+       radius: 3.7 / 2
+     }, %, $referenceEdge6)
 
 const extrude018 = extrude(0.15, sketch018)
   |> fillet({
@@ -310,10 +338,13 @@ const extrude018 = extrude(0.15, sketch018)
 
 // Draw Bolt Pattern on J3 Robot Arm
 const sketch019 = startSketchOn(extrude018, 'END')
-  |> circle([
-       1.75 + (axisJ2ArmLength - 1) * cos(toRadians(axisJ2)),
-       8 + (axisJ2ArmLength - 1.5) * sin(toRadians(axisJ2))
-     ], 0.2, %)
+  |> circle({
+       center: [
+         1.75 + (axisJ2ArmLength - 1) * cos(toRadians(axisJ2)),
+         8 + (axisJ2ArmLength - 1.5) * sin(toRadians(axisJ2))
+       ],
+       radius: 0.2
+     }, %)
   |> patternCircular2d({
        center: [
          1.75 + axisJ2ArmLength * cos(toRadians(axisJ2)),
@@ -328,17 +359,23 @@ const extrude019 = extrude(0.15, sketch019)
 
 // On the J3 Robot Arm Body, Create Mounting Clevis for Grabber Claw
 const sketch020 = startSketchOn(extrude017, 'START')
-  |> circle([
-       -1.75 - (axisJ2ArmLength * cos(toRadians(axisJ2))) - (axisJ3CArmLength * cos(toRadians(axisJ3C))),
-       8 + axisJ2ArmLength * sin(toRadians(axisJ2)) + axisJ3CArmLength * sin(toRadians(axisJ3C))
-     ], axisJ3CArmWidth / 2, %)
+  |> circle({
+       center: [
+         -1.75 - (axisJ2ArmLength * cos(toRadians(axisJ2))) - (axisJ3CArmLength * cos(toRadians(axisJ3C))),
+         8 + axisJ2ArmLength * sin(toRadians(axisJ2)) + axisJ3CArmLength * sin(toRadians(axisJ3C))
+       ],
+       radius: axisJ3CArmWidth / 2
+     }, %)
 const extrude020 = extrude(-0.5, sketch020)
 
 const sketch021 = startSketchOn(extrude017, 'END')
-  |> circle([
-       1.75 + axisJ2ArmLength * cos(toRadians(axisJ2)) + axisJ3CArmLength * cos(toRadians(axisJ3C)),
-       8 + axisJ2ArmLength * sin(toRadians(axisJ2)) + axisJ3CArmLength * sin(toRadians(axisJ3C))
-     ], axisJ3CArmWidth / 2.01, %)
+  |> circle({
+       center: [
+         1.75 + axisJ2ArmLength * cos(toRadians(axisJ2)) + axisJ3CArmLength * cos(toRadians(axisJ3C)),
+         8 + axisJ2ArmLength * sin(toRadians(axisJ2)) + axisJ3CArmLength * sin(toRadians(axisJ3C))
+       ],
+       radius: axisJ3CArmWidth / 2.01
+     }, %)
 
 const extrude021 = extrude(-0.5, sketch021)
 
@@ -346,7 +383,7 @@ const extrude021 = extrude(-0.5, sketch021)
 const grabberLength = 7
 
 const sketch022 = startSketchOn(extrude021, 'START')
-  |> circle([0, 0], 0.10, %)
+  |> circle({ center: [0, 0], radius: 0.10 }, %)
 
 const extrude022 = extrude(-0.01, sketch022)
 

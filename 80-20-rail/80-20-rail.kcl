@@ -187,10 +187,13 @@ fn rail8020 = (originStart, railHeight, railLength) => {
     |> close(%)
 
     // Sketch center hole of profile
-    |> hole(circle([
-         .5 * railHeight + originStart[0],
-         .5 * railHeight + originStart[1]
-       ], .205 * railHeight / 2, %), %)
+    |> hole(circle({
+         center: [
+           .5 * railHeight + originStart[0],
+           .5 * railHeight + originStart[1]
+         ],
+         radius: .205 * railHeight / 2
+       }, %), %)
     |> extrude(railLength, %)
     |> fillet({
          radius: 0.06,
@@ -213,7 +216,6 @@ fn rail8020 = (originStart, railHeight, railLength) => {
            getNextAdjacentEdge(edge30)
          ]
        }, %)
-       
     |> fillet({
          radius: 0.03,
          tags: [

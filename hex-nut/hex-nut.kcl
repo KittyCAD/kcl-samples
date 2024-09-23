@@ -29,7 +29,7 @@ fn hexNut = (start, thk, innerDia) => {
      }, %)
   |> angledLine({ angle: 0, length: innerDia * .90 }, %)
   |> close(%)
-  |> hole(circle([start[0], start[1]], innerDia / 2, %), %)
+  |> hole(circle({center: [start[0], start[1]], radius: innerDia / 2}, %), %)
   |> extrude(thk, %)
   return hexNutSketch
 }
