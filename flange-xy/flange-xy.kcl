@@ -1,18 +1,19 @@
 // Flange with XY coordinates
-// A flange is a flat rim, collar, or rib, typically forged or cast, that is used to strengthen an object, guide it, or attach it to another object. Flanges are known for their use in various applications, including piping, plumbing, and mechanical engineering, among others. 
+// A flange is a flat rim, collar, or rib, typically forged or cast, that is used to strengthen an object, guide it, or attach it to another object. Flanges are known for their use in various applications, including piping, plumbing, and mechanical engineering, among others.
 
-// Define constants
-const mountingHoleDia = .625 // inches
-const baseDia = 4.625 // inches
-const pipeDia = 1.25 // inches
-const thickness = .625 // inches
-const totalThickness = 0.813 // inches
-const topTotalDiameter = 2.313 // inches
-const bottomThickness = 0.06 // inches
-const bottomTotalDiameter = 2.5 // inches
-const mountingHolePlacementDiameter = 3.5 // inches
-const baseThickness = .625 // inches
-const topTotalThickness = totalThickness - (bottomThickness+baseThickness) // inches
+
+// Define constants in inches (in)
+const mountingHoleDia = .625
+const baseDia = 4.625
+const pipeDia = 1.25
+const thickness = .625
+const totalThickness = 0.813
+const topTotalDiameter = 2.313
+const bottomThickness = 0.06
+const bottomTotalDiameter = 2.5
+const mountingHolePlacementDiameter = 3.5
+const baseThickness = .625
+const topTotalThickness = totalThickness - (bottomThickness + baseThickness)
 const holeLocator = baseDia - 8
 const nHoles = 4
 
@@ -21,44 +22,30 @@ assertGreaterThan(nHoles, 1, "nHoles must be greater than 1")
 
 // Create the flange base and the six mounting holes
 const flangeBase = startSketchOn('XY')
-  |> circle({center: [0,0], radius: baseDia / 2}, %)
+  |> circle({ center: [0, 0], radius: baseDia / 2 }, %)
   |> hole(circle({
-       center: [
-         mountingHolePlacementDiameter / 2,
-         0
-       ],
+       center: [mountingHolePlacementDiameter / 2, 0],
        radius: mountingHoleDia / 2
      }, %), %)
   |> hole(circle({
-       center: [
-         0,
-         mountingHolePlacementDiameter / 2
-       ],
+       center: [0, mountingHolePlacementDiameter / 2],
        radius: mountingHoleDia / 2
      }, %), %)
   |> hole(circle({
-       center: [
-         -mountingHolePlacementDiameter / 2,
-         0
-       ], radius: mountingHoleDia / 2
+       center: [-mountingHolePlacementDiameter / 2, 0],
+       radius: mountingHoleDia / 2
      }, %), %)
   |> hole(circle({
-       center: [
-         0,
-         -mountingHolePlacementDiameter / 2
-       ], radius: mountingHoleDia / 2
+       center: [0, -mountingHolePlacementDiameter / 2],
+       radius: mountingHoleDia / 2
      }, %), %)
-  |> hole(circle({center: [0, 0], pipeDia/2, %), %)
+  |> hole(circle({ center: [0, 0], radius: pipeDia / 2 }, %), %)
   |> extrude(baseThickness, %)
 
 // Plane for top face
 const topFacePlane = {
   plane: {
-    origin: {
-      x: 0,
-      y: 0,
-      z: baseThickness
-    },
+    origin: { x: 0, y: 0, z: baseThickness },
     xAxis: { x: 1, y: 0, z: 0 },
     yAxis: { x: 0, y: 1, z: 0 },
     zAxis: { x: 0, y: 0, z: 1 }
@@ -67,14 +54,20 @@ const topFacePlane = {
 
 // Create the extrusion on the top of the flange base
 const topExtrusion = startSketchOn(topFacePlane, 'end')
-  |> circle({center: [0, 0], radius: topTotalDiameter/2}, %)
-  |> hole(circle({center: [0, 0], radius: pipeDia/2}, %), %)
+  |> circle({
+       center: [0, 0],
+       radius: topTotalDiameter / 2
+     }, %)
+  |> hole(circle({ center: [0, 0], radius: pipeDia / 2 }, %), %)
   |> extrude(topTotalThickness, %)
 
 // Create the extrusion on the bottom of the flange base
 const bottomExtrusion = startSketchOn("XY")
-  |> circle({center: [0, 0], radius: bottomTotalDiameter/2}, %)
-  |> hole(circle({center: [0, 0], radius: pipeDia/2}, %), %)
+  |> circle({
+       center: [0, 0],
+       radius: bottomTotalDiameter / 2
+     }, %)
+  |> hole(circle({ center: [0, 0], radius: pipeDia / 2 }, %), %)
   |> extrude(-bottomThickness, %)
 
 // https://www.mcmaster.com/44685K193/
