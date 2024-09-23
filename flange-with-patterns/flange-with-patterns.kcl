@@ -21,7 +21,7 @@ assertGreaterThan(nHoles, 1, "nHoles must be greater than 1")
 
 // Create the circular pattern for the mounting holes
 const circles = startSketchOn('XY')
-  |> circle([mountingHolePlacementDiameter /2, 0], mountingHoleDia / 2, %)
+  |> circle({center: [mountingHolePlacementDiameter /2, 0], radius: mountingHoleDia / 2}, %)
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
@@ -31,9 +31,9 @@ const circles = startSketchOn('XY')
 
 // Create the base of the flange and add the mounting holes
 const flangeBase = startSketchOn('XY')
-  |> circle([0, 0], baseDia/2, %)
+  |> circle({center: [0, 0], radius: baseDia/2}, %)
   |> hole(circles, %)
-  |> hole(circle([0, 0], pipeDia/2, %), %)
+  |> hole(circle({center: [0, 0], radius: pipeDia/2}, %), %)
   |> extrude(baseThickness, %)
 
 // Plane for top face
@@ -52,12 +52,12 @@ const topFacePlane = {
 
 // Create the extrusion on the top of the flange base
 const topExtrusion = startSketchOn(topFacePlane)
-  |> circle([0, 0], topTotalDiameter/2, %)
-  |> hole(circle([0, 0], pipeDia/2, %), %)
+  |> circle({center: [0, 0], radius: topTotalDiameter/2}, %)
+  |> hole(circle({center: [0, 0], radius: pipeDia/2}, %), %)
   |> extrude(topTotalThickness, %)
 
 // Create the extrusion on the bottom of the flange base
 const bottomExtrusion = startSketchOn("XY")
-  |> circle([0, 0], bottomTotalDiameter/2, %)
-  |> hole(circle([0, 0], pipeDia/2, %), %)
+  |> circle({center: [0, 0], radius: bottomTotalDiameter/2}, %)
+  |> hole(circle({center: [0, 0], radius: pipeDia/2}, %), %)
   |> extrude(-bottomThickness, %)

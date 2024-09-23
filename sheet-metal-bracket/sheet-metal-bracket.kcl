@@ -1,5 +1,6 @@
 // Sheet Metal Bracket
-// A component typically made from flat sheet metal through various manufacturing processes such as bending, punching, cutting, and forming. These brackets are used to support, attach, or mount other hardware components, often providing a structural or functional base for assembly. 
+// A component typically made from flat sheet metal through various manufacturing processes such as bending, punching, cutting, and forming. These brackets are used to support, attach, or mount other hardware components, often providing a structural or functional base for assembly.
+
 
 // Define constants such as sheet metal thickness, bend radius, flange length, bolt diameter size, etc.
 const thickness = 0.090 // inches
@@ -11,7 +12,8 @@ const hatWidth = 5 // inches
 const boltSize = 0.25 // inches
 const flangeWidth = 1.5 // inches
 
-// Sketch and extrude the base shape and fillet the inside and outside edges. 
+
+// Sketch and extrude the base shape and fillet the inside and outside edges.
 const baseExtrusion = startSketchOn('-XZ')
   |> startProfileAt([0, 0], %)
   |> line([0, thickness], %, $e1)
@@ -67,13 +69,16 @@ const flange1 = startSketchOn('XY')
   |> line([flangeWidth, 0], %, $e13)
   |> line([0, -hatWidth], %, $e14)
   |> close(%)
-  |> hole(circle([0.75, 1], boltSize, %), %)
-  |> hole(circle([0.75, 4], boltSize, %), %)
+  |> hole(circle({ center: [0.75, 1], radius: boltSize }, %), %)
+  |> hole(circle({ center: [0.75, 4], radius: boltSize }, %), %)
   |> extrude(thickness, %)
   |> fillet({
-    radius: 0.5,
-    tags: [getNextAdjacentEdge(e13), getNextAdjacentEdge(e14)],
-  }, %)
+       radius: 0.5,
+       tags: [
+         getNextAdjacentEdge(e13),
+         getNextAdjacentEdge(e14)
+       ]
+     }, %)
 
 const flange2 = startSketchOn('XY')
   |> startProfileAt([-6, 0], %)
@@ -81,10 +86,13 @@ const flange2 = startSketchOn('XY')
   |> line([-flangeWidth, 0], %, $e15)
   |> line([0, -hatWidth], %, $e16)
   |> close(%)
-  |> hole(circle([-6.75, 1], boltSize, %), %)
-  |> hole(circle([-6.75, 4], boltSize, %), %)
+  |> hole(circle({ center: [-6.75, 1], radius: boltSize }, %), %)
+  |> hole(circle({ center: [-6.75, 4], radius: boltSize }, %), %)
   |> extrude(thickness, %)
   |> fillet({
-    radius: 0.25,
-    tags: [getNextAdjacentEdge(e15), getNextAdjacentEdge(e16)],
-  }, %)
+       radius: 0.25,
+       tags: [
+         getNextAdjacentEdge(e15),
+         getNextAdjacentEdge(e16)
+       ]
+     }, %)

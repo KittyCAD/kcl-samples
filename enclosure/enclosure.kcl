@@ -53,8 +53,8 @@ fn function001 = (originStart) => {
 
   // Create a pillar with a fasterner hole at the center
   const sketch002 = startSketchOn(plane001)
-    |> circle([originStart[0], originStart[1]], holeDia + wallThickness, %)
-    |> hole(circle([originStart[0], originStart[1]], holeDia, %), %)
+    |> circle({center: [originStart[0], originStart[1]], radius: holeDia + wallThickness}, %)
+    |> hole(circle({center: [originStart[0], originStart[1]], radius: holeDia}, %), %)
   const extrude002 = extrude(height - wallThickness, sketch002)
 
   return extrude002
@@ -92,22 +92,34 @@ const sketch003 = startSketchOn('XY')
      ], %, $rectangleSegmentC002)
   |> lineTo([profileStartX(%), profileStartY(%)], %, $rectangleSegmentD002)
   |> close(%)
-  |> hole(circle([
-       width * 1.2 + wallThickness * 3 + holeDia,
-       wallThickness * 3 + holeDia
-     ], holeDia, %), %)
-  |> hole(circle([
-       width * 1.2 + wallThickness * 3 + holeDia,
-       length - (wallThickness * 3 + holeDia)
-     ], holeDia, %), %)
-  |> hole(circle([
-       width * 2.2 - (wallThickness * 3 + holeDia),
-       wallThickness * 3 + holeDia
-     ], holeDia, %), %)
-  |> hole(circle([
-       width * 2.2 - (wallThickness * 3 + holeDia),
-       length - (wallThickness * 3 + holeDia)
-     ], holeDia, %), %)
+  |> hole(circle({
+       center: [
+         width * 1.2 + wallThickness * 3 + holeDia,
+         wallThickness * 3 + holeDia
+       ],
+       radius: holeDia
+     }, %), %)
+  |> hole(circle({
+       center: [
+         width * 1.2 + wallThickness * 3 + holeDia,
+         length - (wallThickness * 3 + holeDia)
+       ],
+       radius: holeDia
+     }, %), %)
+  |> hole(circle({
+       center: [
+         width * 2.2 - (wallThickness * 3 + holeDia),
+         wallThickness * 3 + holeDia
+       ],
+       radius: holeDia
+     }, %), %)
+  |> hole(circle({
+       center: [
+         width * 2.2 - (wallThickness * 3 + holeDia),
+         length - (wallThickness * 3 + holeDia)
+       ],
+       radius: holeDia
+     }, %), %)
 const extrude003 = extrude(wallThickness, sketch003)
   |> fillet({
        radius: wallThickness * 4,
@@ -136,22 +148,34 @@ const sketch004 = startSketchOn(extrude003, 'END')
      ], %, $rectangleSegmentC003)
   |> lineTo([profileStartX(%), profileStartY(%)], %, $rectangleSegmentD003)
   |> close(%)
-  |> hole(circle([
-       width * 1.2 + wallThickness * 3 + holeDia,
-       wallThickness * 3 + holeDia
-     ], holeDia + wallThickness, %), %)
-  |> hole(circle([
-       width * 1.2 + wallThickness * 3 + holeDia,
-       length - (wallThickness * 3 + holeDia)
-     ], holeDia + wallThickness, %), %)
-  |> hole(circle([
-       width * 2.2 - (wallThickness * 3 + holeDia),
-       wallThickness * 3 + holeDia
-     ], holeDia + wallThickness, %), %)
-  |> hole(circle([
-       width * 2.2 - (wallThickness * 3 + holeDia),
-       length - (wallThickness * 3 + holeDia)
-     ], holeDia + wallThickness, %), %)
+  |> hole(circle({
+       center: [
+         width * 1.2 + wallThickness * 3 + holeDia,
+         wallThickness * 3 + holeDia
+       ],
+       radius: holeDia + wallThickness
+     }, %), %)
+  |> hole(circle({
+       center: [
+         width * 1.2 + wallThickness * 3 + holeDia,
+         length - (wallThickness * 3 + holeDia)
+       ],
+       radius: holeDia + wallThickness
+     }, %), %)
+  |> hole(circle({
+       center: [
+         width * 2.2 - (wallThickness * 3 + holeDia),
+         wallThickness * 3 + holeDia
+       ],
+       radius: holeDia + wallThickness
+     }, %), %)
+  |> hole(circle({
+       center: [
+         width * 2.2 - (wallThickness * 3 + holeDia),
+         length - (wallThickness * 3 + holeDia)
+       ],
+       radius: holeDia + wallThickness
+     }, %), %)
 const extrude004 = extrude(wallThickness, sketch004)
   |> fillet({
        radius: wallThickness * 3,
