@@ -31,8 +31,8 @@ const part001 = revolve({
   angle: 90,
   axis: {
     custom: {
-      axis: [1.0, 0.0, 0.0],
-      origin: [0.0, height + .0001, 0]
+      axis: [1.0, 0.0],
+      origin: [0.0, height + .0001]
     }
   }
 }, sketch001)
