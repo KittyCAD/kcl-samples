@@ -3,25 +3,25 @@
 
 
 // Define constants in inches (in)
-const mountingHoleDia = .625
-const baseDia = 4.625
-const pipeDia = 1.25
-const thickness = .625
-const totalThickness = 0.813
-const topTotalDiameter = 2.313
-const bottomThickness = 0.06
-const bottomTotalDiameter = 2.5
-const mountingHolePlacementDiameter = 3.5
-const baseThickness = .625
-const topTotalThickness = totalThickness - (bottomThickness + baseThickness)
-const holeLocator = baseDia - 8
-const nHoles = 4
+mountingHoleDia = .625
+baseDia = 4.625
+pipeDia = 1.25
+thickness = .625
+totalThickness = 0.813
+topTotalDiameter = 2.313
+bottomThickness = 0.06
+bottomTotalDiameter = 2.5
+mountingHolePlacementDiameter = 3.5
+baseThickness = .625
+topTotalThickness = totalThickness - (bottomThickness + baseThickness)
+holeLocator = baseDia - 8
+nHoles = 4
 
 // Add assertion so nHoles are always greater than 1
 assertGreaterThan(nHoles, 1, "nHoles must be greater than 1")
 
 // Create the flange base and the six mounting holes
-const flangeBase = startSketchOn('XY')
+flangeBase = startSketchOn('XY')
   |> circle({ center: [0, 0], radius: baseDia / 2 }, %)
   |> hole(circle({
        center: [mountingHolePlacementDiameter / 2, 0],
@@ -43,7 +43,7 @@ const flangeBase = startSketchOn('XY')
   |> extrude(baseThickness, %)
 
 // Plane for top face
-const topFacePlane = {
+topFacePlane = {
   plane: {
     origin: { x: 0, y: 0, z: baseThickness },
     xAxis: { x: 1, y: 0, z: 0 },
@@ -53,7 +53,7 @@ const topFacePlane = {
 }
 
 // Create the extrusion on the top of the flange base
-const topExtrusion = startSketchOn(topFacePlane, 'end')
+topExtrusion = startSketchOn(topFacePlane, 'end')
   |> circle({
        center: [0, 0],
        radius: topTotalDiameter / 2
@@ -62,7 +62,7 @@ const topExtrusion = startSketchOn(topFacePlane, 'end')
   |> extrude(topTotalThickness, %)
 
 // Create the extrusion on the bottom of the flange base
-const bottomExtrusion = startSketchOn("XY")
+bottomExtrusion = startSketchOn("XY")
   |> circle({
        center: [0, 0],
        radius: bottomTotalDiameter / 2

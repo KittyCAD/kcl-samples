@@ -2,17 +2,17 @@
 // Brake calipers are used to squeeze the brake pads against the rotor, causing larger and larger amounts of friction depending on how hard the brakes are pressed.
 
 // Define constants
-const rotorDiameter = 12 // inches
-const rotorInnerDiameterThickness = 12.6 // mm
-const rotorTotalThickness = 25.4 // mm
-const caliperTolerance = 5 // mm
-const caliperPadLength = 40 // mm
-const caliperThickness = 10 // mm
-const caliperOuterEdgeRadius = 10 // mm
-const caliperInnerEdgeRadius = 3 // mm
+rotorDiameter = 12 // inches
+rotorInnerDiameterThickness = 12.6 // mm
+rotorTotalThickness = 25.4 // mm
+caliperTolerance = 5 // mm
+caliperPadLength = 40 // mm
+caliperThickness = 10 // mm
+caliperOuterEdgeRadius = 10 // mm
+caliperInnerEdgeRadius = 3 // mm
 
 // Create the plane for the brake caliper. This is so it can match up with the rotor model.
-const brakeCaliperPlane = {
+brakeCaliperPlane = {
   plane: {
     origin: { x: 0, y: 0, z: 0 },
     xAxis: { x: 1, y: 0, z: 0 },
@@ -22,7 +22,7 @@ const brakeCaliperPlane = {
 }
 
 // Sketch the brake caliper cross section
-const brakeCaliperSketch = startSketchOn(brakeCaliperPlane)
+brakeCaliperSketch = startSketchOn(brakeCaliperPlane)
   |> startProfileAt([rotorDiameter/2 * 25.4+caliperTolerance, 0], %)
   |> line([0, rotorTotalThickness + caliperTolerance - caliperInnerEdgeRadius], %)
   |> tangentialArc({
@@ -67,7 +67,7 @@ const brakeCaliperSketch = startSketchOn(brakeCaliperPlane)
   |> close(%)
 
 // Revolve the brake caliiper sketch
-const brakeCaliper = revolve({
+brakeCaliper = revolve({
     axis: "Y",
     angle: -70,
   }, brakeCaliperSketch)

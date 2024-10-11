@@ -3,17 +3,17 @@
 
 
 // Define constants such as length, width, height, counter-bore depth and diameter, bearing diameter, hole location padding, and more
-const length = 6
-const width = 4
-const height = 1
-const cbDepth = .25
-const cbDia = .7
-const holeDia = .375
-const padding = 1.5
-const bearingDia = 3
+length = 6
+width = 4
+height = 1
+cbDepth = .25
+cbDia = .7
+holeDia = .375
+padding = 1.5
+bearingDia = 3
 
 // (Needs to be updated). Sketch the block and extrude up to where the counterbore diameter starts.
-const block = startSketchOn('XY')
+block = startSketchOn('XY')
   |> startProfileAt([-width / 2, -length / 2], %)
   |> lineTo([width / 2, -length / 2], %)
   |> lineTo([width / 2, length / 2], %)
@@ -54,7 +54,7 @@ const block = startSketchOn('XY')
   |> extrude(height - cbDepth, %)
 
 // Create a second sketch that creates the counterbore diameters and extrude the rest of the way to get the total height. Note: You cannot use startSketchOn(block, 'end'). The extrude lives outside the bounds, and the engine will not execute. This is a known issue.
-const secondHalf = startSketchOn({
+secondHalf = startSketchOn({
        plane: {
          origin: { x: 0, y: 0, z: height - cbDepth },
          xAxis: { x: 1, y: 0, z: 0 },

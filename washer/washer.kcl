@@ -3,20 +3,20 @@
 
 
 // Define constants in inches (in)
-const innerDiameter = 0.203
-const outerDiameter = 0.438
-const thicknessMax = 0.038
-const thicknessMin = 0.024
+innerDiameter = 0.203
+outerDiameter = 0.438
+thicknessMax = 0.038
+thicknessMin = 0.024
 
 
 // Write a function that defines the washer and extrude it.
 fn washer = (plane, innerDia, outerDia, thk) => {
   // Define the sketch of the washer
-  const washerSketch = startSketchOn(plane)
+  washerSketch = startSketchOn(plane)
     |> circle({ center: [0, 0], radius: outerDia / 2 }, %)
     |> hole(circle({ center: [0, 0], radius: innerDia / 2 }, %), %)
 
-  const washer = extrude(thk, washerSketch)
+  washer = extrude(thk, washerSketch)
   return washer
 }
 

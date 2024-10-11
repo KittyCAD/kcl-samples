@@ -3,33 +3,33 @@
 
 
 // Define constants
-const screwLength = 1.000 // inch
-const screwDiameter = .190 // inch
-const headDiameter = .313 // inch
-const headLength = screwDiameter // inch
-const hexWallToWall = 5 / 32 // inch
-const capRatio = screwDiameter / headDiameter
-const hexRatio = hexWallToWall / headDiameter
-const hexWallLength = hexWallToWall / 2 * 1 / cos(toRadians(30)) // inch
-const hexStartingAngle = 210 // first angle of hex pattern (degrees)
-const hexInteriorAngle = 120 // degrees
-const hexChangeAngle = 180 - hexInteriorAngle // degrees
+screwLength = 1.000 // inch
+screwDiameter = .190 // inch
+headDiameter = .313 // inch
+headLength = screwDiameter // inch
+hexWallToWall = 5 / 32 // inch
+capRatio = screwDiameter / headDiameter
+hexRatio = hexWallToWall / headDiameter
+hexWallLength = hexWallToWall / 2 * 1 / cos(toRadians(30)) // inch
+hexStartingAngle = 210 // first angle of hex pattern (degrees)
+hexInteriorAngle = 120 // degrees
+hexChangeAngle = 180 - hexInteriorAngle // degrees
 
 
 // Write a function that defines the Socket Head Cap Screw
 fn capScrew = (start, length, dia, capHeadLength) => {
   // Create the head of the cap screw
-  const screwHeadSketch = startSketchOn('XZ')
+  screwHeadSketch = startSketchOn('XZ')
     |> circle({
          center: [start[0], start[1]],
          radius: dia / capRatio / 2
        }, %)
 
   // Extrude the screw head sketch
-  const screwHead = extrude(capHeadLength, screwHeadSketch)
+  screwHead = extrude(capHeadLength, screwHeadSketch)
 
   // Define the sketch of the hex pattern on the screw head
-  const hexPatternSketch = startSketchOn(screwHead, 'end')
+  hexPatternSketch = startSketchOn(screwHead, 'end')
     |> startProfileAt([hexWallToWall / 2, 0], %)
     |> yLine(-hexWallLength / 2, %)
     |> angledLine({
@@ -53,14 +53,14 @@ fn capScrew = (start, length, dia, capHeadLength) => {
          length: hexWallLength
        }, %)
     |> close(%)
-  const hexPattern = extrude(-headLength * 0.75, hexPatternSketch)
+  hexPattern = extrude(-headLength * 0.75, hexPatternSketch)
 
-  const screwBodySketch = startSketchOn(screwHead, "start")
+  screwBodySketch = startSketchOn(screwHead, "start")
     |> circle({
          center: [start[0], start[1]],
          radius: dia / 2
        }, %)
-  const screwBody = extrude(length, screwBodySketch)
+  screwBody = extrude(length, screwBodySketch)
   return screwBody
 }
 

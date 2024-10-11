@@ -3,15 +3,15 @@
 
 
 // Define constants
-const plateLength = 10
-const plateWidth = 6
-const filletRadius = 0.5
-const plateThickness = .5
-const centerHoleDiameter = 2
+plateLength = 10
+plateWidth = 6
+filletRadius = 0.5
+plateThickness = .5
+centerHoleDiameter = 2
 
 // Create a function that defines the body width and length of the mounting plate. Tag the corners so they can be passed through the fillet function.
 fn rectShape = (pos, w, l) => {
-  const rr = startSketchOn('XY')
+  rr = startSketchOn('XY')
     |> startProfileAt([pos[0] - (w / 2), pos[1] - (l / 2)], %)
     |> lineTo([pos[0] + w / 2, pos[1] - (l / 2)], %, $edge1)
     |> lineTo([pos[0] + w / 2, pos[1] + l / 2], %, $edge2)
@@ -21,12 +21,12 @@ fn rectShape = (pos, w, l) => {
 }
 
 // Define the hole radius and x, y location constants
-const holeRadius = .25
-const holeIndex = .75
+holeRadius = .25
+holeIndex = .75
 
 // Create the mounting plate extrusion, holes, and fillets
-const rs = rectShape([0, 0], plateWidth, plateLength)
-const part = rs
+rs = rectShape([0, 0], plateWidth, plateLength)
+part = rs
   |> hole(circle({
        center: [
          -plateWidth / 2 + holeIndex,
