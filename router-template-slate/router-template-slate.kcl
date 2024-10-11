@@ -2,20 +2,20 @@
 // A guide for routing a slate for a cross bar.
 
 // Define constants
-const routerDiameter = 12.7 // mm
-const mmInInch = 25.4 // mm
-const templateDiameter = mmInInch * 11 / 16 // mm
-const templateGap = ((templateDiameter - routerDiameter) / 2) -0.5 // mm
-const slateWidthHalf = 41.5 / 2 // mm
-const minClampingDistance = 50 + 30 // mm
-const templateThickness = 10 // mm
-const radius = 10 // mm
-const depth = 30 // mm
-const length001 = slateWidthHalf - radius // mm
-const length002 = depth + minClampingDistance // mm
+routerDiameter = 12.7 // mm
+mmInInch = 25.4 // mm
+templateDiameter = mmInInch * 11 / 16 // mm
+templateGap = ((templateDiameter - routerDiameter) / 2) -0.5 // mm
+slateWidthHalf = 41.5 / 2 // mm
+minClampingDistance = 50 + 30 // mm
+templateThickness = 10 // mm
+radius = 10 // mm
+depth = 30 // mm
+length001 = slateWidthHalf - radius // mm
+length002 = depth + minClampingDistance // mm
 
 // Create the first sketch
-const sketch001 = startSketchOn('XZ') 
+sketch001 = startSketchOn('XZ')
   |> startProfileAt([0, depth - templateGap], %)
   |> xLine(length001, %, $seg01)
   |> arc({
@@ -41,10 +41,10 @@ const sketch001 = startSketchOn('XZ')
   |> close(%)
 
 // Extrude the first sketch
-const extrude001 = extrude(5, sketch001)
+extrude001 = extrude(5, sketch001)
 
 // Create the second sketch
-const sketch002 = startSketchOn(extrude001, 'START')
+sketch002 = startSketchOn(extrude001, 'START')
   |> startProfileAt([
        -slateWidthHalf,
        -templateGap * 2 - (templateDiameter / 2)
@@ -62,10 +62,10 @@ const sketch002 = startSketchOn(extrude001, 'START')
   |> close(%)
 
 // Extrude the second sketch
-const extrude002 = extrude(7.5, sketch002)
+extrude002 = extrude(7.5, sketch002)
 
 // Create the third sketch
-const sketch003 = startSketchOn(extrude001, 'START')
+sketch003 = startSketchOn(extrude001, 'START')
   |> startProfileAt([
        slateWidthHalf,
        -templateGap * 2 - (templateDiameter / 2)
@@ -83,4 +83,4 @@ const sketch003 = startSketchOn(extrude001, 'START')
   |> close(%)
 
 // Extrude the third Sketch
-const extrude003 = extrude(7.5, sketch003)
+extrude003 = extrude(7.5, sketch003)

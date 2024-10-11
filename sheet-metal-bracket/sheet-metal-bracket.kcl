@@ -3,18 +3,18 @@
 
 
 // Define constants such as sheet metal thickness, bend radius, flange length, bolt diameter size, etc.
-const thickness = 0.090 // inches
-const bendRad = 0.08 // inches
-const outsideBendRad = bendRad + thickness // inches
-const flangeLength = 0.5 // inches
-const hatHeight = 3 // inches
-const hatWidth = 5 // inches
-const boltSize = 0.25 // inches
-const flangeWidth = 1.5 // inches
+thickness = 0.090 // inches
+bendRad = 0.08 // inches
+outsideBendRad = bendRad + thickness // inches
+flangeLength = 0.5 // inches
+hatHeight = 3 // inches
+hatWidth = 5 // inches
+boltSize = 0.25 // inches
+flangeWidth = 1.5 // inches
 
 
 // Sketch and extrude the base shape and fillet the inside and outside edges.
-const baseExtrusion = startSketchOn('-XZ')
+baseExtrusion = startSketchOn('-XZ')
   |> startProfileAt([0, 0], %)
   |> line([0, thickness], %, $e1)
   |> line([flangeLength, 0], %, $e2)
@@ -63,7 +63,7 @@ const baseExtrusion = startSketchOn('-XZ')
      }, %)
 
 // Define the flanges and place the bolt holes
-const flange1 = startSketchOn('XY')
+flange1 = startSketchOn('XY')
   |> startProfileAt([0, 0], %)
   |> line([0, hatWidth], %)
   |> line([flangeWidth, 0], %, $e13)
@@ -80,7 +80,7 @@ const flange1 = startSketchOn('XY')
        ]
      }, %)
 
-const flange2 = startSketchOn('XY')
+flange2 = startSketchOn('XY')
   |> startProfileAt([-6, 0], %)
   |> line([0, hatWidth], %)
   |> line([-flangeWidth, 0], %, $e15)

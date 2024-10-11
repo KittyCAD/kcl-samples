@@ -2,30 +2,30 @@
 // A crucial component in various piping systems, designed to facilitate the connection, disconnection, and access to piping for inspection, cleaning, and modifications. This assembly combines pipes (long cylindrical conduits) with flanges (plate-like fittings) to create a secure yet detachable joint.
 
 
-const flangeThickness = .125
-const flangeBaseDia = 2
-const boreHeight = 1
-const flangePipeDia = 1
-const mountingHoleDia = 0.425
-const screwDia = 0.375
-const tol = 0.010
-const hexNutScale = 0.90
-const wallThickness = 0.5
-const screwLength = 1.125
-const washerThickness = 0.0625
-const screwStart = [
+flangeThickness = .125
+flangeBaseDia = 2
+boreHeight = 1
+flangePipeDia = 1
+mountingHoleDia = 0.425
+screwDia = 0.375
+tol = 0.010
+hexNutScale = 0.90
+wallThickness = 0.5
+screwLength = 1.125
+washerThickness = 0.0625
+screwStart = [
   0,
   flangeThickness + washerThickness,
   1.375
 ]
-const capRatio = .190 / .313 // Ratio grabbed from another screw
-const hexRatio = 5 / 32 / .190 // Ratio grabbed from another screw
-const hexStartingAngle = 210 // first angle of hex pattern (degrees)
-const hexInteriorAngle = 120 // degrees
-const hexChangeAngle = 180 - hexInteriorAngle // degrees
+capRatio = .190 / .313 // Ratio grabbed from another screw
+hexRatio = 5 / 32 / .190 // Ratio grabbed from another screw
+hexStartingAngle = 210 // first angle of hex pattern (degrees)
+hexInteriorAngle = 120 // degrees
+hexChangeAngle = 180 - hexInteriorAngle // degrees
 
 
-const screwPlane = {
+screwPlane = {
   plane: {
     origin: {
       x: screwStart[0],
@@ -39,24 +39,24 @@ const screwPlane = {
 }
 
 fn capScrew = (start, length, dia) => {
-  const headLength = dia // inch
-  const wallToWallLength = hexRatio * dia
-  const headDia = dia / capRatio
-  const hexWallLength = wallToWallLength / 2 * 1 / cos(toRadians(30)) // inch
+  headLength = dia // inch
+  wallToWallLength = hexRatio * dia
+  headDia = dia / capRatio
+  hexWallLength = wallToWallLength / 2 * 1 / cos(toRadians(30)) // inch
 
 
   // Length of Cap Head is always equal to diameter
-  const capHeadLength = dia
+  capHeadLength = dia
 
   // Create the head of the cap screw
-  const screwHeadSketch = startSketchOn(screwPlane)
+  screwHeadSketch = startSketchOn(screwPlane)
     |> circle({ center: [0, 0], radius: headDia / 2 }, %)
 
   // Extrude the screw head sketch
-  const screwHead = extrude(dia, screwHeadSketch)
+  screwHead = extrude(dia, screwHeadSketch)
 
   // Define the sketch of the hex pattern on the screw head
-  const hexPatternSketch = startSketchOn(screwHead, 'end')
+  hexPatternSketch = startSketchOn(screwHead, 'end')
     |> startProfileAt([
          -start[0] + wallToWallLength / 2,
          start[2]
@@ -83,12 +83,12 @@ fn capScrew = (start, length, dia) => {
          length: hexWallLength
        }, %)
     |> close(%)
-  const hexPattern = extrude(-headLength * 0.75, hexPatternSketch)
+  hexPattern = extrude(-headLength * 0.75, hexPatternSketch)
 
   return hexPattern
 }
 
-const workingPlane = {
+workingPlane = {
   plane: {
     origin: { x: 0, y: flangeThickness, z: 0 },
     xAxis: { x: 0, y: 0, z: 1 },
@@ -99,7 +99,7 @@ const workingPlane = {
 
 // Washer function
 fn washer = (plane, start, thk, innerDia, outerDia) => {
-  const washerSketch = startSketchOn(plane)
+  washerSketch = startSketchOn(plane)
     |> circle({
          center: [start[0], start[1]],
          radius: outerDia / 2
@@ -114,7 +114,7 @@ fn washer = (plane, start, thk, innerDia, outerDia) => {
 
 // Hex nut function
 fn hexNut = (start, thk, innerDia) => {
-  const hexNutSketch = startSketchOn({
+  hexNutSketch = startSketchOn({
          plane: {
            origin: {
              x: start[0],
@@ -151,7 +151,7 @@ fn hexNut = (start, thk, innerDia) => {
 }
 
 // Mounting holes pattern
-const mountingHolePattern = startSketchOn('XZ')
+mountingHolePattern = startSketchOn('XZ')
   |> circle({
        center: [screwStart[0], screwStart[2]],
        radius: screwDia / 2 + tol
@@ -164,7 +164,7 @@ const mountingHolePattern = startSketchOn('XZ')
      }, %)
 
 // Sketch and revolve the pipe
-const pipe = startSketchOn('XY')
+pipe = startSketchOn('XY')
   |> startProfileAt([flangePipeDia / 2 - tol, 0], %)
   |> line([0, -2], %)
   |> angledLine({ angle: -60, length: .5 }, %)
@@ -182,7 +182,7 @@ const pipe = startSketchOn('XY')
   |> revolve({ axis: 'y' }, %)
 
 // Sketch and extrude the wall
-const wall = startSketchOn('XZ')
+wall = startSketchOn('XZ')
   |> startProfileAt([-4, -4], %)
   |> line([0, 8], %)
   |> line([8, 0], %)
@@ -196,7 +196,7 @@ const wall = startSketchOn('XZ')
   |> extrude(wallThickness, %)
 
 // Sketch and revolve the flange
-const flangeBase = startSketchOn('XZ')
+flangeBase = startSketchOn('XZ')
   |> circle({
        center: [0, 0],
        radius: flangeBaseDia
@@ -232,9 +232,9 @@ capScrew([
        rotateDuplicates: true
      }, %)
 
-const screwBodySketch = startSketchOn(screwPlane)
+screwBodySketch = startSketchOn(screwPlane)
   |> circle({ center: [0, 0], radius: screwDia / 2 }, %)
-const screwBody = extrude(-screwLength, screwBodySketch)
+screwBody = extrude(-screwLength, screwBodySketch)
   |> patternCircular3d({
        axis: [0, 1, 0],
        center: [0, 0, 0],
@@ -244,7 +244,7 @@ const screwBody = extrude(-screwLength, screwBodySketch)
      }, %)
 
 // Create a plane for the washers on the back side of the wall
-const backSideWasherPlane = {
+backSideWasherPlane = {
   plane: {
     origin: {
       x: 0,

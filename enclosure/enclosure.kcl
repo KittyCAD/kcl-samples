@@ -2,14 +2,14 @@
 // An enclosure body and sealing lid for storing items
 
 
-const length = 175
-const width = 125
-const height = 70
-const wallThickness = 3
-const holeDia = 4
+length = 175
+width = 125
+height = 70
+wallThickness = 3
+holeDia = 4
 
 // Model a box with base enclosure dimensions
-const sketch001 = startSketchOn('XY')
+sketch001 = startSketchOn('XY')
   |> startProfileAt([0, 0], %)
   |> angledLine([0, width], %, $rectangleSegmentA001)
   |> angledLine([
@@ -22,7 +22,7 @@ const sketch001 = startSketchOn('XY')
      ], %, $rectangleSegmentC001)
   |> lineTo([profileStartX(%), profileStartY(%)], %, $rectangleSegmentD001)
   |> close(%)
-const extrude001 = extrude(height, sketch001)
+extrude001 = extrude(height, sketch001)
   |> fillet({
        radius: wallThickness * 4,
        tags: [
@@ -42,7 +42,7 @@ const extrude001 = extrude(height, sketch001)
 // Define a function to create the internal structure to secure a fastener at each corner
 fn function001 = (originStart) => {
   // Create a plane to sketch on shell interior
-  const plane001 = {
+  plane001 = {
     plane: {
       origin: [0.0, 0.0, wallThickness],
       xAxis: [1.0, 0.0, 0.0],
@@ -52,10 +52,10 @@ fn function001 = (originStart) => {
   }
 
   // Create a pillar with a fasterner hole at the center
-  const sketch002 = startSketchOn(plane001)
+  sketch002 = startSketchOn(plane001)
     |> circle({center: [originStart[0], originStart[1]], radius: holeDia + wallThickness}, %)
     |> hole(circle({center: [originStart[0], originStart[1]], radius: holeDia}, %), %)
-  const extrude002 = extrude(height - wallThickness, sketch002)
+  extrude002 = extrude(height - wallThickness, sketch002)
 
   return extrude002
 }
@@ -79,7 +79,7 @@ function001([
 ])
 
 // Define lid position and outer surface
-const sketch003 = startSketchOn('XY')
+sketch003 = startSketchOn('XY')
   |> startProfileAt([width * 1.2, 0], %)
   |> angledLine([0, width], %, $rectangleSegmentA002)
   |> angledLine([
@@ -120,7 +120,7 @@ const sketch003 = startSketchOn('XY')
        ],
        radius: holeDia
      }, %), %)
-const extrude003 = extrude(wallThickness, sketch003)
+extrude003 = extrude(wallThickness, sketch003)
   |> fillet({
        radius: wallThickness * 4,
        tags: [
@@ -132,7 +132,7 @@ const extrude003 = extrude(wallThickness, sketch003)
      }, %)
 
 // Define lid inner and sealing surfaces
-const sketch004 = startSketchOn(extrude003, 'END')
+sketch004 = startSketchOn(extrude003, 'END')
   |> startProfileAt([
        width * 1.2 + wallThickness,
        wallThickness
@@ -176,7 +176,7 @@ const sketch004 = startSketchOn(extrude003, 'END')
        ],
        radius: holeDia + wallThickness
      }, %), %)
-const extrude004 = extrude(wallThickness, sketch004)
+extrude004 = extrude(wallThickness, sketch004)
   |> fillet({
        radius: wallThickness * 3,
        tags: [

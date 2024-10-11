@@ -2,18 +2,18 @@
 // A ball bearing is a type of rolling-element bearing that uses balls to maintain the separation between the bearing races. The primary purpose of a ball bearing is to reduce rotational friction and support radial and axial loads. 
 
 // Define constants like ball diameter, inside diamter, overhange length, and thickness
-const outsideDiameter = 1.625 // inches
-const sphereDia = 0.25 // inches
-const shaftDia = 0.75 // inches
-const overallThickness = 0.313 // inches
-const wallThickness = 0.100 // inches
-const overHangLength = .3 // inches
-const nBalls = 10 
-const chainWidth = sphereDia/2 // inches
-const chainThickness = sphereDia/8 // inches
-const linkDiameter = sphereDia/4 // inches
+outsideDiameter = 1.625 // inches
+sphereDia = 0.25 // inches
+shaftDia = 0.75 // inches
+overallThickness = 0.313 // inches
+wallThickness = 0.100 // inches
+overHangLength = .3 // inches
+nBalls = 10
+chainWidth = sphereDia/2 // inches
+chainThickness = sphereDia/8 // inches
+linkDiameter = sphereDia/4 // inches
 
-const customPlane = {
+customPlane = {
   plane: {
     origin: { x: 0, y: 0, z: -overallThickness/2 },
     xAxis: { x: 1, y: 0, z: 0 },
@@ -23,7 +23,7 @@ const customPlane = {
 }
 
 // Sketch the inside bearing piece
-const insideWallSketch = startSketchOn(customPlane)
+insideWallSketch = startSketchOn(customPlane)
   |> circle({
        center: [0, 0],
        radius: shaftDia/2 + wallThickness
@@ -34,10 +34,10 @@ const insideWallSketch = startSketchOn(customPlane)
      }, %), %)
 
 // Extrude the inside bearing piece
-const insideWall = extrude(overallThickness, insideWallSketch)
+insideWall = extrude(overallThickness, insideWallSketch)
 
 // Create the sketch of one of the balls
-const ballsSketch = startSketchOn("XY")
+ballsSketch = startSketchOn("XY")
   |> startProfileAt([shaftDia/2 + wallThickness, 0.001], %)
   |> arc({
     angleEnd: 0,
@@ -47,7 +47,7 @@ const ballsSketch = startSketchOn("XY")
   |> close(%)
 
 // Revolve the ball to make a sphere and pattern around the inside wall
-const balls = revolve({
+balls = revolve({
     axis: "X",
   }, ballsSketch)
   |> patternCircular3d({
@@ -59,7 +59,7 @@ const balls = revolve({
   }, %)
 
 // Create the sketch for the chain around the balls
-const chainSketch = startSketchOn("XY")
+chainSketch = startSketchOn("XY")
   |> startProfileAt([shaftDia/2 + wallThickness + sphereDia/2 - chainWidth/2, 0.125 * sin(toRadians(60))], %)
   |> arc({
     angleEnd: 60,
@@ -71,7 +71,7 @@ const chainSketch = startSketchOn("XY")
   |> close(%)
 
 // Revolve the chain sketch
-const chainHead = revolve({
+chainHead = revolve({
     axis: "X",
   }, chainSketch)
   |> patternCircular3d({
@@ -83,14 +83,14 @@ const chainHead = revolve({
   }, %)
 
 // Create the sketch for the links in between the chains 
-const linkSketch = startSketchOn("XZ")
+linkSketch = startSketchOn("XZ")
   |> circle({
        center: [shaftDia/2 + wallThickness + sphereDia/2, 0],
        radius: linkDiameter/2
      }, %)
 
 // Revolve the link sketch
-const linkRevolve = revolve({
+linkRevolve = revolve({
     axis: 'Y',
     angle: 360/nBalls
   }, linkSketch)
@@ -103,7 +103,7 @@ const linkRevolve = revolve({
   }, %)
 
 // Create the sketch for the outside walls
-const outsideWallSketch = startSketchOn(customPlane)
+outsideWallSketch = startSketchOn(customPlane)
   |> circle({
        center: [0, 0],
        radius: outsideDiameter/2
@@ -113,6 +113,6 @@ const outsideWallSketch = startSketchOn(customPlane)
        radius: shaftDia/2 + wallThickness + sphereDia
      }, %), %)
 
-const outsideWall = extrude(overallThickness, outsideWallSketch)
+outsideWall = extrude(overallThickness, outsideWallSketch)
 
 // https://www.mcmaster.com/60355K185/

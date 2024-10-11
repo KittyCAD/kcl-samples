@@ -3,14 +3,14 @@
 
 
 // Define constants
-const gearRadius = 2 // inches
-const nTeeth = 8
-const width = 2 // inches
+gearRadius = 2 // inches
+nTeeth = 8
+width = 2 // inches
 
 
 // Create a function for sketch of a single tooth
 fn tooth = () => {
-  const toothSketch = startSketchOn('XY')
+  toothSketch = startSketchOn('XY')
     |> startProfileAt([0, gearRadius], %)
     |> arc({
          angleStart: 90,
@@ -49,12 +49,12 @@ fn tooth = () => {
 }
 
 // Create  the body
-const body = startSketchOn('XY')
+body = startSketchOn('XY')
   |> circle({ center: [0, 0], radius: gearRadius }, %)
   |> extrude(width, %)
 
 // Pattern the teeth around the body
-const teeth = tooth()
+teeth = tooth()
   |> patternCircular3d({
        arcDegrees: 360,
        axis: [0, 0, 1],
@@ -64,14 +64,14 @@ const teeth = tooth()
      }, %)
 
 // Define the constants of the keyway and the bore hole
-const keywayWidth = 0.250
-const keywayDepth = keywayWidth / 2
-const holeDiam = 2
-const holeRadius = 1
-const startAngle = asin(keywayWidth / 2 / holeRadius)
+keywayWidth = 0.250
+keywayDepth = keywayWidth / 2
+holeDiam = 2
+holeRadius = 1
+startAngle = asin(keywayWidth / 2 / holeRadius)
 
 // sketch the keyway and center hole and extrude
-const sketch001 = startSketchOn(body, 'END')
+sketch001 = startSketchOn(body, 'END')
   |> startProfileAt([
        holeRadius * cos(startAngle),
        holeRadius * sin(startAngle)

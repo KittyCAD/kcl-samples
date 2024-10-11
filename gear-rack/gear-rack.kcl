@@ -2,14 +2,14 @@
 // A flat bar or rail that is engraved with teeth along its length. These teeth are designed to mesh with the teeth of a gear, known as a pinion. When the pinion, a small cylindrical gear, rotates, its teeth engage with the teeth on the rack, causing the rack to move linearly. Conversely, linear motion applied to the rack will cause the pinion to rotate.
 
 // Define constants
-const length = 100 // mm
-const pitchHeight = 11.5 // mm
-const width = 5 // mm
-const height = 12 // mm
-const minHeight = 10.875 // mm
+length = 100 // mm
+pitchHeight = 11.5 // mm
+width = 5 // mm
+height = 12 // mm
+minHeight = 10.875 // mm
 
 // Create the body of the rack
-const rackBody = startSketchOn('XY')
+rackBody = startSketchOn('XY')
   |> startProfileAt([-length / 2, 0], %)
   |> line([length, 0], %)
   |> line([0, minHeight], %)
@@ -19,7 +19,7 @@ const rackBody = startSketchOn('XY')
 
 // Create a function for sketch of a single tooth
 fn tooth = () => {
-  const toothSketch = startSketchOn('XY')
+  toothSketch = startSketchOn('XY')
   |> startProfileAt([-length / 2 + 0.567672, minHeight], %)
   |> tangentialArcToRelative([0.157636, 0.110378], %)
   |> line([0.329118, 0.904244], %)
@@ -34,7 +34,7 @@ fn tooth = () => {
 }
 
 // Pattern the single tooth over the length of the rack body
-const teeth = tooth()
+teeth = tooth()
   |> patternLinear3d({
        axis: [10, 0, 0],
        distance: 1.570796,
@@ -42,7 +42,7 @@ const teeth = tooth()
      }, %)
 
 // Sketch and extrude the first end cap. This is a partial tooth
-const endCapTooth = startSketchOn('XY')
+endCapTooth = startSketchOn('XY')
   |> startProfileAt([-length / 2, 11.849525], %)
   |> line([0.314524, -0.864147], %)
   |> tangentialArcToRelative([0.157636, -0.110378], %)
@@ -51,7 +51,7 @@ const endCapTooth = startSketchOn('XY')
   |> extrude(width, %)
 
 //Sketch and extrude the second end cap. This is a partial tooth
-const endCapTooth2 = startSketchOn('XY')
+endCapTooth2 = startSketchOn('XY')
   |> startProfileAt([length / 2, 11.849525], %)
   |> line([-0.314524, -0.864147], %)
   |> tangentialArcToRelative([-0.157636, -0.110378], %)

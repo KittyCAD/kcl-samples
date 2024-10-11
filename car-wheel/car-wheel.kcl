@@ -4,19 +4,19 @@
 
 // Define constants
 // Base units for this model are in inches
-const lugCount = 5
-const lugSpacing = 114.3 * mm()
-const offset = -35 * mm()
-const backSpacing = 6.38
-const wheelWidth = 9.5
-const wheelDiameter = 19
+lugCount = 5
+lugSpacing = 114.3 * mm()
+offset = -35 * mm()
+backSpacing = 6.38
+wheelWidth = 9.5
+wheelDiameter = 19
 
-const spokeGap = 0.2
-const spokeAngle = 0.02
-const spokeThickness = 0.95
+spokeGap = 0.2
+spokeAngle = 0.02
+spokeThickness = 0.95
 
 // Create the wheel center
-const lugBase = startSketchOn('XZ')
+lugBase = startSketchOn('XZ')
   |> circle({
        center: [0, 0],
        radius: (lugSpacing + 1.5) / 2
@@ -28,7 +28,7 @@ const lugBase = startSketchOn('XZ')
   |> extrude(wheelWidth / 20, %)
 
 // Extend the wheel center and bore holes to accomidate the lug heads
-const lugExtrusion = startSketchOn(lugBase, 'END')
+lugExtrusion = startSketchOn(lugBase, 'END')
   |> circle({
        center: [0, 0],
        radius: (lugSpacing + 1.5) / 2
@@ -40,7 +40,7 @@ const lugExtrusion = startSketchOn(lugBase, 'END')
   |> extrude(wheelWidth / 10, %)
 
 // Create the circular pattern for the lugs
-const lugClearance = startSketchOn(lugExtrusion, 'END')
+lugClearance = startSketchOn(lugExtrusion, 'END')
   |> circle({
        center: [lugSpacing / 2, 0],
        radius: 1.2 / 2
@@ -54,7 +54,7 @@ const lugClearance = startSketchOn(lugExtrusion, 'END')
   |> extrude(-wheelWidth / 10, %)
 
 // Create the circular pattern for the lug holes
-const lugHoles = startSketchOn(lugBase, 'END')
+lugHoles = startSketchOn(lugBase, 'END')
   |> circle({
        center: [lugSpacing / 2, 0],
        radius: 16 * mm() / 2
@@ -68,7 +68,7 @@ const lugHoles = startSketchOn(lugBase, 'END')
   |> extrude(-wheelWidth / 20, %)
 
 // Add detail to the wheel center by revolving curved edge profiles
-const wheelCenterInner = startSketchOn('XY')
+wheelCenterInner = startSketchOn('XY')
   |> startProfileAt([(lugSpacing - 1.5) / 2, 0], %)
   |> yLine(-wheelWidth / 10 - (wheelWidth / 20), %)
   |> bezierCurve({
@@ -81,7 +81,7 @@ const wheelCenterInner = startSketchOn('XY')
   |> close(%)
   |> revolve({ axis: 'y' }, %)
 
-const wheelCenterOuter = startSketchOn('XY')
+wheelCenterOuter = startSketchOn('XY')
   |> startProfileAt([(lugSpacing + 1.5) / 2, 0], %)
   |> yLine(-wheelWidth / 10 - (wheelWidth / 20), %)
   |> bezierCurve({
@@ -97,7 +97,7 @@ const wheelCenterOuter = startSketchOn('XY')
 // Write a function that defines the spoke geometry, patterns and extrudes it
 fn spoke = (spokeGap, spokeAngle, spokeThickness) => {
   // Seperating the spoke base planes
-  const plane001 = {
+  plane001 = {
     plane: {
       origin: [0.0, 0.0, spokeGap / 2],
       xAxis: [1.0, 0.0, spokeAngle],
@@ -107,7 +107,7 @@ fn spoke = (spokeGap, spokeAngle, spokeThickness) => {
   }
 
   // Spoke cross sections
-  const spokeProfile = startSketchOn(plane001)
+  spokeProfile = startSketchOn(plane001)
     |> startProfileAt([(lugSpacing + 2) / 2, -0.7], %)
     |> bezierCurve({
          to: [
@@ -142,7 +142,7 @@ fn spoke = (spokeGap, spokeAngle, spokeThickness) => {
     |> close(%)
 
   // Circular pattern spokes
-  const spokePattern = extrude(spokeThickness, spokeProfile)
+  spokePattern = extrude(spokeThickness, spokeProfile)
     |> patternCircular3d({
          axis: [0, 1, 0],
          center: [0, -2000, 0],
@@ -158,7 +158,7 @@ spoke(spokeGap, spokeAngle, spokeThickness)
 spoke(-spokeGap, -spokeAngle, -spokeThickness)
 
 // Define and revolve wheel exterior
-const wheelOuterRevolve = startSketchOn('XY')
+wheelOuterRevolve = startSketchOn('XY')
   |> startProfileAt([
        wheelDiameter / 2,
        -wheelWidth + backSpacing + offset
