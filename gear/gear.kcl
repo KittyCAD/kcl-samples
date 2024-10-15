@@ -59,7 +59,7 @@ teeth = tooth()
        arcDegrees: 360,
        axis: [0, 0, 1],
        center: [0, 0, 0],
-       instances: nTeeth,
+       repetitions: nTeeth - 1,
        rotateDuplicates: true
      }, %)
 

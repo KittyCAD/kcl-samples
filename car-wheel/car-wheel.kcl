@@ -48,7 +48,7 @@ lugClearance = startSketchOn(lugExtrusion, 'END')
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
-       instances: lugCount,
+       repetitions: lugCount - 1,
        rotateDuplicates: true
      }, %)
   |> extrude(-wheelWidth / 10, %)
@@ -62,7 +62,7 @@ lugHoles = startSketchOn(lugBase, 'END')
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
-       instances: lugCount,
+       repetitions: lugCount - 1,
        rotateDuplicates: true
      }, %)
   |> extrude(-wheelWidth / 20, %)
@@ -146,7 +146,7 @@ fn spoke = (spokeGap, spokeAngle, spokeThickness) => {
     |> patternCircular3d({
          axis: [0, 1, 0],
          center: [0, -2000, 0],
-         instances: 6,
+         repetitions: 5,
          arcDegrees: 360,
          rotateDuplicates: true
        }, %)

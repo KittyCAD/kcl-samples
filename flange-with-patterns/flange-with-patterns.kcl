@@ -25,7 +25,7 @@ circles = startSketchOn('XY')
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
-       instances: nHoles,
+       repetitions: nHoles - 1,
        rotateDuplicates: true
      }, %)
 

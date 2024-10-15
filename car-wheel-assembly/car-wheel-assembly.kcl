@@ -20,7 +20,7 @@ circles = startSketchOn('XZ')
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
-       instances: lugCount - 1,
+       repetitions: lugCount - 1,
        rotateDuplicates: true
      }, %)
 
@@ -65,7 +65,7 @@ sketch005 = startSketchOn(sketch002, 'END')
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
-       instances: lugCount,
+       repetitions: lugCount - 1,
        rotateDuplicates: true
      }, %)
 
@@ -162,7 +162,7 @@ sketch009 = extrude(20, sketch007)
   |> patternCircular3d({
        axis: [0, 1, 0],
        center: [0, -2000, 0],
-       instances: 6,
+       repetitions: 5,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
@@ -171,7 +171,7 @@ sketch0010 = extrude(-20, sketch008)
   |> patternCircular3d({
        axis: [0, 1, 0],
        center: [0, -2000, 0],
-       instances: 6,
+       repetitions: 5,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
@@ -233,7 +233,7 @@ fn lugPattern = (plane) => {
   |> patternCircular2d({
     arcDegrees: 360,
     center: [0, 0],
-    instances: lugCount,
+    repetitions: lugCount - 1,
     rotateDuplicates: true,
   }, %)
   return lugHolePattern
@@ -271,7 +271,7 @@ spacerSketch = startSketchOn(rotorSecondaryPlatePlane)
   |> patternCircular2d({
     arcDegrees: 360,
     center: [0, 0],
-    instances: spacerCount,
+    repetitions: spacerCount,
     rotateDuplicates: true,
   }, %)
 
@@ -329,7 +329,7 @@ lug(customPlane, lugLength, lugDiameter)
       arcDegrees: 360,
       axis: [0, 1, 0],
       center: [0, 0, 0],
-      instances: 5,
+      repetitions: 4,
       rotateDuplicates: false,
     }, %)
 
