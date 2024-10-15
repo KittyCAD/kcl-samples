@@ -61,7 +61,7 @@ sketch4A = startSketchOn(extrude001, 'END')
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
-       repetitions: 3,
+       instances: 5,
        rotateDuplicates: true
      }, %)
 
@@ -78,7 +78,7 @@ sketch4B = startSketchOn(extrude001, 'END')
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
-       repetitions: 3,
+       instances: 5,
        rotateDuplicates: true
      }, %)
 
@@ -157,7 +157,7 @@ sketch008 = startSketchOn(extrude007, 'END')
          1.75 * cos(toRadians(axisJ1)) / abs(cos(toRadians(axisJ1))),
          8
        ],
-       repetitions: 3,
+       instances: 5,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
@@ -253,7 +253,7 @@ sketch014 = startSketchOn(extrude012, 'END')
   |> circle({ center: [-1.75, 6.75], radius: 0.2 }, %)
   |> patternCircular2d({
        center: [-1.75, 8],
-       repetitions: 7,
+       instances: 9,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
@@ -273,7 +273,7 @@ sketch015 = startSketchOn(extrude013, 'END')
          -1.75 - (axisJ2ArmLength * cos(toRadians(axisJ2))),
          8 + axisJ2ArmLength * sin(toRadians(axisJ2))
        ],
-       repetitions: 3,
+       instances: 5,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
@@ -350,7 +350,7 @@ sketch019 = startSketchOn(extrude018, 'END')
          1.75 + axisJ2ArmLength * cos(toRadians(axisJ2)),
          8 + axisJ2ArmLength * sin(toRadians(axisJ2))
        ],
-       repetitions: 7,
+       instances: 9,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)

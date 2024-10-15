@@ -75,12 +75,12 @@ peg = startSketchOn(s, 'end')
      }, %)
   |> patternLinear2d({
        axis: [1, 0],
-       repetitions: wbumps - 1,
+       instances: wbumps,
        distance: pitch
      }, %)
   |> patternLinear2d({
        axis: [0, 1],
-       repetitions: lbumps - 1,
+       instances: lbumps,
        distance: pitch
      }, %)
   |> extrude(bumpHeight, %)
@@ -96,12 +96,12 @@ tubePattern = startSketchOn(tubeFace)
      }, %)
   |> patternLinear2d({
        axis: [1, 0],
-       repetitions: wbumps - 2,
+       instances: wbumps - 1,
        distance: pitch
      }, %)
   |> patternLinear2d({
        axis: [0, 1],
-       repetitions: lbumps - 2,
+       instances: lbumps - 1,
        distance: pitch
      }, %)
   |> extrude(-bumpHeight, %)

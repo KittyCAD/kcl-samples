@@ -54,7 +54,7 @@ balls = revolve({
       arcDegrees: 360,
       axis: [0, 0, 1],
       center: [0, 0, 0],
-      repetitions: nBalls-1,
+      instances: nBalls,
       rotateDuplicates: true
   }, %)
 
@@ -78,7 +78,7 @@ chainHead = revolve({
     arcDegrees: 360,
     axis: [0, 0, 1],
     center: [0, 0, 0],
-    repetitions: nBalls-1,
+    instances: nBalls,
     rotateDuplicates: true,
   }, %)
 
@@ -98,7 +98,7 @@ linkRevolve = revolve({
     arcDegrees: 360,
     axis: [0, 0, 1],
     center: [0, 0, 0],
-    repetitions: nBalls-1,
+    instances: nBalls,
     rotateDuplicates: true,
   }, %)
 
