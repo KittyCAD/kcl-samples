@@ -3,9 +3,9 @@
 
 
 // Define constants
-gearRadius = 2 // inches
+gearRadius = 2 
 nTeeth = 8
-width = 2 // inches
+width = 2 
 
 
 // Create a function for sketch of a single tooth
@@ -59,7 +59,7 @@ teeth = tooth()
        arcDegrees: 360,
        axis: [0, 0, 1],
        center: [0, 0, 0],
-       repetitions: nTeeth - 1,
+       : nTeeth,
        rotateDuplicates: true
      }, %)
 

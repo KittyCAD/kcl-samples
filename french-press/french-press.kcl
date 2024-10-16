@@ -86,7 +86,7 @@ sketch002 = startSketchOn(plane001)
   |> patternCircular3d({
        axis: [0, 0, 1],
        center: [0, 0, 0],
-       repetitions: 3,
+       instances: 4,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
@@ -112,7 +112,7 @@ sketch004 = startSketchOn(extrude001, 'END')
   |> close(%)
   |> patternCircular2d({
        center: [0, 0],
-       repetitions: 2,
+       instances: 3,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
@@ -162,7 +162,7 @@ sketch008 = startSketchOn(extrude003, 'END')
   |> circle({ center: [1.4, 0], radius: .3 }, %)
   |> patternCircular2d({
        center: [0, 0],
-       repetitions: 7,
+       instances: 8,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
@@ -174,7 +174,7 @@ sketch009 = startSketchOn(extrude003, 'END')
   |> circle({ center: [0.6, 0], radius: .2 }, %)
   |> patternCircular2d({
        center: [0, 0],
-       repetitions: 3,
+       instances: 4,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)

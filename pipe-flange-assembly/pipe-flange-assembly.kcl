@@ -159,7 +159,7 @@ mountingHolePattern = startSketchOn('XZ')
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
-       repetitions: 6,
+       instances: 7,
        rotateDuplicates: true
      }, %)
 
@@ -213,7 +213,7 @@ washer(workingPlane, [screwStart[2], screwStart[0]], 0.0625, screwDia + tol, 0.6
   |> patternCircular3d({
        axis: [0, 1, 0],
        center: [0, 0, 0],
-       repetitions: 6,
+       instances: 7,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
@@ -227,7 +227,7 @@ capScrew([
   |> patternCircular3d({
        axis: [0, 1, 0],
        center: [0, 0, 0],
-       repetitions: 6,
+       instances: 7,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
@@ -238,7 +238,7 @@ screwBody = extrude(-screwLength, screwBodySketch)
   |> patternCircular3d({
        axis: [0, 1, 0],
        center: [0, 0, 0],
-       repetitions: 6,
+       instances: 7,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
@@ -262,7 +262,7 @@ washer(backSideWasherPlane, [screwStart[2], screwStart[0]], 0.0625, screwDia + t
   |> patternCircular3d({
        axis: [0, 1, 0],
        center: [0, 0, 0],
-       repetitions: 6,
+       instances: 8,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
@@ -276,7 +276,7 @@ hexNut([
   |> patternCircular3d({
        axis: [0, 1, 0],
        center: [0, 0, 0],
-       repetitions: 6,
+       instances: 7,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
