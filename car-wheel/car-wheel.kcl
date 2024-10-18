@@ -10,7 +10,7 @@ offset = -35 * mm()
 backSpacing = 6.38
 wheelWidth = 9.5
 wheelDiameter = 19
-
+spokeCount = 6
 spokeGap = 0.2
 spokeAngle = 0.02
 spokeThickness = 0.95
@@ -146,7 +146,7 @@ fn spoke = (spokeGap, spokeAngle, spokeThickness) => {
     |> patternCircular3d({
          axis: [0, 1, 0],
          center: [0, -2000, 0],
-         instances: 6,
+         instances: spokeCount,
          arcDegrees: 360,
          rotateDuplicates: true
        }, %)
