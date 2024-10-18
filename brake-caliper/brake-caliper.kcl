@@ -2,14 +2,14 @@
 // Brake calipers are used to squeeze the brake pads against the rotor, causing larger and larger amounts of friction depending on how hard the brakes are pressed.
 
 // Define constants
-rotorDiameter = 12 // inches
-rotorInnerDiameterThickness = 12.6 // mm
-rotorTotalThickness = 25.4 // mm
-caliperTolerance = 5 // mm
-caliperPadLength = 40 // mm
-caliperThickness = 10 // mm
-caliperOuterEdgeRadius = 10 // mm
-caliperInnerEdgeRadius = 3 // mm
+rotorDiameter = 12 
+rotorInnerDiameterThickness = 12.6 
+rotorTotalThickness = 25.4 
+caliperTolerance = 5 
+caliperPadLength = 40 
+caliperThickness = 10 
+caliperOuterEdgeRadius = 10 
+caliperInnerEdgeRadius = 3 
 
 // Create the plane for the brake caliper. This is so it can match up with the rotor model.
 brakeCaliperPlane = {

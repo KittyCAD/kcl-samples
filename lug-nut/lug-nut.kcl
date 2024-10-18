@@ -5,11 +5,11 @@
 
 
 // Define constants
-lugDiameter = 24 // mm
-lugHeadLength = lugDiameter * .5 // mm
-lugThreadDiameter = lugDiameter/2 * .85 //mm
-lugLength = 30 //mm
-lugThreadDepth = lugLength - 12.7 //mm
+lugDiameter = 24 
+lugHeadLength = lugDiameter * .5 
+lugThreadDiameter = lugDiameter/2 * .85 
+lugLength = 30 
+lugThreadDepth = lugLength - 12.7 
 
 customPlane = {
       plane: {

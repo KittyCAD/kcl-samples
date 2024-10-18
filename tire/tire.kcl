@@ -3,13 +3,13 @@
 
 
 // Define constants
-tireInnerDiameter = 482.6 // mm (19 in)
-tireOuterDiameter = 660.4 // mm (26 in)
-tireDepth = 280 // mm
-bendRadius = 40 // mm
-tireTreadWidth = 10 // mm
-tireTreadDepth = 10 // mm
-tireTreadOffset = 80 // mm
+tireInnerDiameter = 482.6
+tireOuterDiameter = 660.4
+tireDepth = 280 
+bendRadius = 40 
+tireTreadWidth = 10 
+tireTreadDepth = 10 
+tireTreadOffset = 80 
 
 // Create the sketch of the tire
 tireSketch = startSketchOn("XY")
