@@ -262,7 +262,7 @@ washer(backSideWasherPlane, [screwStart[2], screwStart[0]], 0.0625, screwDia + t
   |> patternCircular3d({
        axis: [0, 1, 0],
        center: [0, 0, 0],
-       instances: 8,
+       instances: 7,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
