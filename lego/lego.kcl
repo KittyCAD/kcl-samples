@@ -96,12 +96,12 @@ tubePattern = startSketchOn(tubeFace)
      }, %)
   |> patternLinear2d({
        axis: [1, 0],
-       instances: wbumps,
+       instances: wbumps - 1,
        distance: pitch
      }, %)
   |> patternLinear2d({
        axis: [0, 1],
-       instances: lbumps,
+       instances: lbumps - 1,
        distance: pitch
      }, %)
   |> extrude(-bumpHeight, %)
