@@ -3,17 +3,17 @@
 
 // Define constants
 sigmaAllow = 35000 // psi (6061-T6 aluminum)
-width = 6 // inch
+width = 6 
 p = 300 // Force on shelf - lbs
 factorOfSafety = 1.2 // FOS of 1.2
-shelfMountL = 5 // inches
-wallMountL = 2 // inches
+shelfMountL = 5 
+wallMountL = 2 
 shelfDepth = 12 // Shelf is 12 inches in depth from the wall
 moment = shelfDepth * p // assume the force is applied at the end of the shelf to be conservative (lb-in)
 
-filletRadius = .375 // inches
-extFilletRadius = .25 // inches
-mountingHoleDiameter = 0.5 // inches
+filletRadius = .375 
+extFilletRadius = .25 
+mountingHoleDiameter = 0.5 
 
 // Calculate required thickness of bracket
 thickness = sqrt(moment * factorOfSafety * 6 / (sigmaAllow * width)) // this is the calculation of two brackets holding up the shelf (inches)

@@ -7,11 +7,11 @@
 
 // Define constants
 lugCount = 5
-lugSpacing = 114.3 // mm
-offset = -35 // mm
-backSpacing = 6.38 // inches
-wheelWidth = 9.5 // inches
-wheelDiameter = 19 // inches
+lugSpacing = 114.3 
+offset = -35 
+backSpacing = 6.38 
+wheelWidth = 9.5 
+wheelDiameter = 19 
 
 
 // Create the circular pattern for the lug holes
@@ -20,7 +20,7 @@ circles = startSketchOn('XZ')
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
-       repetitions: lugCount - 1,
+       instances: lugCount,
        rotateDuplicates: true
      }, %)
 
@@ -65,7 +65,7 @@ sketch005 = startSketchOn(sketch002, 'END')
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
-       repetitions: lugCount - 1,
+       instances: lugCount,
        rotateDuplicates: true
      }, %)
 
@@ -162,7 +162,7 @@ sketch009 = extrude(20, sketch007)
   |> patternCircular3d({
        axis: [0, 1, 0],
        center: [0, -2000, 0],
-       repetitions: 5,
+       instances: 6,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
@@ -171,7 +171,7 @@ sketch0010 = extrude(-20, sketch008)
   |> patternCircular3d({
        axis: [0, 1, 0],
        center: [0, -2000, 0],
-       repetitions: 5,
+       instances: 6,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
@@ -206,18 +206,18 @@ sketch0011 = startSketchOn('XY')
   |> revolve({ axis: 'y' }, %)
 
   
-rotorDiameter = 12 // inches
-rotorInnerDiameter = 6 // inches
-rotorSinglePlateThickness = 6.3 // mm
-rotorInnerDiameterThickness = 12.6 // mm
-lugHolePatternDia = 3 // inches
-yAxisOffset = 10 // mm
-rotorTotalThickness = 25.4 // mm
-spacerPatternDiameter = 11 // inches
-spacerDiameter = 6.3 // mm
+rotorDiameter = 12 
+rotorInnerDiameter = 6 
+rotorSinglePlateThickness = 6.3 
+rotorInnerDiameterThickness = 12.6 
+lugHolePatternDia = 3 
+yAxisOffset = 10 
+rotorTotalThickness = 25.4 
+spacerPatternDiameter = 11 
+spacerDiameter = 6.3 
 spacerLength = rotorTotalThickness - 2*rotorSinglePlateThickness
 spacerCount = 16
-wheeldiameter = 19 // inches
+wheeldiameter = 19 
 
 rotorPlane = {
   plane: {
@@ -233,7 +233,7 @@ fn lugPattern = (plane) => {
   |> patternCircular2d({
     arcDegrees: 360,
     center: [0, 0],
-    repetitions: lugCount - 1,
+    instances: lugCount,
     rotateDuplicates: true,
   }, %)
   return lugHolePattern
@@ -271,7 +271,7 @@ spacerSketch = startSketchOn(rotorSecondaryPlatePlane)
   |> patternCircular2d({
     arcDegrees: 360,
     center: [0, 0],
-    repetitions: spacerCount,
+    instances: spacerCount + 1,
     rotateDuplicates: true,
   }, %)
 
@@ -282,8 +282,8 @@ spacers = extrude(-spacerLength, spacerSketch)
 
 
 // Define constants
-lugDiameter = 24 // mm
-lugHeadLength = lugDiameter * .5 // mm
+lugDiameter = 24 
+lugHeadLength = lugDiameter * .5 
 lugThreadDiameter = lugDiameter/2 * .85 //mm
 lugLength = 30 //mm
 lugThreadDepth = lugLength - 12.7 //mm
@@ -329,7 +329,7 @@ lug(customPlane, lugLength, lugDiameter)
       arcDegrees: 360,
       axis: [0, 1, 0],
       center: [0, 0, 0],
-      repetitions: 4,
+      instances: 5,
       rotateDuplicates: false,
     }, %)
 
@@ -338,13 +338,13 @@ lug(customPlane, lugLength, lugDiameter)
 
 
 // Define constants
-tireInnerDiameter = 19 * 25.4 // mm
-tireOuterDiameter = 26 * 25.4 // mm
-tireDepth = 280 // mm
-bendRadius = 40 // mm
-tireTreadWidth = 10 // mm
-tireTreadDepth = 10 // mm
-tireTreadOffset = 80 // mm
+tireInnerDiameter = 19 * 25.4 
+tireOuterDiameter = 26 * 25.4 
+tireDepth = 280 
+bendRadius = 40 
+tireTreadWidth = 10 
+tireTreadDepth = 10 
+tireTreadOffset = 80 
 
 // Create the sketch of the tire
 tireSketch = startSketchOn("XY")
@@ -376,11 +376,11 @@ tire = revolve({ axis: "Y" }, tireSketch)
 // Brake calipers are used to squeeze the brake pads against the rotor, causing larger and larger amounts of friction depending on how hard the brakes are pressed.
 
 // Define constants
-caliperTolerance = 5 // mm
-caliperPadLength = 40 // mm
-caliperThickness = 10 // mm
-caliperOuterEdgeRadius = 10 // mm
-caliperInnerEdgeRadius = 3 // mm
+caliperTolerance = 5 
+caliperPadLength = 40 
+caliperThickness = 10 
+caliperOuterEdgeRadius = 10 
+caliperInnerEdgeRadius = 3 
 
 // Create the plane for the brake caliper. This is so it can match up with the rotor model.
 brakeCaliperPlane = {

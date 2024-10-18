@@ -3,9 +3,9 @@
 
 
 // Define constants (5/16" - 24 thread size)
-wallToWallLength = 0.5 // inches
-thickness = 0.266 // inches
-diameter = 0.3125 // inches
+wallToWallLength = 0.5 
+thickness = 0.266 
+diameter = 0.3125 
 
 
 // Define a function for the hex nut

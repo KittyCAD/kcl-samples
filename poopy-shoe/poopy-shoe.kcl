@@ -1,13 +1,13 @@
 // Poopy Shoe
 // poop shute for bambu labs printer - optimized for printing.
 
-wallThickness = 0.125 // inches
-wallsWidth = 3 // inches
-height = 5.125 // inches
-filletRadius = 0.050 // inches
-backLength = 6 // inches
-exitHeight = 1 // inches
-frontLength = 7 // inches
+wallThickness = 0.125 
+wallsWidth = 3 
+height = 5.125 
+filletRadius = 0.050 
+backLength = 6 
+exitHeight = 1 
+frontLength = 7 
 
 sketch001 = startSketchOn("-YZ")
   |> startProfileAt([wallsWidth / 2, 0], %)

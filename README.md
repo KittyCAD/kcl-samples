@@ -45,6 +45,8 @@ When you submit a PR to add or modify KCL samples, images and STEP files will be
 [![flange-xy](screenshots/flange-xy.png)](./flange-xy/flange-xy.kcl)
 #### [focusrite-scarlett-mounting-bracket](./focusrite-scarlett-mounting-bracket/focusrite-scarlett-mounting-bracket.kcl) ([step](step/focusrite-scarlett-mounting-bracket.step)) ([screenshot](screenshots/focusrite-scarlett-mounting-bracket.png))
 [![focusrite-scarlett-mounting-bracket](screenshots/focusrite-scarlett-mounting-bracket.png)](./focusrite-scarlett-mounting-bracket/focusrite-scarlett-mounting-bracket.kcl)
+#### [food-service-spatula](./food-service-spatula/food-service-spatula.kcl) ([step](step/food-service-spatula.step)) ([screenshot](screenshots/food-service-spatula.png))
+[![food-service-spatula](screenshots/food-service-spatula.png)](./food-service-spatula/food-service-spatula.kcl)
 #### [french-press](./french-press/french-press.kcl) ([step](step/french-press.step)) ([screenshot](screenshots/french-press.png))
 [![french-press](screenshots/french-press.png)](./french-press/french-press.kcl)
 #### [gear-rack](./gear-rack/gear-rack.kcl) ([step](step/gear-rack.step)) ([screenshot](screenshots/gear-rack.png))

@@ -2,16 +2,16 @@
 // A ball bearing is a type of rolling-element bearing that uses balls to maintain the separation between the bearing races. The primary purpose of a ball bearing is to reduce rotational friction and support radial and axial loads. 
 
 // Define constants like ball diameter, inside diamter, overhange length, and thickness
-outsideDiameter = 1.625 // inches
-sphereDia = 0.25 // inches
-shaftDia = 0.75 // inches
-overallThickness = 0.313 // inches
-wallThickness = 0.100 // inches
-overHangLength = .3 // inches
+outsideDiameter = 1.625 
+sphereDia = 0.25 
+shaftDia = 0.75 
+overallThickness = 0.313 
+wallThickness = 0.100 
+overHangLength = .3 
 nBalls = 10
-chainWidth = sphereDia/2 // inches
-chainThickness = sphereDia/8 // inches
-linkDiameter = sphereDia/4 // inches
+chainWidth = sphereDia/2 
+chainThickness = sphereDia/8 
+linkDiameter = sphereDia/4 
 
 customPlane = {
   plane: {
@@ -54,7 +54,7 @@ balls = revolve({
       arcDegrees: 360,
       axis: [0, 0, 1],
       center: [0, 0, 0],
-      repetitions: nBalls-1,
+      instances: nBalls,
       rotateDuplicates: true
   }, %)
 
@@ -78,7 +78,7 @@ chainHead = revolve({
     arcDegrees: 360,
     axis: [0, 0, 1],
     center: [0, 0, 0],
-    repetitions: nBalls-1,
+    instances: nBalls,
     rotateDuplicates: true,
   }, %)
 
@@ -98,7 +98,7 @@ linkRevolve = revolve({
     arcDegrees: 360,
     axis: [0, 0, 1],
     center: [0, 0, 0],
-    repetitions: nBalls-1,
+    instances: nBalls,
     rotateDuplicates: true,
   }, %)
 

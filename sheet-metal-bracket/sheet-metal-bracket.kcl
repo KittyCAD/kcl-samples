@@ -3,14 +3,14 @@
 
 
 // Define constants such as sheet metal thickness, bend radius, flange length, bolt diameter size, etc.
-thickness = 0.090 // inches
-bendRad = 0.08 // inches
-outsideBendRad = bendRad + thickness // inches
-flangeLength = 0.5 // inches
-hatHeight = 3 // inches
-hatWidth = 5 // inches
-boltSize = 0.25 // inches
-flangeWidth = 1.5 // inches
+thickness = 0.090 
+bendRad = 0.08 
+outsideBendRad = bendRad + thickness 
+flangeLength = 0.5 
+hatHeight = 3 
+hatWidth = 5 
+boltSize = 0.25 
+flangeWidth = 1.5 
 
 
 // Sketch and extrude the base shape and fillet the inside and outside edges.
