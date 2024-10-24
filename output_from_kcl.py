@@ -1,8 +1,6 @@
 import asyncio
-import logging
 import os
 import re
-import requests
 import tomllib
 from concurrent.futures import ProcessPoolExecutor
 from io import BytesIO
@@ -10,37 +8,11 @@ from pathlib import Path
 from typing import Container
 
 import kcl
+import requests
 from kcl import UnitLength
 from PIL import Image
 
-RETRIES = 3
-
-LOGGER_NAME = "sample_logger"
-
-# Some default formatting for logging
-FORMAT = "%(asctime)s | %(levelname)-7s | %(filename)s:%(lineno)d | %(funcName)s | %(message)s"
-
-# Default levels for different object types
-DEFAULT_LEVEL_LOGGER = logging.DEBUG
-DEFAULT_LEVEL_FILE = logging.DEBUG
-DEFAULT_LEVEL_CONSOLE = logging.DEBUG
-
-# Create a logger
-logger = logging.getLogger(LOGGER_NAME)
-logger.setLevel(DEFAULT_LEVEL_LOGGER)
-
-# Create a stream handler for logging to the console
-console_handler = logging.StreamHandler()
-console_handler.setLevel(logging.DEBUG)
-
-# Create a formatter
-formatter = logging.Formatter(FORMAT)
-
-# Set formatter for console logging
-console_handler.setFormatter(formatter)
-
-# Add both console handler to the logger
-logger.addHandler(console_handler)
+RETRIES = 5
 
 # Map strings to kcl units
 UNIT_MAP = {
@@ -54,7 +26,6 @@ UNIT_MAP = {
 
 
 def export_step(code: str, save_path: Path, unit_length: UnitLength = kcl.UnitLength.Mm) -> bool:
-    logger.info("Exporting KCL to STEP")
     try:
         export_response = asyncio.run(
             kcl.execute_and_export(code, unit_length, kcl.FileExportFormat.Step)
@@ -65,11 +36,9 @@ def export_step(code: str, save_path: Path, unit_length: UnitLength = kcl.UnitLe
         with open(stl_path, "wb") as out:
             out.write(bytes(export_response[0].contents))
 
-        logger.info(f"KCL exported successfully to {stl_path}")
-
         return True
     except Exception as e:
-        logger.error(f"Failed to export step: {e}")
+        print(e)
         return False
 
 
@@ -118,8 +87,6 @@ def get_units(kcl_path: Path) -> UnitLength:
 
 
 def snapshot(code: str, save_path: Path, unit_length: UnitLength = kcl.UnitLength.Mm) -> bool:
-    logger.info("Saving a snapshot of the KCL")
-
     try:
         snapshot_response = asyncio.run(
             kcl.execute_and_snapshot(code, unit_length, kcl.ImageFormat.Png)
@@ -131,16 +98,14 @@ def snapshot(code: str, save_path: Path, unit_length: UnitLength = kcl.UnitLengt
 
         image.save(im_path)
 
-        logger.info(f"KCL snapshot successfully saved to {im_path}")
-
         return True
     except Exception as e:
-        logger.error(f"Failed to save snapshot: {e}")
+        print(e)
         return False
 
 
 def process_single_kcl(kcl_path: Path) -> [bool, bool]:
-    logger.debug(f"Processing {kcl_path.name}")
+    print(f"Processing {kcl_path.name}")
 
     units = get_units(kcl_path)
 
