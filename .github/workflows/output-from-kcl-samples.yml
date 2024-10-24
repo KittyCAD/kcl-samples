@@ -21,63 +21,27 @@ jobs:
     build:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
-            - uses: KittyCAD/action-install-cli@main
+            - name: Checkout repo
+              uses: actions/checkout@v4
+
+            - name: Set up Python 3.11
+              uses: actions/setup-python@v5
+              with:
+                  python-version: 3.11
+
+            - name: Install dependencies
+              run: |
+                  python -m pip install --upgrade pip
+                  pip install -r requirements.txt
+
             - name: Get Zoo Outputs
               env:
-                  ZOO_TOKEN: ${{ secrets.KITTYCAD_TOKEN }}
+                  KITTYCAD_API_TOKEN: ${{ secrets.KITTYCAD_TOKEN }}
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GH_REPO: ${{ github.repository }}
+                  GH_PR: ${{ github.event.pull_request.number }}
               run: |
-                  zoo version
-                  sed -i '/---/q' README.md
-                  mkdir -p {screenshots,step}
-                  # Find all .kcl files in subdirectories
-                  failed_files=()
-
-                  while IFS= read -r -d '' file; do
-                  fileName=$(basename "${file%.*}")
-                  fileDir=$(dirname "$file")
-                  echo "Processing $fileName..."
-
-                    # Take a snapshot
-                    zoo kcl snapshot "$file" "./screenshots/$fileName.png"
-
-                    # Try to export to STEP format
-                    if zoo kcl export --deterministic --output-format=step "$file" "./step"; then
-                      mv "./step/output.step" "./step/$fileName.step"
-                      echo "#### [$fileName]($fileDir/$fileName.kcl) ([step](step/$fileName.step)) ([screenshot](screenshots/$fileName.png))" >> README.md
-                      echo "[![$fileName](screenshots/$fileName.png)]($fileDir/$fileName.kcl)" >> README.md
-                    else
-                      echo "Failed to export $file to STEP format."
-                      failed_files+=("$file")
-                      echo "Added $file to failed_files array: $file"
-                    fi
-                  done < <(find . -type f -name '*.kcl' -print0 | sort -z)
-
-                  # Output the contents of the failed_files array for debugging
-                  echo "Failed files array contains: ${failed_files[@]}"
-
-
-                  # Output the contents of the failed_files array for debugging
-                  echo "Failed files array contains: ${failed_files[@]}"
-
-                  # Check for any failed files and post a comment if needed
-                  if [ ${#failed_files[@]} -ne 0 ]; then
-                    echo "Constructing the comment body."
-                    comment_body="The following files failed to export to STEP format:\n"
-                    for file in "${failed_files[@]}"; do
-                        comment_body+="$file\n"
-                    done
-                    echo "Comment Body:"
-                    echo "$comment_body"
-                    # Post the comment to the PR
-                    curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                        -H "Content-Type: application/json" \
-                        -X POST \
-                        -d "{\"body\": \"$comment_body\"}" \
-                        "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments"
-                  else
-                    echo "No failed files to report."
-                  fi
+                  python output_from_kcl.py
 
             - name: check for changes
               id: git-check
@@ -89,6 +53,7 @@ jobs:
                   else
                     echo "modified=false" >> $GITHUB_OUTPUT
                   fi
+
             - name: Commit changes, if any
               if: steps.git-check.outputs.modified == 'true'
               run: |
