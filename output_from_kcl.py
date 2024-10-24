@@ -169,7 +169,7 @@ def main():
     kcl_files = find_files(path=Path(__file__).parent, valid_suffixes=[".kcl"])
 
     # run concurrently
-    with ProcessPoolExecutor(max_workers=10) as executor:
+    with ProcessPoolExecutor(max_workers=5) as executor:
         futures = [executor.submit(process_single_kcl, kcl_file) for kcl_file in kcl_files]
     results = [future.result() for future in futures]
 
