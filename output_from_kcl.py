@@ -179,7 +179,7 @@ def main():
             if not i["export_status"]:
                 comment_body += f"{i['filename']}\n"
 
-        url = f"https://api.github.com/repos/{os.getenv("GH_REPO")}/issues/{os.getenv("GH_PR")}/comments"
+        url = f"https://api.github.com/repos/{os.getenv('GH_REPO')}/issues/{os.getenv('GH_PR')}/comments"
 
         headers = {
             'Authorization': f'token {os.getenv("GH_TOKEN")}',
