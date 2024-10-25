@@ -2,18 +2,18 @@
 // A 4 axis robotic arm for industrial use. These machines can be used for assembly, packaging, organization of goods, and quality inspection processes
 
 
-const axisJ4 = 25
-const axisJ3 = 60
-const axisJ2 = 110
-const axisJ1 = 80
+axisJ4 = 25
+axisJ3 = 60
+axisJ2 = 110
+axisJ1 = 80
 
 // Robot Arm Base
-const basePlateRadius = 5
-const basePlateThickness = 0.5
-const baseChamfer = 2
-const baseHeight = 5
+basePlateRadius = 5
+basePlateThickness = 0.5
+baseChamfer = 2
+baseHeight = 5
 
-const sketch001 = startSketchOn('XY')
+sketch001 = startSketchOn('XY')
   |> startProfileAt([-basePlateRadius, -basePlateRadius], %)
   |> angledLine([0, 2 * basePlateRadius], %, $rectangleSegmentA001)
   |> angledLine([
@@ -26,7 +26,7 @@ const sketch001 = startSketchOn('XY')
      ], %, $rectangleSegmentC001)
   |> lineTo([profileStartX(%), profileStartY(%)], %, $rectangleSegmentD001)
   |> close(%)
-const extrude001 = extrude(basePlateThickness, sketch001)
+extrude001 = extrude(basePlateThickness, sketch001)
   |> chamfer({
        length: baseChamfer,
        tags: [
@@ -38,19 +38,19 @@ const extrude001 = extrude(basePlateThickness, sketch001)
      }, %)
 
 // Base Motor for actuating first joint
-const sketch002 = startSketchOn(extrude001, 'END')
+sketch002 = startSketchOn(extrude001, 'END')
   |> circle({ center: [0, 0], radius: 4 }, %, $referenceEdge)
-const extrude002 = extrude(baseHeight - basePlateThickness - 1.5, sketch002)
+extrude002 = extrude(baseHeight - basePlateThickness - 1.5, sketch002)
   |> fillet({
        radius: 0.1,
        tags: [getOppositeEdge(referenceEdge)]
      }, %)
-const sketch003 = startSketchOn(extrude002, 'END')
+sketch003 = startSketchOn(extrude002, 'END')
   |> circle({ center: [0, 0], radius: 0.5 }, %)
-const extrude003 = extrude(1, sketch003)
+extrude003 = extrude(1, sketch003)
 
 // Pattern M8 mounting bolts in base
-const sketch4A = startSketchOn(extrude001, 'END')
+sketch4A = startSketchOn(extrude001, 'END')
   |> circle({
        center: [
          -basePlateRadius + 1,
@@ -61,13 +61,13 @@ const sketch4A = startSketchOn(extrude001, 'END')
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
-       repetitions: 3,
+       instances: 4,
        rotateDuplicates: true
      }, %)
 
-const extrude4A = extrude(-basePlateThickness, sketch4A)
+extrude4A = extrude(-basePlateThickness, sketch4A)
 
-const sketch4B = startSketchOn(extrude001, 'END')
+sketch4B = startSketchOn(extrude001, 'END')
   |> circle({
        center: [
          -basePlateRadius + 0.5 + baseChamfer,
@@ -78,15 +78,15 @@ const sketch4B = startSketchOn(extrude001, 'END')
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
-       repetitions: 3,
+       instances: 4,
        rotateDuplicates: true
      }, %)
 
-const extrude4B = extrude(-basePlateThickness, sketch4B)
+extrude4B = extrude(-basePlateThickness, sketch4B)
 
 // Housing for J2 motor
 // Define Planes to change robot angle
-const plane001 = {
+plane001 = {
   plane: {
     origin: [0.0, 0.0, baseHeight - 1.5 + 0.1],
     xAxis: [1.0, 0.0, 0.0],
@@ -94,7 +94,7 @@ const plane001 = {
     zAxis: [0.0, 0.0, 1.0]
   }
 }
-const plane002 = {
+plane002 = {
   plane: {
     origin: [0.0, 0.0, 0.0],
     xAxis: [
@@ -108,15 +108,15 @@ const plane002 = {
 }
 
 // Create Rotating Base
-const sketch005 = startSketchOn(plane001)
+sketch005 = startSketchOn(plane001)
   |> circle({ center: [0, 0], radius: 3.9 }, %, $referenceEdge1)
-const extrude005 = extrude(1.5 - 0.1, sketch005)
+extrude005 = extrude(1.5 - 0.1, sketch005)
   |> fillet({
        radius: 0.1,
        tags: [getOppositeEdge(referenceEdge1)]
      }, %)
 
-const sketch006 = startSketchOn(plane002)
+sketch006 = startSketchOn(plane002)
   |> startProfileAt([3.5, baseHeight], %)
   |> angledLine({ angle: 60, length: 1.75 }, %)
   |> arc({
@@ -127,9 +127,9 @@ const sketch006 = startSketchOn(plane002)
   |> angledLineToY({ angle: 60, to: baseHeight }, %)
   |> lineTo([profileStartX(%), profileStartY(%)], %)
   |> close(%)
-const extrude006 = extrude(1, sketch006)
+extrude006 = extrude(1, sketch006)
 
-const sketch007 = startSketchOn(extrude006, 'END')
+sketch007 = startSketchOn(extrude006, 'END')
   |> circle({
        center: [
          1.75 * cos(toRadians(axisJ1)) / abs(cos(toRadians(axisJ1))),
@@ -137,14 +137,14 @@ const sketch007 = startSketchOn(extrude006, 'END')
        ],
        radius: 2.75
      }, %, $referenceEdge2)
-const extrude007 = extrude(1.5, sketch007)
+extrude007 = extrude(1.5, sketch007)
   |> fillet({
        radius: 0.1,
        tags: [getOppositeEdge(referenceEdge2)]
      }, %)
 
 // Draw Bolt Pattern on Rotating Base
-const sketch008 = startSketchOn(extrude007, 'END')
+sketch008 = startSketchOn(extrude007, 'END')
   |> circle({
        center: [
          1.75 * cos(toRadians(axisJ1)) / abs(cos(toRadians(axisJ1))),
@@ -157,13 +157,13 @@ const sketch008 = startSketchOn(extrude007, 'END')
          1.75 * cos(toRadians(axisJ1)) / abs(cos(toRadians(axisJ1))),
          8
        ],
-       repetitions: 3,
+       instances: 4,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
-const extrude008 = extrude(0.2, sketch008)
+extrude008 = extrude(0.2, sketch008)
 
-const sketch009 = startSketchOn(extrude007, 'END')
+sketch009 = startSketchOn(extrude007, 'END')
   |> circle({
        center: [
          1.75 * cos(toRadians(axisJ1)) / abs(cos(toRadians(axisJ1))),
@@ -171,24 +171,24 @@ const sketch009 = startSketchOn(extrude007, 'END')
        ],
        radius: 0.5
      }, %, $referenceEdge3)
-const extrude009 = extrude(0.15, sketch009)
+extrude009 = extrude(0.15, sketch009)
   |> fillet({
        radius: 0.1,
        tags: [getOppositeEdge(referenceEdge3)]
      }, %)
 
-const sketch010 = startSketchOn(plane002)
+sketch010 = startSketchOn(plane002)
   |> circle({ center: [1.75, 8], radius: 0.3 }, %)
-const extrude010 = extrude(-1, sketch010)
+extrude010 = extrude(-1, sketch010)
 
 // J2 Axis for Robot Arm
 // Define Constants for J2 Axis Robot Arm
-const axisJ2ArmLength = 31
-const axisJ2ArmWidth = 4
-const axisJ2ArmThickness = 2.5
+axisJ2ArmLength = 31
+axisJ2ArmWidth = 4
+axisJ2ArmThickness = 2.5
 
 // Define Plane to Move J2 Axis Robot Arm
-const plane003 = {
+plane003 = {
   plane: {
     origin: [-0.1, 0.0, 0.0],
     xAxis: [
@@ -202,7 +202,7 @@ const plane003 = {
 }
 
 // Create Body of J2 Robot Arm
-const sketch011 = startSketchOn(plane003)
+sketch011 = startSketchOn(plane003)
   |> startProfileAt([
        1.75 - (axisJ2ArmWidth / 2 * sin(toRadians(axisJ2))),
        8 + axisJ2ArmWidth / 2 * cos(toRadians(axisJ2))
@@ -223,17 +223,17 @@ const sketch011 = startSketchOn(plane003)
      }, %)
   |> lineTo([profileStartX(%), profileStartY(%)], %)
   |> close(%)
-const extrude011 = extrude(-axisJ2ArmThickness, sketch011)
+extrude011 = extrude(-axisJ2ArmThickness, sketch011)
 
-const sketch012 = startSketchOn(extrude011, 'START')
+sketch012 = startSketchOn(extrude011, 'START')
   |> circle({ center: [-1.75, 8], radius: 1.9 }, %, $referenceEdge4)
 
-const extrude012 = extrude(0.15, sketch012)
+extrude012 = extrude(0.15, sketch012)
   |> fillet({
        radius: 0.1,
        tags: [getOppositeEdge(referenceEdge4)]
      }, %)
-const sketch013 = startSketchOn(extrude011, 'START')
+sketch013 = startSketchOn(extrude011, 'START')
   |> circle({
        center: [
          -1.75 - (axisJ2ArmLength * cos(toRadians(axisJ2))),
@@ -242,25 +242,25 @@ const sketch013 = startSketchOn(extrude011, 'START')
        radius: 1.9
      }, %, $referenceEdge5)
 
-const extrude013 = extrude(1, sketch013)
+extrude013 = extrude(1, sketch013)
   |> fillet({
        radius: 0.1,
        tags: [getOppositeEdge(referenceEdge5)]
      }, %)
 
 // Draw Bolt Patterns on J2 Robot Arm
-const sketch014 = startSketchOn(extrude012, 'END')
+sketch014 = startSketchOn(extrude012, 'END')
   |> circle({ center: [-1.75, 6.75], radius: 0.2 }, %)
   |> patternCircular2d({
        center: [-1.75, 8],
-       repetitions: 7,
+       instances: 8,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
 
-const extrude014 = extrude(0.15, sketch014)
+extrude014 = extrude(0.15, sketch014)
 
-const sketch015 = startSketchOn(extrude013, 'END')
+sketch015 = startSketchOn(extrude013, 'END')
   |> circle({
        center: [
          -1.75 - ((axisJ2ArmLength - 1) * cos(toRadians(axisJ2))),
@@ -273,14 +273,14 @@ const sketch015 = startSketchOn(extrude013, 'END')
          -1.75 - (axisJ2ArmLength * cos(toRadians(axisJ2))),
          8 + axisJ2ArmLength * sin(toRadians(axisJ2))
        ],
-       repetitions: 3,
+       instances: 4,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
 
-const extrude015 = extrude(0.15, sketch015)
+extrude015 = extrude(0.15, sketch015)
 
-const sketch016 = startSketchOn(extrude011, 'END')
+sketch016 = startSketchOn(extrude011, 'END')
   |> circle({
        center: [
          1.75 + axisJ2ArmLength * cos(toRadians(axisJ2)),
@@ -289,16 +289,16 @@ const sketch016 = startSketchOn(extrude011, 'END')
        radius: 0.3
      }, %)
 
-const extrude016 = extrude(1, sketch016)
+extrude016 = extrude(1, sketch016)
 
 // J3 Axis for Robot Arm
-const axisJ3C = axisJ3 - 180 + axisJ2
-const axisJ3CArmLength = 20
-const axisJ3CArmWidth = 3.75
-const axisJ3CArmThickness = 2.5
+axisJ3C = axisJ3 - 180 + axisJ2
+axisJ3CArmLength = 20
+axisJ3CArmWidth = 3.75
+axisJ3CArmThickness = 2.5
 
 // Create Body of J3 Robot Arm
-const sketch017 = startSketchOn(plane002)
+sketch017 = startSketchOn(plane002)
   |> startProfileAt([
        1.75 + axisJ2ArmLength * cos(toRadians(axisJ2)) - (axisJ3CArmWidth / 2 * sin(toRadians(axisJ3C))),
        8 + axisJ2ArmLength * sin(toRadians(axisJ2)) + axisJ3CArmWidth / 2 * cos(toRadians(axisJ3C))
@@ -319,9 +319,9 @@ const sketch017 = startSketchOn(plane002)
      }, %)
   |> lineTo([profileStartX(%), profileStartY(%)], %, $seg01)
   |> close(%)
-const extrude017 = extrude(axisJ3CArmThickness, sketch017)
+extrude017 = extrude(axisJ3CArmThickness, sketch017)
 
-const sketch018 = startSketchOn(extrude017, 'END')
+sketch018 = startSketchOn(extrude017, 'END')
   |> circle({
        center: [
          1.75 + axisJ2ArmLength * cos(toRadians(axisJ2)),
@@ -330,14 +330,14 @@ const sketch018 = startSketchOn(extrude017, 'END')
        radius: 3.7 / 2
      }, %, $referenceEdge6)
 
-const extrude018 = extrude(0.15, sketch018)
+extrude018 = extrude(0.15, sketch018)
   |> fillet({
        radius: 0.1,
        tags: [getOppositeEdge(referenceEdge6)]
      }, %)
 
 // Draw Bolt Pattern on J3 Robot Arm
-const sketch019 = startSketchOn(extrude018, 'END')
+sketch019 = startSketchOn(extrude018, 'END')
   |> circle({
        center: [
          1.75 + (axisJ2ArmLength - 1) * cos(toRadians(axisJ2)),
@@ -350,15 +350,15 @@ const sketch019 = startSketchOn(extrude018, 'END')
          1.75 + axisJ2ArmLength * cos(toRadians(axisJ2)),
          8 + axisJ2ArmLength * sin(toRadians(axisJ2))
        ],
-       repetitions: 7,
+       instances: 8,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
 
-const extrude019 = extrude(0.15, sketch019)
+extrude019 = extrude(0.15, sketch019)
 
 // On the J3 Robot Arm Body, Create Mounting Clevis for Grabber Claw
-const sketch020 = startSketchOn(extrude017, 'START')
+sketch020 = startSketchOn(extrude017, 'START')
   |> circle({
        center: [
          -1.75 - (axisJ2ArmLength * cos(toRadians(axisJ2))) - (axisJ3CArmLength * cos(toRadians(axisJ3C))),
@@ -366,9 +366,9 @@ const sketch020 = startSketchOn(extrude017, 'START')
        ],
        radius: axisJ3CArmWidth / 2
      }, %)
-const extrude020 = extrude(-0.5, sketch020)
+extrude020 = extrude(-0.5, sketch020)
 
-const sketch021 = startSketchOn(extrude017, 'END')
+sketch021 = startSketchOn(extrude017, 'END')
   |> circle({
        center: [
          1.75 + axisJ2ArmLength * cos(toRadians(axisJ2)) + axisJ3CArmLength * cos(toRadians(axisJ3C)),
@@ -377,18 +377,18 @@ const sketch021 = startSketchOn(extrude017, 'END')
        radius: axisJ3CArmWidth / 2.01
      }, %)
 
-const extrude021 = extrude(-0.5, sketch021)
+extrude021 = extrude(-0.5, sketch021)
 
 // Define Grabber Claw Constants
-const grabberLength = 7
+grabberLength = 7
 
-const sketch022 = startSketchOn(extrude021, 'START')
+sketch022 = startSketchOn(extrude021, 'START')
   |> circle({ center: [0, 0], radius: 0.10 }, %)
 
-const extrude022 = extrude(-0.01, sketch022)
+extrude022 = extrude(-0.01, sketch022)
 
 // Build Upper Claw Finger
-const sketch023 = startSketchOn(extrude022, 'START')
+sketch023 = startSketchOn(extrude022, 'START')
   |> startProfileAt([
        1.75 + axisJ2ArmLength * cos(toRadians(axisJ2)) + axisJ3CArmLength * cos(toRadians(axisJ3C)),
        8 + axisJ2ArmLength * sin(toRadians(axisJ2)) + axisJ3CArmLength * sin(toRadians(axisJ3C))
@@ -421,10 +421,10 @@ const sketch023 = startSketchOn(extrude022, 'START')
   |> lineTo([profileStartX(%), profileStartY(%)], %)
   |> close(%)
 
-const extrude023 = extrude(-1.5, sketch023)
+extrude023 = extrude(-1.5, sketch023)
 
 // Build Lower Claw Finger
-const sketch024 = startSketchOn(extrude022, 'START')
+sketch024 = startSketchOn(extrude022, 'START')
   |> startProfileAt([
        1.75 + axisJ2ArmLength * cos(toRadians(axisJ2)) + axisJ3CArmLength * cos(toRadians(axisJ3C)),
        8 + axisJ2ArmLength * sin(toRadians(axisJ2)) + axisJ3CArmLength * sin(toRadians(axisJ3C))
@@ -456,4 +456,4 @@ const sketch024 = startSketchOn(extrude022, 'START')
      }, %)
   |> lineTo([profileStartX(%), profileStartY(%)], %)
   |> close(%)
-const extrude024 = extrude(-1.5, sketch024)
+extrude024 = extrude(-1.5, sketch024)

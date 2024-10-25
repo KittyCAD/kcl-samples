@@ -6,42 +6,42 @@
 // A sports car wheel with a circular lug pattern and spokes.
 
 // Define constants
-const lugCount = 5
-const lugSpacing = 114.3 // mm
-const offset = -35 // mm
-const backSpacing = 6.38 // inches
-const wheelWidth = 9.5 // inches
-const wheelDiameter = 19 // inches
+lugCount = 5
+lugSpacing = 114.3 
+offset = -35 
+backSpacing = 6.38 
+wheelWidth = 9.5 
+wheelDiameter = 19 
 
 
 // Create the circular pattern for the lug holes
-const circles = startSketchOn('XZ')
+circles = startSketchOn('XZ')
   |> circle({center: [lugSpacing / 2, 0], radius: 16 / 2}, %)
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
-       repetitions: lugCount - 1,
+       instances: lugCount,
        rotateDuplicates: true
      }, %)
 
 // Create the wheel center and add lug holes
-const flangeBase = startSketchOn('XZ')
+flangeBase = startSketchOn('XZ')
   |> circle({center: [0, 0], radius: lugSpacing / 2 + 16 + 5}, %)
   |> hole(circles, %)
   |> extrude(10, %)
 
 // Remove the interior of the wheel center
-const sketch001 = startSketchOn(flangeBase, 'END')
+sketch001 = startSketchOn(flangeBase, 'END')
   |> circle({center: [0, 0], radius: 20}, %)
   |> extrude(-10, %)
 
 // Add more material to the wheel center
-const sketch002 = startSketchOn(flangeBase, 'END')
+sketch002 = startSketchOn(flangeBase, 'END')
   |> circle({center: [0, 0], radius: lugSpacing / 2 + 16 + 8}, %)
   |> extrude(30, %)
 
 // Edge treatment around center
-const sketch003 = startSketchOn('XY')
+sketch003 = startSketchOn('XY')
   |> startProfileAt([lugSpacing / 2 + 16 + 8, -10 - 30], %)
   |> yLine(30, %)
   |> line([6, -2], %)
@@ -50,7 +50,7 @@ const sketch003 = startSketchOn('XY')
   |> revolve({ axis: 'y' }, %)
 
 // Center cap
-const sketch004 = startSketchOn('XY')
+sketch004 = startSketchOn('XY')
   |> startProfileAt([15, -40], %)
   |> xLine(15, %)
   |> line([-3.01, -3.54], %)
@@ -60,19 +60,19 @@ const sketch004 = startSketchOn('XY')
   |> revolve({ axis: 'y' }, %)
 
 // Holes for lug nut heads
-const sketch005 = startSketchOn(sketch002, 'END')
+sketch005 = startSketchOn(sketch002, 'END')
   |> circle({center: [lugSpacing / 2, 0], radius: 17}, %)
   |> patternCircular2d({
        arcDegrees: 360,
        center: [0, 0],
-       repetitions: lugCount - 1,
+       instances: lugCount,
        rotateDuplicates: true
      }, %)
 
-const sketch006 = extrude(-30, sketch005)
+sketch006 = extrude(-30, sketch005)
 
 // Seperating the spoke base planes
-const plane001 = {
+plane001 = {
   plane: {
     origin: [0.0, 0.0, 5.0],
     xAxis: [1.0, 0.0, 0.0],
@@ -81,7 +81,7 @@ const plane001 = {
   }
 }
 
-const plane002 = {
+plane002 = {
   plane: {
     origin: [0.0, 0.0, -5.0],
     xAxis: [1.0, 0.0, 0.0],
@@ -91,7 +91,7 @@ const plane002 = {
 }
 
 // Spoke cross sections
-const sketch007 = startSketchOn(plane001)
+sketch007 = startSketchOn(plane001)
   |> startProfileAt([lugSpacing / 2 + 17, -36], %)
   |> bezierCurve({
        to: [
@@ -124,7 +124,7 @@ const sketch007 = startSketchOn(plane001)
      }, %)
   |> close(%)
 
-const sketch008 = startSketchOn(plane002)
+sketch008 = startSketchOn(plane002)
   |> startProfileAt([lugSpacing / 2 + 17, -36], %)
   |> bezierCurve({
        to: [
@@ -158,26 +158,26 @@ const sketch008 = startSketchOn(plane002)
   |> close(%)
 
 // Circular pattern spokes
-const sketch009 = extrude(20, sketch007)
+sketch009 = extrude(20, sketch007)
   |> patternCircular3d({
        axis: [0, 1, 0],
        center: [0, -2000, 0],
-       repetitions: 5,
+       instances: 6,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
 
-const sketch0010 = extrude(-20, sketch008)
+sketch0010 = extrude(-20, sketch008)
   |> patternCircular3d({
        axis: [0, 1, 0],
        center: [0, -2000, 0],
-       repetitions: 5,
+       instances: 6,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
 
 // Wheel exterior
-const sketch0011 = startSketchOn('XY')
+sketch0011 = startSketchOn('XY')
   |> startProfileAt([
        wheelDiameter * 25.4 / 2,
        -wheelWidth * 25.4 + backSpacing * 25.4 + offset
@@ -206,20 +206,20 @@ const sketch0011 = startSketchOn('XY')
   |> revolve({ axis: 'y' }, %)
 
   
-const rotorDiameter = 12 // inches
-const rotorInnerDiameter = 6 // inches
-const rotorSinglePlateThickness = 6.3 // mm
-const rotorInnerDiameterThickness = 12.6 // mm
-const lugHolePatternDia = 3 // inches
-const yAxisOffset = 10 // mm
-const rotorTotalThickness = 25.4 // mm
-const spacerPatternDiameter = 11 // inches
-const spacerDiameter = 6.3 // mm
-const spacerLength = rotorTotalThickness - 2*rotorSinglePlateThickness
-const spacerCount = 16
-const wheeldiameter = 19 // inches
+rotorDiameter = 12 
+rotorInnerDiameter = 6 
+rotorSinglePlateThickness = 6.3 
+rotorInnerDiameterThickness = 12.6 
+lugHolePatternDia = 3 
+yAxisOffset = 10 
+rotorTotalThickness = 25.4 
+spacerPatternDiameter = 11 
+spacerDiameter = 6.3 
+spacerLength = rotorTotalThickness - 2*rotorSinglePlateThickness
+spacerCount = 16
+wheeldiameter = 19 
 
-const rotorPlane = {
+rotorPlane = {
   plane: {
     origin: { x: 0, y: yAxisOffset, z: 0 },
     xAxis: { x: -1, y: 0, z: 0 },
@@ -229,29 +229,29 @@ const rotorPlane = {
 }
 
 fn lugPattern = (plane) => {
-  const lugHolePattern = circle({center: [-lugSpacing/2, 0], radius: 8}, plane)
+  lugHolePattern = circle({center: [-lugSpacing/2, 0], radius: 8}, plane)
   |> patternCircular2d({
     arcDegrees: 360,
     center: [0, 0],
-    repetitions: lugCount - 1,
+    instances: lugCount,
     rotateDuplicates: true,
   }, %)
   return lugHolePattern
 }
 
-const rotorSketch = startSketchOn(rotorPlane)
+rotorSketch = startSketchOn(rotorPlane)
   |> circle({center: [0, 0], radius: rotorDiameter/2 * 25.4}, %)
   |> hole(lugPattern(%), %)
   
-const rotor = extrude(rotorSinglePlateThickness, rotorSketch)
+rotor = extrude(rotorSinglePlateThickness, rotorSketch)
 
-const rotorBumpSketch = startSketchOn(rotorPlane)
+rotorBumpSketch = startSketchOn(rotorPlane)
   |> circle({center: [0, 0], radius: rotorInnerDiameter/2 * 25.4}, %)
   |> hole(lugPattern(%), %)
   
-const rotorBump = extrude(-rotorInnerDiameterThickness, rotorBumpSketch)
+rotorBump = extrude(-rotorInnerDiameterThickness, rotorBumpSketch)
 
-const rotorSecondaryPlatePlane = {
+rotorSecondaryPlatePlane = {
   plane: {
     origin: { x: 0, y: 10 + rotorTotalThickness*0.75, z: 0 },
     xAxis: { x: -1, y: 0, z: 0 },
@@ -260,36 +260,36 @@ const rotorSecondaryPlatePlane = {
   }
 }
 
-const secondaryRotorSketch = startSketchOn(rotorSecondaryPlatePlane)
+secondaryRotorSketch = startSketchOn(rotorSecondaryPlatePlane)
   |> circle({center: [0, 0], radius: rotorDiameter/2 * 25.4}, %)
   |> hole(lugPattern(%), %)
 
-const secondRotor = extrude(rotorSinglePlateThickness, secondaryRotorSketch)
+secondRotor = extrude(rotorSinglePlateThickness, secondaryRotorSketch)
 
-const spacerSketch = startSketchOn(rotorSecondaryPlatePlane)
+spacerSketch = startSketchOn(rotorSecondaryPlatePlane)
   |> circle({center: [spacerPatternDiameter/2 * 25.4, 0], radius: spacerDiameter}, %)
   |> patternCircular2d({
     arcDegrees: 360,
     center: [0, 0],
-    repetitions: spacerCount,
+    instances: spacerCount + 1,
     rotateDuplicates: true,
   }, %)
 
-const spacers = extrude(-spacerLength, spacerSketch)
+spacers = extrude(-spacerLength, spacerSketch)
 
 // Lug Nut
 // lug Nuts are essential components used to create secure connections, whether for electrical purposes, like terminating wires or grounding, or for mechanical purposes, such as providing mounting points or reinforcing structural joints. 
 
 
 // Define constants
-const lugDiameter = 24 // mm
-const lugHeadLength = lugDiameter * .5 // mm
-const lugThreadDiameter = lugDiameter/2 * .85 //mm
-const lugLength = 30 //mm
-const lugThreadDepth = lugLength - 12.7 //mm
+lugDiameter = 24 
+lugHeadLength = lugDiameter * .5 
+lugThreadDiameter = lugDiameter/2 * .85 //mm
+lugLength = 30 //mm
+lugThreadDepth = lugLength - 12.7 //mm
 
 // Define the plane the lugs live on
-const customPlane = {
+customPlane = {
       plane: {
         origin: { x: lugSpacing/2, y: -30, z: 0 },
         xAxis: { x: 1, y: 0, z: 0 },
@@ -301,7 +301,7 @@ const customPlane = {
 // Create a function for the lug nuts
 fn lug = (plane, length, diameter) => {
 
-    const lugSketch = startSketchOn(customPlane)
+    lugSketch = startSketchOn(customPlane)
       |> startProfileAt([0 + diameter/2, 0], %)
       |> angledLineOfYLength({
         angle: 70,
@@ -329,7 +329,7 @@ lug(customPlane, lugLength, lugDiameter)
       arcDegrees: 360,
       axis: [0, 1, 0],
       center: [0, 0, 0],
-      repetitions: 4,
+      instances: 5,
       rotateDuplicates: false,
     }, %)
 
@@ -338,16 +338,16 @@ lug(customPlane, lugLength, lugDiameter)
 
 
 // Define constants
-const tireInnerDiameter = 19 * 25.4 // mm
-const tireOuterDiameter = 26 * 25.4 // mm
-const tireDepth = 280 // mm
-const bendRadius = 40 // mm
-const tireTreadWidth = 10 // mm
-const tireTreadDepth = 10 // mm
-const tireTreadOffset = 80 // mm
+tireInnerDiameter = 19 * 25.4 
+tireOuterDiameter = 26 * 25.4 
+tireDepth = 280 
+bendRadius = 40 
+tireTreadWidth = 10 
+tireTreadDepth = 10 
+tireTreadOffset = 80 
 
 // Create the sketch of the tire
-const tireSketch = startSketchOn("XY")
+tireSketch = startSketchOn("XY")
   |> startProfileAt([tireInnerDiameter / 2, tireDepth / 2], %)
   |> lineTo([tireOuterDiameter / 2 - bendRadius, tireDepth / 2], %, $edge1)
   |> tangentialArc({
@@ -370,20 +370,20 @@ const tireSketch = startSketchOn("XY")
   |> lineTo([tireInnerDiameter / 2, -tireDepth / 2], %, $edge2)
   |> close(%)
   
-const tire = revolve({ axis: "Y" }, tireSketch)
+tire = revolve({ axis: "Y" }, tireSketch)
 
 // Brake Caliper
 // Brake calipers are used to squeeze the brake pads against the rotor, causing larger and larger amounts of friction depending on how hard the brakes are pressed.
 
 // Define constants
-const caliperTolerance = 5 // mm
-const caliperPadLength = 40 // mm
-const caliperThickness = 10 // mm
-const caliperOuterEdgeRadius = 10 // mm
-const caliperInnerEdgeRadius = 3 // mm
+caliperTolerance = 5 
+caliperPadLength = 40 
+caliperThickness = 10 
+caliperOuterEdgeRadius = 10 
+caliperInnerEdgeRadius = 3 
 
 // Create the plane for the brake caliper. This is so it can match up with the rotor model.
-const brakeCaliperPlane = {
+brakeCaliperPlane = {
   plane: {
     origin: { x: 0, y: 0, z: 0 },
     xAxis: { x: 1, y: 0, z: 0 },
@@ -393,7 +393,7 @@ const brakeCaliperPlane = {
 }
 
 // Sketch the brake caliper profile
-const brakeCaliperSketch = startSketchOn(brakeCaliperPlane)
+brakeCaliperSketch = startSketchOn(brakeCaliperPlane)
   |> startProfileAt([rotorDiameter/2 * 25.4+caliperTolerance, 0], %)
   |> line([0, rotorTotalThickness + caliperTolerance - caliperInnerEdgeRadius], %)
   |> tangentialArc({
@@ -438,7 +438,7 @@ const brakeCaliperSketch = startSketchOn(brakeCaliperPlane)
   |> close(%)
 
 // Revolve the brake caliiper sketch
-const brakeCaliper = revolve({
+brakeCaliper = revolve({
     axis: "Y",
     angle: -70,
   }, brakeCaliperSketch)

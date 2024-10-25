@@ -3,14 +3,14 @@
 
 
 // Define constants (5/16" - 24 thread size)
-const wallToWallLength = 0.5 // inches
-const thickness = 0.266 // inches
-const diameter = 0.3125 // inches
+wallToWallLength = 0.5 
+thickness = 0.266 
+diameter = 0.3125 
 
 
 // Define a function for the hex nut
 fn hexNut = (start, thk, innerDia) => {
-  const hexNutSketch = startSketchOn('-XZ')
+  hexNutSketch = startSketchOn('-XZ')
     |> startProfileAt([start[0] + innerDia, start[1]], %)
     |> angledLine({ angle: 240, length: innerDia }, %)
     |> angledLine({ angle: 180, length: innerDia }, %)

@@ -2,19 +2,19 @@
 // This is a bracket that holds an audio device underneath a desk or shelf. The audio device has dimensions of 144mm wide, 80mm length and 45mm depth with fillets of 6mm. This mounting bracket is designed to be 3D printed with PLA material
 
 // define constants in mm
-const radius = 6.0 
-const width = 144.0 
-const length = 80.0 
-const depth = 45.0 
-const thk = 4 
-const holeDiam = 5 
-const tabLength = 25 
-const tabWidth = 12
-const tabThk = 4
+radius = 6.0
+width = 144.0
+length = 80.0
+depth = 45.0
+thk = 4
+holeDiam = 5
+tabLength = 25
+tabWidth = 12
+tabThk = 4
 
 // define a rectangular shape func
 fn rectShape = (pos, w, l) => {
-  const rr = startSketchOn('xy')
+  rr = startSketchOn('xy')
     |> startProfileAt([pos[0] - (w / 2), pos[1] - (l / 2)], %)
     |> lineTo([pos[0] + w / 2, pos[1] - (l / 2)], %, $edge01)
     |> lineTo([pos[0] + w / 2, pos[1] + l / 2], %, $edge02)
@@ -24,7 +24,7 @@ fn rectShape = (pos, w, l) => {
 }
 
 // define the bracket plane
-const bracketPlane = {
+bracketPlane = {
   plane: {
     origin: { x: 0, y: length / 2 + thk, z: 0 },
     xAxis: { x: 1, y: 0, z: 0 },
@@ -35,7 +35,7 @@ const bracketPlane = {
 
 // build the bracket sketch around the body
 fn bracketSketch = (w, d, t) => {
-  const s = startSketchOn(bracketPlane)
+  s = startSketchOn(bracketPlane)
     |> startProfileAt([-w / 2 - t, d + t], %)
     |> lineTo([-w / 2 - t, -t], %, $edge1)
     |> lineTo([w / 2 + t, -t], %, $edge2)
@@ -49,8 +49,8 @@ fn bracketSketch = (w, d, t) => {
 }
 
 // build the body of the bracket
-const bs = bracketSketch(width, depth, thk)
-const bracketBody = bs
+bs = bracketSketch(width, depth, thk)
+bracketBody = bs
   |> extrude(length + 2 * thk, %)
   |> fillet({
        radius: radius,
@@ -63,7 +63,7 @@ const bracketBody = bs
      }, %)
 
 // define the tab plane
-const tabPlane = {
+tabPlane = {
   plane: {
     origin: { x: 0, y: 0, z: depth + thk },
     xAxis: { x: 1, y: 0, z: 0 },
@@ -73,7 +73,7 @@ const tabPlane = {
 }
 
 // build the tabs of the mounting bracket (right side)
-const tabsR = startSketchOn(tabPlane)
+tabsR = startSketchOn(tabPlane)
   |> startProfileAt([width / 2 + thk, length / 2 + thk], %)
   |> line([tabWidth, -tabLength / 3], %, $edge11)
   |> line([0, -tabLength / 3 * 2], %, $edge12)
@@ -96,12 +96,12 @@ const tabsR = startSketchOn(tabPlane)
      }, %)
   |> patternLinear3d({
        axis: [0, -1, 0],
-       repetitions: 1,
+       instances: 2,
        distance: length + 2 * thk - (tabLength * 4 / 3)
      }, %)
 
 // build the tabs of the mounting bracket (left side)
-const tabsL = startSketchOn(tabPlane)
+tabsL = startSketchOn(tabPlane)
   |> startProfileAt([-width / 2 - thk, length / 2 + thk], %)
   |> line([-tabWidth, -tabLength / 3], %, $edge21)
   |> line([0, -tabLength / 3 * 2], %, $edge22)
@@ -123,12 +123,12 @@ const tabsL = startSketchOn(tabPlane)
      }, %)
   |> patternLinear3d({
        axis: [0, -1, 0],
-       repetitions: 1,
+       instances: 2,
        distance: length + 2 * thk - (tabLength * 4 / 3)
      }, %)
 
 // define a plane for retention bumps
-const retPlane = {
+retPlane = {
   plane: {
     origin: { x: -width / 2 + 20, y: 0, z: 0 },
     xAxis: { x: 0, y: 1, z: 0 },
@@ -138,7 +138,7 @@ const retPlane = {
 }
 
 // build the retention bump in the front
-const retFront = startSketchOn(retPlane)
+retFront = startSketchOn(retPlane)
   |> startProfileAt([-length / 2 - thk, 0], %)
   |> line([0, thk], %)
   |> line([thk, -thk], %)
@@ -146,7 +146,7 @@ const retFront = startSketchOn(retPlane)
   |> extrude(width - 40, %)
 
 // build the retention bump in the back
-const retBack = startSketchOn(retPlane)
+retBack = startSketchOn(retPlane)
   |> startProfileAt([length / 2 + thk, 0], %)
   |> line([0, thk], %)
   |> line([-thk, 0], %)

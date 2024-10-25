@@ -1,17 +1,17 @@
 // Router template for a cross bar
 // A guide for routing a notch into a cross bar.
 
-const routerDiameter = 12.7
-const mmInInch = 25.4
-const templateDiameter = mmInInch * 11 / 16
-const templateGap = (templateDiameter - routerDiameter) / 2 - 0.5
-const slateWidthHalf = 41.5 / 2
-const minClampingDistance = 50 + 30
-const templateThickness = 10
-const radius = 10
-const depth = 30
-const distanceToInsideEdge = slateWidthHalf+templateThickness+templateGap
-const sketch001 = startSketchOn('XZ')
+routerDiameter = 12.7
+mmInInch = 25.4
+templateDiameter = mmInInch * 11 / 16
+templateGap = (templateDiameter - routerDiameter) / 2 - 0.5
+slateWidthHalf = 41.5 / 2
+minClampingDistance = 50 + 30
+templateThickness = 10
+radius = 10
+depth = 30
+distanceToInsideEdge = slateWidthHalf+templateThickness+templateGap
+sketch001 = startSketchOn('XZ')
   |> startProfileAt([ZERO, depth + templateGap], %)
   |> xLine(slateWidthHalf - radius, %, $seg01)
   |> arc({
@@ -42,9 +42,9 @@ const sketch001 = startSketchOn('XZ')
      }, %)
   |> lineTo([profileStartX(%), profileStartY(%)], %)
   |> close(%)
-const extrude001 = extrude(5, sketch001)
+extrude001 = extrude(5, sketch001)
 
-const sketch003 = startSketchOn(extrude001, 'START')
+sketch003 = startSketchOn(extrude001, 'START')
   |> startProfileAt([distanceToInsideEdge, 0], %)
   |> angledLine([180, templateThickness], %, $rectangleSegmentA002)
   |> angledLine([
@@ -57,9 +57,9 @@ const sketch003 = startSketchOn(extrude001, 'START')
      ], %, $rectangleSegmentC002)
   |> lineTo([profileStartX(%), profileStartY(%)], %)
   |> close(%)
-const extrude003 = extrude(13, sketch003)
+extrude003 = extrude(13, sketch003)
 
-const sketch002 = startSketchOn(extrude001, 'START')
+sketch002 = startSketchOn(extrude001, 'START')
   |> startProfileAt([-distanceToInsideEdge, 0], %)
   |> angledLine([0, templateThickness], %, $rectangleSegmentA001)
   |> angledLine([
@@ -73,9 +73,9 @@ const sketch002 = startSketchOn(extrude001, 'START')
   |> lineTo([profileStartX(%), profileStartY(%)], %)
   |> close(%)
 
-const extrude002 = extrude(13, sketch002)
+extrude002 = extrude(13, sketch002)
 
-const sketch004 = startSketchOn(extrude002, 'END')
+sketch004 = startSketchOn(extrude002, 'END')
   |> startProfileAt([-distanceToInsideEdge, 0], %)
   |> angledLine([0, distanceToInsideEdge*2], %, $rectangleSegmentA003)
   |> angledLine([
@@ -88,4 +88,4 @@ const sketch004 = startSketchOn(extrude002, 'END')
      ], %, $rectangleSegmentC003)
   |> lineTo([profileStartX(%), profileStartY(%)], %)
   |> close(%)
-const extrude004 = extrude(4, sketch004)
+extrude004 = extrude(4, sketch004)

@@ -5,13 +5,13 @@
 
 
 // Define constants
-const lugDiameter = 24 // mm
-const lugHeadLength = lugDiameter * .5 // mm
-const lugThreadDiameter = lugDiameter/2 * .85 //mm
-const lugLength = 30 //mm
-const lugThreadDepth = lugLength - 12.7 //mm
+lugDiameter = 24 
+lugHeadLength = lugDiameter * .5 
+lugThreadDiameter = lugDiameter/2 * .85 
+lugLength = 30 
+lugThreadDepth = lugLength - 12.7 
 
-const customPlane = {
+customPlane = {
       plane: {
         origin: { x: 0, y: 0, z: 0 },
         xAxis: { x: 1, y: 0, z: 0 },
@@ -22,7 +22,7 @@ const customPlane = {
 
 fn lug = (plane, length, diameter) => {
 
-    const lugSketch = startSketchOn(customPlane)
+    lugSketch = startSketchOn(customPlane)
       |> startProfileAt([0 + diameter/2, 0], %)
       |> angledLineOfYLength({
         angle: 70,

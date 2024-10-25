@@ -2,12 +2,12 @@
 // A french press immersion coffee maker
 
 
-const carafeDiameter = 4.41
-const carafeHeight = 7.32
-const handleThickness = 0.65
+carafeDiameter = 4.41
+carafeHeight = 7.32
+handleThickness = 0.65
 
 // Upper ring of the metal structure
-const sketch001 = startSketchOn('XZ')
+sketch001 = startSketchOn('XZ')
   |> startProfileAt([carafeDiameter / 2, 5.7], %)
   |> angledLine([0, 0.1], %, $rectangleSegmentA001)
   |> angledLine([
@@ -23,7 +23,7 @@ const sketch001 = startSketchOn('XZ')
   |> revolve({ angle: 360, axis: 'Y' }, %)
 
 // Create an angled plane to sketch the supports
-const plane001 = {
+plane001 = {
   plane: {
     origin: [-0.26, 0.26, 0.0],
     xAxis: [1, 1, 0.0],
@@ -33,7 +33,7 @@ const plane001 = {
 }
 
 // Cross section of the metal supports
-const sketch002 = startSketchOn(plane001)
+sketch002 = startSketchOn(plane001)
   |> startProfileAt([carafeDiameter / 2, 5.7], %)
   |> xLine(0.1, %)
   |> yLine(-5.2, %, $edge1)
@@ -86,21 +86,21 @@ const sketch002 = startSketchOn(plane001)
   |> patternCircular3d({
        axis: [0, 0, 1],
        center: [0, 0, 0],
-       repetitions: 3,
+       instances: 4,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
 
 // Cross plate
-const sketch003 = startSketchOn(offsetPlane('XY', 1))
+sketch003 = startSketchOn(offsetPlane('XY', 1))
   |> circle({
        center: [0, 0],
        radius: carafeDiameter / 2 - 0.15
      }, %)
 
-const extrude001 = extrude(0.050, sketch003)
+extrude001 = extrude(0.050, sketch003)
 
-const sketch004 = startSketchOn(extrude001, 'END')
+sketch004 = startSketchOn(extrude001, 'END')
   |> startProfileAt([0.3, 0.17], %)
   |> yLine(1.2, %)
   |> arc({
@@ -112,15 +112,15 @@ const sketch004 = startSketchOn(extrude001, 'END')
   |> close(%)
   |> patternCircular2d({
        center: [0, 0],
-       repetitions: 2,
+       instances: 3,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
 
-const extrude002 = extrude(-0.050, sketch004)
+extrude002 = extrude(-0.050, sketch004)
 
 // Filter screen
-const sketch005 = startSketchOn('XZ')
+sketch005 = startSketchOn('XZ')
   |> startProfileAt([0.15, 1.11], %)
   |> xLineTo(carafeDiameter / 2 - 0.2, %)
   |> angledLineToX({
@@ -135,7 +135,7 @@ const sketch005 = startSketchOn('XZ')
   |> revolve({ axis: 'y' }, %)
 
 // Plunger and stem
-const sketch006 = startSketchOn('XZ')
+sketch006 = startSketchOn('XZ')
   |> startProfileAt([0.1, 1], %)
   |> line([0.1, 0], %)
   |> angledLineToX({ angle: 10, to: 0.05 }, %)
@@ -148,52 +148,52 @@ const sketch006 = startSketchOn('XZ')
   |> revolve({ axis: 'y' }, %)
 
 // Spiral plate
-const sketch007 = startSketchOn(offsetPlane('XY', 1.12))
+sketch007 = startSketchOn(offsetPlane('XY', 1.12))
   |> circle({
        center: [0, 0],
        radius: carafeDiameter / 2 - 0.24
      }, %)
   |> hole(circle({ center: [0, 0], radius: .15 }, %), %)
 
-const extrude003 = extrude(0.050, sketch007)
+extrude003 = extrude(0.050, sketch007)
 
 // Pattern holes in the spiral plate
-const sketch008 = startSketchOn(extrude003, 'END')
+sketch008 = startSketchOn(extrude003, 'END')
   |> circle({ center: [1.4, 0], radius: .3 }, %)
   |> patternCircular2d({
        center: [0, 0],
-       repetitions: 7,
+       instances: 8,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
 
-const extrude004 = extrude(-0.050, sketch008)
+extrude004 = extrude(-0.050, sketch008)
 
 // Pattern holes in the spiral plate
-const sketch009 = startSketchOn(extrude003, 'END')
+sketch009 = startSketchOn(extrude003, 'END')
   |> circle({ center: [0.6, 0], radius: .2 }, %)
   |> patternCircular2d({
        center: [0, 0],
-       repetitions: 3,
+       instances: 4,
        arcDegrees: 360,
        rotateDuplicates: true
      }, %)
 
-const extrude005 = extrude(-0.050, sketch009)
+extrude005 = extrude(-0.050, sketch009)
 
 // Extrude a glass carafe body
-const sketch010 = startSketchOn("XY")
+sketch010 = startSketchOn("XY")
   |> circle({
        center: [0, 0],
        radius: carafeDiameter / 2
      }, %)
 
 // Perform a shell operation to hollow the carafe body with the top face removed
-const extrude006 = extrude(carafeHeight, sketch010)
+extrude006 = extrude(carafeHeight, sketch010)
   |> shell({ faces: ["end"], thickness: .07 }, %)
 
 // Draw and revolve the lid
-const sketch011 = startSketchOn('XZ')
+sketch011 = startSketchOn('XZ')
   |> startProfileAt([0.2, carafeHeight - 0.7], %)
   |> xLine(carafeDiameter / 2 - 0.3, %)
   |> yLine(0.7, %)
@@ -210,7 +210,7 @@ const sketch011 = startSketchOn('XZ')
   |> revolve({ axis: 'y' }, %)
 
 // Draw and extrude handle
-const sketch012 = startSketchOn(offsetPlane('XZ', handleThickness / 2))
+sketch012 = startSketchOn(offsetPlane('XZ', handleThickness / 2))
   |> startProfileAt([2.3, 6.4], %)
   |> line([0.56, 0], %)
   |> tangentialArcTo([4.1, 5.26], %)
@@ -225,4 +225,4 @@ const sketch012 = startSketchOn(offsetPlane('XZ', handleThickness / 2))
   |> line([-0.4, 0], %)
   |> lineTo([profileStartX(%), profileStartY(%)], %)
   |> close(%)
-const extrude007 = extrude(-handleThickness, sketch012)
+extrude007 = extrude(-handleThickness, sketch012)

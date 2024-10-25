@@ -5,7 +5,7 @@
 // Define function
 fn rail8020 = (originStart, railHeight, railLength) => {
   // Sketch side 1 of profile
-  const sketch001 = startSketchOn('-XZ')
+  sketch001 = startSketchOn('-XZ')
     |> startProfileAt([
          originStart[0],
          0.1 * railHeight + originStart[1]

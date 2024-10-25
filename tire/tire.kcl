@@ -3,16 +3,16 @@
 
 
 // Define constants
-const tireInnerDiameter = 482.6 // mm (19 in)
-const tireOuterDiameter = 660.4 // mm (26 in)
-const tireDepth = 280 // mm
-const bendRadius = 40 // mm
-const tireTreadWidth = 10 // mm
-const tireTreadDepth = 10 // mm
-const tireTreadOffset = 80 // mm
+tireInnerDiameter = 482.6
+tireOuterDiameter = 660.4
+tireDepth = 280 
+bendRadius = 40 
+tireTreadWidth = 10 
+tireTreadDepth = 10 
+tireTreadOffset = 80 
 
 // Create the sketch of the tire
-const tireSketch = startSketchOn("XY")
+tireSketch = startSketchOn("XY")
   |> startProfileAt([tireInnerDiameter / 2, tireDepth / 2], %)
   |> lineTo([tireOuterDiameter / 2 - bendRadius, tireDepth / 2], %, $edge1)
   |> tangentialArc({
@@ -36,5 +36,5 @@ const tireSketch = startSketchOn("XY")
   |> close(%)
 
 // Revolve the sketch to create the tire
-const tire = revolve({ axis: "Y" }, tireSketch)
+tire = revolve({ axis: "Y" }, tireSketch)
 
