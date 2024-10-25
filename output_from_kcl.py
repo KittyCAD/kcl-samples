@@ -5,7 +5,6 @@ import tomllib
 from concurrent.futures import ProcessPoolExecutor
 from io import BytesIO
 from pathlib import Path
-from typing import Container
 
 import kcl
 import requests
@@ -99,7 +98,7 @@ def snapshot(code: str, save_path: Path, unit_length: UnitLength = kcl.UnitLengt
         return False
 
 
-def process_single_kcl(kcl_path: Path) -> [bool, bool]:
+def process_single_kcl(kcl_path: Path) -> dict:
     print(f"Processing {kcl_path.name}")
 
     units = get_units(kcl_path)
