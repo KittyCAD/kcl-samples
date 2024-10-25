@@ -72,13 +72,13 @@ def get_units(kcl_path: Path) -> UnitLength:
     settings_path = kcl_path.parent / "project.toml"
     if not settings_path.exists():
         return kcl.UnitLength.Mm
-    else:
-        with open(settings_path, "rb") as f:
-            data = tomllib.load(f)
-        try:
-            return UNIT_MAP[data['settings']['modeling']['base_unit']]
-        except KeyError:
-            return kcl.UnitLength.Mm
+ 
+    with open(settings_path, "rb") as f:
+        data = tomllib.load(f)
+    try:
+        return UNIT_MAP[data['settings']['modeling']['base_unit']]
+    except KeyError:
+        return kcl.UnitLength.Mm
 
 
 def snapshot(code: str, save_path: Path, unit_length: UnitLength = kcl.UnitLength.Mm) -> bool:
