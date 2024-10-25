@@ -43,7 +43,7 @@ jobs:
               run: |
                   python output_from_kcl.py
 
-            - name: check for changes
+            - name: Check for changes
               id: git-check
               run: |
                   git add .
