@@ -48,42 +48,12 @@ planeBottomSide = {
   }
 }
 
-// Define a plane for the top angled face
-planeTopSide = {
-  plane: {
-    origin: [
-      inscR * cos(toRadians(toDegrees(dihedral) - 90)),
-      0,
-      inscR + inscR * sin(toRadians(toDegrees(dihedral) - 90))
-    ],
-    xAxis: [
-      -cos(dihedral),
-      0.000000,
-      -sin(dihedral)
-    ],
-    yAxis: [0, 1, 0],
-    zAxis: [sin(dihedral), 0, -cos(dihedral)]
-  }
-}
-
-// Define a plane for the top of the dodecahedron
-planeTop = {
-  plane: {
-    origin: [0, 0, 2 * inscR],
-    xAxis: [-1, 0, 0],
-    yAxis: [0, -1, 0],
-    zAxis: [0, 0, 1]
-  }
-}
-
 // Extrude the faces in each plane
 bottom = extrude(wallThickness, ngon("XY", 5, pentR))
-top = extrude(-wallThickness, ngon(planeTop, 5, pentR))
 bottomSide = extrude(wallThickness, ngon(planeBottomSide, 5, pentR))
-topSide = extrude(-wallThickness, ngon(planeTopSide, 5, pentR))
 
 // Pattern the sides so we have a full dodecahedron
-patternCircular3d({
+bottomBowl = patternCircular3d({
   instances: 5,
   axis: [0, 0, 1],
   center: [0, 0, 0],
@@ -91,10 +61,20 @@ patternCircular3d({
   rotateDuplicates: true
 }, bottomSide)
 
+// pattern the bottom to create the top face
 patternCircular3d({
-  instances: 5,
-  axis: [0, 0, 1],
-  center: [0, 0, 0],
+  instances: 2,
+  axis: [0, 1, 0],
+  center: [0, 0, inscR],
   arcDegrees: 360,
   rotateDuplicates: true
-}, topSide)
+}, bottom)
+
+// pattern the bottom angled faces to create the top
+patternCircular3d({
+  instances: 2,
+  axis: [0, 1, 0],
+  center: [0, 0, inscR],
+  arcDegrees: 360,
+  rotateDuplicates: true
+}, bottomBowl)
