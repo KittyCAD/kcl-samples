@@ -60,17 +60,12 @@ def find_files(
         list[Path]
     """
     path = Path(path)
-    files = path.rglob("*")
-    file_paths = []
     valid_suffixes = [i.lower() for i in valid_suffixes]
-    for file in files:
-        if file.suffix.lower() in valid_suffixes:
-            if name_pattern is not None:
-                if re.match(name_pattern, file.name) is not None:
-                    file_paths.append(file)
-            else:
-                file_paths.append(file)
-    return sorted(file_paths)
+    return sorted(
+        file for file in path.rglob("*")
+        if file.suffix.lower() in valid_suffixes and
+        (name_pattern is None or re.match(name_pattern, file.name))
+    )
 
 
 def get_units(kcl_path: Path) -> UnitLength:
