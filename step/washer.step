@@ -1,7 +1,7 @@
 ISO-10303-21;
 HEADER;
 FILE_DESCRIPTION((('zoo.dev export')), '2;1');
-FILE_NAME('dump.step', '2024-10-25T17:22:36.088095434+00:00', ('Author unknown'), ('Organization unknown'), 'zoo.dev beta', 'zoo.dev', 'Authorization unknown');
+FILE_NAME('dump.step', '2024-10-25T21:01:10.325804205+00:00', ('Author unknown'), ('Organization unknown'), 'zoo.dev beta', 'zoo.dev', 'Authorization unknown');
 FILE_SCHEMA(('AP203_CONFIGURATION_CONTROLLED_3D_DESIGN_OF_MECHANICAL_PARTS_AND_ASSEMBLIES_MIM_LF'));
 ENDSEC;
 DATA;
