@@ -43,7 +43,7 @@ def export_step(code: str, save_path: Path, unit_length: UnitLength = kcl.UnitLe
 
 
 def find_files(
-        path: str | Path, valid_suffixes: Container[str], name_pattern: str | None = None
+        path: str | Path, valid_suffixes: list[str], name_pattern: str | None = None
 ) -> list[Path]:
     """
     Recursively find files in a folder by a list of provided suffixes or file naming pattern
