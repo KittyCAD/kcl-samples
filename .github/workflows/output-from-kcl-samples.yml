@@ -36,11 +36,10 @@ jobs:
 
             - name: Get Zoo Outputs
               env:
-                  KITTYCAD_API_TOKEN: ${{ secrets.KITTYCAD_DEV_TOKEN }}
+                  KITTYCAD_API_TOKEN: ${{ secrets.KITTYCAD_TOKEN }}
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   GH_REPO: ${{ github.repository }}
                   GH_PR: ${{ github.event.pull_request.number }}
-                  BASE_URL: ${{ secrets.BASE_URL }}
               run: |
                   python output_from_kcl.py
 
