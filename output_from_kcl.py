@@ -154,7 +154,7 @@ def main():
             'body': comment_body,
         }
 
-        requests.post(url, headers=headers, json=json_data)
+        requests.post(url, headers=headers, json=json_data, timeout=60)
 
 
 if __name__ == "__main__":
