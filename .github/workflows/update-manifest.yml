@@ -33,8 +33,13 @@ jobs:
       - name: Commit and push changes
         if: ${{ success() && (steps.check-for-changes.outputs.changed == 'changes detected') }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add ./manifest.json
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git fetch origin
+          echo ${{ github.head_ref }}
+          git checkout ${{ github.head_ref }}
           git commit -m "Update manifest.json"
           git push
+          git push origin ${{ github.head_ref }}
