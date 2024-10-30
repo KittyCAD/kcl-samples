@@ -10,9 +10,6 @@ jobs:
   generate-manifest:
     runs-on: ubuntu-latest
 
-    outputs:
-      manifest-is-changed: ${{steps.check-for-changes.outputs.changed}}
-
     steps:
       # Checkout the repository
       - name: Checkout repository
@@ -34,7 +31,7 @@ jobs:
 
       # Stage and commit the changes if any were made
       - name: Commit and push changes
-        if: ${{ success() && needs.generate-manifest.outputs.manifest-is-changed }}
+        if: ${{ success() && (steps.check-for-changes.outputs.changed == 'changes detected') }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
