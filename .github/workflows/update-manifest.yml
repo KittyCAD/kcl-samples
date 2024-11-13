@@ -1,5 +1,9 @@
 name: Generate Manifest
 
+permissions:
+    contents: write
+    pull-requests: write
+
 on:
   push:
     branches:
@@ -25,15 +29,20 @@ jobs:
 
       # Check if the manifest.json has changed
       - name: Check for changes
+        id: check-for-changes
         run: |
-          git diff --exit-code ./manifest.json || echo "Changes detected"
+          git diff --exit-code ./manifest.json || echo "changed=changes detected" >> "$GITHUB_OUTPUT"
 
       # Stage and commit the changes if any were made
       - name: Commit and push changes
-        if: ${{ success() && (steps.Check_for_changes.outputs.changed == 'true') }}
+        if: ${{ success() && (steps.check-for-changes.outputs.changed == 'changes detected') }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add ./manifest.json
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git fetch origin
+          echo ${{ github.head_ref }}
+          git checkout ${{ github.head_ref }}
           git commit -m "Update manifest.json"
-          git push
+          git push origin ${{ github.head_ref }}
