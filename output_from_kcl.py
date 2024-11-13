@@ -4,6 +4,7 @@ import re
 import tomllib
 from concurrent.futures import ProcessPoolExecutor
 from io import BytesIO
+from operator import itemgetter
 from pathlib import Path
 
 import kcl
@@ -121,7 +122,33 @@ def process_single_kcl(kcl_path: Path) -> dict:
                                    unit_length=units)
         count += 1
 
-    return {"filename": kcl_path.name, "export_status": export_status, "snapshot_status": snapshot_status}
+    readme_entry = (
+        f"#### [{kcl_path.parent.name}](./{kcl_path.parent.name}/{kcl_path.name}) ([step](step/{kcl_path.stem}.step)) ([screenshot](screenshots/{kcl_path.stem}.png))\n"
+        f"[![{kcl_path.parent.name}](screenshots/{kcl_path.stem}.png)](./{kcl_path.parent.name}/{kcl_path.name})"
+    )
+
+    return {"filename": kcl_path.name, "export_status": export_status, "snapshot_status": snapshot_status,
+            "readme_entry": readme_entry}
+
+
+def update_readme(new_content: str, search_string: str = '---\n') -> None:
+    with open("README.md", 'r', encoding='utf-8') as file:
+        lines = file.readlines()
+
+    # Find the line containing the search string
+    found_index = -1
+    for i, line in enumerate(lines):
+        if search_string in line:
+            found_index = i
+            break
+
+    new_lines = lines[:found_index + 1]
+    new_lines.append(new_content)
+
+    # Write the modified content back to the file
+    with open("README.md", 'w', encoding='utf-8') as file:
+        file.writelines(new_lines)
+        file.write("\n")
 
 
 def main():
@@ -131,6 +158,8 @@ def main():
     with ProcessPoolExecutor(max_workers=5) as executor:
         futures = [executor.submit(process_single_kcl, kcl_file) for kcl_file in kcl_files]
     results = [future.result() for future in futures]
+
+    results = sorted(results, key=itemgetter('filename'))
 
     if False in [i["export_status"] for i in results]:
         comment_body = "The following files failed to export to STEP format:\n"
@@ -149,6 +178,15 @@ def main():
         }
 
         requests.post(url, headers=headers, json=json_data, timeout=60)
+
+    new_readme_links = []
+    for result in results:
+        if result["export_status"] and result["snapshot_status"]:
+            new_readme_links.append(result["readme_entry"])
+
+    new_readme_str = "\n".join(new_readme_links)
+
+    update_readme(new_readme_str)
 
 
 if __name__ == "__main__":
