@@ -20,12 +20,12 @@ rs = map([0..cmo], (i) => {
 })
 
 // Calculate operating pressure angle
-as = map(rs, (r) => {
+angles = map(rs, (r) => {
   return toDegrees(acos(baseDiameter / 2 / r))
 })
 
 // Calculate the involute function
-invas = map(as, (a) => {
+invas = map(angles, (a) => {
   return tan(toRadians(a)) - toRadians(a)
 })
 
