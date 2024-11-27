@@ -3,29 +3,29 @@
 
 
 // Define constants in inches (in)
-const innerDiameter = 10
-const outerDiameter = 20
-const bendRadius = 30
-const bendAngle = 90
+innerDiameter = 10
+outerDiameter = 20
+bendRadius = 30
+bendAngle = 90
 
 // create a sketch in the 'XZ' plane
-const sketch000 = startSketchOn("XZ")
+sketch000 = startSketchOn("XZ")
 
 // create a profile for the outer diameter
-const outerProfile = circle({
-  center: [bendRadius, 0],
-  radius: outerDiameter / 2
+outerProfile = circle({
+  center = [bendRadius, 0],
+  radius = outerDiameter / 2
 }, sketch000)
 
 // create a profile for the inner diameter
-const innerProfile = circle({
-  center: [bendRadius, 0],
-  radius: innerDiameter / 2
+innerProfile = circle({
+  center = [bendRadius, 0],
+  radius = innerDiameter / 2
 }, sketch000)
 
 // create the profile of the pipe
-const pipeProfile = outerProfile
+pipeProfile = outerProfile
   |> hole(innerProfile, %)
 
 // revolve the pipe profile at the desired angle
-const pipe = revolve({ axis: "Y", angle: bendAngle }, pipeProfile)
+pipe = revolve({ axis = "Y", angle = bendAngle }, pipeProfile)
