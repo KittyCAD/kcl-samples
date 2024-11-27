@@ -28,41 +28,41 @@ holeIndex = .75
 rs = rectShape([0, 0], plateWidth, plateLength)
 part = rs
   |> hole(circle({
-       center: [
+       center = [
          -plateWidth / 2 + holeIndex,
          plateLength / 2 - holeIndex
        ],
-       radius: holeRadius
+       radius = holeRadius
      }, %), %)
   |> hole(circle({
-       center: [
+       center = [
          plateWidth / 2 - holeIndex,
          plateLength / 2 - holeIndex
        ],
-       radius: holeRadius
+       radius = holeRadius
      }, %), %)
   |> hole(circle({
-       center: [
+       center = [
          -plateWidth / 2 + holeIndex,
          -plateLength / 2 + holeIndex
        ],
-       radius: holeRadius
+       radius = holeRadius
      }, %), %)
   |> hole(circle({
-       center: [
+       center = [
          plateWidth / 2 - holeIndex,
          -plateLength / 2 + holeIndex
        ],
-       radius: holeRadius
+       radius = holeRadius
      }, %), %)
   |> hole(circle({
-       center: [0, 0],
-       radius: centerHoleDiameter
+       center = [0, 0],
+       radius = centerHoleDiameter
      }, %), %)
   |> extrude(plateThickness, %)
   |> fillet({
-       radius: filletRadius,
-       tags: [
+       radius = filletRadius,
+       tags = [
          getPreviousAdjacentEdge(rs.tags.edge1),
          getPreviousAdjacentEdge(rs.tags.edge2),
          getPreviousAdjacentEdge(rs.tags.edge3),
