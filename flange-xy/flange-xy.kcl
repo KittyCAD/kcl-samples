@@ -22,52 +22,64 @@ assertGreaterThan(nHoles, 1, "nHoles must be greater than 1")
 
 // Create the flange base and the six mounting holes
 flangeBase = startSketchOn('XY')
-  |> circle({ center: [0, 0], radius: baseDia / 2 }, %)
+  |> circle({
+       center = [0, 0],
+       radius = baseDia / 2
+     }, %)
   |> hole(circle({
-       center: [mountingHolePlacementDiameter / 2, 0],
-       radius: mountingHoleDia / 2
+       center = [mountingHolePlacementDiameter / 2, 0],
+       radius = mountingHoleDia / 2
      }, %), %)
   |> hole(circle({
-       center: [0, mountingHolePlacementDiameter / 2],
-       radius: mountingHoleDia / 2
+       center = [0, mountingHolePlacementDiameter / 2],
+       radius = mountingHoleDia / 2
      }, %), %)
   |> hole(circle({
-       center: [-mountingHolePlacementDiameter / 2, 0],
-       radius: mountingHoleDia / 2
+       center = [-mountingHolePlacementDiameter / 2, 0],
+       radius = mountingHoleDia / 2
      }, %), %)
   |> hole(circle({
-       center: [0, -mountingHolePlacementDiameter / 2],
-       radius: mountingHoleDia / 2
+       center = [0, -mountingHolePlacementDiameter / 2],
+       radius = mountingHoleDia / 2
      }, %), %)
-  |> hole(circle({ center: [0, 0], radius: pipeDia / 2 }, %), %)
+  |> hole(circle({
+       center = [0, 0],
+       radius = pipeDia / 2
+     }, %), %)
   |> extrude(baseThickness, %)
 
 // Plane for top face
 topFacePlane = {
-  plane: {
-    origin: { x: 0, y: 0, z: baseThickness },
-    xAxis: { x: 1, y: 0, z: 0 },
-    yAxis: { x: 0, y: 1, z: 0 },
-    zAxis: { x: 0, y: 0, z: 1 }
+  plane = {
+    origin = { x = 0, y = 0, z = baseThickness },
+    xAxis = { x = 1, y = 0, z = 0 },
+    yAxis = { x = 0, y = 1, z = 0 },
+    zAxis = { x = 0, y = 0, z = 1 }
   }
 }
 
 // Create the extrusion on the top of the flange base
 topExtrusion = startSketchOn(topFacePlane, 'end')
   |> circle({
-       center: [0, 0],
-       radius: topTotalDiameter / 2
+       center = [0, 0],
+       radius = topTotalDiameter / 2
      }, %)
-  |> hole(circle({ center: [0, 0], radius: pipeDia / 2 }, %), %)
+  |> hole(circle({
+       center = [0, 0],
+       radius = pipeDia / 2
+     }, %), %)
   |> extrude(topTotalThickness, %)
 
 // Create the extrusion on the bottom of the flange base
 bottomExtrusion = startSketchOn("XY")
   |> circle({
-       center: [0, 0],
-       radius: bottomTotalDiameter / 2
+       center = [0, 0],
+       radius = bottomTotalDiameter / 2
      }, %)
-  |> hole(circle({ center: [0, 0], radius: pipeDia / 2 }, %), %)
+  |> hole(circle({
+       center = [0, 0],
+       radius = pipeDia / 2
+     }, %), %)
   |> extrude(-bottomThickness, %)
 
 // https://www.mcmaster.com/44685K193/

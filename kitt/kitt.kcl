@@ -1,6 +1,7 @@
 // Kitt
 // The beloved KittyCAD mascot in a voxelized style.
 
+
 // pixel box function
 fn pixelBox = (kitExtrude, extrudeTag, positionY, positionZ, width, height, depth) => {
   pixelBoxBody = startSketchOn(kitExtrude, extrudeTag)
@@ -35,7 +36,6 @@ kitHeadHeight = 16
 
 kitHeadElevation = kitBodyElevation + kitBodyHeight - kitHeadOffset - kitHeadHeight
 
-
 kitHeadWidth = kitBodyWidth - (kitHeadOffset * 2)
 kitHeadDepth = 3
 kitHead = pixelBox(kitBody, 'END', -kitHeadWidth / 2, kitHeadElevation, kitHeadWidth, kitHeadHeight, kitHeadDepth)
@@ -63,8 +63,8 @@ kitFace = startSketchOn(kitHead, 'END')
   |> close(%)
   |> extrude(-kitFaceDepth, %)
 
-// Kitty Face Features:
-// 3.1 Kitty Eyes
+  // Kitty Face Features:
+  // 3.1 Kitty Eyes
 
 // 3.1.1 Kitty Left Eye
 kitEyeDepth = 0.5
@@ -158,7 +158,7 @@ kitShoeLength = 10
 kitShoeHeight = 3
 
 fn kitLeg = (offsetFront, offsetSide) => {
-  kitShoeOffsetFront = (kitShoeLength / 2) - (kitBodyDepth / 2) - offsetFront
+  kitShoeOffsetFront = kitShoeLength / 2 - (kitBodyDepth / 2) - offsetFront
 
   kitFootPrint = startSketchOn('XY')
     |> startProfileAt([offsetSide, kitShoeOffsetFront], %)
@@ -196,7 +196,6 @@ fn kitEar = (earOffsetFront, earOffsetSide) => {
   baseVolume = pixelBox(kitBody, seg01, kitNewEarOffsetSide, kitNewEarOffsetFront, kitEarWidth, -kitEarDepth, kitEarHeight)
 
   secondOffset = 1
-  
   secondLevel = pixelBox(baseVolume, 'END', kitNewEarOffsetSide + secondOffset, kitNewEarOffsetFront - 0.01, kitEarWidth - (secondOffset * 2), -kitEarDepth + secondOffset * 2, kitEarHeight)
 
   thirdOffset = 2

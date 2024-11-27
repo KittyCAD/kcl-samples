@@ -25,21 +25,21 @@ assertGreaterThan(wbumps, 1, "wbumps must be greater than 1")
 
 // Create the plane for the pegs. This is a hack so that the pegs can be patterned along the face of the lego base.
 pegFace = {
-  plane: {
-    origin: { x: 0, y: 0, z: height },
-    xAxis: { x: 1, y: 0, z: 0 },
-    yAxis: { x: 0, y: 1, z: 0 },
-    zAxis: { x: 0, y: 0, z: 1 }
+  plane = {
+    origin = { x = 0, y = 0, z = height },
+    xAxis = { x = 1, y = 0, z = 0 },
+    yAxis = { x = 0, y = 1, z = 0 },
+    zAxis = { x = 0, y = 0, z = 1 }
   }
 }
 
 // Create the plane for the tubes underneath the lego. This is a hack so that the tubes can be patterned underneath the lego.
 tubeFace = {
-  plane: {
-    origin: { x: 0, y: 0, z: height - t },
-    xAxis: { x: 1, y: 0, z: 0 },
-    yAxis: { x: 0, y: 1, z: 0 },
-    zAxis: { x: 0, y: 0, z: 1 }
+  plane = {
+    origin = { x = 0, y = 0, z = height - t },
+    xAxis = { x = 1, y = 0, z = 0 },
+    yAxis = { x = 0, y = 1, z = 0 },
+    zAxis = { x = 0, y = 0, z = 1 }
   }
 }
 
@@ -67,41 +67,41 @@ shellExtrude = startSketchOn(s, "start")
 // Create the pegs on the top of the base
 peg = startSketchOn(s, 'end')
   |> circle({
-       center: [
+       center = [
          -(pitch * (wbumps - 1) / 2),
          -(pitch * (lbumps - 1) / 2)
        ],
-       radius: bumpDiam / 2
+       radius = bumpDiam / 2
      }, %)
   |> patternLinear2d({
-       axis: [1, 0],
-       instances: wbumps,
-       distance: pitch
+       axis = [1, 0],
+       instances = wbumps,
+       distance = pitch
      }, %)
   |> patternLinear2d({
-       axis: [0, 1],
-       instances: lbumps,
-       distance: pitch
+       axis = [0, 1],
+       instances = lbumps,
+       distance = pitch
      }, %)
   |> extrude(bumpHeight, %)
 
 // Create the pegs on the bottom of the base
 tubePattern = startSketchOn(tubeFace)
   |> circle({
-       center: [
+       center = [
          -(pitch * (wbumps - 1) / 2 - (pitch / 2)),
          -(pitch * (lbumps - 1) / 2 - (pitch / 2))
        ],
-       radius: bumpDiam / 2
+       radius = bumpDiam / 2
      }, %)
   |> patternLinear2d({
-       axis: [1, 0],
-       instances: wbumps - 1,
-       distance: pitch
+       axis = [1, 0],
+       instances = wbumps - 1,
+       distance = pitch
      }, %)
   |> patternLinear2d({
-       axis: [0, 1],
-       instances: lbumps - 1,
-       distance: pitch
+       axis = [0, 1],
+       instances = lbumps - 1,
+       distance = pitch
      }, %)
   |> extrude(-bumpHeight, %)

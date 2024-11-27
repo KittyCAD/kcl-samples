@@ -21,7 +21,7 @@ rs = map([0..cmo], (i) => {
 
 // Calculate operating pressure angle
 angles = map(rs, (r) => {
-  return toDegrees(acos(baseDiameter / 2 / r))
+  return toDegrees(  acos(baseDiameter / 2 / r))
 })
 
 // Calculate the involute function
@@ -41,8 +41,8 @@ ys = map([0..cmo], (i) => {
 // Extrude the gear body
 body = startSketchOn('XY')
   |> circle({
-       center: [0, 0],
-       radius: baseDiameter / 2
+       center = [0, 0],
+       radius = baseDiameter / 2
      }, %)
   |> extrude(gearHeight, %)
 
@@ -65,19 +65,19 @@ start = startSketchOn('XY')
   |> startProfileAt([xs[101], ys[101]], %)
 teeth = reduce([0..100], start, leftInvolute)
   |> arc({
-       angleStart: 0,
-       angleEnd: toothAngle,
-       radius: baseDiameter / 2
+       angleStart = 0,
+       angleEnd = toothAngle,
+       radius = baseDiameter / 2
      }, %)
   |> reduce([1..101], %, rightInvolute)
   |> close(%)
   |> extrude(gearHeight, %)
   |> patternCircular3d({
-       axis: [0, 0, 1],
-       center: [0, 0, 0],
-       instances: nTeeth,
-       arcDegrees: 360,
-       rotateDuplicates: true
+       axis = [0, 0, 1],
+       center = [0, 0, 0],
+       instances = nTeeth,
+       arcDegrees = 360,
+       rotateDuplicates = true
      }, %)
 
 // Define the constants of the keyway and the bore hole
@@ -97,14 +97,14 @@ keyWay = startSketchOn(body, 'END')
   |> yLine(-keywayWidth, %)
   |> xLine(-keywayDepth, %)
   |> arc({
-       angleEnd: 180,
-       angleStart: -1 * 180 / pi() * startAngle + 360,
-       radius: holeRadius
+       angleEnd = 180,
+       angleStart = -1 * 180 / pi() * startAngle + 360,
+       radius = holeRadius
      }, %)
   |> arc({
-       angleEnd: 180 / pi() * startAngle,
-       angleStart: 180,
-       radius: holeRadius
+       angleEnd = 180 / pi() * startAngle,
+       angleStart = 180,
+       radius = holeRadius
      }, %)
   |> close(%)
   |> extrude(-gearHeight, %)

@@ -1,6 +1,7 @@
 // Food Service Spatula
 // Use these spatulas for mixing, flipping, and scraping.
 
+
 // Define constants in millimeters (mm)
 flipperThickness = 3.5
 flipperLength = 70.0
@@ -25,16 +26,16 @@ fn slot = (sketch1, start, end, width) => {
     if end[0] < start[0] {
       toDegrees(atan((end[1] - start[1]) / (end[0] - start[0]))) + 180
     } else {
-      toDegrees(atan((end[1] - start[1]) / (end[0] - start[0])))
+      toDegrees(      atan((end[1] - start[1]) / (end[0] - start[0])))
     }
   }
   dist = sqrt(pow(end[1] - start[1], 2) + pow(end[0] - start[0], 2))
   xstart = width / 2 * cos(toRadians(angle - 90)) + start[0]
   ystart = width / 2 * sin(toRadians(angle - 90)) + start[1]
   slotSketch = startProfileAt([xstart, ystart], sketch1)
-    |> angledLine({ angle: angle, length: dist }, %, $line000)
-    |> tangentialArc({ radius: width / 2, offset: 180 }, %, $arc000)
-    |> angledLine({ angle: angle, length: -dist }, %, $line001)
+    |> angledLine({ angle = angle, length = dist }, %, $line000)
+    |> tangentialArc({ radius = width / 2, offset = 180 }, %, $arc000)
+    |> angledLine({ angle = angle, length = -dist }, %, $line001)
     |> tangentialArcTo([profileStartX(%), profileStartY(%)], %, $arc001)
     |> close(%)
   return slotSketch
@@ -44,14 +45,14 @@ fn slot = (sketch1, start, end, width) => {
 sketch000 = startSketchOn('XY')
 
 // create a profile of the flipper
-flipperProfile = startProfileAt([-flipperLength, -32.000000], sketch000)
-  |> line([flipperLength, 2.000000], %)
-  |> yLine(60.000000, %, $backEdge)
-  |> line([-flipperLength, 2.000000], %)
+flipperProfile = startProfileAt([-flipperLength, -32.0], sketch000)
+  |> line([flipperLength, 2.0], %)
+  |> yLine(60.0, %, $backEdge)
+  |> line([-flipperLength, 2.0], %)
   |> arc({
-       angleEnd: 196.912390,
-       angleStart: 163.087610,
-       radius: 110.000000
+       angleEnd = 196.912390,
+       angleStart = 163.087610,
+       radius = 110.0
      }, %)
   |> close(%)
 
@@ -75,8 +76,8 @@ flipper = extrude(flipperThickness, [spatulaProfile])
 
 // fillet the edges of the flipper
 fillet({
-  radius: flipperFilletRadius,
-  tags: [
+  radius = flipperFilletRadius,
+  tags = [
     getNextAdjacentEdge(backEdge),
     getPreviousAdjacentEdge(backEdge)
   ]
@@ -86,7 +87,7 @@ fillet({
 sketch001 = startSketchOn(offsetPlane("XZ", -handleWidth / 2))
 
 // create a profile of the spatula handle
-handleProfile = startProfileAt([0.000000, flipperThickness], sketch001)
+handleProfile = startProfileAt([0.0, flipperThickness], sketch001)
   |> line([31.819805, 31.819805], %, $handleBottomEdge)
   |> line([140.953893, 51.303021], %)
   |> line([-1.710101, 4.698463], %)
@@ -100,8 +101,8 @@ handle = extrude(handleWidth, [handleProfile])
 
 // fillet the bend of the spatula handle
 fillet({
-  radius: 4,
-  tags: [
+  radius = 4,
+  tags = [
     getNextAdjacentEdge(handleBottomEdge),
     getNextAdjacentEdge(handleTopEdge)
   ]
@@ -109,11 +110,11 @@ fillet({
 
 // define a plane which is at the end of the handle
 handlePlane = {
-  plane: {
-    origin: [208.593833, 0.000000, 75.921946],
-    xAxis: [0.342020, -0.000000, -0.939693],
-    yAxis: [0.000000, 1.000000, 0.000000],
-    zAxis: [0.939693, -0.000000, 0.342020]
+  plane = {
+    origin = [208.593833, 0.0, 75.921946],
+    xAxis = [0.342020, -0.0, -0.939693],
+    yAxis = [0.0, 1.0, 0.0],
+    zAxis = [0.939693, -0.0, 0.342020]
   }
 }
 
@@ -121,30 +122,30 @@ handlePlane = {
 sketch002 = startSketchOn(handlePlane)
 
 // create a profile of the grip
-gripProfile = startProfileAt([-26.806746, -10.000000], sketch002)
-  |> xLine(gripWidth - 2 * gripFilletRadius, %)
+gripProfile = startProfileAt([-26.806746, -10.0], sketch002)
+  |> xLine(gripWidth - (2 * gripFilletRadius), %)
   |> arc({
-       angleStart: -90.000000,
-       angleEnd: 0.000000,
-       radius: gripFilletRadius
+       angleStart = -90.0,
+       angleEnd = 0.0,
+       radius = gripFilletRadius
      }, %)
-  |> yLine(gripHeight - 2 * gripFilletRadius, %)
+  |> yLine(gripHeight - (2 * gripFilletRadius), %)
   |> arc({
-       angleStart: 0.000000,
-       angleEnd: 90.000000,
-       radius: gripFilletRadius
+       angleStart = 0.0,
+       angleEnd = 90.0,
+       radius = gripFilletRadius
      }, %)
-  |> xLine(-(gripWidth - 2 * gripFilletRadius), %)
+  |> xLine(-(gripWidth - (2 * gripFilletRadius)), %)
   |> arc({
-       angleStart: 90.000000,
-       angleEnd: 180.000000,
-       radius: gripFilletRadius
+       angleStart = 90.0,
+       angleEnd = 180.0,
+       radius = gripFilletRadius
      }, %)
-  |> yLine(-(gripHeight - 2 * gripFilletRadius), %, $gripEdgeTop)
+  |> yLine(-(gripHeight - (2 * gripFilletRadius)), %, $gripEdgeTop)
   |> arc({
-       angleStart: 180.000000,
-       angleEnd: 270.000000,
-       radius: gripFilletRadius
+       angleStart = 180.0,
+       angleEnd = 270.0,
+       radius = gripFilletRadius
      }, %)
   |> close(%)
 
