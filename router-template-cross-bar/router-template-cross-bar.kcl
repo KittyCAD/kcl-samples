@@ -1,6 +1,7 @@
 // Router template for a cross bar
 // A guide for routing a notch into a cross bar.
 
+
 routerDiameter = 12.7
 mmInInch = 25.4
 templateDiameter = mmInInch * 11 / 16
@@ -10,14 +11,14 @@ minClampingDistance = 50 + 30
 templateThickness = 10
 radius = 10
 depth = 30
-distanceToInsideEdge = slateWidthHalf+templateThickness+templateGap
+distanceToInsideEdge = slateWidthHalf + templateThickness + templateGap
 sketch001 = startSketchOn('XZ')
   |> startProfileAt([ZERO, depth + templateGap], %)
   |> xLine(slateWidthHalf - radius, %, $seg01)
   |> arc({
-       angleEnd: 0,
-       angleStart: 90,
-       radius: 10 + templateGap
+       angleEnd = 0,
+       angleStart = 90,
+       radius = 10 + templateGap
      }, %, $seg09)
   |> yLineTo(-templateThickness, %, $seg03)
   |> xLine(templateThickness, %, $seg07)
@@ -36,9 +37,9 @@ sketch001 = startSketchOn('XZ')
   |> xLine(segLen(seg07), %)
   |> yLine(segLen(seg03), %)
   |> arc({
-       angleEnd: 90,
-       angleStart: 180,
-       radius: 10 + templateGap
+       angleEnd = 90,
+       angleStart = 180,
+       radius = 10 + templateGap
      }, %)
   |> lineTo([profileStartX(%), profileStartY(%)], %)
   |> close(%)
@@ -77,7 +78,7 @@ extrude002 = extrude(13, sketch002)
 
 sketch004 = startSketchOn(extrude002, 'END')
   |> startProfileAt([-distanceToInsideEdge, 0], %)
-  |> angledLine([0, distanceToInsideEdge*2], %, $rectangleSegmentA003)
+  |> angledLine([0, distanceToInsideEdge * 2], %, $rectangleSegmentA003)
   |> angledLine([
        segAng(rectangleSegmentA003) - 90,
        templateThickness

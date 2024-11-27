@@ -24,8 +24,8 @@ sketch001 = startSketchOn('XY')
   |> close(%)
 extrude001 = extrude(height, sketch001)
   |> fillet({
-       radius: wallThickness * 4,
-       tags: [
+       radius = wallThickness * 4,
+       tags = [
          getNextAdjacentEdge(rectangleSegmentA001),
          getNextAdjacentEdge(rectangleSegmentB001),
          getNextAdjacentEdge(rectangleSegmentC001),
@@ -35,26 +35,32 @@ extrude001 = extrude(height, sketch001)
 
   // Apply a shell to the enclosure base to create the internal storage
   |> shell({
-       faces: ["end"],
-       thickness: wallThickness
+       faces = ["end"],
+       thickness = wallThickness
      }, %)
 
 // Define a function to create the internal structure to secure a fastener at each corner
 fn function001 = (originStart) => {
   // Create a plane to sketch on shell interior
   plane001 = {
-    plane: {
-      origin: [0.0, 0.0, wallThickness],
-      xAxis: [1.0, 0.0, 0.0],
-      yAxis: [0.0, 1.0, 0.0],
-      zAxis: [0.0, 0.0, 1.0]
+    plane = {
+      origin = [0.0, 0.0, wallThickness],
+      xAxis = [1.0, 0.0, 0.0],
+      yAxis = [0.0, 1.0, 0.0],
+      zAxis = [0.0, 0.0, 1.0]
     }
   }
 
   // Create a pillar with a fasterner hole at the center
   sketch002 = startSketchOn(plane001)
-    |> circle({center: [originStart[0], originStart[1]], radius: holeDia + wallThickness}, %)
-    |> hole(circle({center: [originStart[0], originStart[1]], radius: holeDia}, %), %)
+    |> circle({
+         center = [originStart[0], originStart[1]],
+         radius = holeDia + wallThickness
+       }, %)
+    |> hole(circle({
+         center = [originStart[0], originStart[1]],
+         radius = holeDia
+       }, %), %)
   extrude002 = extrude(height - wallThickness, sketch002)
 
   return extrude002
@@ -93,37 +99,37 @@ sketch003 = startSketchOn('XY')
   |> lineTo([profileStartX(%), profileStartY(%)], %, $rectangleSegmentD002)
   |> close(%)
   |> hole(circle({
-       center: [
+       center = [
          width * 1.2 + wallThickness * 3 + holeDia,
          wallThickness * 3 + holeDia
        ],
-       radius: holeDia
+       radius = holeDia
      }, %), %)
   |> hole(circle({
-       center: [
+       center = [
          width * 1.2 + wallThickness * 3 + holeDia,
          length - (wallThickness * 3 + holeDia)
        ],
-       radius: holeDia
+       radius = holeDia
      }, %), %)
   |> hole(circle({
-       center: [
+       center = [
          width * 2.2 - (wallThickness * 3 + holeDia),
          wallThickness * 3 + holeDia
        ],
-       radius: holeDia
+       radius = holeDia
      }, %), %)
   |> hole(circle({
-       center: [
+       center = [
          width * 2.2 - (wallThickness * 3 + holeDia),
          length - (wallThickness * 3 + holeDia)
        ],
-       radius: holeDia
+       radius = holeDia
      }, %), %)
 extrude003 = extrude(wallThickness, sketch003)
   |> fillet({
-       radius: wallThickness * 4,
-       tags: [
+       radius = wallThickness * 4,
+       tags = [
          getNextAdjacentEdge(rectangleSegmentA002),
          getNextAdjacentEdge(rectangleSegmentB002),
          getNextAdjacentEdge(rectangleSegmentC002),
@@ -149,37 +155,37 @@ sketch004 = startSketchOn(extrude003, 'END')
   |> lineTo([profileStartX(%), profileStartY(%)], %, $rectangleSegmentD003)
   |> close(%)
   |> hole(circle({
-       center: [
+       center = [
          width * 1.2 + wallThickness * 3 + holeDia,
          wallThickness * 3 + holeDia
        ],
-       radius: holeDia + wallThickness
+       radius = holeDia + wallThickness
      }, %), %)
   |> hole(circle({
-       center: [
+       center = [
          width * 1.2 + wallThickness * 3 + holeDia,
          length - (wallThickness * 3 + holeDia)
        ],
-       radius: holeDia + wallThickness
+       radius = holeDia + wallThickness
      }, %), %)
   |> hole(circle({
-       center: [
+       center = [
          width * 2.2 - (wallThickness * 3 + holeDia),
          wallThickness * 3 + holeDia
        ],
-       radius: holeDia + wallThickness
+       radius = holeDia + wallThickness
      }, %), %)
   |> hole(circle({
-       center: [
+       center = [
          width * 2.2 - (wallThickness * 3 + holeDia),
          length - (wallThickness * 3 + holeDia)
        ],
-       radius: holeDia + wallThickness
+       radius = holeDia + wallThickness
      }, %), %)
 extrude004 = extrude(wallThickness, sketch004)
   |> fillet({
-       radius: wallThickness * 3,
-       tags: [
+       radius = wallThickness * 3,
+       tags = [
          getNextAdjacentEdge(rectangleSegmentA003),
          getNextAdjacentEdge(rectangleSegmentB003),
          getNextAdjacentEdge(rectangleSegmentC003),

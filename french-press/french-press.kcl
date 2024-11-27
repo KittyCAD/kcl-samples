@@ -20,15 +20,15 @@ sketch001 = startSketchOn('XZ')
      ], %, $rectangleSegmentC001)
   |> lineTo([profileStartX(%), profileStartY(%)], %)
   |> close(%)
-  |> revolve({ angle: 360, axis: 'Y' }, %)
+  |> revolve({ angle = 360, axis = 'Y' }, %)
 
 // Create an angled plane to sketch the supports
 plane001 = {
-  plane: {
-    origin: [-0.26, 0.26, 0.0],
-    xAxis: [1, 1, 0.0],
-    yAxis: [0.0, 0.0, 1.0],
-    zAxis: [1.0, 0.0, 0.0]
+  plane = {
+    origin = [-0.26, 0.26, 0.0],
+    xAxis = [1, 1, 0.0],
+    yAxis = [0.0, 0.0, 1.0],
+    zAxis = [1.0, 0.0, 0.0]
   }
 }
 
@@ -38,64 +38,64 @@ sketch002 = startSketchOn(plane001)
   |> xLine(0.1, %)
   |> yLine(-5.2, %, $edge1)
   |> arc({
-       angleStart: 180,
-       angleEnd: 205,
-       radius: 0.3
+       angleStart = 180,
+       angleEnd = 205,
+       radius = 0.3
      }, %)
-  |> angledLine({ angle: -60, length: 0.6 }, %, $edge2)
+  |> angledLine({ angle = -60, length = 0.6 }, %, $edge2)
   |> arc({
-       angleStart: 30,
-       angleEnd: -120,
-       radius: 0.6
+       angleStart = 30,
+       angleEnd = -120,
+       radius = 0.6
      }, %)
-  |> angledLineToY({ angle: 150, to: -0.2 }, %, $edge3)
+  |> angledLineToY({ angle = 150, to = -0.2 }, %, $edge3)
   |> arc({
-       angleStart: 60,
-       angleEnd: 90,
-       radius: 0.5
+       angleStart = 60,
+       angleEnd = 90,
+       radius = 0.5
      }, %)
   |> xLineTo(0.1, %, $edgeLen)
   |> yLine(0.1, %)
   |> xLine(segLen(edgeLen) + 0.035, %, $edge4)
   |> arc({
-       angleStart: 90,
-       angleEnd: 60,
-       radius: 0.6
+       angleStart = 90,
+       angleEnd = 60,
+       radius = 0.6
      }, %)
   |> angledLine({
-       angle: 150,
-       length: -segLen(edge3) + 0.035
+       angle = 150,
+       length = -segLen(edge3) + 0.035
      }, %, $edge5)
   |> arc({
-       angleStart: -120,
-       angleEnd: 30,
-       radius: 0.5
+       angleStart = -120,
+       angleEnd = 30,
+       radius = 0.5
      }, %)
   |> angledLine({
-       angle: -60,
-       length: -segLen(edge2) + 0.035
+       angle = -60,
+       length = -segLen(edge2) + 0.035
      }, %, $edge6)
   |> arc({
-       angleStart: 205,
-       angleEnd: 180,
-       radius: 0.6
+       angleStart = 205,
+       angleEnd = 180,
+       radius = 0.6
      }, %)
   |> lineTo([profileStartX(%), profileStartY(%)], %)
   |> close(%)
   |> extrude(0.75, %)
   |> patternCircular3d({
-       axis: [0, 0, 1],
-       center: [0, 0, 0],
-       instances: 4,
-       arcDegrees: 360,
-       rotateDuplicates: true
+       axis = [0, 0, 1],
+       center = [0, 0, 0],
+       instances = 4,
+       arcDegrees = 360,
+       rotateDuplicates = true
      }, %)
 
 // Cross plate
 sketch003 = startSketchOn(offsetPlane('XY', 1))
   |> circle({
-       center: [0, 0],
-       radius: carafeDiameter / 2 - 0.15
+       center = [0, 0],
+       radius = carafeDiameter / 2 - 0.15
      }, %)
 
 extrude001 = extrude(0.050, sketch003)
@@ -104,17 +104,17 @@ sketch004 = startSketchOn(extrude001, 'END')
   |> startProfileAt([0.3, 0.17], %)
   |> yLine(1.2, %)
   |> arc({
-       angleStart: 90,
-       angleEnd: -30,
-       radius: 1.2
+       angleStart = 90,
+       angleEnd = -30,
+       radius = 1.2
      }, %)
   |> lineTo([profileStartX(%), profileStartY(%)], %)
   |> close(%)
   |> patternCircular2d({
-       center: [0, 0],
-       instances: 3,
-       arcDegrees: 360,
-       rotateDuplicates: true
+       center = [0, 0],
+       instances = 3,
+       arcDegrees = 360,
+       rotateDuplicates = true
      }, %)
 
 extrude002 = extrude(-0.050, sketch004)
@@ -124,59 +124,59 @@ sketch005 = startSketchOn('XZ')
   |> startProfileAt([0.15, 1.11], %)
   |> xLineTo(carafeDiameter / 2 - 0.2, %)
   |> angledLineToX({
-       angle: 30,
-       to: carafeDiameter / 2 - 0.07
+       angle = 30,
+       to = carafeDiameter / 2 - 0.07
      }, %, $seg1)
-  |> angledLine({ angle: -60, length: 0.050 }, %)
-  |> angledLine({ angle: 30, length: -segLen(seg1) }, %)
+  |> angledLine({ angle = -60, length = 0.050 }, %)
+  |> angledLine({ angle = 30, length = -segLen(seg1) }, %)
   |> xLineTo(0.15, %)
   |> lineTo([profileStartX(%), profileStartY(%)], %)
   |> close(%)
-  |> revolve({ axis: 'y' }, %)
+  |> revolve({ axis = 'y' }, %)
 
 // Plunger and stem
 sketch006 = startSketchOn('XZ')
   |> startProfileAt([0.1, 1], %)
   |> line([0.1, 0], %)
-  |> angledLineToX({ angle: 10, to: 0.05 }, %)
+  |> angledLineToX({ angle = 10, to = 0.05 }, %)
   |> yLine(10, %)
   |> line([0.6, 0], %)
   |> yLine(-.05, %)
-  |> tangentialArc({ radius: 0.6, offset: -90 }, %)
+  |> tangentialArc({ radius = 0.6, offset = -90 }, %)
   |> lineTo([profileStartX(%), profileStartY(%)], %)
   |> close(%)
-  |> revolve({ axis: 'y' }, %)
+  |> revolve({ axis = 'y' }, %)
 
 // Spiral plate
 sketch007 = startSketchOn(offsetPlane('XY', 1.12))
   |> circle({
-       center: [0, 0],
-       radius: carafeDiameter / 2 - 0.24
+       center = [0, 0],
+       radius = carafeDiameter / 2 - 0.24
      }, %)
-  |> hole(circle({ center: [0, 0], radius: .15 }, %), %)
+  |> hole(circle({ center = [0, 0], radius = .15 }, %), %)
 
 extrude003 = extrude(0.050, sketch007)
 
 // Pattern holes in the spiral plate
 sketch008 = startSketchOn(extrude003, 'END')
-  |> circle({ center: [1.4, 0], radius: .3 }, %)
+  |> circle({ center = [1.4, 0], radius = .3 }, %)
   |> patternCircular2d({
-       center: [0, 0],
-       instances: 8,
-       arcDegrees: 360,
-       rotateDuplicates: true
+       center = [0, 0],
+       instances = 8,
+       arcDegrees = 360,
+       rotateDuplicates = true
      }, %)
 
 extrude004 = extrude(-0.050, sketch008)
 
 // Pattern holes in the spiral plate
 sketch009 = startSketchOn(extrude003, 'END')
-  |> circle({ center: [0.6, 0], radius: .2 }, %)
+  |> circle({ center = [0.6, 0], radius = .2 }, %)
   |> patternCircular2d({
-       center: [0, 0],
-       instances: 4,
-       arcDegrees: 360,
-       rotateDuplicates: true
+       center = [0, 0],
+       instances = 4,
+       arcDegrees = 360,
+       rotateDuplicates = true
      }, %)
 
 extrude005 = extrude(-0.050, sketch009)
@@ -184,13 +184,13 @@ extrude005 = extrude(-0.050, sketch009)
 // Extrude a glass carafe body
 sketch010 = startSketchOn("XY")
   |> circle({
-       center: [0, 0],
-       radius: carafeDiameter / 2
+       center = [0, 0],
+       radius = carafeDiameter / 2
      }, %)
 
 // Perform a shell operation to hollow the carafe body with the top face removed
 extrude006 = extrude(carafeHeight, sketch010)
-  |> shell({ faces: ["end"], thickness: .07 }, %)
+  |> shell({ faces = ["end"], thickness = .07 }, %)
 
 // Draw and revolve the lid
 sketch011 = startSketchOn('XZ')
@@ -201,13 +201,13 @@ sketch011 = startSketchOn('XZ')
   |> yLine(0.4, %)
   |> line([-0.02, 0.02], %)
   |> bezierCurve({
-       to: [-carafeDiameter / 2 - 0.1, 1],
-       control1: [-0.3, 0],
-       control2: [carafeDiameter / 10, 1]
+       to = [-carafeDiameter / 2 - 0.1, 1],
+       control1 = [-0.3, 0],
+       control2 = [carafeDiameter / 10, 1]
      }, %)
   |> lineTo([profileStartX(%), profileStartY(%)], %)
   |> close(%)
-  |> revolve({ axis: 'y' }, %)
+  |> revolve({ axis = 'y' }, %)
 
 // Draw and extrude handle
 sketch012 = startSketchOn(offsetPlane('XZ', handleThickness / 2))

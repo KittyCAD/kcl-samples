@@ -1,6 +1,7 @@
 // A mounting bracket for the Focusrite Scarlett Solo audio interface
 // This is a bracket that holds an audio device underneath a desk or shelf. The audio device has dimensions of 144mm wide, 80mm length and 45mm depth with fillets of 6mm. This mounting bracket is designed to be 3D printed with PLA material
 
+
 // define constants in mm
 radius = 6.0
 width = 144.0
@@ -25,11 +26,11 @@ fn rectShape = (pos, w, l) => {
 
 // define the bracket plane
 bracketPlane = {
-  plane: {
-    origin: { x: 0, y: length / 2 + thk, z: 0 },
-    xAxis: { x: 1, y: 0, z: 0 },
-    yAxis: { x: 0, y: 0, z: 1 },
-    zAxis: { x: 0, y: -1, z: 0 }
+  plane = {
+    origin = { x = 0, y = length / 2 + thk, z = 0 },
+    xAxis = { x = 1, y = 0, z = 0 },
+    yAxis = { x = 0, y = 0, z = 1 },
+    zAxis = { x = 0, y = -1, z = 0 }
   }
 }
 
@@ -53,8 +54,8 @@ bs = bracketSketch(width, depth, thk)
 bracketBody = bs
   |> extrude(length + 2 * thk, %)
   |> fillet({
-       radius: radius,
-       tags: [
+       radius = radius,
+       tags = [
          getPreviousAdjacentEdge(bs.tags.edge7),
          getPreviousAdjacentEdge(bs.tags.edge2),
          getPreviousAdjacentEdge(bs.tags.edge3),
@@ -64,11 +65,11 @@ bracketBody = bs
 
 // define the tab plane
 tabPlane = {
-  plane: {
-    origin: { x: 0, y: 0, z: depth + thk },
-    xAxis: { x: 1, y: 0, z: 0 },
-    yAxis: { x: 0, y: 1, z: 0 },
-    zAxis: { x: 0, y: 0, z: 1 }
+  plane = {
+    origin = { x = 0, y = 0, z = depth + thk },
+    xAxis = { x = 1, y = 0, z = 0 },
+    yAxis = { x = 0, y = 1, z = 0 },
+    zAxis = { x = 0, y = 0, z = 1 }
   }
 }
 
@@ -80,24 +81,24 @@ tabsR = startSketchOn(tabPlane)
   |> line([-tabWidth, -tabLength / 3], %, $edge13)
   |> close(%, $edge14)
   |> hole(circle({
-       center: [
+       center = [
          width / 2 + thk + tabWidth / 2,
          length / 2 + thk - (tabLength / (3 / 2))
        ],
-       radius: holeDiam / 2
+       radius = holeDiam / 2
      }, %), %)
   |> extrude(-tabThk, %)
   |> fillet({
-       radius: holeDiam / 2,
-       tags: [
+       radius = holeDiam / 2,
+       tags = [
          getNextAdjacentEdge(edge11),
          getNextAdjacentEdge(edge12)
        ]
      }, %)
   |> patternLinear3d({
-       axis: [0, -1, 0],
-       instances: 2,
-       distance: length + 2 * thk - (tabLength * 4 / 3)
+       axis = [0, -1, 0],
+       instances = 2,
+       distance = length + 2 * thk - (tabLength * 4 / 3)
      }, %)
 
 // build the tabs of the mounting bracket (left side)
@@ -108,32 +109,33 @@ tabsL = startSketchOn(tabPlane)
   |> line([tabWidth, -tabLength / 3], %, $edge23)
   |> close(%, $edge24)
   |> hole(circle({
-       center: [
+       center = [
          -width / 2 - thk - (tabWidth / 2),
          length / 2 + thk - (tabLength / (3 / 2))
-       ], radius: holeDiam / 2
+       ],
+       radius = holeDiam / 2
      }, %), %)
   |> extrude(-tabThk, %)
   |> fillet({
-       radius: holeDiam / 2,
-       tags: [
+       radius = holeDiam / 2,
+       tags = [
          getNextAdjacentEdge(edge21),
          getNextAdjacentEdge(edge22)
        ]
      }, %)
   |> patternLinear3d({
-       axis: [0, -1, 0],
-       instances: 2,
-       distance: length + 2 * thk - (tabLength * 4 / 3)
+       axis = [0, -1, 0],
+       instances = 2,
+       distance = length + 2 * thk - (tabLength * 4 / 3)
      }, %)
 
 // define a plane for retention bumps
 retPlane = {
-  plane: {
-    origin: { x: -width / 2 + 20, y: 0, z: 0 },
-    xAxis: { x: 0, y: 1, z: 0 },
-    yAxis: { x: 0, y: 0, z: 1 },
-    zAxis: { x: 1, y: 0, z: 0 }
+  plane = {
+    origin = { x = -width / 2 + 20, y = 0, z = 0 },
+    xAxis = { x = 0, y = 1, z = 0 },
+    yAxis = { x = 0, y = 0, z = 1 },
+    zAxis = { x = 1, y = 0, z = 0 }
   }
 }
 
