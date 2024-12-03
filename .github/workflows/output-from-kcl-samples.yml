@@ -12,9 +12,6 @@ on:
             - .github/workflows/output-from-kcl-samples.yml
         branches:
             - main
-    push:
-        branches:
-            - main
     workflow_dispatch:
 
 jobs:
