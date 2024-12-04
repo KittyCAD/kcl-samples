@@ -95,7 +95,7 @@ wheelCenterOuter = startSketchOn('XY')
   |> revolve({ axis = 'y' }, %)
 
 // Write a function that defines the spoke geometry, patterns and extrudes it
-fn spoke = (spokeGap, spokeAngle, spokeThickness) => {
+fn spoke(spokeGap, spokeAngle, spokeThickness) {
   // Seperating the spoke base planes
   plane001 = {
     plane = {
