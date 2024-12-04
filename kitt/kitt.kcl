@@ -3,7 +3,7 @@
 
 
 // pixel box function
-fn pixelBox = (kitExtrude, extrudeTag, positionY, positionZ, width, height, depth) => {
+fn pixelBox(kitExtrude, extrudeTag, positionY, positionZ, width, height, depth) {
   pixelBoxBody = startSketchOn(kitExtrude, extrudeTag)
     |> startProfileAt([positionY, positionZ], %)
     |> line([0, height], %)
@@ -157,7 +157,7 @@ kitShoeWidth = 7
 kitShoeLength = 10
 kitShoeHeight = 3
 
-fn kitLeg = (offsetFront, offsetSide) => {
+fn kitLeg(offsetFront, offsetSide) {
   kitShoeOffsetFront = kitShoeLength / 2 - (kitBodyDepth / 2) - offsetFront
 
   kitFootPrint = startSketchOn('XY')
@@ -190,7 +190,7 @@ kitEarWidth = 8
 kitEarDepth = 8
 kitEarHeight = 2
 
-fn kitEar = (earOffsetFront, earOffsetSide) => {
+fn kitEar(earOffsetFront, earOffsetSide) {
   kitNewEarOffsetFront = kitBodyDepth - earOffsetFront
   kitNewEarOffsetSide = -(kitBodyWidth / 2 - earOffsetSide)
   baseVolume = pixelBox(kitBody, seg01, kitNewEarOffsetSide, kitNewEarOffsetFront, kitEarWidth, -kitEarDepth, kitEarHeight)

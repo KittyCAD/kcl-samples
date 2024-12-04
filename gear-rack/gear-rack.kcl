@@ -19,7 +19,7 @@ rackBody = startSketchOn('XY')
   |> extrude(width, %)
 
 // Create a function for sketch of a single tooth
-fn tooth = () => {
+fn tooth() {
   toothSketch = startSketchOn('XY')
     |> startProfileAt([-length / 2 + 0.567672, minHeight], %)
     |> tangentialArcToRelative([0.157636, 0.110378], %)

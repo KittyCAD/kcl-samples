@@ -10,7 +10,7 @@ plateThickness = .5
 centerHoleDiameter = 2
 
 // Create a function that defines the body width and length of the mounting plate. Tag the corners so they can be passed through the fillet function.
-fn rectShape = (pos, w, l) => {
+fn rectShape(pos, w, l) {
   rr = startSketchOn('XY')
     |> startProfileAt([pos[0] - (w / 2), pos[1] - (l / 2)], %)
     |> lineTo([pos[0] + w / 2, pos[1] - (l / 2)], %, $edge1)

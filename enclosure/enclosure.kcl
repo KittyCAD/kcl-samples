@@ -40,7 +40,7 @@ extrude001 = extrude(height, sketch001)
      }, %)
 
 // Define a function to create the internal structure to secure a fastener at each corner
-fn function001 = (originStart) => {
+fn function001(originStart) {
   // Create a plane to sketch on shell interior
   plane001 = {
     plane = {

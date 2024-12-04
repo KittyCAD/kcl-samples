@@ -15,7 +15,7 @@ gripFilletRadius = 3.0
 gripSlotWidth = 8.0
 
 // function for drawing slots on a sketch given the start and end points as well as a width
-fn slot = (sketch1, start, end, width) => {
+fn slot(sketch1, start, end, width) {
   angle = if start[0] == end[0] {
     if end[1] > start[1] {
       90
