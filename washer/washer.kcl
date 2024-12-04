@@ -9,7 +9,7 @@ thicknessMax = 0.038
 thicknessMin = 0.024
 
 // Write a function that defines the washer and extrude it.
-fn washer = (plane, innerDia, outerDia, thk) => {
+fn washer(plane, innerDia, outerDia, thk) {
   // Define the sketch of the washer
   washerSketch = startSketchOn(plane)
     |> circle({

@@ -14,7 +14,7 @@ tabWidth = 12
 tabThk = 4
 
 // define a rectangular shape func
-fn rectShape = (pos, w, l) => {
+fn rectShape(pos, w, l) {
   rr = startSketchOn('xy')
     |> startProfileAt([pos[0] - (w / 2), pos[1] - (l / 2)], %)
     |> lineTo([pos[0] + w / 2, pos[1] - (l / 2)], %, $edge01)
@@ -35,7 +35,7 @@ bracketPlane = {
 }
 
 // build the bracket sketch around the body
-fn bracketSketch = (w, d, t) => {
+fn bracketSketch(w, d, t) {
   s = startSketchOn(bracketPlane)
     |> startProfileAt([-w / 2 - t, d + t], %)
     |> lineTo([-w / 2 - t, -t], %, $edge1)

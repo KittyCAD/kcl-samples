@@ -16,7 +16,7 @@ hexInteriorAngle = 120
 hexChangeAngle = 180 - hexInteriorAngle
 
 // Write a function that defines the Socket Head Cap Screw
-fn capScrew = (start, length, dia, capHeadLength) => {
+fn capScrew(start, length, dia, capHeadLength) {
   // Create the head of the cap screw
   screwHeadSketch = startSketchOn('XZ')
     |> circle({

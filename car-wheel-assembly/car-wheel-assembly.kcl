@@ -239,7 +239,7 @@ rotorPlane = {
   }
 }
 
-fn lugPattern = (plane) => {
+fn lugPattern(plane) {
   lugHolePattern = circle({
          center = [-lugSpacing / 2, 0],
          radius = 8
@@ -328,7 +328,7 @@ customPlane = {
 }
 
 // Create a function for the lug nuts
-fn lug = (plane, length, diameter) => {
+fn lug(plane, length, diameter) {
   lugSketch = startSketchOn(customPlane)
     |> startProfileAt([0 + diameter / 2, 0], %)
     |> angledLineOfYLength({ angle = 70, length = lugHeadLength }, %)

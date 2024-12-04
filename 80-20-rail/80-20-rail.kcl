@@ -3,7 +3,7 @@
 
 
 // Define function
-fn rail8020 = (originStart, railHeight, railLength) => {
+fn rail8020(originStart, railHeight, railLength) {
   // Sketch side 1 of profile
   sketch001 = startSketchOn('-XZ')
     |> startProfileAt([

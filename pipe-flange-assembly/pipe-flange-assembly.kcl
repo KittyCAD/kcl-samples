@@ -38,7 +38,7 @@ screwPlane = {
   }
 }
 
-fn capScrew = (start, length, dia) => {
+fn capScrew(start, length, dia) {
   headLength = dia // inch
   wallToWallLength = hexRatio * dia
   headDia = dia / capRatio
@@ -101,7 +101,7 @@ workingPlane = {
 }
 
 // Washer function
-fn washer = (plane, start, thk, innerDia, outerDia) => {
+fn washer(plane, start, thk, innerDia, outerDia) {
   washerSketch = startSketchOn(plane)
     |> circle({
          center = [start[0], start[1]],
@@ -116,7 +116,7 @@ fn washer = (plane, start, thk, innerDia, outerDia) => {
 }
 
 // Hex nut function
-fn hexNut = (start, thk, innerDia) => {
+fn hexNut(start, thk, innerDia) {
   hexNutSketch = startSketchOn({
          plane = {
            origin = {
