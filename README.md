@@ -69,6 +69,8 @@ When you submit a PR to add or modify KCL samples, images and STEP files will be
 [![multi-axis-robot](screenshots/multi-axis-robot.png)](./multi-axis-robot/multi-axis-robot.kcl)
 #### [pipe-flange-assembly](./pipe-flange-assembly/pipe-flange-assembly.kcl) ([step](step/pipe-flange-assembly.step)) ([screenshot](screenshots/pipe-flange-assembly.png))
 [![pipe-flange-assembly](screenshots/pipe-flange-assembly.png)](./pipe-flange-assembly/pipe-flange-assembly.kcl)
+#### [pipe-with-bend](./pipe-with-bend/pipe-with-bend.kcl) ([step](step/pipe-with-bend.step)) ([screenshot](screenshots/pipe-with-bend.png))
+[![pipe-with-bend](screenshots/pipe-with-bend.png)](./pipe-with-bend/pipe-with-bend.kcl)
 #### [pipe](./pipe/pipe.kcl) ([step](step/pipe.step)) ([screenshot](screenshots/pipe.png))
 [![pipe](screenshots/pipe.png)](./pipe/pipe.kcl)
 #### [poopy-shoe](./poopy-shoe/poopy-shoe.kcl) ([step](step/poopy-shoe.step)) ([screenshot](screenshots/poopy-shoe.png))
