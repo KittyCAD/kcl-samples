@@ -349,7 +349,7 @@ lug(customPlane, lugLength, lugDiameter)
        arcDegrees = 360,
        axis = [0, 1, 0],
        center = [0, 0, 0],
-       instances = 5,
+       instances = lugCount,
        rotateDuplicates = false
      }, %)
 
