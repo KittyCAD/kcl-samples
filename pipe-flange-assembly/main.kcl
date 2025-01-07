@@ -186,6 +186,9 @@ pipe = startSketchOn('XY')
   |> angledLine({ angle = 240, length = .5 }, %)
   |> close(%)
   |> revolve({ axis = 'y' }, %)
+  |> appearance({
+    color = "#7b79d7",
+  }, %)
 
 // Sketch and extrude the wall
 wall = startSketchOn('XZ')
@@ -200,6 +203,9 @@ wall = startSketchOn('XZ')
        radius = flangePipeDia / 2
      }, %), %)
   |> extrude(wallThickness, %)
+  |> appearance({
+    color = "#c7aa8f",
+  }, %)
 
 // Sketch and revolve the flange
 flangeBase = startSketchOn('XZ')
@@ -213,6 +219,9 @@ flangeBase = startSketchOn('XZ')
        radius = flangePipeDia / 2
      }, %), %)
   |> extrude(-flangeThickness, %)
+  |> appearance({
+    color = "#9b9797",
+  }, %)
 
 // Create the washer and pattern around the flange
 washer(workingPlane, [screwStart[2], screwStart[0]], 0.0625, screwDia + tol, 0.625)
@@ -223,6 +232,9 @@ washer(workingPlane, [screwStart[2], screwStart[0]], 0.0625, screwDia + tol, 0.6
        arcDegrees = 360,
        rotateDuplicates = true
      }, %)
+  |> appearance({
+    color = "#d8da5d",
+  }, %)
 
 // Create the cap screw and pattern around the flange
 capScrew([
@@ -237,6 +249,9 @@ capScrew([
        arcDegrees = 360,
        rotateDuplicates = true
      }, %)
+  |> appearance({
+    color = "#4cd411",
+  }, %)
 
 screwBodySketch = startSketchOn(screwPlane)
   |> circle({
@@ -251,6 +266,9 @@ screwBody = extrude(-screwLength, screwBodySketch)
        arcDegrees = 360,
        rotateDuplicates = true
      }, %)
+  |> appearance({
+    color = "#4cd411",
+  }, %)
 
 // Create a plane for the washers on the back side of the wall
 backSideWasherPlane = {
@@ -275,6 +293,9 @@ washer(backSideWasherPlane, [screwStart[2], screwStart[0]], 0.0625, screwDia + t
        arcDegrees = 360,
        rotateDuplicates = true
      }, %)
+  |> appearance({
+    color = "#e8ec09",
+  }, %)
 
 // Create the hex nut and pattern around the flange
 hexNut([
@@ -289,3 +310,6 @@ hexNut([
        arcDegrees = 360,
        rotateDuplicates = true
      }, %)
+  |> appearance({
+    color = "#bc3434",
+  }, %)
