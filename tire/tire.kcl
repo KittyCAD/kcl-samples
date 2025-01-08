@@ -1,0 +1,45 @@
+// Tire
+// A tire is a critical component of a vehicle that provides the necessary traction and grip between the car and the road. It supports the vehicle's weight and absorbs shocks from road irregularities.
+
+
+// Define constants
+tireInnerDiameter = 482.6
+tireOuterDiameter = 660.4
+tireDepth = 280
+bendRadius = 40
+tireTreadWidth = 10
+tireTreadDepth = 10
+tireTreadOffset = 80
+
+// Create the sketch of the tire
+tireSketch = startSketchOn("XY")
+  |> startProfileAt([tireInnerDiameter / 2, tireDepth / 2], %)
+  |> lineTo([
+       tireOuterDiameter / 2 - bendRadius,
+       tireDepth / 2
+     ], %, $edge1)
+  |> tangentialArc({ offset = -90, radius = bendRadius }, %)
+  |> lineTo([
+       tireOuterDiameter / 2,
+       tireDepth / 2 - tireTreadOffset
+     ], %)
+  |> line([-tireTreadDepth, 0], %)
+  |> line([0, -tireTreadWidth], %)
+  |> line([tireTreadDepth, 0], %)
+  |> lineTo([
+       tireOuterDiameter / 2,
+       -tireDepth / 2 + tireTreadOffset + tireTreadWidth
+     ], %)
+  |> line([-tireTreadDepth, 0], %)
+  |> line([0, -tireTreadWidth], %)
+  |> line([tireTreadDepth, 0], %)
+  |> lineTo([
+       tireOuterDiameter / 2,
+       -tireDepth / 2 + bendRadius
+     ], %)
+  |> tangentialArc({ offset = -90, radius = bendRadius }, %)
+  |> lineTo([tireInnerDiameter / 2, -tireDepth / 2], %, $edge2)
+  |> close(%)
+
+// Revolve the sketch to create the tire
+tire = revolve({ axis = "Y" }, tireSketch)
