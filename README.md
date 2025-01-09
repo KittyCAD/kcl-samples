@@ -59,8 +59,6 @@ When you submit a PR to add or modify KCL samples, images and STEP files will be
 [![lego](screenshots/main.png)](./lego/main.kcl)
 #### [mounting-plate](./mounting-plate/main.kcl) ([step](step/main.step)) ([screenshot](screenshots/main.png))
 [![mounting-plate](screenshots/main.png)](./mounting-plate/main.kcl)
-#### [multi-axis-robot](./multi-axis-robot/main.kcl) ([step](step/main.step)) ([screenshot](screenshots/main.png))
-[![multi-axis-robot](screenshots/main.png)](./multi-axis-robot/main.kcl)
 #### [pipe](./pipe/main.kcl) ([step](step/main.step)) ([screenshot](screenshots/main.png))
 [![pipe](screenshots/main.png)](./pipe/main.kcl)
 #### [pipe-flange-assembly](./pipe-flange-assembly/main.kcl) ([step](step/main.step)) ([screenshot](screenshots/main.png))
