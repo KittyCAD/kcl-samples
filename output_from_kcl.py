@@ -62,7 +62,7 @@ def find_files(
     path = Path(path)
     valid_suffixes = [i.lower() for i in valid_suffixes]
     return sorted(
-        file for file in path.rglob("*")
+        file for file in path.rglob("main.kcl")
         if file.suffix.lower() in valid_suffixes and
         (name_pattern is None or re.match(name_pattern, file.name))
     )
@@ -103,28 +103,29 @@ def process_single_kcl(kcl_path: Path) -> dict:
     print(f"Processing {kcl_path.name}")
 
     units = get_units(kcl_path)
+    parent_name = kcl_path.parent.name
 
     with open(kcl_path, "r") as inp:
         code = str(inp.read())
 
-    export_status = export_step(code=code, save_path=Path(__file__).parent / "step" / kcl_path.stem, unit_length=units)
+    export_status = export_step(code=code, save_path=Path(__file__).parent / "step" / parent_name, unit_length=units)
     count = 1
     while not export_status and count < RETRIES:
-        export_status = export_step(code=code, save_path=Path(__file__).parent / "step" / kcl_path.stem,
+        export_status = export_step(code=code, save_path=Path(__file__).parent / "step" / parent_name,
                                     unit_length=units)
         count += 1
 
-    snapshot_status = snapshot(code=code, save_path=Path(__file__).parent / "screenshots" / kcl_path.stem,
+    snapshot_status = snapshot(code=code, save_path=Path(__file__).parent / "screenshots" / parent_name,
                                unit_length=units)
     count = 1
     while not snapshot_status and count < RETRIES:
-        snapshot_status = snapshot(code=code, save_path=Path(__file__).parent / "screenshots" / kcl_path.stem,
+        snapshot_status = snapshot(code=code, save_path=Path(__file__).parent / "screenshots" / parent_name,
                                    unit_length=units)
         count += 1
 
     readme_entry = (
-        f"#### [{kcl_path.parent.name}](./{kcl_path.parent.name}/{kcl_path.name}) ([step](step/{kcl_path.stem}.step)) ([screenshot](screenshots/{kcl_path.stem}.png))\n"
-        f"[![{kcl_path.parent.name}](screenshots/{kcl_path.stem}.png)](./{kcl_path.parent.name}/{kcl_path.name})"
+        f"#### [{parent_name}](./{parent_name}/main.kcl) ([step](step/{parent_name}.step)) ([screenshot](screenshots/{parent_name}.png))\n"
+        f"[![{parent_name}](screenshots/{parent_name}.png)](./{parent_name}/main.kcl)"
     )
 
     return {"filename": kcl_path.name, "export_status": export_status, "snapshot_status": snapshot_status,
@@ -152,7 +153,7 @@ def update_readme(new_content: str, search_string: str = '---\n') -> None:
 
 
 def main():
-    kcl_files = find_files(path=Path(__file__).parent, valid_suffixes=[".kcl"])
+    kcl_files = find_files(path=Path(__file__).parent, valid_suffixes=[".kcl"], name_pattern="main.kcl")
 
     # run concurrently
     with ProcessPoolExecutor(max_workers=5) as executor:
