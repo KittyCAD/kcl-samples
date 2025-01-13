@@ -100,10 +100,9 @@ def snapshot(code: str, save_path: Path, unit_length: UnitLength = kcl.UnitLengt
 
 
 def process_single_kcl(kcl_path: Path) -> dict:
-    print(f"Processing {kcl_path.name}")
-
     units = get_units(kcl_path)
     parent_name = kcl_path.parent.name
+    print(f"Processing {parent_name}/{kcl_path.name}")
 
     with open(kcl_path, "r") as inp:
         code = str(inp.read())
