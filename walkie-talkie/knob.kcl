@@ -1,5 +1,9 @@
+// Walkie talkie knob
+
+// Import constants
 import knobDiameter, knobHeight, knobRadius from "globals.kcl"
 
+// Create a function for the knob
 export fn knob(origin) {
   knobPlane = {
     plane = {

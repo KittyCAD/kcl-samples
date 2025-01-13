@@ -1,5 +1,10 @@
+// Antenna
+
+
+// import constants
 import height, width, antennaBaseWidth, antennaBaseHeight, antennaTopWidth, antennaTopHeight from 'globals.kcl'
 
+// Create the function for the antenna
 export fn antenna (origin) {
   antennaX = origin[0]
   antennaY = origin[1]

@@ -1,3 +1,5 @@
+// J3 Robot Arm
+
 import plane002, axisJ2, axisJ3C, axisJ4, axisJ2ArmLength, axisJ3CArmLength, axisJ3CArmWidth, axisJ3CArmThickness from 'globals.kcl'
 
 export fn j3RobotArm () {

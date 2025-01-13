@@ -1,3 +1,5 @@
+// Global constants for the walkie talkie
+
 // body
 export height = 4
 export width = 2.5

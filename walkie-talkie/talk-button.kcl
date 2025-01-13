@@ -1,5 +1,9 @@
+// Walkie talkie talk button
+
+// Import constants
 import width, talkButtonSideLength, talkButtonHeight from "globals.kcl"
 
+// Create a function for the talk button
 export fn talkButton(origin) {
   talkButtonPlane = {
     plane = {

@@ -1,3 +1,5 @@
+// Global constants for the multi-axis robot
+
 // Axis Angles
 export axisJ4 = 25
 export axisJ3 = 60

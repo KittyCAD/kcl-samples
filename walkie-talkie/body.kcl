@@ -1,5 +1,9 @@
+// Walkie talkie body
+
+// Import constants
 import height, width, thickness, chamferLength, offset, screenWidth, screenHeight, screenYPosition, screenDepth, speakerBoxWidth, speakerBoxHeight from "globals.kcl"
 
+// Create a function for the body
 export fn body() {
   bodySketch = startSketchOn('XZ')
     |> startProfileAt([-width / 2, height / 2], %)
