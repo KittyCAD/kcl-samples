@@ -72,7 +72,7 @@ def get_units(kcl_path: Path) -> UnitLength:
     settings_path = kcl_path.parent / "project.toml"
     if not settings_path.exists():
         return kcl.UnitLength.Mm
- 
+
     with open(settings_path, "rb") as f:
         data = tomllib.load(f)
     try:
@@ -128,7 +128,7 @@ def process_single_kcl(kcl_path: Path) -> dict:
         f"[![{parent_name}](screenshots/{parent_name}.png)](./{parent_name}/main.kcl)"
     )
 
-    return {"filename": kcl_path.name, "export_status": export_status, "snapshot_status": snapshot_status,
+    return {"filename": kcl_path.name,"parent_name":parent_name, "export_status": export_status, "snapshot_status": snapshot_status,
             "readme_entry": readme_entry}
 
 
@@ -166,7 +166,7 @@ def main():
         comment_body = "The following files failed to export to STEP format:\n"
         for i in results:
             if not i["export_status"]:
-                comment_body += f"{i['filename']}\n"
+                comment_body += f"{i['parent_name']}/{i['filename']}\n"
 
         url = f"https://api.github.com/repos/{os.getenv('GH_REPO')}/issues/{os.getenv('GH_PR')}/comments"
 
