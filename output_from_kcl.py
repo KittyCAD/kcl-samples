@@ -25,7 +25,12 @@ UNIT_MAP = {
 }
 
 
-def export_step(code: str, save_path: Path, unit_length: UnitLength = kcl.UnitLength.Mm) -> bool:
+def export_step(code: str, kcl_path: Path, save_path: Path, unit_length: UnitLength = kcl.UnitLength.Mm) -> bool:
+    # determine the current directory
+    current_dir = os.getcwd()
+
+    # switch to the kcl path so imports work
+    os.chdir(kcl_path.parent)
     try:
         export_response = asyncio.run(
             kcl.execute_and_export(code, unit_length, kcl.FileExportFormat.Step)
@@ -36,9 +41,14 @@ def export_step(code: str, save_path: Path, unit_length: UnitLength = kcl.UnitLe
         with open(stl_path, "wb") as out:
             out.write(bytes(export_response[0].contents))
 
+        # switch back to the directory we started in
+        os.chdir(current_dir)
+
         return True
     except Exception as e:
         print(e)
+        # switch back to the directory we started in
+        os.chdir(current_dir)
         return False
 
 
@@ -72,7 +82,7 @@ def get_units(kcl_path: Path) -> UnitLength:
     settings_path = kcl_path.parent / "project.toml"
     if not settings_path.exists():
         return kcl.UnitLength.Mm
- 
+
     with open(settings_path, "rb") as f:
         data = tomllib.load(f)
     try:
@@ -81,7 +91,12 @@ def get_units(kcl_path: Path) -> UnitLength:
         return kcl.UnitLength.Mm
 
 
-def snapshot(code: str, save_path: Path, unit_length: UnitLength = kcl.UnitLength.Mm) -> bool:
+def snapshot(code: str, kcl_path: Path, save_path: Path, unit_length: UnitLength = kcl.UnitLength.Mm) -> bool:
+    # determine the current directory
+    current_dir = os.getcwd()
+
+    # switch to the kcl path so imports work
+    os.chdir(kcl_path.parent)
     try:
         snapshot_response = asyncio.run(
             kcl.execute_and_snapshot(code, unit_length, kcl.ImageFormat.Png)
@@ -93,41 +108,62 @@ def snapshot(code: str, save_path: Path, unit_length: UnitLength = kcl.UnitLengt
 
         image.save(im_path)
 
+        # switch back to the directory we started in
+        os.chdir(current_dir)
+
         return True
     except Exception as e:
         print(e)
+        # switch back to the directory we started in
+        os.chdir(current_dir)
         return False
 
 
 def process_single_kcl(kcl_path: Path) -> dict:
-    print(f"Processing {kcl_path.name}")
+    # The part name is the parent folder since each file is main.kcl
+    part_name = kcl_path.parent.name
 
+    print(f"Processing {part_name}")
+
+    # determine units based on project.toml
     units = get_units(kcl_path)
 
+    # read the file to get the code as a string
     with open(kcl_path, "r") as inp:
         code = str(inp.read())
 
-    export_status = export_step(code=code, save_path=Path(__file__).parent / "step" / kcl_path.stem, unit_length=units)
+    # determine the root dir, which is where this python script
+    root_dir = Path(__file__).parent
+    # step and screenshots for the part are based on the root dir
+    step_path = root_dir / "step" / part_name
+    screenshots_path = root_dir / "screenshots" / part_name
+
+    # attempt step export
+    export_status = export_step(code=code, kcl_path=kcl_path, save_path=step_path, unit_length=units)
     count = 1
     while not export_status and count < RETRIES:
-        export_status = export_step(code=code, save_path=Path(__file__).parent / "step" / kcl_path.stem,
-                                    unit_length=units)
+        export_status = export_step(code=code,  kcl_path=kcl_path, save_path=step_path, unit_length=units)
         count += 1
 
-    snapshot_status = snapshot(code=code, save_path=Path(__file__).parent / "screenshots" / kcl_path.stem,
-                               unit_length=units)
+    # attempt screenshot
+    snapshot_status = snapshot(code=code, kcl_path=kcl_path, save_path=screenshots_path, unit_length=units)
     count = 1
     while not snapshot_status and count < RETRIES:
-        snapshot_status = snapshot(code=code, save_path=Path(__file__).parent / "screenshots" / kcl_path.stem,
-                                   unit_length=units)
+        snapshot_status = snapshot(code=code, kcl_path=kcl_path, save_path=screenshots_path, unit_length=units)
         count += 1
 
+    # find relative paths, used for building the README.md
+    kcl_rel_path = kcl_path.relative_to(Path(__file__).parent)
+    step_rel_path = step_path.relative_to(Path(__file__).parent).with_suffix(".step")
+    screenshot_rel_path = screenshots_path.relative_to(Path(__file__).parent).with_suffix(".png")
+
+    # readme string for the part
     readme_entry = (
-        f"#### [{kcl_path.parent.name}](./{kcl_path.parent.name}/{kcl_path.name}) ([step](step/{kcl_path.stem}.step)) ([screenshot](screenshots/{kcl_path.stem}.png))\n"
-        f"[![{kcl_path.parent.name}](screenshots/{kcl_path.stem}.png)](./{kcl_path.parent.name}/{kcl_path.name})"
+        f"#### [{part_name}]({kcl_rel_path}) ([step]({step_rel_path})) ([screenshot]({screenshot_rel_path}))\n"
+        f"[![{part_name}]({screenshot_rel_path})]({kcl_rel_path})"
     )
 
-    return {"filename": kcl_path.name, "export_status": export_status, "snapshot_status": snapshot_status,
+    return {"filename": f"{kcl_rel_path}", "export_status": export_status, "snapshot_status": snapshot_status,
             "readme_entry": readme_entry}
 
 
@@ -152,7 +188,7 @@ def update_readme(new_content: str, search_string: str = '---\n') -> None:
 
 
 def main():
-    kcl_files = find_files(path=Path(__file__).parent, valid_suffixes=[".kcl"])
+    kcl_files = find_files(path=Path(__file__).parent, valid_suffixes=[".kcl"], name_pattern="main")
 
     # run concurrently
     with ProcessPoolExecutor(max_workers=5) as executor:
