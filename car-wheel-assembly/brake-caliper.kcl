@@ -88,7 +88,7 @@ export fn brakeCaliper () {
        }, %)
     |> close(%)
   
-  // Revolve the brake caliiper sketch
+  // Revolve the brake caliper sketch
   brakeCaliperRevlove = revolve({ axis = "Y", angle = -70 }, brakeCaliperSketch)
     |> appearance({
       color = "#c82d2d",
