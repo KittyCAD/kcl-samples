@@ -19,6 +19,8 @@ const getKclMetadata = (filePath) => {
 
   return {
     file: path.basename(filePath),
+    // Assumed to ALWAYS be 1 level deep. That's the current practice.
+    pathFromProjectDirectoryToFirstFile: filePath.split('/').splice(-2).join('/'),
     title,
     description,
   };
