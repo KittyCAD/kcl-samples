@@ -6,8 +6,11 @@ const MANIFEST_FILE = "manifest.json";
 const COMMENT_PREFIX = "//";
 
 // Function to read and parse .kcl files
-const getKclMetadata = (filePath) => {
-  const content = fs.readFileSync(filePath, "utf-8");
+const getKclMetadata = (projectPath, files) => {
+  const primaryKclFile = files.find((file) => file.includes("main.kcl")) ?? files.sort()[0];
+  const fullPathToPrimaryKcl = path.join(projectPath, primaryKclFile);
+
+  const content = fs.readFileSync(fullPathToPrimaryKcl, "utf-8");
   const lines = content.split("\n");
 
   if (lines.length < 2) {
@@ -18,9 +21,12 @@ const getKclMetadata = (filePath) => {
   const description = lines[1].replace(COMMENT_PREFIX, "").trim();
 
   return {
-    file: path.basename(filePath),
+    file: primaryKclFile,
     // Assumed to ALWAYS be 1 level deep. That's the current practice.
-    pathFromProjectDirectoryToFirstFile: filePath.split('/').splice(-2).join('/'),
+    pathFromProjectDirectoryToFirstFile: fullPathToPrimaryKcl.split('/').splice(-2).join('/'),
+    // This was added so that multiple file project samples do not load in
+    // the web app through the manifest.
+    multipleFiles: files.length > 1,
     title,
     description,
   };
@@ -32,16 +38,16 @@ const generateManifest = (dir) => {
   const manifest = [];
 
   projectDirectories.forEach((file) => {
-    const filePath = path.join(dir, file);
-    const stattedDir = fs.statSync(filePath);
+    const projectPath = path.join(dir, file);
+    const stattedDir = fs.statSync(projectPath);
     if (stattedDir.isDirectory()) {
       const files = fs
-        .readdirSync(filePath)
+        .readdirSync(projectPath)
         .filter((f) => f.endsWith(FILE_EXTENSION));
       if (files.length === 0) {
         return;
       }
-      const metadata = getKclMetadata(path.join(filePath, files[0]));
+      const metadata = getKclMetadata(projectPath, files);
       if (metadata) {
         manifest.push(metadata);
       }
