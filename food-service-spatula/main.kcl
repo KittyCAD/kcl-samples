@@ -97,7 +97,7 @@ handleProfile = startProfileAt([0.0, flipperThickness], sketch001)
   |> close()
 
 // create an extrusion extrude001
-handle = extrude(handleWidth, [handleProfile])
+handle = extrude(handleProfile, length = handleWidth)
 
 // fillet the bend of the spatula handle
 fillet({
@@ -150,7 +150,7 @@ gripProfile = startProfileAt([-26.806746, -10.0], sketch002)
   |> close()
 
 // extrude the grip profile to create the grip
-grip = extrude(-gripLength, [gripProfile])
+grip = extrude(gripProfile, length = -gripLength)
 
 // create a sketch on the grip for the hole
 sketch003 = startSketchOn(grip, gripEdgeTop)
