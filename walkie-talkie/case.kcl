@@ -43,26 +43,26 @@ export fn case(plane) {
          angle = 45,
          to = height / 2 - (offset + caseTolerance)
        }, %)
-    |> lineTo([
+    |> line(endAbsolute = [
          width / 2 - (chamferLength + (offset + caseTolerance) / 2 * cos(toRadians(45))),
          height / 2 - (offset + caseTolerance)
-       ], %)
+       ])
     |> angledLineToX({
          angle = -45,
          to = width / 2 - (offset + caseTolerance)
        }, %)
-    |> lineTo([
+    |> line(endAbsolute = [
          width / 2 - (offset + caseTolerance),
          -(height / 2 - (chamferLength + (offset + caseTolerance) / 2 * cos(toRadians(45))))
-       ], %)
+       ])
     |> angledLineToY({
          angle = -135,
          to = -height / 2 + offset + caseTolerance
        }, %)
-    |> lineTo([
+    |> line(endAbsolute = [
          -(width / 2 - (chamferLength + (offset + caseTolerance) / 2 * cos(toRadians(45)))),
          -height / 2 + offset + caseTolerance
-       ], %)
+       ])
     |> angledLineToX({
          angle = -225,
          to = -width / 2 + offset + caseTolerance
