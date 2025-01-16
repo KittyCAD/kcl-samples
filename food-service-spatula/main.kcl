@@ -72,7 +72,7 @@ spatulaProfile = flipperProfile
   |> hole(slotProfile002, %)
 
 // extrude the profile to create the spatula flipper
-flipper = extrude(flipperThickness, [spatulaProfile])
+flipper = extrude(spatulaProfile, length = flipperThickness)
 
 // fillet the edges of the flipper
 fillet({
