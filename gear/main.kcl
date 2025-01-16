@@ -14,27 +14,27 @@ tipDiameter = pitchDiameter + 2 * module
 gearHeight = 3
 
 // Interpolate points along the involute curve
-cmo = int(101)
-rs = map([0..cmo], (i) => {
+cmo = 101
+rs = map([0..cmo], fn (i) {
   return baseDiameter / 2 + i / cmo * (tipDiameter - baseDiameter) / 2
 })
 
 // Calculate operating pressure angle
-angles = map(rs, (r) => {
+angles = map(rs, fn (r) {
   return toDegrees(  acos(baseDiameter / 2 / r))
 })
 
 // Calculate the involute function
-invas = map(angles, (a) => {
+invas = map(angles, fn (a) {
   return tan(toRadians(a)) - toRadians(a)
 })
 
 // Map the involute curve
-xs = map([0..cmo], (i) => {
+xs = map([0..cmo], fn (i) {
   return rs[i] * cos(invas[i])
 })
 
-ys = map([0..cmo], (i) => {
+ys = map([0..cmo], fn (i) {
   return rs[i] * sin(invas[i])
 })
 
@@ -50,7 +50,7 @@ toothAngle = 360 / nTeeth / 1.5
 
 // Plot the involute curve
 fn leftInvolute(i, sg) {
-  j = int(100 - i) // iterate backwards
+  j = 100 - i // iterate backwards
   return lineTo([xs[j], ys[j]], sg)
 }
 
