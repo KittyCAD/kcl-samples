@@ -30,7 +30,7 @@ fn ngon(plane, numSides, radius) {
   return reduce([1..numSides], sketch001, fn(i, sg) {
       x = cos(step * i) * radius
       y = sin(step * i) * radius
-      return lineTo([x, y], sg)
+      return line(sg, endAbsolute = [x, y])
     })
     |> close()
 }
@@ -50,8 +50,8 @@ planeBottomSide = {
 }
 
 // Extrude the faces in each plane
-bottom = extrude(pentR, length = wallThickness, ngon("XY", 5))
-bottomSide = extrude(pentR, length = wallThickness, ngon(planeBottomSide, 5))
+bottom = extrude(ngon("XY", 5, pentR), length = wallThickness)
+bottomSide = extrude(ngon(planeBottomSide, 5, pentR), length = wallThickness)
 
 // Pattern the sides so we have a full dodecahedron
 bottomBowl = patternCircular3d({
