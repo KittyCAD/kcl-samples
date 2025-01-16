@@ -22,66 +22,66 @@ export fn brakeCaliper () {
          rotorDiameter / 2 + caliperTolerance,
          0
        ], %)
-    |> line([
+    |> line(end = [
          0,
          rotorTotalThickness + caliperTolerance - caliperInnerEdgeRadius
-       ], %)
+       ])
     |> tangentialArc({
          offset = 90,
          radius = caliperInnerEdgeRadius
        }, %)
-    |> line([
+    |> line(end = [
          -caliperPadLength + 2 * caliperInnerEdgeRadius,
          0
-       ], %)
+       ])
     |> tangentialArc({
          offset = -90,
          radius = caliperInnerEdgeRadius
        }, %)
-    |> line([
+    |> line(end = [
          0,
          caliperThickness - (caliperInnerEdgeRadius * 2)
-       ], %)
+       ])
     |> tangentialArc({
          offset = -90,
          radius = caliperInnerEdgeRadius
        }, %)
-    |> line([
+    |> line(end = [
          caliperPadLength + caliperThickness - caliperOuterEdgeRadius - caliperInnerEdgeRadius,
          0
-       ], %)
+       ])
     |> tangentialArc({
          offset = -90,
          radius = caliperOuterEdgeRadius
        }, %)
-    |> line([
+    |> line(end = [
          0,
          -2 * caliperTolerance - (2 * caliperThickness) - rotorTotalThickness + 2 * caliperOuterEdgeRadius
-       ], %)
+       ])
     |> tangentialArc({
          offset = -90,
          radius = caliperOuterEdgeRadius
        }, %)
-    |> line([
+    |> line(end = [
          -caliperPadLength - caliperThickness + caliperOuterEdgeRadius + caliperInnerEdgeRadius,
          0
-       ], %)
+       ])
     |> tangentialArc({
          offset = -90,
          radius = caliperInnerEdgeRadius
        }, %)
-    |> line([
+    |> line(end = [
          0,
          caliperThickness - (2 * caliperInnerEdgeRadius)
-       ], %)
+       ])
     |> tangentialArc({
          offset = -90,
          radius = caliperInnerEdgeRadius
        }, %)
-    |> line([
+    |> line(end = [
          caliperPadLength - (2 * caliperInnerEdgeRadius),
          0
-       ], %)
+       ])
     |> tangentialArc({
          offset = 90,
          radius = caliperInnerEdgeRadius

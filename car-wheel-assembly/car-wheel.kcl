@@ -186,20 +186,20 @@ export fn carWheel () {
     |> yLine(-wheelWidth * 0.02, %)
     |> line(end = [-wheelWidth * 0.05, -wheelWidth * 0.01])
     |> yLine(-backSpacing * 0.7, %)
-    |> line([
+    |> line(end = [
          -wheelDiameter * 0.01,
          -wheelWidth * 0.02
-       ], %)
+       ])
     |> yLineTo(offset - 0.2, %)
-    |> line([
+    |> line(end = [
          -wheelDiameter * 0.03,
          -wheelWidth * 0.02
-       ], %)
+       ])
     |> yLine(-wheelWidth * 0.02, %)
-    |> line([
+    |> line(end = [
          wheelDiameter * 0.03,
          -wheelWidth * 0.1
-       ], %)
+       ])
     |> yLine(-wheelWidth * 0.05, %)
     |> line(end = [wheelWidth * 0.02, -wheelWidth * 0.02])
     |> yLineTo(-wheelWidth + backSpacing + offset - 0.28, %)
