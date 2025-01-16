@@ -10,8 +10,8 @@ export fn body() {
     |> xLine(width, %, $chamfer1)
     |> yLine(-height, %, $chamfer2)
     |> xLine(-width, %, $chamfer3)
-    |> close(%, $chamfer4)
-  bodyExtrude = extrude(thickness, bodySketch)
+    |> close(tag = $chamfer4)
+  bodyExtrude = extrude(bodySketch, length = thickness)
     |> chamfer({
          length = chamferLength,
          tags = [
@@ -57,8 +57,8 @@ export fn body() {
          angle = -225,
          to = -width / 2 + offset
        }, %)
-    |> close(%)
-  extrude002 = extrude(-0.0625, sketch002)
+    |> close()
+  extrude002 = extrude(sketch002, length = -0.0625)
     // |> appearance({
     //      color = '#707980',
     //      metalness = 90,
@@ -72,9 +72,9 @@ export fn body() {
     |> xLine(screenWidth, %, $seg01)
     |> yLine(-screenHeight, %)
     |> xLine(-segLen(seg01), %)
-    |> lineTo([profileStartX(%), profileStartY(%)], %)
-    |> close(%)
-  extrude003 = extrude(screenDepth, sketch003)
+    |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
+    |> close()
+  extrude003 = extrude(sketch003, length = screenDepth)
     // |> appearance({
     //      color = '#707980',
     //      metalness = 90,
@@ -88,9 +88,9 @@ export fn body() {
     |> xLine(speakerBoxWidth, %)
     |> yLine(-speakerBoxHeight, %)
     |> xLine(-speakerBoxWidth, %)
-    |> close(%)
+    |> close()
     
-  extrude004 = extrude(-.5, sketch004)
+  extrude004 = extrude(sketch004, length = -.5)
   
   return extrude004
 }

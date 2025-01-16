@@ -39,7 +39,7 @@ insideWallSketch = startSketchOn(customPlane)
      }, %), %)
 
 // Extrude the inside bearing piece
-insideWall = extrude(overallThickness, insideWallSketch)
+insideWall = extrude(insideWallSketch, length = overallThickness)
 
 // Create the sketch of one of the balls
 ballsSketch = startSketchOn("XY")
@@ -49,7 +49,7 @@ ballsSketch = startSketchOn("XY")
        angleStart = 180,
        radius = sphereDia / 2
      }, %)
-  |> close(%)
+  |> close()
 
 // Revolve the ball to make a sphere and pattern around the inside wall
 balls = revolve({ axis = "X" }, ballsSketch)
@@ -72,9 +72,9 @@ chainSketch = startSketchOn("XY")
        angleStart = 120,
        radius = sphereDia / 2
      }, %)
-  |> line([0, chainThickness], %)
-  |> line([-chainWidth, 0], %)
-  |> close(%)
+  |> line(end = [0, chainThickness])
+  |> line(end = [-chainWidth, 0])
+  |> close()
 
 // Revolve the chain sketch
 chainHead = revolve({ axis = "X" }, chainSketch)
@@ -117,6 +117,6 @@ outsideWallSketch = startSketchOn(customPlane)
        radius = shaftDia / 2 + wallThickness + sphereDia
      }, %), %)
 
-outsideWall = extrude(overallThickness, outsideWallSketch)
+outsideWall = extrude(outsideWallSketch, length = overallThickness)
 
 // https://www.mcmaster.com/60355K185/

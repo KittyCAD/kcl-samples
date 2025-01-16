@@ -16,12 +16,12 @@ fn hexNut(start, thk, innerDia) {
     |> angledLine({ angle = 120, length = innerDia }, %)
     |> angledLine({ angle = 60, length = innerDia }, %)
     |> angledLine({ angle = 0, length = innerDia * .90 }, %)
-    |> close(%)
+    |> close()
     |> hole(circle({
          center = [start[0], start[1]],
          radius = innerDia / 2
        }, %), %)
-    |> extrude(thk, %)
+    |> extrude(length = thk)
   return hexNutSketch
 }
 

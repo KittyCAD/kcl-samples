@@ -184,7 +184,7 @@ fn rail8020(originStart, railHeight, railLength) {
          angleEnd = -90,
          radius = 0.072 / 4 * railHeight
        }, %)
-    |> close(%)
+    |> close()
 
     // Sketch center hole of profile
     |> hole(circle({
@@ -194,7 +194,7 @@ fn rail8020(originStart, railHeight, railLength) {
          ],
          radius = .205 * railHeight / 2
        }, %), %)
-    |> extrude(railLength, %)
+    |> extrude(length = railLength)
     |> fillet({
          radius = 0.06,
          tags = [

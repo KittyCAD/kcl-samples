@@ -86,7 +86,7 @@ export fn brakeCaliper () {
          offset = 90,
          radius = caliperInnerEdgeRadius
        }, %)
-    |> close(%)
+    |> close()
   
   // Revolve the brake caliper sketch
   brakeCaliperRevlove = revolve({ axis = "Y", angle = -70 }, brakeCaliperSketch)
