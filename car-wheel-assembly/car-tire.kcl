@@ -18,23 +18,23 @@ export fn carTire () {
          tireOuterDiameter / 2,
          tireDepth / 2 - tireTreadOffset
        ], %)
-    |> line([-tireTreadDepth, 0], %)
-    |> line([0, -tireTreadWidth], %)
-    |> line([tireTreadDepth, 0], %)
+    |> line(end = [-tireTreadDepth, 0])
+    |> line(end = [0, -tireTreadWidth])
+    |> line(end = [tireTreadDepth, 0])
     |> lineTo([
          tireOuterDiameter / 2,
          -tireDepth / 2 + tireTreadOffset + tireTreadWidth
        ], %)
-    |> line([-tireTreadDepth, 0], %)
-    |> line([0, -tireTreadWidth], %)
-    |> line([tireTreadDepth, 0], %)
+    |> line(end = [-tireTreadDepth, 0])
+    |> line(end = [0, -tireTreadWidth])
+    |> line(end = [tireTreadDepth, 0])
     |> lineTo([
          tireOuterDiameter / 2,
          -tireDepth / 2 + bendRadius
        ], %)
     |> tangentialArc({ offset = -90, radius = bendRadius }, %)
-    |> lineTo([tireInnerDiameter / 2, -tireDepth / 2], %, $edge2)
-    |> close(%)
+    |> line(endAbsolute = [tireInnerDiameter / 2, -tireDepth / 2], tag = $edge2)
+    |> close()
   
   // Revolve the sketch to create the tire
   tire = revolve({ axis = "Y" }, tireSketch)

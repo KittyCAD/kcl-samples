@@ -26,9 +26,9 @@ export fn talkButton(origin) {
     |> xLine(talkButtonSideLength, %, $tag1)
     |> yLine(-talkButtonSideLength, %, $tag2)
     |> xLine(-talkButtonSideLength, %, $tag3)
-    |> close(%, $tag4)
+    |> close(tag = $tag4)
 
-  talkButtonExtrude = extrude(talkButtonHeight, talkButtonSketch)
+  talkButtonExtrude = extrude(talkButtonSketch, length = talkButtonHeight)
     |> fillet({
          radius = 0.050,
          tags = [

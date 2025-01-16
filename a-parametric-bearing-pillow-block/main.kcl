@@ -15,10 +15,10 @@ bearingDia = 3
 // (Needs to be updated). Sketch the block and extrude up to where the counterbore diameter starts.
 block = startSketchOn('XY')
   |> startProfileAt([-width / 2, -length / 2], %)
-  |> lineTo([width / 2, -length / 2], %)
-  |> lineTo([width / 2, length / 2], %)
-  |> lineTo([-width / 2, length / 2], %)
-  |> close(%)
+  |> line(endAbsolute = [width / 2, -length / 2])
+  |> line(endAbsolute = [width / 2, length / 2])
+  |> line(endAbsolute = [-width / 2, length / 2])
+  |> close()
   |> hole(circle({
        center = [
          -(width / 2 - (padding / 2)),
@@ -51,7 +51,7 @@ block = startSketchOn('XY')
        center = [0, 0],
        radius = bearingDia / 2
      }, %), %)
-  |> extrude(height - cbDepth, %)
+  |> extrude(length = height - cbDepth)
 
 // Create a second sketch that creates the counterbore diameters and extrude the rest of the way to get the total height. Note: You cannot use startSketchOn(block, 'end'). The extrude lives outside the bounds, and the engine will not execute. This is a known issue.
 secondHalf = startSketchOn({
@@ -63,10 +63,10 @@ secondHalf = startSketchOn({
        }
      })
   |> startProfileAt([-width / 2, -length / 2], %)
-  |> lineTo([width / 2, -length / 2], %)
-  |> lineTo([width / 2, length / 2], %)
-  |> lineTo([-width / 2, length / 2], %)
-  |> close(%)
+  |> line(endAbsolute = [width / 2, -length / 2])
+  |> line(endAbsolute = [width / 2, length / 2])
+  |> line(endAbsolute = [-width / 2, length / 2])
+  |> close()
   |> hole(circle({
        center = [
          -(width / 2 - (padding / 2)),
@@ -99,4 +99,4 @@ secondHalf = startSketchOn({
        center = [0, 0],
        radius = bearingDia / 2
      }, %), %)
-  |> extrude(cbDepth, %)
+  |> extrude(length = cbDepth)

@@ -37,7 +37,7 @@ fn slot(sketch1, start, end, width) {
     |> tangentialArc({ radius = width / 2, offset = 180 }, %, $arc000)
     |> angledLine({ angle = angle, length = -dist }, %, $line001)
     |> tangentialArcTo([profileStartX(%), profileStartY(%)], %, $arc001)
-    |> close(%)
+    |> close()
   return slotSketch
 }
 
@@ -46,15 +46,15 @@ sketch000 = startSketchOn('XY')
 
 // create a profile of the flipper
 flipperProfile = startProfileAt([-flipperLength, -32.0], sketch000)
-  |> line([flipperLength, 2.0], %)
+  |> line(end = [flipperLength, 2.0])
   |> yLine(60.0, %, $backEdge)
-  |> line([-flipperLength, 2.0], %)
+  |> line(end = [-flipperLength, 2.0])
   |> arc({
        angleEnd = 196.912390,
        angleStart = 163.087610,
        radius = 110.0
      }, %)
-  |> close(%)
+  |> close()
 
 // create a profile of the middle
 slotProfile000 = slot(sketch000, [-25, 0], [-55, 0], flipperSlotWidth)
@@ -88,13 +88,13 @@ sketch001 = startSketchOn(offsetPlane("XZ", -handleWidth / 2))
 
 // create a profile of the spatula handle
 handleProfile = startProfileAt([0.0, flipperThickness], sketch001)
-  |> line([31.819805, 31.819805], %, $handleBottomEdge)
-  |> line([140.953893, 51.303021], %)
-  |> line([-1.710101, 4.698463], %)
-  |> line([-141.995517, -51.682142], %, $handleTopEdge)
-  |> line([-36.139148, -36.139148], %)
+  |> line(end = [31.819805, 31.819805], tag = $handleBottomEdge)
+  |> line(end = [140.953893, 51.303021])
+  |> line(end = [-1.710101, 4.698463])
+  |> line(end = [-141.995517, -51.682142], tag = $handleTopEdge)
+  |> line(end = [-36.139148, -36.139148])
   |> xLine(7.071068, %)
-  |> close(%)
+  |> close()
 
 // create an extrusion extrude001
 handle = extrude(handleWidth, [handleProfile])
@@ -147,7 +147,7 @@ gripProfile = startProfileAt([-26.806746, -10.0], sketch002)
        angleEnd = 270.0,
        radius = gripFilletRadius
      }, %)
-  |> close(%)
+  |> close()
 
 // extrude the grip profile to create the grip
 grip = extrude(-gripLength, [gripProfile])
@@ -159,4 +159,4 @@ sketch003 = startSketchOn(grip, gripEdgeTop)
 gripHoleProfile = slot(sketch003, [0, 200], [0, 210], gripSlotWidth)
 
 // cut a hole in the grip
-extrude(-gripWidth, gripHoleProfile)
+extrude(gripHoleProfile, length = -gripWidth)

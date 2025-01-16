@@ -21,7 +21,7 @@ fn washer(plane, innerDia, outerDia, thk) {
          radius = innerDia / 2
        }, %), %)
 
-  washer = extrude(thk, washerSketch)
+  washer = extrude(washerSketch, length = thk)
   return washer
 }
 

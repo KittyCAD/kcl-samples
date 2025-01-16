@@ -15,19 +15,19 @@ flangeWidth = 1.5
 // Sketch and extrude the base shape and fillet the inside and outside edges.
 baseExtrusion = startSketchOn('-XZ')
   |> startProfileAt([0, 0], %)
-  |> line([0, thickness], %, $e1)
-  |> line([flangeLength, 0], %, $e2)
-  |> line([0, hatHeight], %, $e3)
-  |> line([hatWidth, 0], %, $e4)
-  |> line([0, -hatHeight], %, $e5)
-  |> line([flangeLength, 0], %, $e6)
-  |> line([0, -thickness], %, $e7)
-  |> line([-flangeLength - thickness, 0], %, $e8)
-  |> line([0, hatHeight], %, $e9)
-  |> line([-hatWidth + 2 * thickness, 0], %, $e10)
-  |> line([0, -hatHeight], %, $e11)
-  |> close(%, $e12)
-  |> extrude(hatWidth, %)
+  |> line(end = [0, thickness], tag = $e1)
+  |> line(end = [flangeLength, 0], tag = $e2)
+  |> line(end = [0, hatHeight], tag = $e3)
+  |> line(end = [hatWidth, 0], tag = $e4)
+  |> line(end = [0, -hatHeight], tag = $e5)
+  |> line(end = [flangeLength, 0], tag = $e6)
+  |> line(end = [0, -thickness], tag = $e7)
+  |> line(end = [-flangeLength - thickness, 0], tag = $e8)
+  |> line(end = [0, hatHeight], tag = $e9)
+  |> line(end = [-hatWidth + 2 * thickness, 0], tag = $e10)
+  |> line(end = [0, -hatHeight], tag = $e11)
+  |> close(tag = $e12)
+  |> extrude(length = hatWidth)
   |> fillet({
        radius = bendRad,
        tags = [getNextAdjacentEdge(e2)]
@@ -64,10 +64,10 @@ baseExtrusion = startSketchOn('-XZ')
 // Define the flanges and place the bolt holes
 flange1 = startSketchOn('XY')
   |> startProfileAt([0, 0], %)
-  |> line([0, hatWidth], %)
-  |> line([flangeWidth, 0], %, $e13)
-  |> line([0, -hatWidth], %, $e14)
-  |> close(%)
+  |> line(end = [0, hatWidth])
+  |> line(end = [flangeWidth, 0], tag = $e13)
+  |> line(end = [0, -hatWidth], tag = $e14)
+  |> close()
   |> hole(circle({
        center = [0.75, 1],
        radius = boltSize
@@ -76,7 +76,7 @@ flange1 = startSketchOn('XY')
        center = [0.75, 4],
        radius = boltSize
      }, %), %)
-  |> extrude(thickness, %)
+  |> extrude(length = thickness)
   |> fillet({
        radius = 0.5,
        tags = [
@@ -87,10 +87,10 @@ flange1 = startSketchOn('XY')
 
 flange2 = startSketchOn('XY')
   |> startProfileAt([-6, 0], %)
-  |> line([0, hatWidth], %)
-  |> line([-flangeWidth, 0], %, $e15)
-  |> line([0, -hatWidth], %, $e16)
-  |> close(%)
+  |> line(end = [0, hatWidth])
+  |> line(end = [-flangeWidth, 0], tag = $e15)
+  |> line(end = [0, -hatWidth], tag = $e16)
+  |> close()
   |> hole(circle({
        center = [-6.75, 1],
        radius = boltSize
@@ -99,7 +99,7 @@ flange2 = startSketchOn('XY')
        center = [-6.75, 4],
        radius = boltSize
      }, %), %)
-  |> extrude(thickness, %)
+  |> extrude(length = thickness)
   |> fillet({
        radius = 0.25,
        tags = [

@@ -28,7 +28,7 @@ export fn knob(origin) {
          radius = .05
        }, %)
     |> xLineTo(0.0001, %)
-    |> close(%)
+    |> close()
     |> revolve({
       axis = "Y",
     }, %)

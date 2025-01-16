@@ -17,7 +17,7 @@ export fn carWheel () {
          center = [0, 0],
          radius = (lugSpacing - 1.5) / 2
        }, %), %)
-    |> extrude(wheelWidth / 20, %)
+    |> extrude(length = wheelWidth / 20)
   
   // Extend the wheel center and bore holes to accomidate the lug heads
   lugExtrusion = startSketchOn(lugBase, 'END')
@@ -29,7 +29,7 @@ export fn carWheel () {
          center = [0, 0],
          radius = (lugSpacing - 1.5) / 2
        }, %), %)
-    |> extrude(wheelWidth / 10, %)
+    |> extrude(length = wheelWidth / 10)
   
   // Create the circular pattern for the lugs
   lugClearance = startSketchOn(lugExtrusion, 'END')
@@ -43,7 +43,7 @@ export fn carWheel () {
          instances = lugCount,
          rotateDuplicates = true
        }, %)
-    |> extrude(-wheelWidth / 10, %)
+    |> extrude(length = -wheelWidth / 10)
   
   // Create the circular pattern for the lug holes
   lugHoles = startSketchOn(lugBase, 'END')
@@ -57,7 +57,7 @@ export fn carWheel () {
          instances = lugCount,
          rotateDuplicates = true
        }, %)
-    |> extrude(-wheelWidth / 20, %)
+    |> extrude(length = -wheelWidth / 20)
     |> appearance({
       color = "#ffffff",
       metalness = 0,
@@ -74,8 +74,8 @@ export fn carWheel () {
          control2 = [0, 0.3]
        }, %)
     |> yLineTo(0, %)
-    |> lineTo([profileStartX(%), profileStartY(%)], %)
-    |> close(%)
+    |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
+    |> close()
     |> revolve({ axis = 'y' }, %)
     |> appearance({
       color = "#ffffff",
@@ -92,8 +92,8 @@ export fn carWheel () {
          control2 = [0.2, -0.3]
        }, %)
     |> yLineTo(-wheelWidth / 20, %)
-    |> lineTo([profileStartX(%), profileStartY(%)], %)
-    |> close(%)
+    |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
+    |> close()
     |> revolve({ axis = 'y' }, %)
     |> appearance({
       color = "#ffffff",
@@ -145,11 +145,11 @@ export fn carWheel () {
              -offset / 1.5
            ]
          }, %)
-      |> lineTo([profileStartX(%), profileStartY(%)], %)
-      |> close(%)
+      |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
+      |> close()
   
     // Circular pattern spokes
-    spokePattern = extrude(spokeThickness, spokeProfile)
+    spokePattern = extrude(spokeProfile, length = spokeThickness)
       |> patternCircular3d({
            axis = [0, 1, 0],
            center = [0, -2000, 0],
@@ -176,15 +176,15 @@ export fn carWheel () {
          -wheelWidth + backSpacing + offset
        ], %)
     |> yLine(wheelWidth * 0.25, %)
-    |> line([-wheelWidth * 0.02, wheelWidth * 0.02], %)
+    |> line(end = [-wheelWidth * 0.02, wheelWidth * 0.02])
     |> yLine(wheelWidth * 0.25, %)
-    |> line([wheelWidth * 0.02, wheelWidth * 0.02], %)
+    |> line(end = [wheelWidth * 0.02, wheelWidth * 0.02])
     |> yLineTo(backSpacing + offset, %)
-    |> line([wheelWidth * 0.05, wheelWidth * .01], %)
+    |> line(end = [wheelWidth * 0.05, wheelWidth * .01])
     |> yLine(wheelWidth * 0.05, %)
     |> xLine(-wheelWidth * 0.03, %)
     |> yLine(-wheelWidth * 0.02, %)
-    |> line([-wheelWidth * 0.05, -wheelWidth * 0.01], %)
+    |> line(end = [-wheelWidth * 0.05, -wheelWidth * 0.01])
     |> yLine(-backSpacing * 0.7, %)
     |> line([
          -wheelDiameter * 0.01,
@@ -201,13 +201,13 @@ export fn carWheel () {
          -wheelWidth * 0.1
        ], %)
     |> yLine(-wheelWidth * 0.05, %)
-    |> line([wheelWidth * 0.02, -wheelWidth * 0.02], %)
+    |> line(end = [wheelWidth * 0.02, -wheelWidth * 0.02])
     |> yLineTo(-wheelWidth + backSpacing + offset - 0.28, %)
-    |> line([wheelWidth * 0.05, -wheelWidth * 0.01], %)
+    |> line(end = [wheelWidth * 0.05, -wheelWidth * 0.01])
     |> yLine(-wheelWidth * 0.02, %)
     |> xLine(wheelWidth * 0.03, %)
     |> yLine(wheelWidth * 0.05, %)
-    |> close(%)
+    |> close()
     |> revolve({ axis = 'y' }, %)
     |> appearance({
       color = "#ffffff",

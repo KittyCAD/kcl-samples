@@ -7,7 +7,7 @@ export fn robotRotatingBase () {
   // Create Rotating Base
   sketch005 = startSketchOn(plane001)
     |> circle({ center = [0, 0], radius = 3.9 }, %, $referenceEdge1)
-  extrude005 = extrude(1.5 - 0.1, sketch005)
+  extrude005 = extrude(sketch005, length = 1.5 - 0.1)
     |> fillet({
          radius = 0.1,
          tags = [getOppositeEdge(referenceEdge1)]
@@ -27,10 +27,10 @@ export fn robotRotatingBase () {
        radius = 3
      }, %)
   |> angledLineToY({ angle = 60, to = baseHeight }, %)
-  |> lineTo([profileStartX(%), profileStartY(%)], %)
-  |> close(%)
+  |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
+  |> close()
   
-  extrude006 = extrude(1, sketch006)
+  extrude006 = extrude(sketch006, length = 1)
 
   sketch007 = startSketchOn(extrude006, 'END')
     |> circle({
@@ -40,7 +40,7 @@ export fn robotRotatingBase () {
          ],
          radius = 2.75
        }, %, $referenceEdge2)
-  extrude007 = extrude(1.5, sketch007)
+  extrude007 = extrude(sketch007, length = 1.5)
     |> fillet({
          radius = 0.1,
          tags = [getOppositeEdge(referenceEdge2)]
@@ -64,7 +64,7 @@ export fn robotRotatingBase () {
          arcDegrees = 360,
          rotateDuplicates = true
        }, %)
-  extrude008 = extrude(0.2, sketch008)
+  extrude008 = extrude(sketch008, length = 0.2)
   
   sketch009 = startSketchOn(extrude007, 'END')
     |> circle({
@@ -74,7 +74,7 @@ export fn robotRotatingBase () {
          ],
          radius = 0.5
        }, %, $referenceEdge3)
-  extrude009 = extrude(0.15, sketch009)
+  extrude009 = extrude(sketch009, length = 0.15)
     |> fillet({
          radius = 0.1,
          tags = [getOppositeEdge(referenceEdge3)]
@@ -87,7 +87,7 @@ export fn robotRotatingBase () {
   
   sketch010 = startSketchOn(plane002)
     |> circle({ center = [1.75, 8], radius = 0.3 }, %)
-  extrude010 = extrude(-1, sketch010)
+  extrude010 = extrude(sketch010, length = -1)
 
   return extrude010
 }

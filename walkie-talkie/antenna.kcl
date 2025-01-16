@@ -24,10 +24,10 @@ export fn antenna (origin) {
   
   sketch001 = startSketchOn(antennaPlane)
     |> startProfileAt([origin[0], origin[1]], %)
-    |> line([antennaBaseWidth, 0], %)
-    |> line([0, -antennaBaseHeight], %)
-    |> line([-antennaBaseWidth, 0], %)
-    |> close(%)
+    |> line(end = [antennaBaseWidth, 0])
+    |> line(end = [0, -antennaBaseHeight])
+    |> line(end = [-antennaBaseWidth, 0])
+    |> close()
     
   loftPlane = offsetPlane('XY', height/2 + 3)
   
@@ -36,7 +36,7 @@ export fn antenna (origin) {
     |> xLine(antennaTopWidth, %)
     |> yLine(-antennaTopHeight, %)
     |> xLine(-antennaTopWidth, %)
-    |> close(%)
+    |> close()
 
   antennaLoft = loft([sketch001, sketch002])
   

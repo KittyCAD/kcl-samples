@@ -50,7 +50,7 @@ export fn carRotor () {
          radius = rotorDiameter / 2
        }, %)
     |> hole(lugPattern(%), %)
-  rotor = extrude(rotorSinglePlateThickness, rotorSketch)
+  rotor = extrude(rotorSketch, length = rotorSinglePlateThickness)
   
   rotorBumpSketch = startSketchOn(rotorPlane)
     |> circle({
@@ -58,7 +58,7 @@ export fn carRotor () {
          radius = rotorInnerDiameter / 2
        }, %)
     |> hole(lugPattern(%), %)
-  rotorBump = extrude(-rotorInnerDiameterThickness, rotorBumpSketch)
+  rotorBump = extrude(rotorBumpSketch, length = -rotorInnerDiameterThickness)
     |> appearance({
       color = "#dbcd70",
       roughness = 90,
@@ -85,7 +85,7 @@ export fn carRotor () {
        }, %)
     |> hole(lugPattern(%), %)
   
-  secondRotor = extrude(rotorSinglePlateThickness, secondaryRotorSketch)
+  secondRotor = extrude(secondaryRotorSketch, length = rotorSinglePlateThickness)
   
   spacerSketch = startSketchOn(rotorSecondaryPlatePlane)
     |> circle({
@@ -99,7 +99,7 @@ export fn carRotor () {
          rotateDuplicates = true
        }, %)
   
-  spacers = extrude(-spacerLength, spacerSketch)
+  spacers = extrude(spacerSketch, length = -spacerLength)
     |> appearance({
       color = "#dbcd70",
       roughness = 90,
@@ -111,8 +111,8 @@ export fn carRotor () {
     |> xLine(0.12, %)
     |> yLine(2.56, %)
     |> xLine(-0.12, %)
-    |> lineTo([profileStartX(%), profileStartY(%)], %)
-    |> close(%)
+    |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
+    |> close()
     |> patternCircular2d({
          center = [0, 0],
          instances = drillAndSlotCount,
@@ -120,7 +120,7 @@ export fn carRotor () {
          rotateDuplicates = true
        }, %)
   
-  rotorSlotted = extrude(-rotorSinglePlateThickness / 2, rotorSlottedSketch)
+  rotorSlotted = extrude(rotorSlottedSketch, length = -rotorSinglePlateThickness / 2)
   
   rotorDrilledSketch = startSketchOn(rotor, 'START')
     |> circle({ center = [1.34, 3.23], radius = 0.12 }, %)
@@ -136,7 +136,7 @@ export fn carRotor () {
          rotateDuplicates = true
        }, %)
   
-  rotorDrilled = extrude(-rotorSinglePlateThickness, rotorDrilledSketch)
+  rotorDrilled = extrude(rotorDrilledSketch, length = -rotorSinglePlateThickness)
     |> appearance({
       color = "#dbcd70",
       roughness = 90,
@@ -148,8 +148,8 @@ export fn carRotor () {
     |> xLine(-0.12, %)
     |> yLine(2.56, %)
     |> xLine(0.12, %)
-    |> lineTo([profileStartX(%), profileStartY(%)], %)
-    |> close(%)
+    |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
+    |> close()
     |> patternCircular2d({
          center = [0, 0],
          instances = drillAndSlotCount,
@@ -157,7 +157,7 @@ export fn carRotor () {
          rotateDuplicates = true
        }, %)
   
-  secondRotorSlotted = extrude(-rotorSinglePlateThickness / 2, secondRotorSlottedSketch)
+  secondRotorSlotted = extrude(secondRotorSlottedSketch, length = -rotorSinglePlateThickness / 2)
   
   secondRotorDrilledSketch = startSketchOn(secondRotor, 'START')
     |> circle({ center = [1.34, 3.23], radius = 0.12 }, %)
@@ -173,7 +173,7 @@ export fn carRotor () {
          rotateDuplicates = true
        }, %)
   
-  secondRotorDrilled = extrude(-rotorSinglePlateThickness, secondRotorDrilledSketch)
+  secondRotorDrilled = extrude(secondRotorDrilledSketch, length = -rotorSinglePlateThickness)
     |> appearance({
       color = "#dbcd70",
       roughness = 90,
