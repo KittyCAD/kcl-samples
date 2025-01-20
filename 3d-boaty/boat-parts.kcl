@@ -1,3 +1,6 @@
+// 3D Boaty Function Library
+// The following file describes various functions to build the 3D boaty
+
 export dividerThickness = 4
 
 fn dividerSketch(plane) {
