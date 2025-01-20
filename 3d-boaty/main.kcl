@@ -1,0 +1,31 @@
+// 3D Boaty
+// This is a slight remix of Depep1's original 3D Boaty (https://www.printables.com/model/1141963-3d-boaty). This is a tool used for benchmarking 3D FDM printers for bed adhesion, overhangs, bridging and top surface quality.
+
+// Import various constants and functions from our library
+import dividerThickness from "boat-parts.kcl"
+import divider from "boat-parts.kcl"
+import connector from "boat-parts.kcl"
+import seatSlats from "boat-parts.kcl"
+import backSlats from "boat-parts.kcl"
+import armRest from "boat-parts.kcl"
+
+// Define the bench length in millimeters
+benchLength = 56
+
+// Create the dividers, these hold the seat and back slats
+divider("YZ")
+divider(offsetPlane("-YZ", benchLength / 2))
+divider(offsetPlane("YZ", benchLength / 2))
+
+// Create the connectors to join the dividers
+connector(offsetPlane("YZ", -benchLength / 2), benchLength)
+
+// Create the seat slats
+seatSlats(offsetPlane("YZ", -benchLength / 2 - dividerThickness / 2), benchLength + dividerThickness)
+
+// Create the back slats
+backSlats(offsetPlane("YZ", -benchLength / 2 - dividerThickness / 2), benchLength + dividerThickness)
+
+// Create the arm rests
+armRest("-YZ", benchLength / 2)
+armRest("YZ", benchLength / 2)
