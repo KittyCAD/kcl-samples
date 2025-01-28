@@ -1,0 +1,63 @@
+import coopFront from "coopFront.kcl"
+import coopRoof from "coopRoof.kcl"
+// import coopBack from "coopBack.kcl"
+import coopOutsideWall from "coopOutsideWall.kcl"
+// import coopRunWall from "coopRunWall.kcl"
+// import runEnd from "runEnd.kcl"
+// import runWallsAndRoof from "runWallsAndRoof.kcl"
+import nestingBox from "nestingBox.kcl"
+import foundation from "foundation.kcl"
+
+import variables from "vars.kcl"
+import pitchedStud, flatten, verticalStudGeo, studWithoutAngles from "studUtils.kcl"
+
+v = variables()
+runRafterCount = v.runRafterCount
+interRafterDistance = v.interRafterDistance
+runEndPlane = v.runEndPlane
+coopLength = v.coopLength
+runDoorWidth = v.runDoorWidth
+studWidth = v.studWidth
+studDepth = v.studDepth
+runRoofPitchR = v.runRoofPitchR
+runRoofPitch = v.runRoofPitch
+heightOfRunEndWall = v.heightOfRunEndWall
+studThicknessAtRunAngle = v.studThicknessAtRunAngle
+runPitchedStudLen = v.runPitchedStudLen
+runDoorHeight = v.runDoorHeight
+runHorzBraceHeight = v.runHorzBraceHeight
+studTallSideThicknessAtRunAngle = v.studTallSideThicknessAtRunAngle
+runSideEaveOverHang = v.runSideEaveOverHang
+rafterCommonZ = v.rafterCommonZ
+runRafterCommonHorizontalDistance = v.runRafterCommonHorizontalDistance
+ridgeWidth = v.ridgeWidth
+runRafterRatio = v.runRafterRatio
+frontRoofAngle = v.frontRoofAngle
+xCoordForRunHorzSupportFront = v.xCoordForRunHorzSupportFront
+xCoordForRunHorzSupportBack = v.xCoordForRunHorzSupportBack
+heightToNotchIntoRafters = v.heightToNotchIntoRafters
+nestingBoxDepth = v.nestingBoxDepth
+nestingRoofPitch = v.nestingRoofPitch
+nestingRoofPitchR = v.nestingRoofPitchR
+frontPlane = v.frontPlane
+coopStorageLength = v.coopStorageLength
+nestingBoxHeight = v.nestingBoxHeight
+sideEaveOverHang = v.sideEaveOverHang
+studTallSideThicknessAtAngle = v.studTallSideThicknessAtAngle
+angleFromRunRoofToCoopRoof = v.angleFromRunRoofToCoopRoof
+horizontalLengthAlongRunFromvalleyToTip = v.horizontalLengthAlongRunFromvalleyToTip
+coopWidth = v.coopWidth
+coopRoofPitchR = v.coopRoofPitchR
+coopRoofPitch = v.coopRoofPitch
+angleFromCoopRoofToRunRoof = v.angleFromCoopRoofToRunRoof
+
+coopFront(v.frontPlane)
+coopRoof(v.backPlane)
+// coopBack(v.backPlane)
+coopOutsideWall(v.outsideWallPlane)
+nestingBox()
+// coopRunWall(v.runWallPlane)
+// runEnd()
+// runWallsAndRoof(v.runWallPlane)
+foundation()
+

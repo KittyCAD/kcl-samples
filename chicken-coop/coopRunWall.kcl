@@ -1,0 +1,208 @@
+import variables from "vars.kcl"
+import pitchedStud, flatten, verticalStudGeo, studWithoutAngles, concat from "studUtils.kcl"
+
+v = variables()
+
+export fn coopRunWall(plane) {
+  fixedStuds = [
+    studWithoutAngles(plane, [0, 0, 0], [
+  v.coopFrameLength,
+  v.studWidth,
+  -v.studDepth
+], 'runWallFrameBase'),
+    studWithoutAngles(plane, [
+  v.coopFrameLength - (v.studWidth * 2),
+  0,
+  v.studWidth
+], [
+  v.studWidth,
+  v.nestingBoxHeight - v.studWidth + v.studDepth,
+  -v.studDepth
+], 'runWallNestingHeaderUpperSupportStudR1'),
+    studWithoutAngles(plane, [
+  v.coopStorageLength + v.studWidth,
+  0,
+  v.studWidth
+], [
+  v.studWidth,
+  v.nestingBoxHeight - v.studWidth + v.studDepth,
+  -v.studDepth
+], 'runWallNestingHeaderUpperSupportStudL1'),
+    studWithoutAngles(plane, [
+  v.coopFrameLength - v.studWidth,
+  0,
+  v.studWidth
+], [
+  v.studWidth,
+  v.nestingBoxHeight - v.studWidth + v.studDepth,
+  -v.studDepth
+], 'runWallNestingHeaderUpperSupportStudR2'),
+    studWithoutAngles(plane, [v.coopStorageLength, 0, v.studWidth], [
+  v.studWidth,
+  v.nestingBoxHeight + v.studDepth + v.windowHeight,
+  -v.studDepth
+], 'runWallStorageCoopTransitionVerticalStud'),
+    studWithoutAngles(plane, [
+  v.coopStorageLength + v.studWidth,
+  0,
+  v.nestingBoxHeight + v.studDepth
+], [
+  v.coopFrameLength - v.coopStorageLength - v.studWidth,
+  v.studWidth,
+  -v.studDepth
+], 'runWallWindowSectionBase'),
+    studWithoutAngles(plane, [
+  v.coopStorageLength,
+  0,
+  v.nestingBoxHeight + v.studDepth + v.windowHeight + v.studWidth
+], [
+  v.coopFrameLength - v.coopStorageLength,
+  v.studWidth,
+  -v.studDepth
+], 'runWallwindowHeader1'),
+    studWithoutAngles(plane, [
+  v.coopStorageLength,
+  0,
+  v.nestingBoxHeight + v.studDepth + v.windowHeight + v.studWidth * 2
+], [
+  v.coopFrameLength - v.coopStorageLength,
+  v.studWidth,
+  -v.studDepth
+], 'runWallwindowHeader2'),
+    studWithoutAngles(plane, [0, 0, v.coopFrameHeight - v.studWidth], [
+  v.coopFrameLength,
+  v.studWidth,
+  -v.studDepth
+], 'runWallFrameTop1'),
+    studWithoutAngles(plane, [
+  0,
+  0,
+  v.coopFrameHeight - (v.studWidth * 2)
+], [
+  v.coopFrameLength,
+  v.studWidth,
+  -v.studDepth
+], 'runWallFrameTop1'),
+    studWithoutAngles(plane, [0, 0, v.studWidth], [
+  v.studWidth,
+  v.coopFrameHeight - (v.studWidth * 3),
+  -v.studDepth
+], 'runWallFrameEdgeL'),
+    studWithoutAngles(plane, [
+  v.coopStorageLength - v.studWidth,
+  0,
+  v.studWidth
+], [
+  v.studWidth,
+  v.coopFrameHeight - (v.studWidth * 3),
+  -v.studDepth
+], 'runWallstorageDoorVertStudR'),
+    studWithoutAngles(plane, [
+  v.coopFrameLength - v.studWidth,
+  0,
+  v.nestingBoxHeight + v.studDepth + v.studWidth
+], [
+  v.studWidth,
+  v.windowHeight,
+  -v.studDepth
+], 'runWallwindowEdgeVertStud'),
+    studWithoutAngles(plane, [
+  v.coopFrameLength - v.studWidth,
+  0,
+  v.nestingBoxHeight + v.studDepth + v.studWidth + v.windowHeight + v.studWidth * 2
+], [
+  v.studWidth,
+  v.coopFrameHeight - (v.nestingBoxHeight + v.studDepth + v.studWidth + v.windowHeight + v.studWidth * 4),
+  -v.studDepth
+], 'runWalltopRightEdgeSupport')
+  ]
+
+  vertStudDistance = v.coopLength - v.coopStorageLength - (v.studWidth * 3)
+  vertStudCount = ceil(vertStudDistance / v.interStudDistance)
+  vertStudRemainder = vertStudDistance - ((vertStudCount - 1) * v.interStudDistance)
+  assert(vertStudDistance > v.windowCount * (v.windowWidth + v.studWidth * 2), 'windows will not fit, you either need a longer coop, less windows, or more narrow windows')
+  fn vertStudPlacer(index) {
+    position = v.interStudDistance * index - (vertStudRemainder / 2)
+    result = [
+      studWithoutAngles(plane, [
+  v.coopStorageLength + position,
+  0,
+  v.nestingBoxHeight + v.studDepth + v.studWidth + v.windowHeight + v.studWidth * 2
+], [
+  v.studWidth,
+  v.coopFrameHeight - (v.nestingBoxHeight + v.studDepth + v.studWidth + v.windowHeight + v.studWidth * 4),
+  -v.studDepth
+], 'runWalltopVerticalStud'),
+      studWithoutAngles(plane, [
+  v.coopStorageLength + position,
+  0,
+  v.studWidth
+], [
+  v.studWidth,
+  v.nestingBoxHeight - v.studWidth + v.studDepth,
+  -v.studDepth
+], 'runWallbottomVerticalStud')
+    ]
+//     pushedResult = if index == 1 {
+//       concat(result, [
+//         studWithoutAngles(plane, [
+//   v.coopStorageLength + position + v.studWidth,
+//   0,
+//   v.studWidth + v.chickenDoorHeight
+// ], [
+//   v.interStudDistance - v.studWidth,
+//   v.studDepth,
+//   -v.studWidth
+// ], 'runWallchickenDoorHeader1'),
+//         studWithoutAngles(plane, [
+//   v.coopStorageLength + position + v.studWidth,
+//   -v.studDepth + v.studWidth,
+//   v.studWidth + v.chickenDoorHeight
+// ], [
+//   v.interStudDistance - v.studWidth,
+//   v.studDepth,
+//   -v.studWidth
+// ], 'runWallchickenDoorHeader2')
+//       ])
+//     } else {
+//       result
+//     }
+    return result
+  }
+  topVertStuds = flatten(  map([1 .. vertStudCount - 1], vertStudPlacer))
+  vertStudDistanceForWindows = v.coopLength - v.coopStorageLength - (v.studWidth * 4)
+  windownPositionInterval = vertStudDistanceForWindows / (v.windowCount + 1)
+  fn windowStudPlacer(index) {
+    position = windownPositionInterval * index
+    return [
+      studWithoutAngles(plane, [
+  v.coopStorageLength + position - v.studWidth - (v.windowWidth / 2),
+  0,
+  v.nestingBoxHeight + v.studDepth + v.studWidth
+], [
+  v.studWidth,
+  v.windowHeight,
+  -v.studDepth
+], 'runWallwindownEdgeStudsL'),
+      studWithoutAngles(plane, [
+  v.coopStorageLength + position - v.studWidth + v.windowWidth / 2,
+  0,
+  v.nestingBoxHeight + v.studDepth + v.studWidth
+], [
+  v.studWidth,
+  v.windowHeight,
+  -v.studDepth
+], 'runWallwindownEdgeStudsR')
+    ]
+  }
+  windowEdgeStuds = flatten(  map([1 .. v.windowCount], windowStudPlacer))
+  return flatten([
+    fixedStuds,
+    windowEdgeStuds,
+    topVertStuds
+  ])
+}
+
+// example, uncomment to check, but should be left comment
+// otherwise causes problem importing elsewhere
+aGroupOfStudForCreatingCutList = coopRunWall(v.runWallPlane)
