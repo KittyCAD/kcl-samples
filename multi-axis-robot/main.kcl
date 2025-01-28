@@ -1,12 +1,12 @@
 // Robot Arm
 // A 4 axis robotic arm for industrial use. These machines can be used for assembly, packaging, organization of goods, and quality inspection processes
 
-import robotArmBase from 'robot-arm-base.kcl'
-import robotRotatingBase from 'robot-rotating-base.kcl'
-import j2RobotArm from 'robot-arm-j2.kcl'
-import j3RobotArm from 'robot-arm-j3.kcl'
+import 'robot-arm-base.kcl' as robotArmBase
+import 'robot-rotating-base.kcl' as rotatingBase
+import 'robot-arm-j2.kcl' as j2RobotArm
+import 'robot-arm-j3.kcl' as j3RobotArm
 
-robotArmBase()
-robotRotatingBase()
-j2RobotArm()
-j3RobotArm()
+robotArmBase
+rotatingBase
+j2RobotArm
+j3RobotArm

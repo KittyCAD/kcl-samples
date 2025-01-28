@@ -1,17 +1,17 @@
 // Car Wheel Assembly
 // A car wheel assembly with a rotor, tire, and lug nuts.
 
-import carRotor from 'car-rotor.kcl'
-import carTire from 'car-tire.kcl'
-import carWheel from 'car-wheel.kcl'
+import 'car-rotor.kcl' as carRotor
+import 'car-tire.kcl' as carTire
+import 'car-wheel.kcl' as carWheel 
+import 'brake-caliper.kcl' as brakeCaliper 
 import lugNut from 'lug-nut.kcl'
-import brakeCaliper from 'brake-caliper.kcl'
 import lugCount from 'globals.kcl'
 
-carRotor()
-carTire()
-carWheel()
-lugNut()
+carRotor
+carTire
+carWheel
+lugNut
   |> patternCircular3d({
      arcDegrees = 360,
      axis = [0, 1, 0],
@@ -19,4 +19,4 @@ lugNut()
      instances = lugCount,
      rotateDuplicates = false
    }, %)
-brakeCaliper()
+brakeCaliper
