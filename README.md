@@ -33,6 +33,8 @@ When you submit a PR to add or modify KCL samples, images and STEP files will be
 [![bracket](screenshots/bracket.png)](bracket/main.kcl)
 #### [car-wheel-assembly](car-wheel-assembly/main.kcl) ([step](step/car-wheel-assembly.step)) ([screenshot](screenshots/car-wheel-assembly.png))
 [![car-wheel-assembly](screenshots/car-wheel-assembly.png)](car-wheel-assembly/main.kcl)
+#### [chicken-coop](chicken-coop/main.kcl) ([step](step/chicken-coop.step)) ([screenshot](screenshots/chicken-coop.png))
+[![chicken-coop](screenshots/chicken-coop.png)](chicken-coop/main.kcl)
 #### [dodecahedron](dodecahedron/main.kcl) ([step](step/dodecahedron.step)) ([screenshot](screenshots/dodecahedron.png))
 [![dodecahedron](screenshots/dodecahedron.png)](dodecahedron/main.kcl)
 #### [enclosure](enclosure/main.kcl) ([step](step/enclosure.step)) ([screenshot](screenshots/enclosure.png))

@@ -1,0 +1,240 @@
+import variables from "vars.kcl"
+import pitchedStud, pitchedStud2, flatten, verticalStudGeo, studWithoutAngles, concat from "studUtils.kcl"
+
+v = variables()
+
+runRafterCount = v.runRafterCount
+interRafterDistance = v.interRafterDistance
+runEndPlane = v.runEndPlane
+coopLength = v.coopLength
+runDoorWidth = v.runDoorWidth
+studWidth = v.studWidth
+studDepth = v.studDepth
+runRoofPitchR = v.runRoofPitchR
+runRoofPitch = v.runRoofPitch
+heightOfRunEndWall = v.heightOfRunEndWall
+studThicknessAtRunAngle = v.studThicknessAtRunAngle
+runPitchedStudLen = v.runPitchedStudLen
+runDoorHeight = v.runDoorHeight
+runHorzBraceHeight = v.runHorzBraceHeight
+studTallSideThicknessAtRunAngle = v.studTallSideThicknessAtRunAngle
+runSideEaveOverHang = v.runSideEaveOverHang
+rafterCommonZ = v.rafterCommonZ
+runRafterCommonHorizontalDistance = v.runRafterCommonHorizontalDistance
+ridgeWidth = v.ridgeWidth
+runRafterRatio = v.runRafterRatio
+frontRoofAngle = v.frontRoofAngle
+xCoordForRunHorzSupportFront = v.xCoordForRunHorzSupportFront
+xCoordForRunHorzSupportBack = v.xCoordForRunHorzSupportBack
+heightToNotchIntoRafters = v.heightToNotchIntoRafters
+nestingBoxDepth = v.nestingBoxDepth
+nestingRoofPitch = v.nestingRoofPitch
+nestingRoofPitchR = v.nestingRoofPitchR
+frontPlane = v.frontPlane
+coopStorageLength = v.coopStorageLength
+nestingBoxHeight = v.nestingBoxHeight
+backEaveOverHang = v.backEaveOverHang
+coopWidthHalf = v.coopWidthHalf
+coopStartHeight = v.coopStartHeight
+coopRoofPitchR = v.coopRoofPitchR
+ridgeDepth = v.ridgeDepth
+studThicknessAtAngle = v.studThicknessAtAngle
+studTallSideThicknessAtAngle = v.studTallSideThicknessAtAngle
+frontEaveOverHang = v.frontEaveOverHang
+sideEaveOverHang = v.sideEaveOverHang
+bottOfSideEaveHeight = v.bottOfSideEaveHeight
+coopWidth = v.coopWidth
+leftRafterY = v.leftRafterY
+rafterLength = v.rafterLength
+rightRafterY = v.rightRafterY
+leftRafterAngle = v.leftRafterAngle
+rightRafterAngle = v.rightRafterAngle
+rafterCommonHorzLength = v.rafterCommonHorzLength
+rafterRatioForAngle = v.rafterRatioForAngle
+interStudDistance = v.interStudDistance
+coopRoofPitch = v.coopRoofPitch
+backPlane = v.backPlane
+angleFromCoopRoofToRunRoof = v.angleFromCoopRoofToRunRoof
+horizontalLengthAlongRunFromvalleyToTip = v.horizontalLengthAlongRunFromvalleyToTip
+
+fudgeOffsetForFlashing = 70
+xComponetCompensationForFudge = fudgeOffsetForFlashing / tan(coopRoofPitchR)
+
+angang = coopRoofPitch + 270
+coopRoofPlane1 = {
+  plane = {
+    origin = [
+      -runSideEaveOverHang,
+      coopWidth + sideEaveOverHang - xComponetCompensationForFudge,
+      rafterCommonZ + studTallSideThicknessAtAngle + fudgeOffsetForFlashing
+    ],
+    xAxis = [1, 0, 0],
+    yAxis = [
+      0,
+      sin(toRadians(angang)),
+      cos(toRadians(angang))
+    ],
+    zAxis = [
+      0,
+      cos(toRadians(angang)),
+      sin(toRadians(angang))
+    ]
+  }
+}
+
+fn runValleyFlashingBattenForCoop(plane, flip) {
+  multiplier = if flip {
+    1
+  } else {
+    -1
+  }
+  angleFromCoopRoofToRunRoof2 = if flip {
+    -angleFromCoopRoofToRunRoof
+  } else {
+    angleFromCoopRoofToRunRoof
+  }
+  xStart = if flip {
+    coopLength + runSideEaveOverHang - studDepth
+  } else {
+    0
+  }
+
+  runRafterLength = (coopLength / 2 + runSideEaveOverHang - studWidth) / cos(runRoofPitchR)
+  valleyLength = sqrt(pow(horizontalLengthAlongRunFromvalleyToTip, 2) + pow(runRafterLength, 2))
+
+  sketch001 = startSketchOn(plane)
+    |> startProfileAt([xStart, 0], %)
+    |> angledLine([
+         -270 - angleFromCoopRoofToRunRoof2,
+         valleyLength
+       ], %, $seg01)
+    |> angledLineOfXLength({ angle = 0, length = studDepth }, %)
+    |> angledLine([segAng(seg01) + 180, segLen(seg01)], %)
+    |> lineTo([profileStartX(%), profileStartY(%)], %)
+    |> close(%)
+    |> extrude(-studWidth, %)
+  lengthOfAngleForCut = tan(toDegrees(angleFromCoopRoofToRunRoof2)) * studDepth
+  widthOfFlashing = 150
+  lengthOfAngleForFlashing = tan(toDegrees(angleFromCoopRoofToRunRoof2)) * widthOfFlashing
+  return 
+    {
+  // stud = extrude002,
+  // safeCutLength = safeCutLength,
+  lengthBeforeAngles = valleyLength - lengthOfAngleForCut,
+  name = "valleyRunStud",
+  studType = [v.studWidth, "by", v.studDepth],
+  angleRelevantWidth = v.studWidth,
+  endCut1 = v.angleFromCoopRoofToRunRoof,
+  endCut2 = v.angleFromCoopRoofToRunRoof
+}
+  
+}
+
+fn rafterFn(index) {
+  position = interStudDistance * index
+  positionForRafterOnFrame = coopLength / 2 - (studWidth / 2) - interStudDistance
+  finalPosition = if position > positionForRafterOnFrame {
+    positionForRafterOnFrame
+  } else {
+    position
+  }
+  frontPosition = -studDepth + studWidth / 2 + coopLength / 2 + interStudDistance + finalPosition
+  backPosition = -studDepth + studWidth / 2 - finalPosition + coopLength / 2 - interStudDistance
+  return [
+    pitchedStud2("raftersLeftFront", backPlane, [
+  frontPosition,
+  leftRafterY,
+  rafterCommonZ
+], studDepth, studWidth, (coopWidthHalf + sideEaveOverHang - (ridgeWidth / 2)) / cos(toRadians(coopRoofPitch)), leftRafterAngle),
+    pitchedStud2("raftersLeftBack", backPlane, [
+  backPosition,
+  leftRafterY,
+  rafterCommonZ
+], studDepth, studWidth, (coopWidthHalf + sideEaveOverHang - (ridgeWidth / 2)) / cos(toRadians(coopRoofPitch)), leftRafterAngle),
+    pitchedStud2("raftersRightFront", backPlane, [
+  frontPosition,
+  rightRafterY,
+  rafterCommonZ + studTallSideThicknessAtAngle
+], studDepth, studWidth, (coopWidthHalf + sideEaveOverHang - (ridgeWidth / 2)) / cos(toRadians(coopRoofPitch)), rightRafterAngle),
+    pitchedStud2("raftersRightBack", backPlane, [
+  backPosition,
+  rightRafterY,
+  rafterCommonZ + studTallSideThicknessAtAngle
+], studDepth, studWidth, (coopWidthHalf + sideEaveOverHang - (ridgeWidth / 2)) / cos(toRadians(coopRoofPitch)), rightRafterAngle)
+  ]
+}
+
+export fn coopRoof(plane) {
+  outsideStuds = [
+//     studWithoutAngles(plane, [
+//   -backEaveOverHang,
+//   coopWidthHalf - (ridgeWidth / 2),
+//   coopStartHeight + tan(coopRoofPitchR) * coopWidthHalf - ridgeDepth + studThicknessAtAngle - (tan(coopRoofPitchR) * ridgeWidth / 2) + studTallSideThicknessAtAngle
+// ], [
+//   ridgeWidth,
+//   ridgeDepth,
+//   coopLength + backEaveOverHang + frontEaveOverHang - (studWidth * 2)
+// ], 'coopRidge'),
+//     studWithoutAngles(plane, [
+//   -backEaveOverHang - studWidth,
+//   -sideEaveOverHang - studWidth,
+//   bottOfSideEaveHeight
+// ], [
+//   studWidth,
+//   studDepth,
+//   coopLength + backEaveOverHang + frontEaveOverHang
+// ], 'coopGutterLineNestBoxSide'),
+    studWithoutAngles(plane, [
+  -backEaveOverHang - studWidth,
+  sideEaveOverHang + coopWidth,
+  bottOfSideEaveHeight
+], [
+  studWidth,
+  studDepth,
+  coopLength + backEaveOverHang + frontEaveOverHang
+], 'coopGutterLineRunSide'),
+    pitchedStud2("coopCenterRafterL", plane, [
+  -studDepth + studWidth + coopLength / 2 - (studWidth / 2),
+  leftRafterY,
+  rafterCommonZ
+], studDepth, studWidth, rafterLength, leftRafterAngle),
+    pitchedStud2("coopCenterRafterR", plane, [
+  -studDepth + studWidth + coopLength / 2 - (studWidth / 2),
+  rightRafterY,
+  rafterCommonZ + studTallSideThicknessAtAngle
+], studDepth, studWidth, rafterLength, rightRafterAngle),
+    pitchedStud2("coopBackEndRafterL", plane, [
+  -backEaveOverHang,
+  leftRafterY,
+  rafterCommonZ
+], studDepth, studWidth, (rafterCommonHorzLength + ridgeWidth / 2) / rafterRatioForAngle, leftRafterAngle),
+    pitchedStud2("coopBackEndRafterR", plane, [
+  -backEaveOverHang,
+  rightRafterY,
+  rafterCommonZ + studTallSideThicknessAtAngle
+], studDepth, studWidth, (rafterCommonHorzLength + ridgeWidth / 2) / rafterRatioForAngle, rightRafterAngle),
+    pitchedStud2("coopFrontEndRafterL", plane, [
+  coopLength + frontEaveOverHang - studWidth,
+  leftRafterY,
+  rafterCommonZ
+], studDepth, studWidth, (rafterCommonHorzLength + ridgeWidth / 2) / rafterRatioForAngle, leftRafterAngle),
+    pitchedStud2("coopFrontEndRafterR", plane, [
+  coopLength + frontEaveOverHang - studWidth,
+  rightRafterY,
+  rafterCommonZ + studTallSideThicknessAtAngle
+], studDepth, studWidth, (rafterCommonHorzLength + ridgeWidth / 2) / rafterRatioForAngle, rightRafterAngle)
+  ]
+  rafterCount = ceil((coopLength / 2 - interStudDistance - (studWidth * 2)) / interStudDistance)
+  rafters = flatten(  map([0..rafterCount], rafterFn))
+  return flatten([
+    rafters,
+    outsideStuds,
+    [runValleyFlashingBattenForCoop(coopRoofPlane1, false),
+    runValleyFlashingBattenForCoop(coopRoofPlane1, true)],
+  ])
+}
+
+// example, uncomment to check, but should be left comment
+// otherwise causes problem importing elsewhere
+// aGroupOfStudForCreatingCutList = coopRoof(v.backPlane)
+

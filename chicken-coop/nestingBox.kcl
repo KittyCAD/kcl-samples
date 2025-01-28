@@ -1,0 +1,82 @@
+import variables from "vars.kcl"
+import pitchedStud, pitchedStud2, flatten, verticalStudGeo, studWithoutAngles, concat from "studUtils.kcl"
+
+v = variables()
+
+runRafterCount = v.runRafterCount
+interRafterDistance = v.interRafterDistance
+runEndPlane = v.runEndPlane
+coopLength = v.coopLength
+runDoorWidth = v.runDoorWidth
+studWidth = v.studWidth
+studDepth = v.studDepth
+runRoofPitchR = v.runRoofPitchR
+runRoofPitch = v.runRoofPitch
+heightOfRunEndWall = v.heightOfRunEndWall
+studThicknessAtRunAngle = v.studThicknessAtRunAngle
+runPitchedStudLen = v.runPitchedStudLen
+runDoorHeight = v.runDoorHeight
+runHorzBraceHeight = v.runHorzBraceHeight
+studTallSideThicknessAtRunAngle = v.studTallSideThicknessAtRunAngle
+runSideEaveOverHang = v.runSideEaveOverHang
+rafterCommonZ = v.rafterCommonZ
+runRafterCommonHorizontalDistance = v.runRafterCommonHorizontalDistance
+ridgeWidth = v.ridgeWidth
+runRafterRatio = v.runRafterRatio
+frontRoofAngle = v.frontRoofAngle
+xCoordForRunHorzSupportFront = v.xCoordForRunHorzSupportFront
+xCoordForRunHorzSupportBack = v.xCoordForRunHorzSupportBack
+heightToNotchIntoRafters = v.heightToNotchIntoRafters
+nestingBoxDepth = v.nestingBoxDepth
+nestingRoofPitch = v.nestingRoofPitch
+nestingRoofPitchR = v.nestingRoofPitchR
+frontPlane = v.frontPlane
+coopStorageLength = v.coopStorageLength
+nestingBoxHeight = v.nestingBoxHeight
+
+export fn nestingBox() {
+  nestingPitchLength = nestingBoxDepth / cos(nestingRoofPitchR)
+  nestingVerticalComponent = nestingBoxDepth * tan(nestingRoofPitchR)
+
+  nestingBits = [
+    studWithoutAngles(frontPlane, [
+  -studDepth - (studWidth * 2),
+  0,
+  studDepth
+], [
+  -nestingBoxDepth + studDepth,
+  studDepth,
+  studWidth
+], 'nestingFrame1Front'),
+    studWithoutAngles(frontPlane, [
+  -coopLength + coopStorageLength + studDepth + studWidth,
+  0,
+  studDepth
+], [
+  -nestingBoxDepth + studDepth,
+  studDepth,
+  studWidth
+], 'nestingFrame1FrontBack'),
+    pitchedStud2("nestingFrame2Front", frontPlane, [
+  -studDepth - studWidth,
+  -nestingBoxDepth,
+  -nestingVerticalComponent + nestingBoxHeight
+], studDepth, studWidth, nestingPitchLength, nestingRoofPitch),
+    pitchedStud2("nestingFrame2Back", frontPlane, [
+  -coopLength + coopStorageLength + studDepth + studWidth * 2,
+  -nestingBoxDepth,
+  -nestingVerticalComponent + nestingBoxHeight
+], studDepth, studWidth, nestingPitchLength, nestingRoofPitch),
+    verticalStudGeo(frontPlane, [-studDepth - studWidth, 0, 0], -nestingBoxDepth, studDepth, studWidth, false, 'nestingFrame3Front', nestingRoofPitch, nestingBoxHeight),
+    verticalStudGeo(frontPlane, [
+  -coopLength + coopStorageLength + studDepth + studWidth * 2,
+  0,
+  0
+], -nestingBoxDepth, studDepth, studWidth, false, 'nestingFrame3Back', nestingRoofPitch, nestingBoxHeight)
+  ]
+  return nestingBits
+}
+
+// example, uncomment to check, but should be left comment
+// otherwise causes problem importing elsewhere
+// aGroupOfStudForCreatingCutList = nestingBox()
