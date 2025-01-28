@@ -1,10 +1,10 @@
 import coopFront from "coopFront.kcl"
 import coopRoof from "coopRoof.kcl"
-// import coopBack from "coopBack.kcl"
+import coopBack from "coopBack.kcl"
 import coopOutsideWall from "coopOutsideWall.kcl"
-// import coopRunWall from "coopRunWall.kcl"
-// import runEnd from "runEnd.kcl"
-// import runWallsAndRoof from "runWallsAndRoof.kcl"
+import coopRunWall from "coopRunWall.kcl"
+import runEnd from "runEnd.kcl"
+import runWallsAndRoof from "runWallsAndRoof.kcl"
 import nestingBox from "nestingBox.kcl"
 import foundation from "foundation.kcl"
 
@@ -53,11 +53,11 @@ angleFromCoopRoofToRunRoof = v.angleFromCoopRoofToRunRoof
 
 coopFront(v.frontPlane)
 coopRoof(v.backPlane)
-// coopBack(v.backPlane)
+coopBack(v.backPlane)
 coopOutsideWall(v.outsideWallPlane)
 nestingBox()
-// coopRunWall(v.runWallPlane)
-// runEnd()
-// runWallsAndRoof(v.runWallPlane)
+coopRunWall(v.runWallPlane)
+runEnd()
+runWallsAndRoof(v.runWallPlane)
 foundation()
 

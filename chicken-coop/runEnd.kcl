@@ -142,4 +142,4 @@ export fn runEnd() {
 
 // example, uncomment to check, but should be left comment
 // otherwise causes problem importing elsewhere
-aGroupOfStudForCreatingCutList = runEnd()
+// aGroupOfStudForCreatingCutList = runEnd()

@@ -26,4 +26,4 @@ export fn coopBack(plane) {
 
 // example, uncomment to check, but should be left comment
 // otherwise causes problem importing elsewhere
-aGroupOfStudForCreatingCutList = coopBack(v.backPlane)
+// aGroupOfStudForCreatingCutList = coopBack(v.backPlane)

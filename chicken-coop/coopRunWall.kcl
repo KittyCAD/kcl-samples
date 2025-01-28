@@ -205,4 +205,4 @@ export fn coopRunWall(plane) {
 
 // example, uncomment to check, but should be left comment
 // otherwise causes problem importing elsewhere
-aGroupOfStudForCreatingCutList = coopRunWall(v.runWallPlane)
+// aGroupOfStudForCreatingCutList = coopRunWall(v.runWallPlane)
