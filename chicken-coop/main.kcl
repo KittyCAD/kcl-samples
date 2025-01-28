@@ -1,135 +1,63 @@
-fn planeAboutZ(ang, origin) {
-  return {
-    plane = {
-      origin = origin,
-      yAxis = [
-        sin(toRadians(ang)),
-        cos(toRadians(ang)),
-        0.0
-      ],
-      xAxis = [0.0, 0.0, 1.0],
-      zAxis = [1.0, 0.0, 0.0]
-    }
-  }
-}
-// plane on the xz that rotates about the zAxis
-fn xy(origin, ang) {
-  angRads = toRadians(ang)
-  cosAng = cos(angRads)
-  sinAng = sin(angRads)
-  return {
-    plane = {
-      origin = [0, 0, 0],
-      xAxis = [cosAng, sinAng, 0],
-      yAxis = [-sinAng, cosAng, 0],
-      zAxis = [0, 0, 1]
-    }
-  }
-}
+import coopFront from "coopFront.kcl"
+import coopRoof from "coopRoof.kcl"
+// import coopBack from "coopBack.kcl"
+import coopOutsideWall from "coopOutsideWall.kcl"
+// import coopRunWall from "coopRunWall.kcl"
+// import runEnd from "runEnd.kcl"
+// import runWallsAndRoof from "runWallsAndRoof.kcl"
+import nestingBox from "nestingBox.kcl"
+import foundation from "foundation.kcl"
 
-// plane on the xz that rotates about the yAxis
-fn xz(origin, ang) {
-  angRads = toRadians(ang)
-  cosAng = cos(angRads)
-  sinAng = sin(angRads)
-  return {
-    plane = {
-      origin = origin,
-      xAxis = [cosAng, 0, -sinAng],
-      yAxis = [sinAng, 0, cosAng],
-      zAxis = [0, 1, 0]
-    }
-  }
-}
+import variables from "vars.kcl"
+import pitchedStud, flatten, verticalStudGeo, studWithoutAngles from "studUtils.kcl"
 
-// plane on the YZ that rotates about the xAxis
-fn yz(origin, ang) {
-  angRads = toRadians(ang)
-  cosAng = cos(angRads)
-  sinAng = sin(angRads)
-  return {
-    plane = {
-      origin = origin,
-      zAxis = [1, 0, 0],
-      xAxis = [0, cosAng, sinAng],
-      yAxis = [0, -sinAng, cosAng]
-    }
-  }
-}
+v = variables()
+runRafterCount = v.runRafterCount
+interRafterDistance = v.interRafterDistance
+runEndPlane = v.runEndPlane
+coopLength = v.coopLength
+runDoorWidth = v.runDoorWidth
+studWidth = v.studWidth
+studDepth = v.studDepth
+runRoofPitchR = v.runRoofPitchR
+runRoofPitch = v.runRoofPitch
+heightOfRunEndWall = v.heightOfRunEndWall
+studThicknessAtRunAngle = v.studThicknessAtRunAngle
+runPitchedStudLen = v.runPitchedStudLen
+runDoorHeight = v.runDoorHeight
+runHorzBraceHeight = v.runHorzBraceHeight
+studTallSideThicknessAtRunAngle = v.studTallSideThicknessAtRunAngle
+runSideEaveOverHang = v.runSideEaveOverHang
+rafterCommonZ = v.rafterCommonZ
+runRafterCommonHorizontalDistance = v.runRafterCommonHorizontalDistance
+ridgeWidth = v.ridgeWidth
+runRafterRatio = v.runRafterRatio
+frontRoofAngle = v.frontRoofAngle
+xCoordForRunHorzSupportFront = v.xCoordForRunHorzSupportFront
+xCoordForRunHorzSupportBack = v.xCoordForRunHorzSupportBack
+heightToNotchIntoRafters = v.heightToNotchIntoRafters
+nestingBoxDepth = v.nestingBoxDepth
+nestingRoofPitch = v.nestingRoofPitch
+nestingRoofPitchR = v.nestingRoofPitchR
+frontPlane = v.frontPlane
+coopStorageLength = v.coopStorageLength
+nestingBoxHeight = v.nestingBoxHeight
+sideEaveOverHang = v.sideEaveOverHang
+studTallSideThicknessAtAngle = v.studTallSideThicknessAtAngle
+angleFromRunRoofToCoopRoof = v.angleFromRunRoofToCoopRoof
+horizontalLengthAlongRunFromvalleyToTip = v.horizontalLengthAlongRunFromvalleyToTip
+coopWidth = v.coopWidth
+coopRoofPitchR = v.coopRoofPitchR
+coopRoofPitch = v.coopRoofPitch
+angleFromCoopRoofToRunRoof = v.angleFromCoopRoofToRunRoof
 
-fn member(origin, ang1, ang2, length, width, depth, studAng) {
-  memberAng1 = 90 - ang1
-  memberAng2 = ang2
-  memberHeight = depth
-  memberHalfHeight = memberHeight / 2
-  memberLength = length
-  myAng = 45
-  sketch001 = startSketchOn(xz(origin, studAng))
-    |> startProfileAt([0, 0], %)
-    |> angledLineToY([memberAng1, memberHalfHeight], %, $seg02)
-    |> xLine(memberLength, %)
-    |> angledLineToY([-memberAng2, ZERO], %, $seg01)
-    |> angledLine([segAng(seg01), segLen(seg01)], %)
-    |> angledLineThatIntersects({
-         angle = HALF_TURN,
-         offset = -0,
-         intersectTag = seg02
-       }, %)
-    |> lineTo([profileStartX(%), profileStartY(%)], %)
-    |> close(%)
-  extrude001 = extrude(width, sketch001)
-  return extrude001
-}
+coopFront(v.frontPlane)
+coopRoof(v.backPlane)
+// coopBack(v.backPlane)
+coopOutsideWall(v.outsideWallPlane)
+nestingBox()
+// coopRunWall(v.runWallPlane)
+// runEnd()
+// runWallsAndRoof(v.runWallPlane)
+foundation()
 
-commomMemberWidth = 35
-commomMemberDepth = 90
-roof1Pitch = 20
-trussWidth = 6200
-trussWidthHalf = trussWidth / 2
-studWidth = 600
-spacteToFillWithStuds = trussWidthHalf - studWidth
-studsCount = ceil(spacteToFillWithStuds / studWidth)
-
-roofStartHeight = 2000
-
-fn fillerVertialStud(index) {
-  return if (index * studWidth + commomMemberDepth*2) >= trussWidthHalf {
-    member([
-  -commomMemberDepth*1.5 + trussWidthHalf,
-  0,
-  0
-], 0, 90 - roof1Pitch, roofStartHeight - (commomMemberDepth / cos(toRadians(roof1Pitch))) + tan(toRadians(roof1Pitch)) * (trussWidthHalf - commomMemberDepth*2), commomMemberWidth, commomMemberDepth, -90)
-  } else {
-    member([
-      commomMemberDepth / 2 + studWidth * index,
-      0,
-      0
-    ], 0, 90 - roof1Pitch, roofStartHeight - (commomMemberDepth / cos(toRadians(roof1Pitch))) + tan(toRadians(roof1Pitch)) * studWidth * index, commomMemberWidth, commomMemberDepth, -90)
-  }
-}
-
-// filler1 = fillerVertialStud(1)
-// filler2 = fillerVertialStud(2)
-// filler3 = fillerVertialStud(3)
-// filler4 = fillerVertialStud(4)
-circles = map([1..studsCount], fillerVertialStud)
-
-roofPitchMember = member([
-  0,
-  0,
-  -commomMemberDepth / 2 / cos(toRadians(roof1Pitch)) + roofStartHeight
-], roof1Pitch, 90 + roof1Pitch, trussWidthHalf / cos(toRadians(roof1Pitch)), commomMemberWidth, commomMemberDepth, -roof1Pitch)
-
-startVerticalMember = member([commomMemberDepth / 2, 0, 0], 0, 90 - roof1Pitch, roofStartHeight - (commomMemberDepth / cos(toRadians(roof1Pitch))), commomMemberWidth, commomMemberDepth, -90)
-
-endVerticalMember = member([
-  -commomMemberDepth / 2 + trussWidthHalf,
-  0,
-  0
-], 0, 90 - roof1Pitch, roofStartHeight - (commomMemberDepth / cos(toRadians(roof1Pitch))) + tan(toRadians(roof1Pitch)) * (trussWidthHalf - commomMemberDepth), commomMemberWidth, commomMemberDepth, -90)
-
-sketch002 = startSketchOn('XZ')
-  |> startProfileAt([trussWidthHalf, 0], %)
-  |> xLineTo(ZERO, %)
-  |> yLine(roofStartHeight, %)
-  |> angledLine([roof1Pitch, 2171.89], %)
