@@ -18,11 +18,6 @@ body
 
 // Import the case
 case
-  |> appearance({
-     color = '#D0FF01',
-     metalness = 0,
-     roughness = 50
-   }, %)
 
 // Import the antenna
 antenna
@@ -47,18 +42,9 @@ button([
 
 // Import the talk button
 talkButton
-  |> appearance({
-     color = '#D0FF01',
-     metalness = 90,
-     roughness = 90
-   }, %)
-
+  
 // Import the frequency knob
 knob
-  |> appearance({
-     color = '#D0FF01',
-     metalness = 90,
-     roughness = 50
-   }, %)
+  
 
 

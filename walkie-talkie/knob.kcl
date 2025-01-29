@@ -35,3 +35,8 @@ knobSketch = startSketchOn(knobPlane)
   |> revolve({
     axis = "Y",
   }, %)
+  |> appearance({
+     color = '#D0FF01',
+     metalness = 90,
+     roughness = 50
+   }, %)

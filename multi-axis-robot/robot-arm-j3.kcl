@@ -166,7 +166,7 @@ sketch024 = startSketchOn(extrude022, 'START')
   |> close(%)
 extrude024 = extrude(-1.5, sketch024)
   |> appearance({
-    color = "#4f7d54",
+    color = "#6572b3",
     metalness = 90,
     roughness = 90
   }, %)

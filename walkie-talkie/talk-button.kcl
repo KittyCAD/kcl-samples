@@ -42,3 +42,8 @@ talkButtonExtrude = extrude(talkButtonHeight, talkButtonSketch)
          getNextAdjacentEdge(tag4)
        ]
      }, %)
+  |> appearance({
+     color = '#D0FF01',
+     metalness = 90,
+     roughness = 90
+   }, %)
