@@ -5,6 +5,9 @@
 import lugCount, lugSpacing, offset, backSpacing, wheelWidth, wheelDiameter, spokeCount, 
 spokeGap, spokeAngle, spokeThickness from 'globals.kcl'
 
+// Set units
+@settings(defaultLengthUnit = in)
+
 // Create the wheel center
 lugBase = startSketchOn('XZ')
   |> circle({

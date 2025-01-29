@@ -1,6 +1,8 @@
 // I-beam
 // A structural metal beam with an I shaped cross section. Often used in construction
 
+// Set Units
+@settings(defaultLengthUnit = in)
 
 //Define Beam Dimensions
 beamLength = 24

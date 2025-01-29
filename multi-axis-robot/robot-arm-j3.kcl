@@ -2,6 +2,9 @@
 
 import plane002, axisJ2, axisJ3C, axisJ4, axisJ2ArmLength, axisJ3CArmLength, axisJ3CArmWidth, axisJ3CArmThickness from 'globals.kcl'
 
+// Set Units
+@settings(defaultLengthUnit = in)
+
 // Create Body of J3 Robot Arm
 sketch017 = startSketchOn(plane002)
   |> startProfileAt([

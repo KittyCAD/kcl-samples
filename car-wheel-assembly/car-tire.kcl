@@ -4,6 +4,9 @@
 // Import Constants
 import tireInnerDiameter, tireOuterDiameter, tireDepth, bendRadius, tireTreadWidth, tireTreadDepth, tireTreadOffset from 'globals.kcl'
 
+// Set units
+@settings(defaultLengthUnit = in)
+
 // Create the sketch of the tire
 tireSketch = startSketchOn("XY")
   |> startProfileAt([tireInnerDiameter / 2, tireDepth / 2], %)

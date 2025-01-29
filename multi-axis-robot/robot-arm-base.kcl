@@ -4,6 +4,10 @@
 import basePlateRadius, basePlateThickness,
 baseChamfer, baseHeight from 'globals.kcl'
 
+// Set Units
+@settings(defaultLengthUnit = in)
+
+// Base Plate
 sketch001 = startSketchOn('XY')
   |> startProfileAt([-basePlateRadius, -basePlateRadius], %)
   |> angledLine([0, 2 * basePlateRadius], %, $rectangleSegmentA001)

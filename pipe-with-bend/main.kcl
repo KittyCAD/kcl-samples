@@ -1,6 +1,8 @@
 // Pipe with bend
 // A tubular section or hollow cylinder, usually but not necessarily of circular cross-section, used mainly to convey substances that can flow.
 
+// Set units
+@settings(defaultLengthUnit = in)
 
 // Define constants in inches (in)
 innerDiameter = 10

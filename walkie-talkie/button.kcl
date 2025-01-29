@@ -3,6 +3,9 @@
 // Import constants
 import screenHeight, buttonWidth, tolerance, buttonHeight, buttonThickness from 'globals.kcl'
 
+// Set units
+@settings(defaultLengthUnit = in)
+
 // Create a function for the button
 export fn button(origin, rotation, plane) {
   buttonSketch = startSketchOn(plane)

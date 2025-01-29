@@ -4,6 +4,9 @@
 // Import Constants
 import lugDiameter, lugHeadLength, lugThreadDiameter, lugLength, lugThreadDepth, lugSpacing from 'globals.kcl'
 
+// Set units
+@settings(defaultLengthUnit = in)
+
 export fn lugNut () {
   customPlane = {
     plane = {
@@ -36,4 +39,5 @@ export fn lugNut () {
   }
 
   return lug(customPlane, lugLength, lugDiameter)
+
 }

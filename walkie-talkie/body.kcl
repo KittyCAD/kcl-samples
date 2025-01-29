@@ -3,7 +3,9 @@
 // Import constants
 import height, width, thickness, chamferLength, offset, screenWidth, screenHeight, screenYPosition, screenDepth, speakerBoxWidth, speakerBoxHeight from "globals.kcl"
 
-// Create a function for the body
+// Set units
+@settings(defaultLengthUnit = in)
+
 bodySketch = startSketchOn('XZ')
   |> startProfileAt([-width / 2, height / 2], %)
   |> xLine(width, %, $chamfer1)
@@ -24,9 +26,7 @@ bodyExtrude = extrude(thickness, bodySketch)
   //      color = '#707980',
   //      metalness = 90,
   //      roughness = 90
-  //    }, %)
-
-  
+  //    }, %)  
 
 // Define the offset for the indentation
 sketch002 = startSketchOn(bodyExtrude, 'END')

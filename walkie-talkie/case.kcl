@@ -4,6 +4,9 @@
 import width, height, chamferLength, offset, screenWidth, screenHeight, screenYPosition, screenDepth, speakerBoxWidth, speakerBoxHeight, squareHoleSideLength, caseTolerance from "globals.kcl"
 import zLogo, oLogo, oLogo2 from "zoo-logo.kcl"
 
+// Set units
+@settings(defaultLengthUnit = in)
+
 plane = offsetPlane("XZ", 1)
 
 fn screenHole(sketchStart) {

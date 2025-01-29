@@ -1,6 +1,8 @@
 // 80/20 Rail
 // An 80/20 extruded aluminum linear rail. T-slot profile adjustable by profile height, rail length, and origin position
 
+// Set units
+@settings(defaultLengthUnit = in)
 
 // Define function
 fn rail8020(originStart, railHeight, railLength) {

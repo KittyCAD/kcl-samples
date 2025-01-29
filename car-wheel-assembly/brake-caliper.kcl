@@ -5,6 +5,9 @@
 import caliperTolerance, caliperPadLength,
 caliperThickness, caliperOuterEdgeRadius, caliperInnerEdgeRadius, rotorDiameter, rotorTotalThickness from 'globals.kcl'
 
+// Set units
+@settings(defaultLengthUnit = in)
+
 // Create the plane for the brake caliper. This is so it can match up with the rotor model.
 brakeCaliperPlane = {
   plane = {

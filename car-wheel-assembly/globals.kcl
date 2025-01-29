@@ -1,5 +1,8 @@
 // Car wheel assembly global constants
 
+// Set units
+@settings(defaultLengthUnit = in)
+
 // Car Wheel
 export lugCount = 5
 export lugSpacing = 114.3 * mm()

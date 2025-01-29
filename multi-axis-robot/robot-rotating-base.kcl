@@ -1,7 +1,10 @@
 // Robot Rotating Base
 
 import axisJ1, baseHeight, plane001, plane002 from 'globals.kcl'
-  
+
+// Set Units
+@settings(defaultLengthUnit = in)
+
 // Create Rotating Base
 sketch005 = startSketchOn(plane001)
   |> circle({ center = [0, 0], radius = 3.9 }, %, $referenceEdge1)
