@@ -109,10 +109,6 @@ def process_single_kcl(kcl_path: Path) -> dict:
     # determine units based on project.toml
     units = get_units(kcl_path)
 
-    # read the file to get the code as a string
-    with open(kcl_path, "r") as inp:
-        code = str(inp.read())
-
     # determine the root dir, which is where this python script
     root_dir = Path(__file__).parent
     # step and screenshots for the part are based on the root dir
