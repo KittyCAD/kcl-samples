@@ -1,9 +1,9 @@
 // J3 Robot Arm
 
-import plane002, axisJ2, axisJ3C, axisJ4, axisJ2ArmLength, axisJ3CArmLength, axisJ3CArmWidth, axisJ3CArmThickness from 'globals.kcl'
-
 // Set Units
 @settings(defaultLengthUnit = in)
+
+import plane002, axisJ2, axisJ3C, axisJ4, axisJ2ArmLength, axisJ3CArmLength, axisJ3CArmWidth, axisJ3CArmThickness from 'globals.kcl'
 
 // Create Body of J3 Robot Arm
 sketch017 = startSketchOn(plane002)
@@ -164,7 +164,8 @@ sketch024 = startSketchOn(extrude022, 'START')
      }, %)
   |> lineTo([profileStartX(%), profileStartY(%)], %)
   |> close(%)
-extrude024 = extrude(-1.5, sketch024)
+
+export j3RobotArm = extrude(-1.5, sketch024)
   |> appearance({
     color = "#6572b3",
     metalness = 90,

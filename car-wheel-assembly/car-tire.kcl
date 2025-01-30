@@ -1,11 +1,11 @@
 // Tire
 // A tire is a critical component of a vehicle that provides the necessary traction and grip between the car and the road. It supports the vehicle's weight and absorbs shocks from road irregularities.
 
-// Import Constants
-import tireInnerDiameter, tireOuterDiameter, tireDepth, bendRadius, tireTreadWidth, tireTreadDepth, tireTreadOffset from 'globals.kcl'
-
 // Set units
 @settings(defaultLengthUnit = in)
+
+// Import Constants
+import tireInnerDiameter, tireOuterDiameter, tireDepth, bendRadius, tireTreadWidth, tireTreadDepth, tireTreadOffset from 'globals.kcl'
 
 // Create the sketch of the tire
 tireSketch = startSketchOn("XY")
@@ -38,7 +38,7 @@ tireSketch = startSketchOn("XY")
   |> close(%)
 
 // Revolve the sketch to create the tire
-tire = revolve({ axis = "Y" }, tireSketch)
+export carTire = revolve({ axis = "Y" }, tireSketch)
   |> appearance({
       color = "#0f0f0f",
       roughness = 80,

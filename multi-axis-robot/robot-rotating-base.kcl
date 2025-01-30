@@ -1,9 +1,9 @@
 // Robot Rotating Base
 
-import axisJ1, baseHeight, plane001, plane002 from 'globals.kcl'
-
 // Set Units
 @settings(defaultLengthUnit = in)
+
+import axisJ1, baseHeight, plane001, plane002 from 'globals.kcl'
 
 // Create Rotating Base
 sketch005 = startSketchOn(plane001)
@@ -88,4 +88,5 @@ extrude009 = extrude(0.15, sketch009)
 
 sketch010 = startSketchOn(plane002)
   |> circle({ center = [1.75, 8], radius = 0.3 }, %)
-extrude010 = extrude(-1, sketch010)
+
+export rotatingBase = extrude(-1, sketch010)

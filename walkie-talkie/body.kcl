@@ -1,10 +1,10 @@
 // Walkie talkie body
 
-// Import constants
-import height, width, thickness, chamferLength, offset, screenWidth, screenHeight, screenYPosition, screenDepth, speakerBoxWidth, speakerBoxHeight from "globals.kcl"
-
 // Set units
 @settings(defaultLengthUnit = in)
+
+// Import constants
+import height, width, thickness, chamferLength, offset, screenWidth, screenHeight, screenYPosition, screenDepth, speakerBoxWidth, speakerBoxHeight from "globals.kcl"
 
 bodySketch = startSketchOn('XZ')
   |> startProfileAt([-width / 2, height / 2], %)
@@ -89,4 +89,4 @@ sketch004 = startSketchOn(extrude002, 'start')
   |> xLine(-speakerBoxWidth, %)
   |> close(%)
   
-extrude004 = extrude(-.5, sketch004)
+export body = extrude(-.5, sketch004)

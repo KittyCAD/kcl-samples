@@ -4,17 +4,16 @@
 // Set units
 @settings(defaultLengthUnit = in)
 
-import 'car-rotor.kcl' as carRotor
-import 'car-tire.kcl' as carTire
 import 'car-wheel.kcl' as carWheel 
-import 'brake-caliper.kcl' as brakeCaliper 
+import 'car-rotor.kcl' as carRotor
+import brakeCaliper from "brake-caliper.kcl"
 import lugNut from 'lug-nut.kcl'
+import carTire from 'car-tire.kcl'
 import lugCount from 'globals.kcl'
 
 carRotor
-carTire
 carWheel
-lugNut()
+lugNut
   |> patternCircular3d({
      arcDegrees = 360,
      axis = [0, 1, 0],
@@ -22,4 +21,4 @@ lugNut()
      instances = lugCount,
      rotateDuplicates = false
    }, %)
-brakeCaliper
+  

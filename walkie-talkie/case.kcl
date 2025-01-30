@@ -1,11 +1,11 @@
 // Walkie talkie case
 
+// Set units
+@settings(defaultLengthUnit = in)
+
 // Import constants and Zoo logo
 import width, height, chamferLength, offset, screenWidth, screenHeight, screenYPosition, screenDepth, speakerBoxWidth, speakerBoxHeight, squareHoleSideLength, caseTolerance from "globals.kcl"
 import zLogo, oLogo, oLogo2 from "zoo-logo.kcl"
-
-// Set units
-@settings(defaultLengthUnit = in)
 
 plane = offsetPlane("XZ", 1)
 
@@ -78,7 +78,8 @@ sketch005 = startSketchOn(offsetPlane("XZ", 1))
   |> hole(oLogo2(plane, [-.075, -1.825], .20), %)
   |> hole(oLogo(plane, [.175, -1.825], .20), %)
   |> hole(oLogo2(plane, [.175, -1.825], .20), %)
-extrude005 = extrude(-0.0625, sketch005)
+
+export case = extrude(-0.0625, sketch005)
   |> appearance({
      color = '#D0FF01',
      metalness = 0,

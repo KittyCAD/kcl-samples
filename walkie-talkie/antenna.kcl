@@ -1,10 +1,11 @@
 // Antenna
 
+// Set units
+@settings(defaultLengthUnit = in)
+
 // import constants
 import height, width, antennaBaseWidth, antennaBaseHeight, antennaTopWidth, antennaTopHeight from 'globals.kcl'
 
-// Set units
-@settings(defaultLengthUnit = in)
 
 // Calculate the origin
 origin = [-width / 2 + .45, -0.10]
@@ -45,4 +46,4 @@ sketch002 = startSketchOn(loftPlane)
   |> close(%)
 
 // Create the antenna using a loft
-antennaLoft = loft([sketch001, sketch002])
+export antenna = loft([sketch001, sketch002])

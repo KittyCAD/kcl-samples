@@ -1,12 +1,13 @@
 // Car Wheel
 // A sports car wheel with a circular lug pattern and spokes.
 
+// Set units
+@settings(defaultLengthUnit = in)
+
 // Import Constants
 import lugCount, lugSpacing, offset, backSpacing, wheelWidth, wheelDiameter, spokeCount, 
 spokeGap, spokeAngle, spokeThickness from 'globals.kcl'
 
-// Set units
-@settings(defaultLengthUnit = in)
 
 // Create the wheel center
 lugBase = startSketchOn('XZ')
