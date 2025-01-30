@@ -1,6 +1,8 @@
 // Pipe
 // A tubular section or hollow cylinder, usually but not necessarily of circular cross-section, used mainly to convey substances that can flow.
 
+// Set Units
+@settings(defaultLengthUnit = in)
 
 // Define constants
 pipeTotalLength = 20

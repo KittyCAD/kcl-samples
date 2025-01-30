@@ -1,6 +1,8 @@
 // Hollow Dodecahedron
 // A regular dodecahedron or pentagonal dodecahedron is a dodecahedron composed of regular pentagonal faces, three meeting at each vertex. This example shows constructing the individual faces of the dodecahedron and extruding inwards.
 
+// Set units
+@settings(defaultLengthUnit = in)
 
 // Input parameters
 // circumscribed radius

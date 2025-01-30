@@ -1,5 +1,8 @@
 // Global constants for the multi-axis robot
 
+// Set Units
+@settings(defaultLengthUnit = in)
+
 // Axis Angles
 export axisJ4 = 25
 export axisJ3 = 60
