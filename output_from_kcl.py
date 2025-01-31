@@ -1,7 +1,6 @@
 import asyncio
 import os
 import re
-import tomllib
 from concurrent.futures import ProcessPoolExecutor
 from io import BytesIO
 from operator import itemgetter
@@ -9,27 +8,16 @@ from pathlib import Path
 
 import kcl
 import requests
-from kcl import UnitLength
 from PIL import Image
 
 RETRIES = 5
 
-# Map strings to kcl units
-UNIT_MAP = {
-    'in': kcl.UnitLength.In,
-    'mm': kcl.UnitLength.Mm,
-    'ft': kcl.UnitLength.Ft,
-    'm': kcl.UnitLength.M,
-    'cm': kcl.UnitLength.Cm,
-    'yd': kcl.UnitLength.Yd,
-}
 
-
-def export_step(kcl_path: Path, save_path: Path, unit_length: UnitLength = kcl.UnitLength.Mm) -> bool:
+def export_step(kcl_path: Path, save_path: Path) -> bool:
     # determine the current directory
     try:
         export_response = asyncio.run(
-            kcl.execute_and_export(str(kcl_path.parent), unit_length, kcl.FileExportFormat.Step)
+            kcl.execute_and_export(str(kcl_path.parent), kcl.UnitLength.Mm, kcl.FileExportFormat.Step)
         )
 
         stl_path = save_path.with_suffix(".step")
@@ -69,23 +57,10 @@ def find_files(
     )
 
 
-def get_units(kcl_path: Path) -> UnitLength:
-    settings_path = kcl_path.parent / "project.toml"
-    if not settings_path.exists():
-        return kcl.UnitLength.Mm
-
-    with open(settings_path, "rb") as f:
-        data = tomllib.load(f)
-    try:
-        return UNIT_MAP[data['settings']['modeling']['base_unit']]
-    except KeyError:
-        return kcl.UnitLength.Mm
-
-
-def snapshot(kcl_path: Path, save_path: Path, unit_length: UnitLength = kcl.UnitLength.Mm) -> bool:
+def snapshot(kcl_path: Path, save_path: Path) -> bool:
     try:
         snapshot_response = asyncio.run(
-            kcl.execute_and_snapshot(str(kcl_path.parent), unit_length, kcl.ImageFormat.Png)
+            kcl.execute_and_snapshot(str(kcl_path.parent), kcl.UnitLength.Mm, kcl.ImageFormat.Png)
         )
 
         image = Image.open(BytesIO(bytearray(snapshot_response)))
@@ -106,9 +81,6 @@ def process_single_kcl(kcl_path: Path) -> dict:
 
     print(f"Processing {part_name}")
 
-    # determine units based on project.toml
-    units = get_units(kcl_path)
-
     # determine the root dir, which is where this python script
     root_dir = Path(__file__).parent
     # step and screenshots for the part are based on the root dir
@@ -116,17 +88,17 @@ def process_single_kcl(kcl_path: Path) -> dict:
     screenshots_path = root_dir / "screenshots" / part_name
 
     # attempt step export
-    export_status = export_step(kcl_path=kcl_path, save_path=step_path, unit_length=units)
+    export_status = export_step(kcl_path=kcl_path, save_path=step_path)
     count = 1
     while not export_status and count < RETRIES:
-        export_status = export_step( kcl_path=kcl_path, save_path=step_path, unit_length=units)
+        export_status = export_step( kcl_path=kcl_path, save_path=step_path)
         count += 1
 
     # attempt screenshot
-    snapshot_status = snapshot(kcl_path=kcl_path, save_path=screenshots_path, unit_length=units)
+    snapshot_status = snapshot(kcl_path=kcl_path, save_path=screenshots_path)
     count = 1
     while not snapshot_status and count < RETRIES:
-        snapshot_status = snapshot(kcl_path=kcl_path, save_path=screenshots_path, unit_length=units)
+        snapshot_status = snapshot(kcl_path=kcl_path, save_path=screenshots_path)
         count += 1
 
     # find relative paths, used for building the README.md
