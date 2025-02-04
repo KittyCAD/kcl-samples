@@ -1,6 +1,8 @@
 // Sheet Metal Bracket
 // A component typically made from flat sheet metal through various manufacturing processes such as bending, punching, cutting, and forming. These brackets are used to support, attach, or mount other hardware components, often providing a structural or functional base for assembly.
 
+// Set Units
+@settings(defaultLengthUnit = in)
 
 // Define constants such as sheet metal thickness, bend radius, flange length, bolt diameter size, etc.
 thickness = 0.090

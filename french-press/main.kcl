@@ -1,7 +1,10 @@
 // French Press
 // A french press immersion coffee maker
 
+// Set units
+@settings(defaultLengthUnit = in)
 
+// Define constants
 carafeDiameter = 4.41
 carafeHeight = 7.32
 handleThickness = 0.65

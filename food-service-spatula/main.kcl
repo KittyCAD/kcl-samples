@@ -1,6 +1,8 @@
 // Food Service Spatula
 // Use these spatulas for mixing, flipping, and scraping.
 
+// Set units
+@settings(defaultLengthUnit = mm)
 
 // Define constants in millimeters (mm)
 flipperThickness = 3.5
