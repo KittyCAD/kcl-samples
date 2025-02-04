@@ -27,7 +27,7 @@ sketch017 = startSketchOn(plane002)
      }, %)
   |> line(endAbsolute = [profileStartX(%), profileStartY(%)], tag = $seg01)
   |> close()
-extrude017 = extrude(axisJ3CArmThickness, sketch017)
+extrude017 = extrude(sketch017, length = axisJ3CArmThickness)
 
 sketch018 = startSketchOn(extrude017, 'END')
   |> circle({
@@ -38,7 +38,7 @@ sketch018 = startSketchOn(extrude017, 'END')
        radius = 3.7 / 2
      }, %, $referenceEdge6)
 
-extrude018 = extrude(0.15, sketch018)
+extrude018 = extrude(sketch018, length = 0.15)
   |> fillet({
        radius = 0.1,
        tags = [getOppositeEdge(referenceEdge6)]
@@ -63,7 +63,7 @@ sketch019 = startSketchOn(extrude018, 'END')
        rotateDuplicates = true
      }, %)
 
-extrude019 = extrude(0.15, sketch019)
+extrude019 = extrude(sketch019, length = 0.15)
 
 // On the J3 Robot Arm Body, Create Mounting Clevis for Grabber Claw
 sketch020 = startSketchOn(extrude017, 'START')
@@ -74,7 +74,7 @@ sketch020 = startSketchOn(extrude017, 'START')
        ],
        radius = axisJ3CArmWidth / 2
      }, %)
-extrude020 = extrude(-0.5, sketch020)
+extrude020 = extrude(sketch020, length = -0.5)
 
 sketch021 = startSketchOn(extrude017, 'END')
   |> circle({
@@ -85,7 +85,7 @@ sketch021 = startSketchOn(extrude017, 'END')
        radius = axisJ3CArmWidth / 2.01
      }, %)
 
-extrude021 = extrude(-0.5, sketch021)
+extrude021 = extrude(sketch021, length = -0.5)
 
 // Define Grabber Claw Constants
 grabberLength = 7
@@ -93,7 +93,7 @@ grabberLength = 7
 sketch022 = startSketchOn(extrude021, 'START')
   |> circle({ center = [0, 0], radius = 0.10 }, %)
 
-extrude022 = extrude(-0.01, sketch022)
+extrude022 = extrude(sketch022, length = -0.01)
 
 // Build Upper Claw Finger
 sketch023 = startSketchOn(extrude022, 'START')
@@ -129,7 +129,7 @@ sketch023 = startSketchOn(extrude022, 'START')
   |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
   |> close()
 
-extrude023 = extrude(-1.5, sketch023)
+extrude023 = extrude(sketch023, length = -1.5)
 
 // Build Lower Claw Finger
 sketch024 = startSketchOn(extrude022, 'START')
@@ -165,7 +165,7 @@ sketch024 = startSketchOn(extrude022, 'START')
   |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
   |> close()
 
-export j3RobotArm = extrude(-1.5, sketch024)
+export j3RobotArm = extrude(sketch024, length = -1.5)
   |> appearance({
     color = "#6572b3",
     metalness = 90,

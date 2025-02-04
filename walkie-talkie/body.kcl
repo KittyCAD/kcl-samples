@@ -12,7 +12,7 @@ bodySketch = startSketchOn('XZ')
   |> yLine(-height, %, $chamfer2)
   |> xLine(-width, %, $chamfer3)
   |> close(tag = $chamfer4)
-bodyExtrude = extrude(thickness, bodySketch)
+bodyExtrude = extrude(bodySketch, length = thickness)
   |> chamfer({
        length = chamferLength,
        tags = [
@@ -35,29 +35,29 @@ sketch002 = startSketchOn(bodyExtrude, 'END')
        height / 2 - (chamferLength + offset / 2 * cos(toRadians(45)))
      ], %)
   |> angledLineToY({ angle = 45, to = height / 2 - offset }, %)
-  |> lineTo([
+  |> line(endAbsolute = [
        width / 2 - (chamferLength + offset / 2 * cos(toRadians(45))),
        height / 2 - offset
-     ], %)
+     ])
   |> angledLineToX({ angle = -45, to = width / 2 - offset }, %)
-  |> lineTo([
+  |> line(endAbsolute = [
        width / 2 - offset,
        -(height / 2 - (chamferLength + offset / 2 * cos(toRadians(45))))
-     ], %)
+     ])
   |> angledLineToY({
        angle = -135,
        to = -height / 2 + offset
      }, %)
-  |> lineTo([
+  |> line(endAbsolute = [
        -(width / 2 - (chamferLength + offset / 2 * cos(toRadians(45)))),
        -height / 2 + offset
-     ], %)
+     ])
   |> angledLineToX({
        angle = -225,
        to = -width / 2 + offset
      }, %)
   |> close()
-extrude002 = extrude(-0.0625, sketch002)
+extrude002 = extrude(sketch002, length = -0.0625)
   // |> appearance({
   //      color = '#707980',
   //      metalness = 90,
@@ -73,7 +73,7 @@ sketch003 = startSketchOn(extrude002, 'start')
   |> xLine(-segLen(seg01), %)
   |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
   |> close()
-extrude003 = extrude(screenDepth, sketch003)
+extrude003 = extrude(sketch003, length = screenDepth)
   // |> appearance({
   //      color = '#707980',
   //      metalness = 90,
@@ -89,4 +89,4 @@ sketch004 = startSketchOn(extrude002, 'start')
   |> xLine(-speakerBoxWidth, %)
   |> close()
   
-export body = extrude(-.5, sketch004)
+export body = extrude(sketch004, length = -.5)

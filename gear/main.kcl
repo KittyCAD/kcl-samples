@@ -53,13 +53,13 @@ toothAngle = 360 / nTeeth / 1.5
 // Plot the involute curve
 fn leftInvolute(i, sg) {
   j = 100 - i // iterate backwards
-  return lineTo([xs[j], ys[j]], sg)
+  return line(sg, endAbsolute = [xs[j], ys[j]])
 }
 
 fn rightInvolute(i, sg) {
   x = rs[i] * cos(toRadians(-toothAngle + toDegrees(atan(ys[i] / xs[i]))))
   y = -rs[i] * sin(toRadians(-toothAngle + toDegrees(atan(ys[i] / xs[i]))))
-  return lineTo([x, y], sg)
+  return line(sg, endAbsolute = [x, y])
 }
 
 // Draw gear teeth

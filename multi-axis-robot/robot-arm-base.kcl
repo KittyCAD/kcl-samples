@@ -22,7 +22,7 @@ sketch001 = startSketchOn('XY')
      ], %, $rectangleSegmentC001)
   |> line(endAbsolute = [profileStartX(%), profileStartY(%)], tag = $rectangleSegmentD001)
   |> close()
-extrude001 = extrude(basePlateThickness, sketch001)
+extrude001 = extrude(sketch001, length = basePlateThickness)
   |> chamfer({
        length = baseChamfer,
        tags = [
@@ -36,14 +36,14 @@ extrude001 = extrude(basePlateThickness, sketch001)
 // Base Motor for actuating first joint
 sketch002 = startSketchOn(extrude001, 'END')
   |> circle({ center = [0, 0], radius = 4 }, %, $referenceEdge)
-extrude002 = extrude(baseHeight - basePlateThickness - 1.5, sketch002)
+extrude002 = extrude(sketch002, length = baseHeight - basePlateThickness - 1.5)
   |> fillet({
        radius = 0.1,
        tags = [getOppositeEdge(referenceEdge)]
      }, %)
 sketch003 = startSketchOn(extrude002, 'END')
   |> circle({ center = [0, 0], radius = 0.5 }, %)
-extrude003 = extrude(1, sketch003)
+extrude003 = extrude(sketch003, length = 1)
 
 // Pattern M8 mounting bolts in base
 sketch4A = startSketchOn(extrude001, 'END')
@@ -61,7 +61,7 @@ sketch4A = startSketchOn(extrude001, 'END')
        rotateDuplicates = true
      }, %)
 
-extrude4A = extrude(-basePlateThickness, sketch4A)
+extrude4A = extrude(sketch4A, length = -basePlateThickness)
 
 sketch4B = startSketchOn(extrude001, 'END')
   |> circle({
@@ -78,7 +78,7 @@ sketch4B = startSketchOn(extrude001, 'END')
        rotateDuplicates = true
      }, %)
 
-export robotArmBase = extrude(-basePlateThickness, sketch4B)
+export robotArmBase = extrude(sketch4B, length = -basePlateThickness)
   |> appearance({
     color = "#754110",
     roughness = 90,

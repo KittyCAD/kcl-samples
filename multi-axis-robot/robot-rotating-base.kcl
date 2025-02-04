@@ -8,7 +8,7 @@ import axisJ1, baseHeight, plane001, plane002 from 'globals.kcl'
 // Create Rotating Base
 sketch005 = startSketchOn(plane001)
   |> circle({ center = [0, 0], radius = 3.9 }, %, $referenceEdge1)
-extrude005 = extrude(1.5 - 0.1, sketch005)
+extrude005 = extrude(sketch005, length = 1.5 - 0.1)
   |> fillet({
        radius = 0.1,
        tags = [getOppositeEdge(referenceEdge1)]
@@ -31,7 +31,7 @@ sketch006 = startSketchOn(plane002)
 |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
 |> close()
 
-extrude006 = extrude(1, sketch006)
+extrude006 = extrude(sketch006, length = 1)
 
 sketch007 = startSketchOn(extrude006, 'END')
   |> circle({
@@ -41,7 +41,7 @@ sketch007 = startSketchOn(extrude006, 'END')
        ],
        radius = 2.75
      }, %, $referenceEdge2)
-extrude007 = extrude(1.5, sketch007)
+extrude007 = extrude(sketch007, length = 1.5)
   |> fillet({
        radius = 0.1,
        tags = [getOppositeEdge(referenceEdge2)]
@@ -65,7 +65,7 @@ sketch008 = startSketchOn(extrude007, 'END')
        arcDegrees = 360,
        rotateDuplicates = true
      }, %)
-extrude008 = extrude(0.2, sketch008)
+extrude008 = extrude(sketch008, length = 0.2)
 
 sketch009 = startSketchOn(extrude007, 'END')
   |> circle({
@@ -75,7 +75,7 @@ sketch009 = startSketchOn(extrude007, 'END')
        ],
        radius = 0.5
      }, %, $referenceEdge3)
-extrude009 = extrude(0.15, sketch009)
+extrude009 = extrude(sketch009, length = 0.15)
   |> fillet({
        radius = 0.1,
        tags = [getOppositeEdge(referenceEdge3)]
@@ -89,4 +89,4 @@ extrude009 = extrude(0.15, sketch009)
 sketch010 = startSketchOn(plane002)
   |> circle({ center = [1.75, 8], radius = 0.3 }, %)
 
-export rotatingBase = extrude(-1, sketch010)
+export rotatingBase = extrude(sketch010, length = -1)
