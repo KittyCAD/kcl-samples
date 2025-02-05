@@ -15,10 +15,10 @@ centerHoleDiameter = 2
 fn rectShape(pos, w, l) {
   rr = startSketchOn('XY')
     |> startProfileAt([pos[0] - (w / 2), pos[1] - (l / 2)], %)
-    |> lineTo([pos[0] + w / 2, pos[1] - (l / 2)], %, $edge1)
-    |> lineTo([pos[0] + w / 2, pos[1] + l / 2], %, $edge2)
-    |> lineTo([pos[0] - (w / 2), pos[1] + l / 2], %, $edge3)
-    |> close(%, $edge4)
+    |> line(endAbsolute = [pos[0] + w / 2, pos[1] - (l / 2)], tag = $edge1)
+    |> line(endAbsolute = [pos[0] + w / 2, pos[1] + l / 2], tag = $edge2)
+    |> line(endAbsolute = [pos[0] - (w / 2), pos[1] + l / 2], tag = $edge3)
+    |> close(tag = $edge4)
   return rr
 }
 
@@ -61,7 +61,7 @@ part = rs
        center = [0, 0],
        radius = centerHoleDiameter
      }, %), %)
-  |> extrude(plateThickness, %)
+  |> extrude(length = plateThickness)
   |> fillet({
        radius = filletRadius,
        tags = [

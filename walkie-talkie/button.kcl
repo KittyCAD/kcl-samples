@@ -23,8 +23,8 @@ export fn button(origin, rotation, plane) {
          angle = 0 + rotation,
          length = buttonWidth
        }, %)
-    |> close(%)
-  buttonExtrude = extrude(buttonThickness, buttonSketch)
+    |> close()
+  buttonExtrude = extrude(buttonSketch, length = buttonThickness)
     |> chamfer({
          length = .050,
          tags = [
