@@ -46,7 +46,7 @@ flangeBase = startSketchOn('XY')
        center = [0, 0],
        radius = pipeDia / 2
      }, %), %)
-  |> extrude(baseThickness, %)
+  |> extrude(length = baseThickness)
 
 // Plane for top face
 topFacePlane = {
@@ -68,7 +68,7 @@ topExtrusion = startSketchOn(topFacePlane)
        center = [0, 0],
        radius = pipeDia / 2
      }, %), %)
-  |> extrude(topTotalThickness, %)
+  |> extrude(length = topTotalThickness)
 
 // Create the extrusion on the bottom of the flange base
 bottomExtrusion = startSketchOn("XY")
@@ -80,4 +80,4 @@ bottomExtrusion = startSketchOn("XY")
        center = [0, 0],
        radius = pipeDia / 2
      }, %), %)
-  |> extrude(-bottomThickness, %)
+  |> extrude(length = -bottomThickness)

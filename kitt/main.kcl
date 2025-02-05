@@ -5,12 +5,12 @@
 fn pixelBox(kitExtrude, extrudeTag, positionY, positionZ, width, height, depth) {
   pixelBoxBody = startSketchOn(kitExtrude, extrudeTag)
     |> startProfileAt([positionY, positionZ], %)
-    |> line([0, height], %)
-    |> line([width, 0], %)
-    |> line([0, -height], %)
-    |> lineTo([profileStartX(%), profileStartY(%)], %)
-    |> close(%)
-    |> extrude(depth, %)
+    |> line(end = [0, height])
+    |> line(end = [width, 0])
+    |> line(end = [0, -height])
+    |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
+    |> close()
+    |> extrude(length = depth)
   return pixelBoxBody
 }
 
@@ -22,12 +22,12 @@ kitBodyDepth = 18
 
 kitBody = startSketchOn('XZ')
   |> startProfileAt([-kitBodyWidth / 2, kitBodyElevation], %)
-  |> line([0, kitBodyHeight], %)
-  |> line([kitBodyWidth, 0], %, $seg01)
-  |> line([0, -kitBodyHeight], %, $seg02)
-  |> lineTo([profileStartX(%), profileStartY(%)], %)
-  |> close(%)
-  |> extrude(kitBodyDepth, %)
+  |> line(end = [0, kitBodyHeight])
+  |> line(end = [kitBodyWidth, 0], tag = $seg01)
+  |> line(end = [0, -kitBodyHeight], tag = $seg02)
+  |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
+  |> close()
+  |> extrude(length = kitBodyDepth)
 
 // 2. Kitty Head (Frame of display)
 kitHeadOffset = 1
@@ -47,20 +47,20 @@ kitFaceDepth = 2
 
 kitFace = startSketchOn(kitHead, 'END')
   |> startProfileAt([-kitFaceWidth / 2, kitFaceElevation], %)
-  |> line([0, 1], %) // left lower corner up
-  |> line([-1, 0], %) // left lower corner left
-  |> line([0, kitFaceHeight], %) // left side up
-  |> line([1, 0], %) // left upper corner right
-  |> line([0, 1], %) // left upper corner up
-  |> line([kitFaceWidth, 0], %) // upper side right
-  |> line([0, -1], %) // right upper corner down
-  |> line([1, 0], %) // right upper corner right
-  |> line([0, -kitFaceHeight], %) // right side down
-  |> line([-1, 0], %) // right lower corner left
-  |> line([0, -1], %) // right lower corner down
-  |> lineTo([profileStartX(%), profileStartY(%)], %)
-  |> close(%)
-  |> extrude(-kitFaceDepth, %)
+  |> line(end = [0, 1]) // left lower corner up
+  |> line(end = [-1, 0]) // left lower corner left
+  |> line(end = [0, kitFaceHeight]) // left side up
+  |> line(end = [1, 0]) // left upper corner right
+  |> line(end = [0, 1]) // left upper corner up
+  |> line(end = [kitFaceWidth, 0]) // upper side right
+  |> line(end = [0, -1]) // right upper corner down
+  |> line(end = [1, 0]) // right upper corner right
+  |> line(end = [0, -kitFaceHeight]) // right side down
+  |> line(end = [-1, 0]) // right lower corner left
+  |> line(end = [0, -1]) // right lower corner down
+  |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
+  |> close()
+  |> extrude(length = -kitFaceDepth)
 
   // Kitty Face Features:
   // 3.1 Kitty Eyes
@@ -80,20 +80,20 @@ kitRightEye = pixelBox(kitFace, 'START', kitEyeOffset - 3, kitEyeHeihgt - 1, 2, 
 kitNoseElevation = kitEyeHeihgt - 5
 kitNose = startSketchOn(kitFace, 'START')
   |> startProfileAt([-2, kitNoseElevation], %) // H V
-  |> line([0, 1], %) // lower-left up
-  |> line([2, 0], %) // lower-left right
-  |> line([0, 2], %) // mid-left up
-  |> line([-1, 0], %) // upper-left left
-  |> line([0, 1], %) // upper-left up
-  |> line([3, 0], %) // upper-mid right
-  |> line([0, -1], %) // upper-right down
-  |> line([-1, 0], %) // upper-right left
-  |> line([0, -2], %) // mid-left down
-  |> line([2, 0], %) // lower-right right
-  |> line([0, -1], %) // lower-right down
-  |> lineTo([profileStartX(%), profileStartY(%)], %)
-  |> close(%)
-  |> extrude(kitEyeDepth, %)
+  |> line(end = [0, 1]) // lower-left up
+  |> line(end = [2, 0]) // lower-left right
+  |> line(end = [0, 2]) // mid-left up
+  |> line(end = [-1, 0]) // upper-left left
+  |> line(end = [0, 1]) // upper-left up
+  |> line(end = [3, 0]) // upper-mid right
+  |> line(end = [0, -1]) // upper-right down
+  |> line(end = [-1, 0]) // upper-right left
+  |> line(end = [0, -2]) // mid-left down
+  |> line(end = [2, 0]) // lower-right right
+  |> line(end = [0, -1]) // lower-right down
+  |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
+  |> close()
+  |> extrude(length = kitEyeDepth)
 
 // 3.3 Kitty Mouth
 kitMouthOffset = 4
@@ -161,13 +161,13 @@ fn kitLeg(offsetFront, offsetSide) {
 
   kitFootPrint = startSketchOn('XY')
     |> startProfileAt([offsetSide, kitShoeOffsetFront], %)
-    |> line([kitShoeWidth, 0], %)
-    |> line([0, -kitShoeLength], %)
-    |> line([-kitShoeWidth, 0], %)
-    |> lineTo([profileStartX(%), profileStartY(%)], %)
-    |> close(%)
+    |> line(end = [kitShoeWidth, 0])
+    |> line(end = [0, -kitShoeLength])
+    |> line(end = [-kitShoeWidth, 0])
+    |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
+    |> close()
 
-  kitShoe = extrude(kitShoeHeight, kitFootPrint)
+  kitShoe = extrude(kitFootPrint, length = kitShoeHeight)
 
   kitPantsOffsetSide = offsetSide + 1
   kitPantsOffsetFront = 2 * kitShoeOffsetFront - 2

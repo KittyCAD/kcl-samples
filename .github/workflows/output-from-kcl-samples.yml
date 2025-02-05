@@ -10,6 +10,7 @@ on:
             - '**/*.kcl'
             - '**/project.toml'
             - .github/workflows/output-from-kcl-samples.yml
+            - requirements.txt
         branches:
             - main
     workflow_dispatch:

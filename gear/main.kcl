@@ -46,20 +46,20 @@ body = startSketchOn('XY')
        center = [0, 0],
        radius = baseDiameter / 2
      }, %)
-  |> extrude(gearHeight, %)
+  |> extrude(length = gearHeight)
 
 toothAngle = 360 / nTeeth / 1.5
 
 // Plot the involute curve
 fn leftInvolute(i, sg) {
   j = 100 - i // iterate backwards
-  return lineTo([xs[j], ys[j]], sg)
+  return line(sg, endAbsolute = [xs[j], ys[j]])
 }
 
 fn rightInvolute(i, sg) {
   x = rs[i] * cos(toRadians(-toothAngle + toDegrees(atan(ys[i] / xs[i]))))
   y = -rs[i] * sin(toRadians(-toothAngle + toDegrees(atan(ys[i] / xs[i]))))
-  return lineTo([x, y], sg)
+  return line(sg, endAbsolute = [x, y])
 }
 
 // Draw gear teeth
@@ -72,8 +72,8 @@ teeth = reduce([0..100], start, leftInvolute)
        radius = baseDiameter / 2
      }, %)
   |> reduce([1..101], %, rightInvolute)
-  |> close(%)
-  |> extrude(gearHeight, %)
+  |> close()
+  |> extrude(length = gearHeight)
   |> patternCircular3d({
        axis = [0, 0, 1],
        center = [0, 0, 0],
@@ -108,5 +108,5 @@ keyWay = startSketchOn(body, 'END')
        angleStart = 180,
        radius = holeRadius
      }, %)
-  |> close(%)
-  |> extrude(-gearHeight, %)
+  |> close()
+  |> extrude(length = -gearHeight)

@@ -27,7 +27,7 @@ fn lug(plane, length, diameter) {
     |> yLineTo(lugThreadDepth, %)
     |> xLineTo(lugThreadDiameter, %)
     |> yLineTo(0, %)
-    |> close(%)
+    |> close()
     |> revolve({ axis = "Y" }, %)
     |> appearance({
       color = "#dbcd70",

@@ -34,7 +34,7 @@ rotorSketch = startSketchOn(rotorPlane)
        radius = rotorDiameter / 2
      }, %)
   |> hole(lugPattern(%), %)
-rotor = extrude(rotorSinglePlateThickness, rotorSketch)
+rotor = extrude(rotorSketch, length = rotorSinglePlateThickness)
   |> appearance({
     color = "#dbcd70",
     roughness = 90,
@@ -46,7 +46,7 @@ rotorBumpSketch = startSketchOn(rotorPlane)
        radius = rotorInnerDiameter / 2
      }, %)
   |> hole(lugPattern(%), %)
-rotorBump = extrude(-rotorInnerDiameterThickness, rotorBumpSketch)
+rotorBump = extrude(rotorBumpSketch, length = -rotorInnerDiameterThickness)
   |> appearance({
     color = "#dbcd70",
     roughness = 90,
@@ -70,7 +70,7 @@ secondaryRotorSketch = startSketchOn(rotorSecondaryPlatePlane)
        radius = rotorDiameter / 2
      }, %)
   |> hole(lugPattern(%), %)
-secondRotor = extrude(rotorSinglePlateThickness, secondaryRotorSketch)
+secondRotor = extrude(secondaryRotorSketch, length = rotorSinglePlateThickness)
 spacerSketch = startSketchOn(rotorSecondaryPlatePlane)
   |> circle({
        center = [spacerPatternDiameter / 2, 0],
@@ -82,7 +82,7 @@ spacerSketch = startSketchOn(rotorSecondaryPlatePlane)
        instances = spacerCount,
        rotateDuplicates = true
      }, %)
-spacers = extrude(-spacerLength, spacerSketch)
+spacers = extrude(spacerSketch, length = -spacerLength)
   |> appearance({
     color = "#dbcd70",
     roughness = 90,
@@ -93,30 +93,30 @@ rotorSlottedSketch = startSketchOn(rotor, 'START')
   |> xLine(0.12, %)
   |> yLine(2.56, %)
   |> xLine(-0.12, %)
-  |> lineTo([profileStartX(%), profileStartY(%)], %)
-  |> close(%)
+  |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
+  |> close()
   |> patternCircular2d({
        center = [0, 0],
        instances = drillAndSlotCount,
        arcDegrees = 360,
        rotateDuplicates = true
      }, %)
-rotorSlotted = extrude(-rotorSinglePlateThickness / 2, rotorSlottedSketch)
+rotorSlotted = extrude(rotorSlottedSketch, length = -rotorSinglePlateThickness / 2)
 
 secondRotorSlottedSketch = startSketchOn(secondRotor, 'END')
   |> startProfileAt([-2.17, 2.56], %)
   |> xLine(-0.12, %)
   |> yLine(2.56, %)
   |> xLine(0.12, %)
-  |> lineTo([profileStartX(%), profileStartY(%)], %)
-  |> close(%)
+  |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
+  |> close()
   |> patternCircular2d({
        center = [0, 0],
        instances = drillAndSlotCount,
        arcDegrees = 360,
        rotateDuplicates = true
      }, %)
-secondRotorSlotted = extrude(-rotorSinglePlateThickness / 2, secondRotorSlottedSketch)
+secondRotorSlotted = extrude(secondRotorSlottedSketch, length = -rotorSinglePlateThickness / 2)
   |> appearance({
     color = "#dbcd70",
     roughness = 90,
