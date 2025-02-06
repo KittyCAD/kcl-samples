@@ -161,4 +161,4 @@ sketch003 = startSketchOn(grip, gripEdgeTop)
 gripHoleProfile = slot(sketch003, [0, 200], [0, 210], gripSlotWidth)
 
 // cut a hole in the grip
-extrude(gripHoleProfile, length = -gripWidth)
+extrude(gripHoleProfile, length = -gripWidth-20)
