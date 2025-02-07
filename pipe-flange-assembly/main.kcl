@@ -167,12 +167,12 @@ mountingHolePattern = startSketchOn('XZ')
        center = [screwStart[0], screwStart[2]],
        radius = screwDia / 2 + tol
      }, %)
-  |> patternCircular2d({
+  |> patternCircular2d(
        arcDegrees = 360,
        center = [0, 0],
        instances = 7,
        rotateDuplicates = true
-     }, %)
+     )
 
 // Sketch and revolve the pipe
 pipe = startSketchOn('XY')
@@ -224,13 +224,13 @@ flangeBase = startSketchOn('XZ')
 
 // Create the washer and pattern around the flange
 washer(workingPlane, [screwStart[2], screwStart[0]], 0.0625, screwDia + tol, 0.625)
-  |> patternCircular3d({
+  |> patternCircular3d(
        axis = [0, 1, 0],
        center = [0, 0, 0],
        instances = 7,
        arcDegrees = 360,
        rotateDuplicates = true
-     }, %)
+     )
   |> appearance(color = "#d8da5d")
 
 // Create the cap screw and pattern around the flange
@@ -239,13 +239,13 @@ capScrew([
        flangeThickness + washerThickness,
        1.375
      ], screwLength, screwDia)
-  |> patternCircular3d({
+  |> patternCircular3d(
        axis = [0, 1, 0],
        center = [0, 0, 0],
        instances = 7,
        arcDegrees = 360,
        rotateDuplicates = true
-     }, %)
+     )
   |> appearance(color = "#4cd411")
 
 screwBodySketch = startSketchOn(screwPlane)
@@ -254,13 +254,13 @@ screwBodySketch = startSketchOn(screwPlane)
        radius = screwDia / 2
      }, %)
 screwBody = extrude(screwBodySketch, length = -screwLength)
-  |> patternCircular3d({
+  |> patternCircular3d(
        axis = [0, 1, 0],
        center = [0, 0, 0],
        instances = 7,
        arcDegrees = 360,
        rotateDuplicates = true
-     }, %)
+     )
   |> appearance(color = "#4cd411")
 
 // Create a plane for the washers on the back side of the wall
@@ -279,13 +279,13 @@ backSideWasherPlane = {
 
 // Create the washers on the backside of the wall
 washer(backSideWasherPlane, [screwStart[2], screwStart[0]], 0.0625, screwDia + tol, 0.625)
-  |> patternCircular3d({
+  |> patternCircular3d(
        axis = [0, 1, 0],
        center = [0, 0, 0],
        instances = 7,
        arcDegrees = 360,
        rotateDuplicates = true
-     }, %)
+     )
   |> appearance(color = "#e8ec09")
 
 // Create the hex nut and pattern around the flange
@@ -294,11 +294,11 @@ hexNut([
        screwStart[1],
        screwStart[2]
      ], .25, screwDia + tol)
-  |> patternCircular3d({
+  |> patternCircular3d(
        axis = [0, 1, 0],
        center = [0, 0, 0],
        instances = 7,
        arcDegrees = 360,
        rotateDuplicates = true
-     }, %)
+     )
   |> appearance(color = "#bc3434")
