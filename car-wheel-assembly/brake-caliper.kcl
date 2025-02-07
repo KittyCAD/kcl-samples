@@ -1,13 +1,13 @@
 // Brake Caliper
 // Brake calipers are used to squeeze the brake pads against the rotor, causing larger and larger amounts of friction depending on how hard the brakes are pressed.
 
+
 // Set units
 @settings(defaultLengthUnit = in)
 
-// Import Constants
-import caliperTolerance, caliperPadLength,
-caliperThickness, caliperOuterEdgeRadius, caliperInnerEdgeRadius, rotorDiameter, rotorTotalThickness, yAxisOffset from 'globals.kcl'
 
+// Import Constants
+import caliperTolerance, caliperPadLength, caliperThickness, caliperOuterEdgeRadius, caliperInnerEdgeRadius, rotorDiameter, rotorTotalThickness, yAxisOffset from "globals.kcl"
 
 // Create the plane for the brake caliper. This is so it can match up with the rotor model.
 brakeCaliperPlane = {
@@ -93,9 +93,4 @@ brakeCaliperSketch = startSketchOn(brakeCaliperPlane)
 
 // Revolve the brake caliper sketch
 export brakeCaliper = revolve({ axis = "Y", angle = -70 }, brakeCaliperSketch)
-  |> appearance(
-      color = "#c82d2d",
-      metalness = 90,
-      roughness = 90
-    )
-  
+  |> appearance(color = "#c82d2d", metalness = 90, roughness = 90)

@@ -1,7 +1,9 @@
 // Walkie talkie body
 
+
 // Set units
 @settings(defaultLengthUnit = in)
+
 
 // Import constants
 import height, width, thickness, chamferLength, offset, screenWidth, screenHeight, screenYPosition, screenDepth, speakerBoxWidth, speakerBoxHeight from "globals.kcl"
@@ -54,7 +56,6 @@ sketch002 = startSketchOn(bodyExtrude, 'END')
   |> close()
 extrude002 = extrude(sketch002, length = -0.0625)
 
-
 // Create the pocket for the screen
 sketch003 = startSketchOn(extrude002, 'start')
   |> startProfileAt([-screenWidth / 2, screenYPosition], %)
@@ -65,7 +66,6 @@ sketch003 = startSketchOn(extrude002, 'start')
   |> close()
 extrude003 = extrude(sketch003, length = screenDepth)
 
-
 // Create the speaker box
 sketch004 = startSketchOn(extrude002, 'start')
   |> startProfileAt([-1.25 / 2, -.125], %)
@@ -73,8 +73,8 @@ sketch004 = startSketchOn(extrude002, 'start')
   |> yLine(-speakerBoxHeight, %)
   |> xLine(-speakerBoxWidth, %)
   |> close()
-  
 export body = extrude(sketch004, length = -.5)
   |> appearance(
     color = "#277bb0",
   )
+
