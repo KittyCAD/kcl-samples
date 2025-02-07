@@ -22,11 +22,6 @@ bodyExtrude = extrude(bodySketch, length = thickness)
          getNextAdjacentEdge(chamfer4)
        ]
      }, %)
-  // |> appearance({
-  //      color = '#707980',
-  //      metalness = 90,
-  //      roughness = 90
-  //    }, %)  
 
 // Define the offset for the indentation
 sketch002 = startSketchOn(bodyExtrude, 'END')
@@ -58,11 +53,6 @@ sketch002 = startSketchOn(bodyExtrude, 'END')
      }, %)
   |> close()
 extrude002 = extrude(sketch002, length = -0.0625)
-  // |> appearance({
-  //      color = '#707980',
-  //      metalness = 90,
-  //      roughness = 90
-  //    }, %)
 
 
 // Create the pocket for the screen
@@ -74,11 +64,6 @@ sketch003 = startSketchOn(extrude002, 'start')
   |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
   |> close()
 extrude003 = extrude(sketch003, length = screenDepth)
-  // |> appearance({
-  //      color = '#707980',
-  //      metalness = 90,
-  //      roughness = 90
-  //    }, %)
 
 
 // Create the speaker box
@@ -90,6 +75,6 @@ sketch004 = startSketchOn(extrude002, 'start')
   |> close()
   
 export body = extrude(sketch004, length = -.5)
-  |> appearance({
+  |> appearance(
     color = "#277bb0",
-  }, %)
+  )

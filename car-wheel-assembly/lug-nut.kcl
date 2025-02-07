@@ -29,11 +29,11 @@ fn lug(plane, length, diameter) {
     |> yLineTo(0, %)
     |> close()
     |> revolve({ axis = "Y" }, %)
-    |> appearance({
+    |> appearance(
       color = "#dbcd70",
       roughness = 90,
       metalness = 90
-    }, %)
+    )
   return lugSketch
 }
 

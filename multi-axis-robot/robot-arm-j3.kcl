@@ -166,8 +166,8 @@ sketch024 = startSketchOn(extrude022, 'START')
   |> close()
 
 export j3RobotArm = extrude(sketch024, length = -1.5)
-  |> appearance({
+  |> appearance(
     color = "#6572b3",
     metalness = 90,
     roughness = 90
-  }, %)
+  )

@@ -39,7 +39,7 @@ tireSketch = startSketchOn("XY")
 
 // Revolve the sketch to create the tire
 export carTire = revolve({ axis = "Y" }, tireSketch)
-  |> appearance({
+  |> appearance(
       color = "#0f0f0f",
       roughness = 80,
-    }, %)
+    )
