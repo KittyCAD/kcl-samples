@@ -22,12 +22,12 @@ fn lugPattern(plane) {
          center = [-lugSpacing / 2, 0],
          radius = 0.315
        }, plane)
-    |> patternCircular2d({
+    |> patternCircular2d(
          arcDegrees = 360,
          center = [0, 0],
          instances = lugCount,
          rotateDuplicates = true
-       }, %)
+       )
   return lugHolePattern
 }
 rotorSketch = startSketchOn(rotorPlane)
@@ -70,12 +70,12 @@ spacerSketch = startSketchOn(rotorSecondaryPlatePlane)
        center = [spacerPatternDiameter / 2, 0],
        radius = spacerDiameter
      }, %)
-  |> patternCircular2d({
+  |> patternCircular2d(
        arcDegrees = 360,
        center = [0, 0],
        instances = spacerCount,
        rotateDuplicates = true
-     }, %)
+     )
 spacers = extrude(spacerSketch, length = -spacerLength)
   |> appearance(color = "#dbcd70", roughness = 90, metalness = 90)
 rotorSlottedSketch = startSketchOn(rotor, 'START')
@@ -85,12 +85,12 @@ rotorSlottedSketch = startSketchOn(rotor, 'START')
   |> xLine(-0.12, %)
   |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
   |> close()
-  |> patternCircular2d({
+  |> patternCircular2d(
        center = [0, 0],
        instances = drillAndSlotCount,
        arcDegrees = 360,
        rotateDuplicates = true
-     }, %)
+     )
 rotorSlotted = extrude(rotorSlottedSketch, length = -rotorSinglePlateThickness / 2)
 
 secondRotorSlottedSketch = startSketchOn(secondRotor, 'END')
@@ -100,11 +100,11 @@ secondRotorSlottedSketch = startSketchOn(secondRotor, 'END')
   |> xLine(0.12, %)
   |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
   |> close()
-  |> patternCircular2d({
+  |> patternCircular2d(
        center = [0, 0],
        instances = drillAndSlotCount,
        arcDegrees = 360,
        rotateDuplicates = true
-     }, %)
+     )
 secondRotorSlotted = extrude(secondRotorSlottedSketch, length = -rotorSinglePlateThickness / 2)
   |> appearance(color = "#dbcd70", roughness = 90, metalness = 90)
