@@ -38,8 +38,8 @@ export fn divider(plane) {
     |> extrude(length = dividerThickness / 2)
   left = dividerSketch(plane)
     |> extrude(length = -dividerThickness / 2)
-  shell({ thickness = 1.5, faces = ["end"] }, right)
-  shell({ thickness = 1.5, faces = ["start"] }, left)
+  shell(right, thickness = 1.5, faces = ["end"], )
+  shell(left, thickness = 1.5, faces = ["start"])
   return 0
 }
 
@@ -139,6 +139,6 @@ fn armRestProfile(plane, offset) {
 export fn armRest(plane, offset) {
   path = armRestPath(offsetPlane(plane, offset))
   profile = armRestProfile(offsetPlane("-XZ", 20), offset)
-  sweep({path = path}, profile)
+  sweep(profile, path = path)
   return 0
 }
