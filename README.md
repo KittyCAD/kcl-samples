@@ -39,6 +39,8 @@ When you submit a PR to add or modify KCL samples, images and STEP files will be
 [![dodecahedron](screenshots/dodecahedron.png)](dodecahedron/main.kcl)
 #### [enclosure](enclosure/main.kcl) ([step](step/enclosure.step)) ([screenshot](screenshots/enclosure.png))
 [![enclosure](screenshots/enclosure.png)](enclosure/main.kcl)
+#### [exhaust-manifold](exhaust-manifold/main.kcl) ([step](step/exhaust-manifold.step)) ([screenshot](screenshots/exhaust-manifold.png))
+[![exhaust-manifold](screenshots/exhaust-manifold.png)](exhaust-manifold/main.kcl)
 #### [flange-with-patterns](flange-with-patterns/main.kcl) ([step](step/flange-with-patterns.step)) ([screenshot](screenshots/flange-with-patterns.png))
 [![flange-with-patterns](screenshots/flange-with-patterns.png)](flange-with-patterns/main.kcl)
 #### [flange-xy](flange-xy/main.kcl) ([step](step/flange-xy.step)) ([screenshot](screenshots/flange-xy.png))

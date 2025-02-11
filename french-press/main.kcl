@@ -193,7 +193,7 @@ sketch010 = startSketchOn("XY")
 
 // Perform a shell operation to hollow the carafe body with the top face removed
 extrude006 = extrude(sketch010, length = carafeHeight)
-  |> shell({ faces = ["end"], thickness = .07 }, %)
+  |> shell(faces = ["end"], thickness = .07)
 
 // Draw and revolve the lid
 sketch011 = startSketchOn('XZ')
