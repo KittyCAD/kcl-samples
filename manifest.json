@@ -57,6 +57,13 @@
   },
   {
     "file": "main.kcl",
+    "pathFromProjectDirectoryToFirstFile": "exhaust-manifold/main.kcl",
+    "multipleFiles": false,
+    "title": "Exhaust Manifold",
+    "description": "A welded exhaust header for an inline 4-cylinder engine"
+  },
+  {
+    "file": "main.kcl",
     "pathFromProjectDirectoryToFirstFile": "flange-with-patterns/main.kcl",
     "multipleFiles": false,
     "title": "Flange",
