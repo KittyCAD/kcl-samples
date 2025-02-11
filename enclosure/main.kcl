@@ -36,10 +36,10 @@ extrude001 = extrude(sketch001, length = height)
      }, %)
 
   // Apply a shell to the enclosure base to create the internal storage
-  |> shell({
+  |> shell(
        faces = ["end"],
        thickness = wallThickness
-     }, %)
+     )
 
 // Define a function to create the internal structure to secure a fastener at each corner
 fn function001(originStart) {
