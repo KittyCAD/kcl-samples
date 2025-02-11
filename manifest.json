@@ -36,6 +36,13 @@
   },
   {
     "file": "main.kcl",
+    "pathFromProjectDirectoryToFirstFile": "cycloidal-gear/main.kcl",
+    "multipleFiles": false,
+    "title": "Cycloidal Gear",
+    "description": "A cycloidal gear is a gear with a continuous, curved tooth profile. They are used in watchmaking and high precision robotics actuation"
+  },
+  {
+    "file": "main.kcl",
     "pathFromProjectDirectoryToFirstFile": "dodecahedron/main.kcl",
     "multipleFiles": false,
     "title": "Hollow Dodecahedron",
