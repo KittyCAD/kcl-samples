@@ -47,11 +47,11 @@ fn primaryTube(n, angle001, length001, length002, length003) {
   // Create the cross section of each tube and sweep them
   sweepProfile = startSketchOn('XY')
     |> circle({
-         center = [0, 0],
+         center = [pos001, 0],
          radius = primaryTubeDiameter / 2
        }, %)
     |> hole(circle({
-         center = [0, 0],
+         center = [pos001, 0],
          radius = primaryTubeDiameter / 2 - wallThickness
        }, %), %)
     |> sweep(path = sweepPath)
