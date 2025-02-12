@@ -95,7 +95,7 @@ sketch002 = startSketchOn(plane001)
      )
 
 // Cross plate
-sketch003 = startSketchOn(offsetPlane('XY', 1))
+sketch003 = startSketchOn(offsetPlane('XY', offset = 1))
   |> circle({
        center = [0, 0],
        radius = carafeDiameter / 2 - 0.15
@@ -151,7 +151,7 @@ sketch006 = startSketchOn('XZ')
   |> revolve({ axis = 'y' }, %)
 
 // Spiral plate
-sketch007 = startSketchOn(offsetPlane('XY', 1.12))
+sketch007 = startSketchOn(offsetPlane('XY', offset = 1.12))
   |> circle({
        center = [0, 0],
        radius = carafeDiameter / 2 - 0.24
@@ -213,7 +213,7 @@ sketch011 = startSketchOn('XZ')
   |> revolve({ axis = 'y' }, %)
 
 // Draw and extrude handle
-sketch012 = startSketchOn(offsetPlane('XZ', handleThickness / 2))
+sketch012 = startSketchOn(offsetPlane('XZ', offset = handleThickness / 2))
   |> startProfileAt([2.3, 6.4], %)
   |> line(end = [0.56, 0])
   |> tangentialArcTo([4.1, 5.26], %)
