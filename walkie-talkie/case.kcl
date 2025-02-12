@@ -35,8 +35,8 @@ fn squareHolePattern(plane, x, y) {
     |> line(end = [0, -squareHoleSideLength / 2])
     |> line(end = [-squareHoleSideLength / 2, 0])
     |> close()
-    |> patternTransform2d(13, transformX, %)
-    |> patternTransform2d(11, transformY, %)
+    |> patternTransform2d(instances = 13, transform = transformX)
+    |> patternTransform2d(instances = 11, transform = transformY)
   return squareHolePatternSketch
 }
 sketch005 = startSketchOn(offsetPlane("XZ", 1))
