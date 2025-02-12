@@ -54,12 +54,12 @@ sketch4A = startSketchOn(extrude001, 'END')
        ],
        radius = 0.4
      }, %)
-  |> patternCircular2d({
+  |> patternCircular2d(
        arcDegrees = 360,
        center = [0, 0],
        instances = 4,
        rotateDuplicates = true
-     }, %)
+     )
 
 extrude4A = extrude(sketch4A, length = -basePlateThickness)
 
@@ -71,12 +71,12 @@ sketch4B = startSketchOn(extrude001, 'END')
        ],
        radius = 0.4
      }, %)
-  |> patternCircular2d({
+  |> patternCircular2d(
        arcDegrees = 360,
        center = [0, 0],
        instances = 4,
        rotateDuplicates = true
-     }, %)
+     )
 
 export robotArmBase = extrude(sketch4B, length = -basePlateThickness)
   |> appearance(color = "#754110", roughness = 90, metalness = 90)

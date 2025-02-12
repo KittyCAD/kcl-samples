@@ -28,12 +28,12 @@ circles = startSketchOn('XY')
        center = [mountingHolePlacementDiameter / 2, 0],
        radius = mountingHoleDia / 2
      }, %)
-  |> patternCircular2d({
+  |> patternCircular2d(
        arcDegrees = 360,
        center = [0, 0],
        instances = nHoles,
        rotateDuplicates = true
-     }, %)
+     )
 
 // Create the base of the flange and add the mounting holes
 flangeBase = startSketchOn('XY')

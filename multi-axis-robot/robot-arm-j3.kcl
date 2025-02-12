@@ -55,7 +55,7 @@ sketch019 = startSketchOn(extrude018, 'END')
        ],
        radius = 0.2
      }, %)
-  |> patternCircular2d({
+  |> patternCircular2d(
        center = [
          1.75 + axisJ2ArmLength * cos(toRadians(axisJ2)),
          8 + axisJ2ArmLength * sin(toRadians(axisJ2))
@@ -63,7 +63,7 @@ sketch019 = startSketchOn(extrude018, 'END')
        instances = 8,
        arcDegrees = 360,
        rotateDuplicates = true
-     }, %)
+     )
 
 extrude019 = extrude(sketch019, length = 0.15)
 
