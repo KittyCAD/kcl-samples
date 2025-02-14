@@ -1,9 +1,11 @@
 // J2 Axis for Robot Arm
 
+
 // Set Units
 @settings(defaultLengthUnit = in)
 
-import axisJ1, axisJ2, axisJ2ArmWidth, axisJ2ArmLength, axisJ2ArmThickness, plane003 from 'globals.kcl'
+
+import axisJ1, axisJ2, axisJ2ArmWidth, axisJ2ArmLength, axisJ2ArmThickness, plane003 from "globals.kcl"
 
 // Create Body of J2 Robot Arm
 sketch011 = startSketchOn(plane003)
@@ -94,8 +96,4 @@ sketch016 = startSketchOn(extrude011, 'END')
      }, %)
 
 export j2RobotArm = extrude(sketch016, length = 1)
-  |> appearance({
-    color = "#454545",
-    metalness = 90,
-    roughness = 90
-  }, %)
+  |> appearance(color = "#454545", metalness = 90, roughness = 90)
