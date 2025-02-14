@@ -1,13 +1,13 @@
 // Car Wheel
 // A sports car wheel with a circular lug pattern and spokes.
 
+
 // Set units
 @settings(defaultLengthUnit = in)
 
-// Import Constants
-import lugCount, lugSpacing, offset, backSpacing, wheelWidth, wheelDiameter, spokeCount, 
-spokeGap, spokeAngle, spokeThickness from 'globals.kcl'
 
+// Import Constants
+import lugCount, lugSpacing, offset, backSpacing, wheelWidth, wheelDiameter, spokeCount, spokeGap, spokeAngle, spokeThickness from "globals.kcl"
 
 // Create the wheel center
 lugBase = startSketchOn('XZ')
@@ -60,11 +60,7 @@ lugHoles = startSketchOn(lugBase, 'END')
        rotateDuplicates = true
      }, %)
   |> extrude(length = -wheelWidth / 20)
-  |> appearance({
-    color = "#ffffff",
-    metalness = 0,
-    roughness = 0
-  }, %)
+  |> appearance(color = "#ffffff", metalness = 0, roughness = 0)
 
 // Add detail to the wheel center by revolving curved edge profiles
 wheelCenterInner = startSketchOn('XY')
@@ -79,11 +75,7 @@ wheelCenterInner = startSketchOn('XY')
   |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
   |> close()
   |> revolve({ axis = 'y' }, %)
-  |> appearance({
-    color = "#ffffff",
-    metalness = 0,
-    roughness = 0
-  }, %)
+  |> appearance(color = "#ffffff", metalness = 0, roughness = 0)
 
 wheelCenterOuter = startSketchOn('XY')
   |> startProfileAt([(lugSpacing + 1.5) / 2, 0], %)
@@ -97,11 +89,7 @@ wheelCenterOuter = startSketchOn('XY')
   |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
   |> close()
   |> revolve({ axis = 'y' }, %)
-  |> appearance({
-    color = "#ffffff",
-    metalness = 0,
-    roughness = 0
-  }, %)
+  |> appearance(color = "#ffffff", metalness = 0, roughness = 0)
 
 // Write a function that defines the spoke geometry, patterns and extrudes it
 fn spoke(spokeGap, spokeAngle, spokeThickness) {
@@ -159,12 +147,7 @@ fn spoke(spokeGap, spokeAngle, spokeThickness) {
          arcDegrees = 360,
          rotateDuplicates = true
        }, %)
-    |> appearance({
-      color = "#ffffff",
-      metalness = 0,
-      roughness = 0
-    }, %)
-       
+    |> appearance(color = "#ffffff", metalness = 0, roughness = 0)
   return spokePattern
 }
 
@@ -211,8 +194,4 @@ wheelOuterRevolve = startSketchOn('XY')
   |> yLine(wheelWidth * 0.05, %)
   |> close()
   |> revolve({ axis = 'y' }, %)
-  |> appearance({
-    color = "#ffffff",
-    metalness = 0,
-    roughness = 0
-  }, %)
+  |> appearance(color = "#ffffff", metalness = 0, roughness = 0)
