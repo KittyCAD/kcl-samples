@@ -1,12 +1,12 @@
 // Robot Arm Base
 
+
 // Set Units
 @settings(defaultLengthUnit = in)
 
-// Import Constants
-import basePlateRadius, basePlateThickness,
-baseChamfer, baseHeight from 'globals.kcl'
 
+// Import Constants
+import basePlateRadius, basePlateThickness, baseChamfer, baseHeight from "globals.kcl"
 
 // Base Plate
 sketch001 = startSketchOn('XY')
@@ -79,8 +79,4 @@ sketch4B = startSketchOn(extrude001, 'END')
      }, %)
 
 export robotArmBase = extrude(sketch4B, length = -basePlateThickness)
-  |> appearance({
-    color = "#754110",
-    roughness = 90,
-    metalness = 90
-  }, %)
+  |> appearance(color = "#754110", roughness = 90, metalness = 90)
