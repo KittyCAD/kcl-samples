@@ -2,6 +2,11 @@
 // A crucial component in various piping systems, designed to facilitate the connection, disconnection, and access to piping for inspection, cleaning, and modifications. This assembly combines pipes (long cylindrical conduits) with flanges (plate-like fittings) to create a secure yet detachable joint.
 
 
+// Set units
+@settings(defaultLengthUnit = in)
+
+
+// Define constants
 flangeThickness = .125
 flangeBaseDia = 2
 boreHeight = 1
@@ -56,7 +61,7 @@ fn capScrew(start, length, dia) {
        }, %)
 
   // Extrude the screw head sketch
-  screwHead = extrude(dia, screwHeadSketch)
+  screwHead = extrude(screwHeadSketch, length = dia)
 
   // Define the sketch of the hex pattern on the screw head
   hexPatternSketch = startSketchOn(screwHead, 'end')
@@ -85,8 +90,8 @@ fn capScrew(start, length, dia) {
          angle = hexStartingAngle - (4 * hexChangeAngle),
          length = hexWallLength
        }, %)
-    |> close(%)
-  hexPattern = extrude(-headLength * 0.75, hexPatternSketch)
+    |> close()
+  hexPattern = extrude(hexPatternSketch, length = -headLength * 0.75)
 
   return hexPattern
 }
@@ -111,7 +116,7 @@ fn washer(plane, start, thk, innerDia, outerDia) {
          center = [start[0], start[1]],
          radius = innerDia / 2
        }, %), %)
-    |> extrude(thk, %)
+    |> extrude(length = thk)
   return washerSketch
 }
 
@@ -147,12 +152,12 @@ fn hexNut(start, thk, innerDia) {
          length = innerDia * hexNutScale
        }, %)
     |> angledLine({ angle = 0, length = innerDia * .90 }, %)
-    |> close(%)
+    |> close()
     |> hole(circle({
          center = [0, 0],
          radius = innerDia / 2
        }, %), %)
-    |> extrude(-thk, %)
+    |> extrude(length = -thk)
   return hexNutSketch
 }
 
@@ -172,40 +177,36 @@ mountingHolePattern = startSketchOn('XZ')
 // Sketch and revolve the pipe
 pipe = startSketchOn('XY')
   |> startProfileAt([flangePipeDia / 2 - tol, 0], %)
-  |> line([0, -2], %)
+  |> line(end = [0, -2])
   |> angledLine({ angle = -60, length = .5 }, %)
-  |> line([0, -1], %)
-  |> line([-flangeThickness, 0], %)
-  |> line([0, 1], %)
+  |> line(end = [0, -1])
+  |> line(end = [-flangeThickness, 0])
+  |> line(end = [0, 1])
   |> angledLine({ angle = -240, length = .5 }, %)
-  |> line([0, 5], %)
+  |> line(end = [0, 5])
   |> angledLine({ angle = 60, length = .5 }, %)
-  |> line([0, 1], %)
-  |> line([flangeThickness, 0], %)
-  |> line([0, -1], %)
+  |> line(end = [0, 1])
+  |> line(end = [flangeThickness, 0])
+  |> line(end = [0, -1])
   |> angledLine({ angle = 240, length = .5 }, %)
-  |> close(%)
+  |> close()
   |> revolve({ axis = 'y' }, %)
-  |> appearance({
-    color = "#7b79d7",
-  }, %)
+  |> appearance(color = "#7b79d7")
 
 // Sketch and extrude the wall
 wall = startSketchOn('XZ')
   |> startProfileAt([-4, -4], %)
-  |> line([0, 8], %)
-  |> line([8, 0], %)
-  |> line([0, -8], %)
-  |> close(%)
+  |> line(end = [0, 8])
+  |> line(end = [8, 0])
+  |> line(end = [0, -8])
+  |> close()
   |> hole(mountingHolePattern, %)
   |> hole(circle({
        center = [0, 0],
        radius = flangePipeDia / 2
      }, %), %)
-  |> extrude(wallThickness, %)
-  |> appearance({
-    color = "#c7aa8f",
-  }, %)
+  |> extrude(length = wallThickness)
+  |> appearance(color = "#c7aa8f")
 
 // Sketch and revolve the flange
 flangeBase = startSketchOn('XZ')
@@ -218,10 +219,8 @@ flangeBase = startSketchOn('XZ')
        center = [0, 0],
        radius = flangePipeDia / 2
      }, %), %)
-  |> extrude(-flangeThickness, %)
-  |> appearance({
-    color = "#9b9797",
-  }, %)
+  |> extrude(length = -flangeThickness)
+  |> appearance(color = "#9b9797")
 
 // Create the washer and pattern around the flange
 washer(workingPlane, [screwStart[2], screwStart[0]], 0.0625, screwDia + tol, 0.625)
@@ -232,9 +231,7 @@ washer(workingPlane, [screwStart[2], screwStart[0]], 0.0625, screwDia + tol, 0.6
        arcDegrees = 360,
        rotateDuplicates = true
      }, %)
-  |> appearance({
-    color = "#d8da5d",
-  }, %)
+  |> appearance(color = "#d8da5d")
 
 // Create the cap screw and pattern around the flange
 capScrew([
@@ -249,16 +246,14 @@ capScrew([
        arcDegrees = 360,
        rotateDuplicates = true
      }, %)
-  |> appearance({
-    color = "#4cd411",
-  }, %)
+  |> appearance(color = "#4cd411")
 
 screwBodySketch = startSketchOn(screwPlane)
   |> circle({
        center = [0, 0],
        radius = screwDia / 2
      }, %)
-screwBody = extrude(-screwLength, screwBodySketch)
+screwBody = extrude(screwBodySketch, length = -screwLength)
   |> patternCircular3d({
        axis = [0, 1, 0],
        center = [0, 0, 0],
@@ -266,9 +261,7 @@ screwBody = extrude(-screwLength, screwBodySketch)
        arcDegrees = 360,
        rotateDuplicates = true
      }, %)
-  |> appearance({
-    color = "#4cd411",
-  }, %)
+  |> appearance(color = "#4cd411")
 
 // Create a plane for the washers on the back side of the wall
 backSideWasherPlane = {
@@ -293,9 +286,7 @@ washer(backSideWasherPlane, [screwStart[2], screwStart[0]], 0.0625, screwDia + t
        arcDegrees = 360,
        rotateDuplicates = true
      }, %)
-  |> appearance({
-    color = "#e8ec09",
-  }, %)
+  |> appearance(color = "#e8ec09")
 
 // Create the hex nut and pattern around the flange
 hexNut([
@@ -310,6 +301,4 @@ hexNut([
        arcDegrees = 360,
        rotateDuplicates = true
      }, %)
-  |> appearance({
-    color = "#bc3434",
-  }, %)
+  |> appearance(color = "#bc3434")

@@ -1,11 +1,12 @@
 // Router template for a slate
 // A guide for routing a slate for a cross bar.
 
+// Set Units
+@settings(defaultLengthUnit = mm)
 
 // Define constants
 routerDiameter = 12.7
-mmInInch = 25.4
-templateDiameter = mmInInch * 11 / 16
+templateDiameter = 11 / 16 * inch()
 templateGap = (templateDiameter - routerDiameter) / 2 - 0.5
 slateWidthHalf = 41.5 / 2
 minClampingDistance = 50 + 30
@@ -28,7 +29,7 @@ sketch001 = startSketchOn('XZ')
   |> xLineTo(slateWidthHalf + templateThickness, %, $seg04)
   |> yLine(-length002, %, $seg03)
   |> xLineTo(ZERO, %, $seg02)
-  // |> line([7.78, 11.16], %)
+  // |> line(end = [7.78, 11.16])
   |> xLine(-segLen(seg02), %)
   |> yLine(segLen(seg03), %)
   |> xLine(segLen(seg04), %)
@@ -38,11 +39,11 @@ sketch001 = startSketchOn('XZ')
        angleStart = 180,
        radius = radius - templateGap
      }, %)
-  |> lineTo([profileStartX(%), profileStartY(%)], %)
-  |> close(%)
+  |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
+  |> close()
 
 // Extrude the first sketch
-extrude001 = extrude(5, sketch001)
+extrude001 = extrude(sketch001, length = 5)
 
 // Create the second sketch
 sketch002 = startSketchOn(extrude001, 'START')
@@ -59,11 +60,11 @@ sketch002 = startSketchOn(extrude001, 'START')
        segAng(rectangleSegmentA001),
        -segLen(rectangleSegmentA001)
      ], %, $rectangleSegmentC001)
-  |> lineTo([profileStartX(%), profileStartY(%)], %)
-  |> close(%)
+  |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
+  |> close()
 
 // Extrude the second sketch
-extrude002 = extrude(7.5, sketch002)
+extrude002 = extrude(sketch002, length = 7.5)
 
 // Create the third sketch
 sketch003 = startSketchOn(extrude001, 'START')
@@ -80,8 +81,8 @@ sketch003 = startSketchOn(extrude001, 'START')
        segAng(rectangleSegmentA002),
        -segLen(rectangleSegmentA002)
      ], %)
-  |> lineTo([profileStartX(%), profileStartY(%)], %)
-  |> close(%)
+  |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
+  |> close()
 
 // Extrude the third Sketch
-extrude003 = extrude(7.5, sketch003)
+extrude003 = extrude(sketch003, length = 7.5)

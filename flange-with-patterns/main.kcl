@@ -1,6 +1,8 @@
 // Flange
 // A flange is a flat rim, collar, or rib, typically forged or cast, that is used to strengthen an object, guide it, or attach it to another object. Flanges are known for their use in various applications, including piping, plumbing, and mechanical engineering, among others.
 
+// Set units
+@settings(defaultLengthUnit = in)
 
 // Define constants
 mountingHoleDia = .625
@@ -44,7 +46,7 @@ flangeBase = startSketchOn('XY')
        center = [0, 0],
        radius = pipeDia / 2
      }, %), %)
-  |> extrude(baseThickness, %)
+  |> extrude(length = baseThickness)
 
 // Plane for top face
 topFacePlane = {
@@ -66,7 +68,7 @@ topExtrusion = startSketchOn(topFacePlane)
        center = [0, 0],
        radius = pipeDia / 2
      }, %), %)
-  |> extrude(topTotalThickness, %)
+  |> extrude(length = topTotalThickness)
 
 // Create the extrusion on the bottom of the flange base
 bottomExtrusion = startSketchOn("XY")
@@ -78,4 +80,4 @@ bottomExtrusion = startSketchOn("XY")
        center = [0, 0],
        radius = pipeDia / 2
      }, %), %)
-  |> extrude(-bottomThickness, %)
+  |> extrude(length = -bottomThickness)

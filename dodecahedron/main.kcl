@@ -1,6 +1,8 @@
 // Hollow Dodecahedron
 // A regular dodecahedron or pentagonal dodecahedron is a dodecahedron composed of regular pentagonal faces, three meeting at each vertex. This example shows constructing the individual faces of the dodecahedron and extruding inwards.
 
+// Set units
+@settings(defaultLengthUnit = in)
 
 // Input parameters
 // circumscribed radius
@@ -30,9 +32,9 @@ fn ngon(plane, numSides, radius) {
   return reduce([1..numSides], sketch001, fn(i, sg) {
       x = cos(step * i) * radius
       y = sin(step * i) * radius
-      return lineTo([x, y], sg)
+      return line(sg, endAbsolute = [x, y])
     })
-    |> close(%)
+    |> close()
 }
 
 // Define a plane for the bottom angled face
@@ -50,8 +52,8 @@ planeBottomSide = {
 }
 
 // Extrude the faces in each plane
-bottom = extrude(wallThickness, ngon("XY", 5, pentR))
-bottomSide = extrude(wallThickness, ngon(planeBottomSide, 5, pentR))
+bottom = extrude(ngon("XY", 5, pentR), length = wallThickness)
+bottomSide = extrude(ngon(planeBottomSide, 5, pentR), length = wallThickness)
 
 // Pattern the sides so we have a full dodecahedron
 bottomBowl = patternCircular3d({

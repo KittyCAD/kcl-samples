@@ -1,6 +1,8 @@
 // Poopy Shoe
 // poop shute for bambu labs printer - optimized for printing.
 
+// Set units
+@settings(defaultLengthUnit = in)
 
 wallThickness = 0.125
 wallsWidth = 3
@@ -27,7 +29,7 @@ sketch001 = startSketchOn("-YZ")
   |> xLineTo(0, %)
   |> yLineTo(segEndY(seg01), %)
   |> angledLineToY({ angle = 180 - 60, to = 0 }, %)
-  |> close(%)
+  |> close()
 part001 = revolve({
   angle = 90,
   axis = {
@@ -55,8 +57,8 @@ sketch002 = startSketchOn('-YZ')
   |> xLineTo(0, %)
   |> yLineTo(segEndY(seg02), %)
   |> angledLineToY({ angle = 180 - 60, to = 0 }, %)
-  |> close(%)
-  |> extrude(backLength - height, %)
+  |> close()
+  |> extrude(length = backLength - height)
 
 customPlane = {
   plane = {
@@ -74,8 +76,8 @@ sketch003 = startSketchOn(customPlane)
   |> startProfileAt([0, 0], %)
   |> tangentialArc({ offset = 60, radius = height }, %)
   |> angledLineToY({ angle = 60, to = 0 }, %)
-  |> close(%)
-  |> extrude(wallThickness, %)
+  |> close()
+  |> extrude(length = wallThickness)
 
 sketch004 = startSketchOn(sketch002, 'END')
   |> startProfileAt([0, 0], %)
@@ -96,8 +98,8 @@ sketch004 = startSketchOn(sketch002, 'END')
      ], %)
   |> tangentialArcTo([frontLength, exitHeight], %)
   |> yLineTo(0, %)
-  |> close(%, $seg04)
-  |> extrude(wallThickness, %)
+  |> close(tag = $seg04)
+  |> extrude(length = wallThickness)
 
 customPlane2 = {
   plane = {
@@ -121,24 +123,24 @@ sketch005 = startSketchOn(customPlane2)
      ], %)
   |> tangentialArcTo([frontLength, exitHeight], %)
   |> yLineTo(0, %, $seg03)
-  |> close(%)
-  |> extrude(wallThickness, %)
+  |> close()
+  |> extrude(length = wallThickness)
 
 sketch006 = startSketchOn(sketch005, seg03)
   |> startProfileAt([0, -1 * (backLength - height)], %)
   |> xLineTo(-exitHeight, %)
   |> yLine(-wallsWidth, %)
   |> xLineTo(0, %)
-  |> close(%)
-  |> extrude(wallThickness, %)
+  |> close()
+  |> extrude(length = wallThickness)
 
 sketch007 = startSketchOn(sketch004, 'END')
   |> startProfileAt([0, 0], %)
   |> xLineTo(wallThickness, %)
   |> yLineTo(height, %)
   |> xLineTo(0, %)
-  |> close(%)
-  |> extrude(wallsWidth - (2 * wallThickness), %)
+  |> close()
+  |> extrude(length = wallsWidth - (2 * wallThickness))
 
 customPlane3 = {
   plane = {
@@ -158,5 +160,5 @@ sketch008 = startSketchOn(customPlane3)
   |> xLineTo(frontLength, %)
   |> yLine(wallsWidth - (2 * wallThickness), %)
   |> xLineTo(wallThickness, %)
-  |> close(%)
-  |> extrude(-wallThickness, %)
+  |> close()
+  |> extrude(length = -wallThickness)

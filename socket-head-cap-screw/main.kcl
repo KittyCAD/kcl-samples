@@ -1,6 +1,8 @@
 // Socket Head Cap Screw
 // This is for a #10-24 screw that is 1.00 inches long. A socket head cap screw is a type of fastener that is widely used in a variety of applications requiring a high strength fastening solution. It is characterized by its cylindrical head and internal hexagonal drive, which allows for tightening with an Allen wrench or hex key.
 
+// Set units
+@settings(defaultLengthUnit = in)
 
 // Define constants
 screwLength = 1.0
@@ -25,7 +27,7 @@ fn capScrew(start, length, dia, capHeadLength) {
        }, %)
 
   // Extrude the screw head sketch
-  screwHead = extrude(capHeadLength, screwHeadSketch)
+  screwHead = extrude(screwHeadSketch, length = capHeadLength)
 
   // Define the sketch of the hex pattern on the screw head
   hexPatternSketch = startSketchOn(screwHead, 'end')
@@ -51,15 +53,15 @@ fn capScrew(start, length, dia, capHeadLength) {
          angle = hexStartingAngle - (4 * hexChangeAngle),
          length = hexWallLength
        }, %)
-    |> close(%)
-  hexPattern = extrude(-headLength * 0.75, hexPatternSketch)
+    |> close()
+  hexPattern = extrude(hexPatternSketch, length = -headLength * 0.75)
 
   screwBodySketch = startSketchOn(screwHead, "start")
     |> circle({
          center = [start[0], start[1]],
          radius = dia / 2
        }, %)
-  screwBody = extrude(length, screwBodySketch)
+  screwBody = extrude(screwBodySketch, length = length)
   return screwBody
 }
 

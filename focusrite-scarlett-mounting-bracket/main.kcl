@@ -1,6 +1,8 @@
 // A mounting bracket for the Focusrite Scarlett Solo audio interface
 // This is a bracket that holds an audio device underneath a desk or shelf. The audio device has dimensions of 144mm wide, 80mm length and 45mm depth with fillets of 6mm. This mounting bracket is designed to be 3D printed with PLA material
 
+// Set units
+@settings(defaultLengthUnit = mm)
 
 // define constants in mm
 radius = 6.0
@@ -17,10 +19,10 @@ tabThk = 4
 fn rectShape(pos, w, l) {
   rr = startSketchOn('xy')
     |> startProfileAt([pos[0] - (w / 2), pos[1] - (l / 2)], %)
-    |> lineTo([pos[0] + w / 2, pos[1] - (l / 2)], %, $edge01)
-    |> lineTo([pos[0] + w / 2, pos[1] + l / 2], %, $edge02)
-    |> lineTo([pos[0] - (w / 2), pos[1] + l / 2], %, $edge03)
-    |> close(%, $edge04)
+    |> line(endAbsolute = [pos[0] + w / 2, pos[1] - (l / 2)], tag = $edge01)
+    |> line(endAbsolute = [pos[0] + w / 2, pos[1] + l / 2], tag = $edge02)
+    |> line(endAbsolute = [pos[0] - (w / 2), pos[1] + l / 2], tag = $edge03)
+    |> close(tag = $edge04)
   return rr
 }
 
@@ -38,21 +40,21 @@ bracketPlane = {
 fn bracketSketch(w, d, t) {
   s = startSketchOn(bracketPlane)
     |> startProfileAt([-w / 2 - t, d + t], %)
-    |> lineTo([-w / 2 - t, -t], %, $edge1)
-    |> lineTo([w / 2 + t, -t], %, $edge2)
-    |> lineTo([w / 2 + t, d + t], %, $edge3)
-    |> lineTo([w / 2, d + t], %, $edge4)
-    |> lineTo([w / 2, 0], %, $edge5)
-    |> lineTo([-w / 2, 0], %, $edge6)
-    |> lineTo([-w / 2, d + t], %, $edge7)
-    |> close(%, $edge8)
+    |> line(endAbsolute = [-w / 2 - t, -t], tag = $edge1)
+    |> line(endAbsolute = [w / 2 + t, -t], tag = $edge2)
+    |> line(endAbsolute = [w / 2 + t, d + t], tag = $edge3)
+    |> line(endAbsolute = [w / 2, d + t], tag = $edge4)
+    |> line(endAbsolute = [w / 2, 0], tag = $edge5)
+    |> line(endAbsolute = [-w / 2, 0], tag = $edge6)
+    |> line(endAbsolute = [-w / 2, d + t], tag = $edge7)
+    |> close(tag = $edge8)
   return s
 }
 
 // build the body of the bracket
 bs = bracketSketch(width, depth, thk)
 bracketBody = bs
-  |> extrude(length + 2 * thk, %)
+  |> extrude(length = length + 2 * thk)
   |> fillet({
        radius = radius,
        tags = [
@@ -76,10 +78,10 @@ tabPlane = {
 // build the tabs of the mounting bracket (right side)
 tabsR = startSketchOn(tabPlane)
   |> startProfileAt([width / 2 + thk, length / 2 + thk], %)
-  |> line([tabWidth, -tabLength / 3], %, $edge11)
-  |> line([0, -tabLength / 3 * 2], %, $edge12)
-  |> line([-tabWidth, -tabLength / 3], %, $edge13)
-  |> close(%, $edge14)
+  |> line(end = [tabWidth, -tabLength / 3], tag = $edge11)
+  |> line(end = [0, -tabLength / 3 * 2], tag = $edge12)
+  |> line(end = [-tabWidth, -tabLength / 3], tag = $edge13)
+  |> close(tag = $edge14)
   |> hole(circle({
        center = [
          width / 2 + thk + tabWidth / 2,
@@ -87,7 +89,7 @@ tabsR = startSketchOn(tabPlane)
        ],
        radius = holeDiam / 2
      }, %), %)
-  |> extrude(-tabThk, %)
+  |> extrude(length = -tabThk)
   |> fillet({
        radius = holeDiam / 2,
        tags = [
@@ -104,10 +106,10 @@ tabsR = startSketchOn(tabPlane)
 // build the tabs of the mounting bracket (left side)
 tabsL = startSketchOn(tabPlane)
   |> startProfileAt([-width / 2 - thk, length / 2 + thk], %)
-  |> line([-tabWidth, -tabLength / 3], %, $edge21)
-  |> line([0, -tabLength / 3 * 2], %, $edge22)
-  |> line([tabWidth, -tabLength / 3], %, $edge23)
-  |> close(%, $edge24)
+  |> line(end = [-tabWidth, -tabLength / 3], tag = $edge21)
+  |> line(end = [0, -tabLength / 3 * 2], tag = $edge22)
+  |> line(end = [tabWidth, -tabLength / 3], tag = $edge23)
+  |> close(tag = $edge24)
   |> hole(circle({
        center = [
          -width / 2 - thk - (tabWidth / 2),
@@ -115,7 +117,7 @@ tabsL = startSketchOn(tabPlane)
        ],
        radius = holeDiam / 2
      }, %), %)
-  |> extrude(-tabThk, %)
+  |> extrude(length = -tabThk)
   |> fillet({
        radius = holeDiam / 2,
        tags = [
@@ -142,16 +144,16 @@ retPlane = {
 // build the retention bump in the front
 retFront = startSketchOn(retPlane)
   |> startProfileAt([-length / 2 - thk, 0], %)
-  |> line([0, thk], %)
-  |> line([thk, -thk], %)
-  |> close(%)
-  |> extrude(width - 40, %)
+  |> line(end = [0, thk])
+  |> line(end = [thk, -thk])
+  |> close()
+  |> extrude(length = width - 40)
 
 // build the retention bump in the back
 retBack = startSketchOn(retPlane)
   |> startProfileAt([length / 2 + thk, 0], %)
-  |> line([0, thk], %)
-  |> line([-thk, 0], %)
-  |> line([0, -thk], %)
-  |> close(%)
-  |> extrude(width - 40, %)
+  |> line(end = [0, thk])
+  |> line(end = [-thk, 0])
+  |> line(end = [0, -thk])
+  |> close()
+  |> extrude(length = width - 40)
