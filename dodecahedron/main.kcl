@@ -24,21 +24,8 @@ edgeL = 4 * circR / (sqrt(3) * (1 + sqrt(5)))
 // pentagon radius
 pentR = edgeL / 2 / sin(toRadians(36))
 
-// define a function for a polygon
-fn ngon(plane, numSides, radius) {
-  step = 1 / numSides * tau()
-  sketch001 = startSketchOn(plane)
-    |> startProfileAt([cos(0) * radius, sin(0) * radius], %)
-  return reduce([1..numSides], sketch001, fn(i, sg) {
-      x = cos(step * i) * radius
-      y = sin(step * i) * radius
-      return line(sg, endAbsolute = [x, y])
-    })
-    |> close()
-}
-
 // Define a plane for the bottom angled face
-planeBottomSide = {
+plane = {
   plane = {
     origin = [
       -inscR * cos(toRadians(toDegrees(dihedral) - 90)),
@@ -51,9 +38,26 @@ planeBottomSide = {
   }
 }
 
+// Create a regular pentagon inscribed in a circle of radius pentR
+bottomFace = startSketchOn('XY')
+  |> polygon({
+       radius = pentR,
+       numSides = 5,
+       center = [0, 0],
+       inscribed = true
+     }, %)
+
+bottomSideFace = startSketchOn(plane)
+  |> polygon({
+       radius = pentR,
+       numSides = 5,
+       center = [0, 0],
+       inscribed = true
+     }, %)
+
 // Extrude the faces in each plane
-bottom = extrude(ngon("XY", 5, pentR), length = wallThickness)
-bottomSide = extrude(ngon(planeBottomSide, 5, pentR), length = wallThickness)
+bottom = extrude(bottomFace, length = wallThickness)
+bottomSide = extrude(bottomSideFace, length = wallThickness)
 
 // Pattern the sides so we have a full dodecahedron
 bottomBowl = patternCircular3d({
