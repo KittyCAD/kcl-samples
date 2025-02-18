@@ -86,7 +86,7 @@ fillet({
 }, flipper)
 
 // create a sketch on the "XZ" plane offset by half the thickness
-sketch001 = startSketchOn(offsetPlane("XZ", -handleWidth / 2))
+sketch001 = startSketchOn(offsetPlane("XZ", offset = -handleWidth / 2))
 
 // create a profile of the spatula handle
 handleProfile = startProfileAt([0.0, flipperThickness], sketch001)

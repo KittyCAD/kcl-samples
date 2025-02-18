@@ -12,12 +12,12 @@ metalConstant = 50
 roughnessConstant = 50
 
 // Create planes for 6 sides of a cube
-bluePlane = offsetPlane('XY', halfSize)
-yellowPlane = offsetPlane('XY', -halfSize)
-greenPlane = offsetPlane('XZ', -halfSize)
-purplePlane = offsetPlane('-XZ', -halfSize)
-redPlane = offsetPlane('YZ', halfSize)
-tealPlane = offsetPlane('YZ', -halfSize)
+bluePlane = offsetPlane('XY', offset = halfSize)
+yellowPlane = offsetPlane('XY', offset = -halfSize)
+greenPlane = offsetPlane('XZ', offset = -halfSize)
+purplePlane = offsetPlane('-XZ', offset = -halfSize)
+redPlane = offsetPlane('YZ', offset = halfSize)
+tealPlane = offsetPlane('YZ', offset = -halfSize)
 
 // Sketch a rectangle centered at the origin of the profile
 fn sketchRectangle (profile, color) {

@@ -14,11 +14,11 @@ import lugCount from 'globals.kcl'
 carRotor
 carWheel
 lugNut
-  |> patternCircular3d({
+  |> patternCircular3d(
      arcDegrees = 360,
      axis = [0, 1, 0],
      center = [0, 0, 0],
      instances = lugCount,
      rotateDuplicates = false
-   }, %)
+   )
   
