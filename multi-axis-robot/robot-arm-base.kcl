@@ -78,5 +78,5 @@ sketch4B = startSketchOn(extrude001, 'END')
        rotateDuplicates = true
      )
 
-export robotArmBase = extrude(sketch4B, length = -basePlateThickness)
+extrude(sketch4B, length = -basePlateThickness)
   |> appearance(color = "#754110", roughness = 90, metalness = 90)
