@@ -17,17 +17,17 @@ import armRest from "boat-parts.kcl"
 
 // Create the dividers, these hold the seat and back slats
 divider("YZ")
-divider(offsetPlane("-YZ", benchLength / 2))
-divider(offsetPlane("YZ", benchLength / 2))
+divider(offsetPlane("-YZ", offset = benchLength / 2))
+divider(offsetPlane("YZ", offset = benchLength / 2))
 
 // Create the connectors to join the dividers
-connector(offsetPlane("YZ", -benchLength / 2), benchLength)
+connector(offsetPlane("YZ", offset = -benchLength / 2), benchLength)
 
 // Create the seat slats
-seatSlats(offsetPlane("YZ", -benchLength / 2 - dividerThickness / 2), benchLength + dividerThickness)
+seatSlats(offsetPlane("YZ", offset = -benchLength / 2 - dividerThickness / 2), benchLength + dividerThickness)
 
 // Create the back slats
-backSlats(offsetPlane("YZ", -benchLength / 2 - dividerThickness / 2), benchLength + dividerThickness)
+backSlats(offsetPlane("YZ", offset = -benchLength / 2 - dividerThickness / 2), benchLength + dividerThickness)
 
 // Create the arm rests
 armRest("-YZ", benchLength / 2)
