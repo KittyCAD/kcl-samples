@@ -167,5 +167,5 @@ sketch024 = startSketchOn(extrude022, 'START')
   |> line(endAbsolute = [profileStartX(%), profileStartY(%)])
   |> close()
 
-export j3RobotArm = extrude(sketch024, length = -1.5)
+extrude(sketch024, length = -1.5)
   |> appearance(color = "#6572b3", metalness = 90, roughness = 90)
