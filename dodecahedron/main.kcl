@@ -60,28 +60,31 @@ bottom = extrude(bottomFace, length = wallThickness)
 bottomSide = extrude(bottomSideFace, length = wallThickness)
 
 // Pattern the sides so we have a full dodecahedron
-bottomBowl = patternCircular3d({
+bottomBowl = patternCircular3d(
+  bottomSide,
   instances = 5,
   axis = [0, 0, 1],
   center = [0, 0, 0],
   arcDegrees = 360,
   rotateDuplicates = true
-}, bottomSide)
+)
 
 // pattern the bottom to create the top face
-patternCircular3d({
+patternCircular3d(
+  bottom,
   instances = 2,
   axis = [0, 1, 0],
   center = [0, 0, inscR],
   arcDegrees = 360,
   rotateDuplicates = true
-}, bottom)
+)
 
 // pattern the bottom angled faces to create the top
-patternCircular3d({
+patternCircular3d(
+  bottomBowl,
   instances = 2,
   axis = [0, 1, 0],
   center = [0, 0, inscR],
   arcDegrees = 360,
   rotateDuplicates = true
-}, bottomBowl)
+)

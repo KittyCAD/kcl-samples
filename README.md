@@ -8,6 +8,8 @@ The samples can be browsed in our documentation at <https://zoo.dev/docs/kcl-sam
 
 ## Guidelines for adding samples
 
+Merge PRs to the `next` branch, not main. When we release Modeling App, we will merge this repo's `next` into `main`. This way, `main` is always compatible with the latest ZMA release.
+
 KCL samples conform to a set of style guidelines to ensure consistency and readability.
 
 1. **File Naming:** Name your KCL files descriptively and concisely, using hyphens to separate words (e.g., flange.kcl, ball-bearing.kcl).
@@ -23,6 +25,8 @@ KCL samples conform to a set of style guidelines to ensure consistency and reada
 When you submit a PR to add or modify KCL samples, images and STEP files will be generated and added to the repository automatically.
 
 ---
+#### [3d-boaty](3d-boaty/main.kcl) ([step](step/3d-boaty.step)) ([screenshot](screenshots/3d-boaty.png))
+[![3d-boaty](screenshots/3d-boaty.png)](3d-boaty/main.kcl)
 #### [80-20-rail](80-20-rail/main.kcl) ([step](step/80-20-rail.step)) ([screenshot](screenshots/80-20-rail.png))
 [![80-20-rail](screenshots/80-20-rail.png)](80-20-rail/main.kcl)
 #### [a-parametric-bearing-pillow-block](a-parametric-bearing-pillow-block/main.kcl) ([step](step/a-parametric-bearing-pillow-block.step)) ([screenshot](screenshots/a-parametric-bearing-pillow-block.png))

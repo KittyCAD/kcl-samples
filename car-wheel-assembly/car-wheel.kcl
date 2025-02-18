@@ -39,12 +39,12 @@ lugClearance = startSketchOn(lugExtrusion, 'END')
        center = [lugSpacing / 2, 0],
        radius = 1.2 / 2
      }, %)
-  |> patternCircular2d({
+  |> patternCircular2d(
        arcDegrees = 360,
        center = [0, 0],
        instances = lugCount,
        rotateDuplicates = true
-     }, %)
+     )
   |> extrude(length = -wheelWidth / 10)
 
 // Create the circular pattern for the lug holes
@@ -53,12 +53,12 @@ lugHoles = startSketchOn(lugBase, 'END')
        center = [lugSpacing / 2, 0],
        radius = 16 * mm() / 2
      }, %)
-  |> patternCircular2d({
+  |> patternCircular2d(
        arcDegrees = 360,
        center = [0, 0],
        instances = lugCount,
        rotateDuplicates = true
-     }, %)
+     )
   |> extrude(length = -wheelWidth / 20)
   |> appearance(color = "#ffffff", metalness = 0, roughness = 0)
 
@@ -140,13 +140,13 @@ fn spoke(spokeGap, spokeAngle, spokeThickness) {
 
   // Circular pattern spokes
   spokePattern = extrude(spokeProfile, length = spokeThickness)
-    |> patternCircular3d({
+    |> patternCircular3d(
          axis = [0, 1, 0],
          center = [0, -2000, 0],
          instances = spokeCount,
          arcDegrees = 360,
          rotateDuplicates = true
-       }, %)
+       )
     |> appearance(color = "#ffffff", metalness = 0, roughness = 0)
   return spokePattern
 }
