@@ -155,7 +155,7 @@ spoke(spokeGap, spokeAngle, spokeThickness)
 spoke(-spokeGap, -spokeAngle, -spokeThickness)
 
 // Define and revolve wheel exterior
-wheelOuterRevolve = startSketchOn('XY')
+startSketchOn('XY')
   |> startProfileAt([
        wheelDiameter / 2,
        -wheelWidth + backSpacing + offset
