@@ -92,5 +92,5 @@ brakeCaliperSketch = startSketchOn(brakeCaliperPlane)
   |> close()
 
 // Revolve the brake caliper sketch
-export brakeCaliper = revolve({ axis = "Y", angle = -70 }, brakeCaliperSketch)
+revolve({ axis = "Y", angle = -70 }, brakeCaliperSketch)
   |> appearance(color = "#c82d2d", metalness = 90, roughness = 90)

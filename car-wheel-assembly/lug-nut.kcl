@@ -39,4 +39,4 @@ fn lug(plane, length, diameter) {
   return lugSketch
 }
 
-export lugNut = lug(customPlane, lugLength, lugDiameter)
+lug(customPlane, lugLength, lugDiameter)
