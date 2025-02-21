@@ -62,7 +62,7 @@ part = rs
        radius = centerHoleDiameter
      }, %), %)
   |> extrude(length = plateThickness)
-  |> fillet({
+  |> fillet(
        radius = filletRadius,
        tags = [
          getPreviousAdjacentEdge(rs.tags.edge1),
@@ -70,4 +70,4 @@ part = rs
          getPreviousAdjacentEdge(rs.tags.edge3),
          getPreviousAdjacentEdge(rs.tags.edge4)
        ]
-     }, %)
+     )

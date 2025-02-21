@@ -23,7 +23,7 @@ sketch001 = startSketchOn('XY')
   |> line(endAbsolute = [profileStartX(%), profileStartY(%)], tag = $rectangleSegmentD001)
   |> close()
 extrude001 = extrude(sketch001, length = basePlateThickness)
-  |> chamfer({
+  |> chamfer(
        length = baseChamfer,
        tags = [
          getNextAdjacentEdge(rectangleSegmentA001),
@@ -31,16 +31,16 @@ extrude001 = extrude(sketch001, length = basePlateThickness)
          getNextAdjacentEdge(rectangleSegmentC001),
          getNextAdjacentEdge(rectangleSegmentD001)
        ]
-     }, %)
+     )
 
 // Base Motor for actuating first joint
 sketch002 = startSketchOn(extrude001, 'END')
   |> circle({ center = [0, 0], radius = 4 }, %, $referenceEdge)
 extrude002 = extrude(sketch002, length = baseHeight - basePlateThickness - 1.5)
-  |> fillet({
+  |> fillet(
        radius = 0.1,
        tags = [getOppositeEdge(referenceEdge)]
-     }, %)
+     )
 sketch003 = startSketchOn(extrude002, 'END')
   |> circle({ center = [0, 0], radius = 0.5 }, %)
 extrude003 = extrude(sketch003, length = 1)
