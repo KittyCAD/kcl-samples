@@ -197,7 +197,7 @@ fn rail8020(originStart, railHeight, railLength) {
          radius = .205 * railHeight / 2
        }, %), %)
     |> extrude(length = railLength)
-    |> fillet({
+    |> fillet(
          radius = 0.06,
          tags = [
            getNextAdjacentEdge(edge3),
@@ -217,8 +217,8 @@ fn rail8020(originStart, railHeight, railLength) {
            getNextAdjacentEdge(edge29),
            getNextAdjacentEdge(edge30)
          ]
-       }, %)
-    |> fillet({
+       )
+    |> fillet(
          radius = 0.03,
          tags = [
            getNextAdjacentEdge(edge1),
@@ -238,7 +238,7 @@ fn rail8020(originStart, railHeight, railLength) {
            getNextAdjacentEdge(edge31),
            getNextAdjacentEdge(edge32)
          ]
-       }, %)
+       )
   return sketch001
 }
 
