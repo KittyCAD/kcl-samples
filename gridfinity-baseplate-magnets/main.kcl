@@ -169,7 +169,8 @@ magnetProfile = magnetBase("XY")
 magnetHolesExtrude = extrude(magnetProfile, length = -magDepth)
 
 // add a fillet to the extrusion
-magnetHolesExtrudeFillets = fillet({
+magnetHolesExtrudeFillets = fillet(
+  magnetHolesExtrude,
   radius = cornerRadius,
   tags = [
     getNextAdjacentEdge(magnetHolesExtrude.sketch.tags.line001),
@@ -177,7 +178,7 @@ magnetHolesExtrudeFillets = fillet({
     getNextAdjacentEdge(magnetHolesExtrude.sketch.tags.line003),
     getPreviousAdjacentEdge(magnetHolesExtrude.sketch.tags.line003)
   ]
-}, magnetHolesExtrude)
+)
 
 // create a profile without the holes for the magnets
 magnetProfileNoMagnets = magnetBase(offsetPlane("XY", offset = -magDepth))
@@ -186,7 +187,8 @@ magnetProfileNoMagnets = magnetBase(offsetPlane("XY", offset = -magDepth))
 magnetCutoutExtrude = extrude(magnetProfileNoMagnets, length = -magDepth)
 
 // add a fillet to the extrusion
-magnetCutoutExtrudeFillets = fillet({
+magnetCutoutExtrudeFillets = fillet(
+  magnetCutoutExtrude,
   radius = cornerRadius,
   tags = [
     getNextAdjacentEdge(magnetCutoutExtrude.sketch.tags.line001),
@@ -194,7 +196,7 @@ magnetCutoutExtrudeFillets = fillet({
     getNextAdjacentEdge(magnetCutoutExtrude.sketch.tags.line003),
     getPreviousAdjacentEdge(magnetCutoutExtrude.sketch.tags.line003)
   ]
-}, magnetCutoutExtrude)
+)
 
 // pattern the magnet cutouts with holes
 patternLinear3d(
