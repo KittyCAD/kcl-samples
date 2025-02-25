@@ -1,0 +1,137 @@
+import variables from "vars.kcl"
+import pitchedStud, flatten, verticalStudGeo, studWithoutAngles from "studUtils.kcl"
+
+v = variables()
+coopWidth = v.coopWidth
+studWidth = v.studWidth
+coopLength = v.coopLength
+interStudDistance = v.interStudDistance
+
+export fn foundation() {
+  fixedStuds = [
+    studWithoutAngles(v.backPlane, [-v.studDepth, 0, -v.studDepth], [v.studWidth, v.studDepth, v.coopLength], 'foundationNestingBoxSideOutside'),
+    studWithoutAngles(v.backPlane, [
+  -v.studDepth,
+  v.totalLength - v.studWidth,
+  -v.studDepth
+], [v.studWidth, v.studDepth, v.coopLength], 'foundationRunEndSideOutside'),
+    studWithoutAngles(v.backPlane, [
+  -v.studDepth + v.studWidth,
+  v.studWidth,
+  -v.studDepth
+], [
+  v.studWidth,
+  v.studDepth,
+  v.coopLength - (v.studWidth * 2)
+], 'foundationNestingBoxSideInside'),
+    studWithoutAngles(v.backPlane, [
+  -v.studDepth + v.studWidth,
+  v.totalLength - (v.studWidth * 2),
+  -v.studDepth
+], [
+  v.studWidth,
+  v.studDepth,
+  v.coopLength - (v.studWidth * 2)
+], 'foundationRunEndSideInside'),
+    studWithoutAngles(v.backPlane, [
+  -v.studDepth + v.studWidth,
+  v.studWidth,
+  -v.studDepth
+], [
+  v.totalLength / 2 - v.studWidth - v.foundationStudOverlap,
+  v.studDepth,
+  -v.studWidth
+], 'foundationBackOutside1'),
+    studWithoutAngles(v.backPlane, [
+  -v.studDepth + v.studWidth,
+  v.totalLength / 2 - v.foundationStudOverlap,
+  -v.studDepth
+], [
+  v.totalLength / 2 - v.studWidth + v.foundationStudOverlap,
+  v.studDepth,
+  -v.studWidth
+], 'foundationBackOutside2'),
+    studWithoutAngles(v.backPlane, [
+  -v.studDepth + v.studWidth * 2,
+  v.studWidth * 2,
+  -v.studDepth
+], [
+  v.totalLength / 2 - (v.studWidth * 2) + v.foundationStudOverlap,
+  v.studDepth,
+  -v.studWidth
+], 'foundationBackInside1'),
+    studWithoutAngles(v.backPlane, [
+  -v.studDepth + v.studWidth * 2,
+  v.totalLength / 2 + v.foundationStudOverlap,
+  -v.studDepth
+], [
+  v.totalLength / 2 - (v.studWidth * 2) - v.foundationStudOverlap,
+  v.studDepth,
+  -v.studWidth
+], 'foundationBackInside2'),
+    studWithoutAngles(v.backPlane, [
+  -v.studDepth + v.coopLength,
+  v.studWidth,
+  -v.studDepth
+], [
+  v.totalLength / 2 - v.studWidth - v.foundationStudOverlap,
+  v.studDepth,
+  -v.studWidth
+], 'foundationFrontOutside1'),
+    studWithoutAngles(v.backPlane, [
+  -v.studDepth + v.coopLength,
+  v.studWidth + v.totalLength / 2 - v.studWidth - v.foundationStudOverlap,
+  -v.studDepth
+], [
+  v.totalLength / 2 - v.studWidth + v.foundationStudOverlap,
+  v.studDepth,
+  -v.studWidth
+], 'foundationFrontOutside2'),
+    studWithoutAngles(v.backPlane, [
+  -v.studDepth - v.studWidth + v.coopLength,
+  v.studWidth * 2,
+  -v.studDepth
+], [
+  v.totalLength / 2 - (v.studWidth * 2) + v.foundationStudOverlap,
+  v.studDepth,
+  -v.studWidth
+], 'foundationFrontInside1'),
+    studWithoutAngles(v.backPlane, [
+  -v.studDepth + v.coopLength - v.studWidth,
+  v.totalLength / 2 + v.foundationStudOverlap,
+  -v.studDepth
+], [
+  v.totalLength / 2 - (v.studWidth * 2) - v.foundationStudOverlap,
+  v.studDepth,
+  -v.studWidth
+], 'foundationFrontInside2'),
+    studWithoutAngles(v.backPlane, [
+  -v.studDepth + studWidth * 2,
+  coopWidth - studWidth,
+  -v.studDepth
+], [
+  v.studWidth,
+  v.studDepth,
+  v.coopLength - (studWidth * 4)
+], 'foundationRunSideFloorSupport')
+  ]
+  studCount = floor(coopLength / interStudDistance)
+  fn floorStudPlacer(index) {
+    position = index * interStudDistance
+    return studWithoutAngles(v.backPlane, [
+      -v.studDepth + v.studWidth + position,
+      v.studWidth * 2,
+      -v.studDepth
+    ], [
+      coopWidth - (studWidth * 3),
+      v.studDepth,
+      -v.studWidth
+    ], 'foundationCoopJoist')
+  }
+  floorStuds = map([0..studCount], floorStudPlacer)
+  return flatten([fixedStuds, floorStuds])
+}
+
+// example, uncomment to check, but should be left comment
+// otherwise causes problem importing elsewhere
+// aGroupOfStudForCreatingCutList = foundation()

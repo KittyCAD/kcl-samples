@@ -1,0 +1,215 @@
+import variables from "vars.kcl"
+
+v = variables()
+
+export fn concat(arr1, arr2) {
+  fn pusher(item, prevArr) {
+    return push(prevArr, item)
+  }
+  return reduce(arr2, arr1, pusher)
+}
+
+export fn flatten(arr) {
+  fn flatMapReducer(innerArr, prevFlattenArr) {
+    return concat(prevFlattenArr, innerArr)
+  }
+  return reduce(arr, [], flatMapReducer)
+}
+
+export fn studWithoutAngles(plane, origin, sizes, name) {
+  sketch004 = startSketchOn({
+         plane = {
+           origin = [
+             plane.plane.origin[0] + origin[0],
+             plane.plane.origin[1] + origin[1],
+             plane.plane.origin[2] + origin[2]
+           ],
+           xAxis = plane.plane.xAxis,
+           yAxis = plane.plane.yAxis,
+           zAxis = plane.plane.zAxis
+         }
+       })
+    |> startProfileAt([0, 0], %)
+    |> angledLine([0, sizes[0]], %, $rectangleSegmentA002)
+    |> angledLine([
+         segAng(rectangleSegmentA002) - 90,
+         -sizes[1]
+       ], %, $rectangleSegmentB002)
+    |> angledLine([
+         segAng(rectangleSegmentA002),
+         -segLen(rectangleSegmentA002)
+       ], %, $rectangleSegmentC002)
+    |> lineTo([profileStartX(%), profileStartY(%)], %)
+    |> close(%)
+  extrude001 = extrude(sizes[2], sketch004)
+  return {
+    // stud = extrude001,
+    // safeCutLength = max(sizes[0], sizes[1], sizes[2]),
+    lengthBeforeAngles = max(abs(sizes[0]), abs(sizes[1]), abs(sizes[2])),
+    name = name,
+    studType = [v.studWidth, "by", v.studDepth],
+    endCut1 = 0,
+    endCut2 = 0,
+    // this function always returns 0 degree cuts so angleRelevantWidth doesn't matter
+    angleRelevantWidth = v.studDepth
+  }
+}
+
+// deprecated should port to use pitchStud2 and delete this
+export fn pitchedStud(plane, shouldReverse) {
+  coopHightMinusStud = v.coopStartHeight - sin(toRadians(v.coopRoofPitch))
+  changeValues = if shouldReverse {
+    {
+      multiplier = -1,
+      startX = v.coopWidth
+    }
+  } else {
+    { multiplier = 1, startX = 0 }
+  }
+  sketch003 = startSketchOn(plane)
+    |> startProfileAt([
+         changeValues.startX,
+         coopHightMinusStud
+       ], %)
+    |> angledLineOfXLength([
+         v.coopRoofPitch * changeValues.multiplier,
+         v.coopWidthHalf * changeValues.multiplier
+       ], %, $seg02)
+    |> angledLineThatIntersects({
+         angle = 90,
+         offset = v.studWidth * changeValues.multiplier,
+         intersectTag = seg02
+       }, %)
+    |> angledLine([segAng(seg02) + 180, segLen(seg02)], %)
+    |> lineTo([profileStartX(%), profileStartY(%)], %)
+    |> close(%)
+  extrude002 = extrude(-v.studDepth, sketch003)
+  safeCutLength = v.coopWidthHalf / cos(toRadians(v.coopRoofPitch)) + v.studWidth * tan(toRadians(v.coopRoofPitch))
+  lengthBeforeAngles = v.coopWidthHalf / cos(toRadians(v.coopRoofPitch)) - (v.studWidth * tan(toRadians(v.coopRoofPitch)))
+  return {
+    // stud = extrude002,
+    // safeCutLength = safeCutLength,
+    lengthBeforeAngles = lengthBeforeAngles,
+    name = "backPitchedStud",
+    studType = [v.studWidth, "by", v.studDepth],
+    angleRelevantWidth = v.studWidth,
+    endCut1 = v.coopRoofPitch,
+    endCut2 = v.coopRoofPitch
+  }
+}
+export fn pitchedStud2(name, plane, origin, height, depth, length, angle) {
+  coopHightMinusStud = v.coopStartHeight - sin(toRadians(v.coopRoofPitch))
+  sketch003 = startSketchOn({
+         plane = {
+           origin = [
+             plane.plane.origin[0] + origin[0],
+             plane.plane.origin[1] + origin[1],
+             plane.plane.origin[2] + origin[2]
+           ],
+           xAxis = plane.plane.xAxis,
+           yAxis = plane.plane.yAxis,
+           zAxis = plane.plane.zAxis
+         }
+       })
+    |> startProfileAt([0, 0], %)
+    |> angledLine([angle, length], %, $seg02)
+    |> angledLineThatIntersects({
+         angle = 90,
+         offset = height,
+         intersectTag = seg02
+       }, %)
+    |> angledLine([segAng(seg02) + 180, segLen(seg02)], %)
+    |> lineTo([profileStartX(%), profileStartY(%)], %)
+    |> close(%)
+  extrude002 = extrude(-depth, sketch003)
+  // this safeCutLength was always wrong, copy paste from pitchedStud
+  // safeCutLength = coopWidthHalf / cos(toRadians(angle)) + height * tan(toRadians(angle))
+  lengthBeforeAngles = length - abs(height * tan(toRadians(angle)))
+  displayAngle = if angle > 90 {
+    180 - angle
+  } else {
+    angle
+  }
+  return {
+    // stud = extrude002,
+    // safeCutLength = safeCutLength,
+    lengthBeforeAngles = lengthBeforeAngles,
+    name = name,
+    studType = [
+      min(height, depth),
+      "by",
+      max(height, depth)
+    ],
+    angleRelevantWidth = height,
+    endCut1 = displayAngle,
+    endCut2 = displayAngle
+  }
+}
+
+export fn verticalStudGeo(plane, origin, position, width, depth, flip, name, angle, startHeight) {
+  studLengthShortSide = startHeight + position * tan(toRadians(angle)) - origin[2]
+  flipMultiple = if flip {
+    -1
+  } else {
+    1
+  }
+  sketch004 = startSketchOn({
+         plane = {
+           origin = [
+             plane.plane.origin[0] + origin[0],
+             plane.plane.origin[1] + origin[1],
+             plane.plane.origin[2] + origin[2]
+           ],
+           xAxis = plane.plane.xAxis,
+           yAxis = plane.plane.yAxis,
+           zAxis = plane.plane.zAxis
+         }
+       })
+    |> startProfileAt([position * flipMultiple, 0], %)
+    |> yLine(studLengthShortSide, %)
+    |> angledLineOfXLength({
+         angle = angle * flipMultiple,
+         length = width * flipMultiple
+       }, %)
+    |> yLineTo(profileStartY(%), %)
+    |> lineTo([profileStartX(%), profileStartY(%)], %)
+    |> close(%)
+    |> extrude(-depth, %)
+  lengthBeforeAngles = if width < 0 {
+    studLengthShortSide - abs(tan(toRadians(angle)) * width)
+  } else {
+    studLengthShortSide
+  }
+  return {
+    // safeCutLength = studLengthShortSide + tan(toRadians(angle)) * width,
+    lengthBeforeAngles = lengthBeforeAngles,
+    // stud = extrude(-depth, sketch004),
+    studType = [
+      min(width, depth),
+      "by",
+      max(width, depth)
+    ],
+    endCut1 = 0,
+    endCut2 = angle,
+    angleRelevantWidth = width,
+    name = name
+  }
+}
+
+// examples to check things work as expected
+// they should be commented out normally though as they cause problems when importing otherwise
+// pitchedStud(v.frontPlane, false)
+// pitchedStud(v.frontPlane, true)
+
+
+// studWithoutAngles(v.frontPlane, [0, 0, 0], [v.coopFrameLength, v.studWidth, -v.studDepth], 'outsideFrameBase')
+
+
+// pitchedStud2("backEndRafterR", v.frontPlane, [
+// -v.backEaveOverHang,
+// 450,
+// 300 + 60
+// ], v.studDepth, v.studWidth, 20, 30)
+
+
+// verticalStudGeo(v.frontPlane, [0, 0, v.studWidth], v.studWidth, v.studDepth, v.studWidth, false, 'frontCornerStudL', v.coopRoofPitch, v.coopStartHeight)

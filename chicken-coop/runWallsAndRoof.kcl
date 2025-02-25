@@ -1,0 +1,393 @@
+import variables from "vars.kcl"
+import pitchedStud, pitchedStud2, flatten, verticalStudGeo, studWithoutAngles, concat from "studUtils.kcl"
+import rafterBrace from "rafterBrace.kcl"
+
+slimRender = false
+
+v = variables()
+runRafterCount = v.runRafterCount
+interRafterDistance = v.interRafterDistance
+runEndPlane = v.runEndPlane
+coopLength = v.coopLength
+runDoorWidth = v.runDoorWidth
+studWidth = v.studWidth
+studDepth = v.studDepth
+runRoofPitchR = v.runRoofPitchR
+runRoofPitch = v.runRoofPitch
+heightOfRunEndWall = v.heightOfRunEndWall
+studThicknessAtRunAngle = v.studThicknessAtRunAngle
+runPitchedStudLen = v.runPitchedStudLen
+runDoorHeight = v.runDoorHeight
+runHorzBraceHeight = v.runHorzBraceHeight
+studTallSideThicknessAtRunAngle = v.studTallSideThicknessAtRunAngle
+runSideEaveOverHang = v.runSideEaveOverHang
+rafterCommonZ = v.rafterCommonZ
+runRafterCommonHorizontalDistance = v.runRafterCommonHorizontalDistance
+ridgeWidth = v.ridgeWidth
+runRafterRatio = v.runRafterRatio
+frontRoofAngle = v.frontRoofAngle
+xCoordForRunHorzSupportFront = v.xCoordForRunHorzSupportFront
+xCoordForRunHorzSupportBack = v.xCoordForRunHorzSupportBack
+heightToNotchIntoRafters = v.heightToNotchIntoRafters
+ridgeCenteringX = v.ridgeCenteringX
+ridgeYstartingAtRunEndFacia = v.ridgeYstartingAtRunEndFacia
+runRidgeHeight = v.runRidgeHeight
+ridgeDepth = v.ridgeDepth
+totalLength = v.totalLength
+coopWidth = v.coopWidth
+horzComponentOfRidgeOverCoopRoof = v.horzComponentOfRidgeOverCoopRoof
+horzThicknessOfCoopStud = v.horzThicknessOfCoopStud
+coopRoofPitch = v.coopRoofPitch
+sideEaveOverHang = v.sideEaveOverHang
+coopRoofPitchR = v.coopRoofPitchR
+horizontalLengthAlongRunFromvalleyToTip = v.horizontalLengthAlongRunFromvalleyToTip
+angleFromRunRoofToCoopRoof = v.angleFromRunRoofToCoopRoof
+runRafterBraceLength = v.runRafterBraceLength
+
+battenW = 35
+battenD = 70
+
+fn runRidge() {
+  ridgeLength = totalLength - coopWidth - studWidth + horzComponentOfRidgeOverCoopRoof - horzThicknessOfCoopStud
+  ridgeGeo = startSketchOn({
+         plane = {
+           origin = [
+             ridgeCenteringX,
+             ridgeYstartingAtRunEndFacia,
+             runRidgeHeight
+           ],
+           xAxis = [0, 1, 0],
+           yAxis = [0, 0, 1],
+           zAxis = [1, 0, 0]
+         }
+       })
+    |> startProfileAt([0, 0], %)
+    |> yLine(ridgeDepth, %)
+    |> xLine(-ridgeLength, %)
+    |> angledLineOfYLength({
+         angle = -coopRoofPitch,
+         length = ridgeDepth
+       }, %)
+    |> close(%, $closingSeg)
+    |> extrude(ridgeWidth, %)
+  return {
+    // stud = extrude002,
+    // safeCutLength = safeCutLength,
+    lengthBeforeAngles = min(    segLen(closingSeg), ridgeLength),
+    name = "runRidge",
+    studType = [v.ridgeWidth, "by", v.ridgeDepth],
+    angleRelevantWidth = v.ridgeDepth,
+    endCut1 = 90 - v.coopRoofPitch,
+    endCut2 = 0
+  }
+}
+
+xTallSideThicknessAtCoopAngle = studDepth / sin(coopRoofPitchR)
+xComponentToContinueHeightofRafters = studDepth / tan(coopRoofPitchR)
+coopRoofPlane1 = {
+  plane = {
+    origin = [
+      -studDepth - runSideEaveOverHang + studWidth,
+      sideEaveOverHang + coopWidth + xTallSideThicknessAtCoopAngle - xComponentToContinueHeightofRafters,
+      rafterCommonZ + studTallSideThicknessAtRunAngle
+    ],
+    xAxis = [0, 1, 0],
+    yAxis = [
+      sin(toRadians(90 - runRoofPitch)),
+      0,
+      cos(toRadians(90 - runRoofPitch))
+    ],
+    zAxis = [1, 0, 0]
+  }
+}
+coopRoofPlane2 = {
+  plane = {
+    origin = [
+      studWidth + coopLength,
+      sideEaveOverHang + coopWidth + xTallSideThicknessAtCoopAngle - xComponentToContinueHeightofRafters,
+      rafterCommonZ + studTallSideThicknessAtRunAngle
+    ],
+    xAxis = [0, 1, 0],
+    yAxis = [
+      sin(toRadians(-90 + runRoofPitch)),
+      0,
+      cos(toRadians(-90 + runRoofPitch))
+    ],
+    zAxis = [1, 0, 0]
+  }
+}
+
+fn runValleyFlashingBatten(plane, flip) {
+  multiplier = if flip {
+    1
+  } else {
+    -1
+  }
+
+  runRafterLength = (coopLength / 2 + runSideEaveOverHang - studWidth) / cos(runRoofPitchR)
+  valleyLength = sqrt(pow(horizontalLengthAlongRunFromvalleyToTip, 2) + pow(runRafterLength, 2))
+
+  sketch001 = startSketchOn(plane)
+    |> startProfileAt([0, 0], %)
+    |> angledLine([
+         90 + angleFromRunRoofToCoopRoof,
+         valleyLength
+       ], %, $seg01)
+    |> angledLineOfXLength({ angle = 0, length = studDepth }, %)
+    |> angledLine([segAng(seg01) + 180, segLen(seg01)], %)
+    |> lineTo([profileStartX(%), profileStartY(%)], %)
+    |> close(%)
+    |> extrude(-studWidth * multiplier, %)
+  lengthOfAngleForCut = tan(toDegrees(angleFromRunRoofToCoopRoof)) * studDepth
+  widthOfFlashing = 150
+  lengthOfAngleForFlashing = tan(toDegrees(angleFromRunRoofToCoopRoof)) * widthOfFlashing
+  return [
+    {
+  // stud = extrude002,
+  // safeCutLength = safeCutLength,
+  lengthBeforeAngles = valleyLength - lengthOfAngleForCut,
+  name = "valleyRunStud",
+  studType = [v.studWidth, "by", v.studDepth],
+  angleRelevantWidth = v.studWidth,
+  endCut1 = v.angleFromRunRoofToCoopRoof,
+  endCut2 = v.angleFromRunRoofToCoopRoof
+},
+    {
+  // stud = extrude002,
+  // safeCutLength = safeCutLength,
+  lengthBeforeAngles = valleyLength + lengthOfAngleForFlashing,
+  name = "valleyFlashing",
+  studType = ["valleyFlashing", "by", v.studDepth],
+  angleRelevantWidth = v.studWidth,
+  endCut1 = v.angleFromRunRoofToCoopRoof,
+  endCut2 = v.angleFromRunRoofToCoopRoof
+}
+  ]
+}
+
+fn runBatten(position, flip) {
+  tallSideThicknessAtRunValleyAngle = studDepth / cos(toRadians(angleFromRunRoofToCoopRoof))
+  flipVals = if flip {
+    {
+      plane = coopRoofPlane2,
+      multiplier = -1
+    }
+  } else {
+    {
+      plane = coopRoofPlane1,
+      multiplier = 1
+    }
+  }
+
+  lengthOfBatten = totalLength - coopWidth - studWidth - tallSideThicknessAtRunValleyAngle + tan(toRadians(angleFromRunRoofToCoopRoof)) * position
+  sketch002 = startSketchOn(flipVals.plane)
+    |> startProfileAt([
+         totalLength - coopWidth - studWidth,
+         battenD + position
+       ], %)
+    |> yLine(-battenD, %)
+    |> xLine(-lengthOfBatten, %)
+    |> angledLineOfYLength({
+         length = -battenD,
+         angle = -90 + angleFromRunRoofToCoopRoof
+       }, %)
+    |> close(%)
+    |> extrude(-battenW * flipVals.multiplier, %)
+  return {
+    // stud = extrude002,
+    // safeCutLength = safeCutLength,
+    lengthBeforeAngles = lengthOfBatten,
+    name = "valleyRunStud",
+    studType = [battenD, "by", battenW],
+    angleRelevantWidth = battenD,
+    endCut1 = angleFromRunRoofToCoopRoof,
+    endCut2 = 0
+  }
+}
+
+export fn runWallsAndRoof(plane) {
+  runBits = [
+    // studWithoutAngles(plane, [
+    // v.coopLength - v.studDepth - v.studWidth + v.runSideEaveOverHang,
+    // v.sideEaveOverHang + v.studWidth,
+    // v.bottOfSideEaveHeight
+    // ], [
+    // v.studWidth,
+    // v.studDepth,
+    // v.gutterLineLen
+    // ], 'runFrontGutterLine'),
+    // studWithoutAngles(plane, [
+    // -v.studDepth - v.runSideEaveOverHang,
+    // v.sideEaveOverHang + v.studWidth,
+    // v.bottOfSideEaveHeight
+    // ], [
+    // v.studWidth,
+    // v.studDepth,
+    // v.gutterLineLen
+    // ], 'runBackGutterLine'),
+    pitchedStud2("runEndRafterBack", v.runEndPlane, [
+  v.studWidth - v.studDepth - v.runSideEaveOverHang,
+  v.runEndOverHang,
+  v.rafterCommonZ
+], v.studDepth, v.studWidth, v.runRafterCommonHorizontalDistance / v.runRafterRatio, v.runRoofPitch),
+    pitchedStud2("runEndRafterFront", v.runEndPlane, [
+  -v.studDepth - v.studWidth + v.coopLength + v.runSideEaveOverHang,
+  v.runEndOverHang,
+  v.rafterCommonZ + v.studTallSideThicknessAtRunAngle
+], v.studDepth, v.studWidth, v.runRafterCommonHorizontalDistance / v.runRafterRatio, v.frontRoofAngle),
+    studWithoutAngles(plane, [
+  -v.studDepth,
+  v.sideEaveOverHang + v.studWidth,
+  v.heightToNotchIntoRafters - v.studDepth
+], [
+  v.studWidth,
+  v.studDepth,
+  v.totalLength - v.coopWidth - v.sideEaveOverHang - v.studWidth - v.studDepth
+], 'runHorzTopBack'),
+    studWithoutAngles(plane, [
+  v.coopLength - v.studDepth - v.studWidth,
+  v.sideEaveOverHang + v.studWidth,
+  v.heightToNotchIntoRafters - v.studDepth
+], [
+  v.studWidth,
+  v.studDepth,
+  v.totalLength - v.coopWidth - v.sideEaveOverHang - v.studWidth - v.studDepth
+], 'runHorzTopFront'),
+    studWithoutAngles(plane, [-v.studDepth, 0, 0], [
+  v.studWidth,
+  v.studDepth,
+  v.totalLength - v.coopWidth - v.studDepth
+], 'runHorzBottomBack'),
+    studWithoutAngles(plane, [
+  v.coopLength - v.studDepth - v.studWidth,
+  0,
+  0
+], [
+  v.studWidth,
+  v.studDepth,
+  v.totalLength - v.coopWidth - v.studDepth
+], 'runHorzBottomFront'),
+    studWithoutAngles(plane, [
+  v.xCoordForRunHorzSupportBack,
+  v.studDepth,
+  v.runHorzBraceHeight
+], [
+  v.studWidth,
+  v.studDepth,
+  v.runSupportRemainderLength - v.studWidth
+], 'runHorzMiddleBackFinal'),
+    studWithoutAngles(plane, [
+  v.xCoordForRunHorzSupportFront,
+  v.studDepth,
+  v.runHorzBraceHeight
+], [
+  v.studWidth,
+  v.studDepth,
+  v.runSupportRemainderLength - v.studWidth
+], 'runHorzMiddleFrontFinal'),
+    verticalStudGeo(v.frontPlane, [0, v.coopWidth, v.studDepth], -v.studDepth, v.studDepth, v.studWidth, true, 'verticalRunStudFrontFinal', v.coopRoofPitch, v.coopStartHeight + v.studThicknessAtAngle),
+    verticalStudGeo(v.frontPlane, [
+  0,
+  v.coopWidth,
+  v.heightToNotchIntoRafters - v.studDepth
+], -v.studDepth * 2, v.studDepth, v.studWidth, true, 'verticalRunStudFrontFinal', v.coopRoofPitch, v.coopStartHeight + v.studThicknessAtAngle),
+    verticalStudGeo(v.backPlane, [
+  -v.studDepth + v.studWidth,
+  v.coopWidth,
+  v.studDepth
+], -v.studDepth, v.studDepth, v.studWidth, true, 'verticalRunStudBackFinal', v.coopRoofPitch, v.coopStartHeight + v.studThicknessAtAngle),
+    verticalStudGeo(v.backPlane, [
+  -v.studDepth + v.studWidth,
+  v.coopWidth,
+  v.heightToNotchIntoRafters - v.studDepth
+], -v.studDepth * 2, v.studDepth, v.studWidth, true, 'eaveFillerBack', v.coopRoofPitch, v.coopStartHeight + v.studThicknessAtAngle)
+  ]
+
+  fn rafterAndRunWallSectionPlacer(index) {
+    position = index * interRafterDistance
+    remainder = rem(index, divisor = 2)
+    rafterBits = [
+      pitchedStud2("runRafterFront", runEndPlane, [
+  -studDepth - studWidth + coopLength + runSideEaveOverHang,
+  -position,
+  rafterCommonZ + studTallSideThicknessAtRunAngle
+], studDepth, studWidth, (runRafterCommonHorizontalDistance - (ridgeWidth / 2)) / runRafterRatio, frontRoofAngle),
+      pitchedStud2("runRafterFront", runEndPlane, [
+  -runSideEaveOverHang - studDepth + studWidth,
+  -position,
+  rafterCommonZ
+], studDepth, studWidth, (runRafterCommonHorizontalDistance - (ridgeWidth / 2)) / runRafterRatio, 180 - frontRoofAngle),
+      rafterBrace(runEndPlane, [
+  coopLength / 2 - studDepth,
+  -studWidth * 2 - position,
+  runRidgeHeight + ridgeDepth - (tan(runRoofPitchR) * runRafterBraceLength / 2)
+], runRoofPitch, runRafterBraceLength, studWidth, studDepth)
+    ]
+    shouldAddRunSections = remainder == 0 & index != 0
+    rafterAndRunSections = if shouldAddRunSections & !slimRender {
+      concat(rafterBits, [
+        studWithoutAngles(runEndPlane, [
+  xCoordForRunHorzSupportFront,
+  -position,
+  studDepth
+], [
+  studWidth,
+  heightToNotchIntoRafters - (studDepth * 2),
+  -studDepth
+], 'verticalRunStudFront'),
+        studWithoutAngles(runEndPlane, [
+  xCoordForRunHorzSupportBack,
+  -position,
+  studDepth
+], [
+  studWidth,
+  heightToNotchIntoRafters - (studDepth * 2),
+  -studDepth
+], 'verticalRunStudBack'),
+        studWithoutAngles(runEndPlane, [
+  xCoordForRunHorzSupportBack,
+  -position,
+  runHorzBraceHeight
+], [
+  studWidth,
+  studDepth,
+  interRafterDistance * 2 - studDepth
+], 'runHorzMiddleBack'),
+        studWithoutAngles(runEndPlane, [
+  xCoordForRunHorzSupportFront,
+  -position,
+  runHorzBraceHeight
+], [
+  studWidth,
+  studDepth,
+  interRafterDistance * 2 - studDepth
+], 'runHorzMiddleFront')
+      ])
+    } else {
+      rafterBits
+    }
+    return rafterAndRunSections
+  }
+
+  rafterAndRunSections = flatten(  map([0..runRafterCount], rafterAndRunWallSectionPlacer))
+
+  return flatten([
+    runValleyFlashingBatten(coopRoofPlane1, true),
+    runValleyFlashingBatten(coopRoofPlane2, false),
+    [
+  runBatten(15, false),
+  runBatten(15, true),
+  runBatten(825, false),
+  runBatten(825, true),
+  runBatten(1660, false),
+  runBatten(1660, true),
+  runRidge()
+],
+    runBits,
+    rafterAndRunSections
+  ])
+}
+
+// example, uncomment to check, but should be left comment
+// otherwise causes problem importing elsewhere
+// aGroupOfStudForCreatingCutList = runWallsAndRoof(v.runWallPlane)

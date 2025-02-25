@@ -1,0 +1,249 @@
+export fn variables() {
+  coopLength = 2950 // 2260 theirs
+  coopStorageLength = 1050
+  coopWidth = 1500
+  totalLength = 7500 // includes the coop so run length = totalLength - coopWidth
+  studWidth = 35
+  coopRoofPitch = 45 // 45 theirs
+  runRoofPitch = 23 // 23 theirs
+  // runRoofPitch = 30 // 23 theirs
+  // runRoofPitch = toDegrees(
+  // atan(
+  // (coopWidth/2 * tan(toRadians(coopRoofPitch))) / (coopLength/2)
+  // )
+  // )
+  nestingRoofPitch = runRoofPitch // 23 theirs
+  studDepth = 90
+  runDoorWidth = 960
+  runDoorHeight = 1730
+  coopStartHeight = 1550
+  interStudDistance = 600
+  coopDoorWidth = 750
+  coopDoorHeight = 1750
+  nestingBoxHeight = 550
+  windowHeight = 420
+  windowWidth = 400 // 400
+  windowCount = 2
+  chickenDoorHeight = 475
+  frontEaveOverHang = 400
+  backEaveOverHang = 160 + 35
+  sideEaveOverHang = 200
+  runSideEaveOverHang = 150
+  runEndOverHang = 200
+  ridgeWidth = 35
+  ridgeDepth = 140
+  runHorzBraceHeight = 550
+  foundationStudOverlap = 200
+  interRafterDistance = 600
+  nestingBoxDepth = 450
+  runRafterBraceLength = 1600
+
+  // calc values
+  coopFrameLength = coopLength - (studDepth * 2)
+  coopWidthHalf = coopWidth / 2
+  coopFrontFootWidth = (coopWidth - coopDoorWidth) / 2
+  studCountBetweenSideAndDoor = floor((coopFrontFootWidth - (studWidth * 4)) / interStudDistance)
+  studCountOverDoor = floor((coopDoorWidth / 2 - (studWidth * 2)) / interStudDistance)
+  studCountBack = floor((coopWidthHalf - studWidth) / interStudDistance)
+  coopRoofPitchR = toRadians(coopRoofPitch)
+  runRoofPitchR = toRadians(runRoofPitch)
+  nestingRoofPitchR = toRadians(nestingRoofPitch)
+  sideEaveOverHangXComponent = tan(coopRoofPitchR) * sideEaveOverHang
+  runSideEaveVerticalComponent = tan(runRoofPitchR) * runSideEaveOverHang
+  studTallSideThicknessAtRunAngle = studDepth / cos(runRoofPitchR)
+  studThicknessAtAngle = studWidth / cos(coopRoofPitchR)
+  studThicknessAtRunAngle = studWidth / cos(runRoofPitchR)
+  coopFrameHeight = coopStartHeight + studThicknessAtAngle + tan(coopRoofPitchR) * studWidth
+  // run and ridge math
+  ridgeCenteringX = coopLength / 2 - studDepth - (ridgeWidth / 2)
+  ridgeYstartingAtRunEndFacia = totalLength + runEndOverHang - studWidth
+  heightToBottomOfTheRunEave = coopStartHeight + studThicknessAtAngle - sideEaveOverHangXComponent
+  runSideEaveOverHandYComponent = tan(runRoofPitchR) * runSideEaveOverHang
+  runStudThicknessAtAngle = studWidth * tan(runRoofPitchR)
+  heightOfRunEndWall = heightToBottomOfTheRunEave + runSideEaveOverHandYComponent - runStudThicknessAtAngle
+  topOfRidgeAtBottomOfEave = heightToBottomOfTheRunEave - ridgeDepth
+  topOfRunRidgeAtBottomOfRafterPeak = topOfRidgeAtBottomOfEave + tan(runRoofPitchR) * (coopLength / 2 - studWidth + runSideEaveOverHang)
+  topOfRunRudgeAtTopOfRafterPeak = topOfRunRidgeAtBottomOfRafterPeak + studTallSideThicknessAtRunAngle
+  runRidgeHeight = topOfRunRudgeAtTopOfRafterPeak - (tan(runRoofPitchR) * ridgeWidth / 2)
+  heightDeltaOfRidgeToRoof = runRidgeHeight - topOfRidgeAtBottomOfEave
+  horzComponentOfRidgeOverCoopRoof = heightDeltaOfRidgeToRoof / tan(coopRoofPitchR)
+  horzThicknessOfCoopStud = studDepth / sin(coopRoofPitchR)
+  heightToNotchIntoRafters = heightToBottomOfTheRunEave + tan(runRoofPitchR) * runSideEaveOverHang
+
+  // other run variables
+  studTallSideThicknessAtAngle = studDepth / cos(toRadians(coopRoofPitch))
+  leftRafterAngle = coopRoofPitch
+  rightRafterAngle = 180 - coopRoofPitch
+  leftRafterY = -sideEaveOverHang
+  rightRafterY = sideEaveOverHang + coopWidth
+  rafterCommonZ = coopStartHeight + studThicknessAtAngle - (sideEaveOverHang * tan(toRadians(coopRoofPitch)))
+  rafterRatioForAngle = cos(coopRoofPitchR)
+  rafterCommonHorzLength = coopWidthHalf + sideEaveOverHang - (ridgeWidth / 2)
+  rafterLength = rafterCommonHorzLength / rafterRatioForAngle
+  bottOfSideEaveHeight = coopStartHeight - (tan(coopRoofPitchR) * sideEaveOverHang) + studThicknessAtAngle
+
+  // more run stuff I think
+  gutterLineLen = totalLength - coopWidth - sideEaveOverHang - studWidth + runEndOverHang
+  backRoofAngle = runRoofPitch
+  frontRoofAngle = 180 - runRoofPitch
+  runRafterRatio = cos(runRoofPitchR)
+  runRafterCommonHorizontalDistance = coopLength / 2 - studWidth + runSideEaveOverHang
+  runPitchedStudLen = coopLength / 2 / cos(runRoofPitchR)
+  xCoordForRunHorzSupportFront = coopLength - studDepth - studWidth
+  xCoordForRunHorzSupportBack = -studDepth
+  distanceToDitributeRaftersIn = totalLength - coopWidth - runSideEaveOverHang
+  runRafterCount = floor(distanceToDitributeRaftersIn / interRafterDistance)
+  runSupportRemainderLength = rem(distanceToDitributeRaftersIn, divisor = interRafterDistance * 2)
+
+  runHypotenuse = coopLength / 2 / cos(runRoofPitchR)
+  coopHypotenuse = coopWidth / 2 / cos(coopRoofPitchR)
+  runHeight = tan(runRoofPitchR) * coopLength / 2
+  horizontalLengthAlongRunFromvalleyToTip = runHeight / tan(coopRoofPitchR)
+  angleFromRunRoofToCoopRoofR = atan(horizontalLengthAlongRunFromvalleyToTip / runHypotenuse)
+  angleFromRunRoofToCoopRoof = toDegrees(angleFromRunRoofToCoopRoofR)
+  valleyFlashingLength = sqrt(pow(horizontalLengthAlongRunFromvalleyToTip, 2) + pow(runHypotenuse, 2))
+  angleFromCoopRoofToRunRoofR = acos(coopHypotenuse/valleyFlashingLength)
+  angleFromCoopRoofToRunRoof = toDegrees(angleFromCoopRoofToRunRoofR)
+
+  outsideWallPlane = {
+    plane = {
+      origin = [0, studDepth, 0],
+      xAxis = [1, 0, 0],
+      yAxis = [0, 0, 1],
+      zAxis = [0, 1, 0]
+    }
+  }
+  runWallPlane = {
+    plane = {
+      origin = [0, coopWidth, 0],
+      xAxis = [1, 0, 0],
+      yAxis = [0, 0, 1],
+      zAxis = [0, 1, 0]
+    }
+  }
+  runEndPlane = {
+    plane = {
+      origin = [0, totalLength, 0],
+      xAxis = [1, 0, 0],
+      yAxis = [0, 0, 1],
+      zAxis = [0, 1, 0]
+    }
+  }
+  runEndPlane2 = {
+    plane = {
+      origin = [0, totalLength, 0],
+      xAxis = [1, 0, 0],
+      yAxis = [0, 0, 1],
+      zAxis = [0, 1, 0]
+    }
+  }
+  frontPlane = {
+    plane = {
+      origin = [coopLength - studDepth, 0, 0],
+      xAxis = [0, 1, 0],
+      yAxis = [0, 0, 1],
+      zAxis = [1, 0, 0]
+    }
+  }
+  backPlane = {
+    plane = {
+      origin = [0, 0, 0],
+      xAxis = [0, 1, 0],
+      yAxis = [0, 0, 1],
+      zAxis = [1, 0, 0]
+    }
+  }
+  return {
+    coopLength = coopLength,
+    coopStorageLength = coopStorageLength,
+    coopWidth = coopWidth,
+    totalLength = totalLength,
+    studWidth = studWidth,
+    coopRoofPitch = coopRoofPitch,
+    runRoofPitch = runRoofPitch,
+    nestingRoofPitch = nestingRoofPitch,
+    studDepth = studDepth,
+    runDoorWidth = runDoorWidth,
+    runDoorHeight = runDoorHeight,
+    coopStartHeight = coopStartHeight,
+    interStudDistance = interStudDistance,
+    coopDoorWidth = coopDoorWidth,
+    coopDoorHeight = coopDoorHeight,
+    nestingBoxHeight = nestingBoxHeight,
+    windowHeight = windowHeight,
+    windowWidth = windowWidth,
+    windowCount = windowCount,
+    chickenDoorHeight = chickenDoorHeight,
+    frontEaveOverHang = frontEaveOverHang,
+    backEaveOverHang = backEaveOverHang,
+    sideEaveOverHang = sideEaveOverHang,
+    runSideEaveOverHang = runSideEaveOverHang,
+    runEndOverHang = runEndOverHang,
+    ridgeWidth = ridgeWidth,
+    ridgeDepth = ridgeDepth,
+    runHorzBraceHeight = runHorzBraceHeight,
+    foundationStudOverlap = foundationStudOverlap,
+    interRafterDistance = interRafterDistance,
+    nestingBoxDepth = nestingBoxDepth,
+    runRafterBraceLength = runRafterBraceLength,
+    coopFrameLength = coopFrameLength,
+    coopFrameHeight = coopFrameHeight,
+    coopWidthHalf = coopWidthHalf,
+    coopFrontFootWidth = coopFrontFootWidth,
+    studCountBetweenSideAndDoor = studCountBetweenSideAndDoor,
+    studCountOverDoor = studCountOverDoor,
+    studCountBack = studCountBack,
+    coopRoofPitchR = coopRoofPitchR,
+    runRoofPitchR = runRoofPitchR,
+    nestingRoofPitchR = nestingRoofPitchR,
+    sideEaveOverHangXComponent = sideEaveOverHangXComponent,
+    runSideEaveVerticalComponent = runSideEaveVerticalComponent,
+    studTallSideThicknessAtRunAngle = studTallSideThicknessAtRunAngle,
+    studThicknessAtAngle = studThicknessAtAngle,
+    studThicknessAtRunAngle = studThicknessAtRunAngle,
+    studTallSideThicknessAtAngle = studTallSideThicknessAtAngle,
+    leftRafterAngle = leftRafterAngle,
+    rightRafterAngle = rightRafterAngle,
+    leftRafterY = leftRafterY,
+    rightRafterY = rightRafterY,
+    rafterCommonZ = rafterCommonZ,
+    rafterRatioForAngle = rafterRatioForAngle,
+    rafterCommonHorzLength = rafterCommonHorzLength,
+    rafterLength = rafterLength,
+    bottOfSideEaveHeight = bottOfSideEaveHeight,
+    gutterLineLen = gutterLineLen,
+    backRoofAngle = backRoofAngle,
+    frontRoofAngle = frontRoofAngle,
+    runRafterRatio = runRafterRatio,
+    runRafterCommonHorizontalDistance = runRafterCommonHorizontalDistance,
+    runPitchedStudLen = runPitchedStudLen,
+    xCoordForRunHorzSupportFront = xCoordForRunHorzSupportFront,
+    xCoordForRunHorzSupportBack = xCoordForRunHorzSupportBack,
+    distanceToDitributeRaftersIn = distanceToDitributeRaftersIn,
+    runRafterCount = runRafterCount,
+    runSupportRemainderLength = runSupportRemainderLength,
+    ridgeCenteringX = ridgeCenteringX,
+    ridgeYstartingAtRunEndFacia = ridgeYstartingAtRunEndFacia,
+    heightToBottomOfTheRunEave = heightToBottomOfTheRunEave,
+    runSideEaveOverHandYComponent = runSideEaveOverHandYComponent,
+    runStudThicknessAtAngle = runStudThicknessAtAngle,
+    heightOfRunEndWall = heightOfRunEndWall,
+    topOfRidgeAtBottomOfEave = topOfRidgeAtBottomOfEave,
+    topOfRunRidgeAtBottomOfRafterPeak = topOfRunRidgeAtBottomOfRafterPeak,
+    topOfRunRudgeAtTopOfRafterPeak = topOfRunRudgeAtTopOfRafterPeak,
+    runRidgeHeight = runRidgeHeight,
+    heightDeltaOfRidgeToRoof = heightDeltaOfRidgeToRoof,
+    horzComponentOfRidgeOverCoopRoof = horzComponentOfRidgeOverCoopRoof,
+    horzThicknessOfCoopStud = horzThicknessOfCoopStud,
+    heightToNotchIntoRafters = heightToNotchIntoRafters,
+    angleFromRunRoofToCoopRoof = angleFromRunRoofToCoopRoof,
+    angleFromCoopRoofToRunRoof = angleFromCoopRoofToRunRoof,
+    horizontalLengthAlongRunFromvalleyToTip = horizontalLengthAlongRunFromvalleyToTip,
+    outsideWallPlane = outsideWallPlane,
+    runWallPlane = runWallPlane,
+    runEndPlane = runEndPlane,
+    runEndPlane2 = runEndPlane2,
+    frontPlane = frontPlane,
+    backPlane = backPlane
+  }
+}

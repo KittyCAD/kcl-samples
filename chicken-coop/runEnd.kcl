@@ -1,0 +1,145 @@
+import variables from "vars.kcl"
+import pitchedStud, pitchedStud2, flatten, verticalStudGeo, studWithoutAngles from "studUtils.kcl"
+
+v = variables()
+coopLength = v.coopLength
+runDoorWidth = v.runDoorWidth
+studWidth = v.studWidth
+studDepth = v.studDepth
+runRoofPitchR = v.runRoofPitchR
+runEndPlane = v.runEndPlane
+runRoofPitch = v.runRoofPitch
+heightOfRunEndWall = v.heightOfRunEndWall
+studThicknessAtRunAngle = v.studThicknessAtRunAngle
+runPitchedStudLen = v.runPitchedStudLen
+runDoorHeight = v.runDoorHeight
+runHorzBraceHeight = v.runHorzBraceHeight
+studTallSideThicknessAtRunAngle = v.studTallSideThicknessAtRunAngle
+
+export fn runEnd() {
+  runEndFootLength = (coopLength - runDoorWidth) / 2
+  runPitchedBraceLen = (runEndFootLength - (studWidth * 3) - (studDepth * 2)) / cos(runRoofPitchR)
+  runEndWallBits = [
+    studWithoutAngles(runEndPlane, [-studDepth, 0, 0], [
+  runEndFootLength,
+  studWidth,
+  -studDepth
+], 'runEndFootL'),
+    studWithoutAngles(runEndPlane, [
+  -studDepth + runEndFootLength + runDoorWidth,
+  0,
+  0
+], [
+  runEndFootLength,
+  studWidth,
+  -studDepth
+], 'runEndFootR'),
+    verticalStudGeo(runEndPlane, [-studDepth, 0, studWidth], 0, studWidth, studDepth, false, 'runEdgeVertStudR', runRoofPitch, heightOfRunEndWall - (studThicknessAtRunAngle * 2)),
+    verticalStudGeo(runEndPlane, [coopLength - studDepth, 0, studWidth], 0, studWidth, studDepth, true, 'runEdgeVertStudL', runRoofPitch, heightOfRunEndWall - (studThicknessAtRunAngle * 2)),
+    pitchedStud2("runEndPitchedStudR1", runEndPlane, [
+  -studDepth,
+  0,
+  heightOfRunEndWall - studThicknessAtRunAngle
+], studWidth, studDepth, runPitchedStudLen, runRoofPitch),
+    pitchedStud2("runEndPitchedStudR2", runEndPlane, [
+  -studDepth,
+  0,
+  heightOfRunEndWall - (studThicknessAtRunAngle * 2)
+], studWidth, studDepth, runPitchedStudLen, runRoofPitch),
+    pitchedStud2("runEndPitchedStudL1", runEndPlane, [
+  -studDepth + coopLength,
+  0,
+  heightOfRunEndWall - studThicknessAtRunAngle
+], studWidth, studDepth, runPitchedStudLen, 180 - runRoofPitch),
+    pitchedStud2("runEndPitchedStudL2", runEndPlane, [
+  -studDepth + coopLength,
+  0,
+  heightOfRunEndWall
+], studWidth, studDepth, runPitchedStudLen, 180 - runRoofPitch),
+    verticalStudGeo(runEndPlane, [coopLength - studDepth, 0, studWidth], runEndFootLength - (studWidth * 2), studWidth, studDepth, true, 'runEndDoorVerticalStudL', runRoofPitch, heightOfRunEndWall - (studThicknessAtRunAngle * 2)),
+    verticalStudGeo(runEndPlane, [-studDepth, 0, studWidth], runEndFootLength - (studWidth * 2), studWidth, studDepth, false, 'runEndDoorVerticalStudR', runRoofPitch, heightOfRunEndWall - (studThicknessAtRunAngle * 2)),
+    verticalStudGeo(runEndPlane, [coopLength - studDepth, 0, studWidth], runEndFootLength - (studWidth * 2) - studDepth, studDepth, studWidth, true, 'runENdDoorVerticalStudL2', runRoofPitch, heightOfRunEndWall - (studThicknessAtRunAngle * 2)),
+    verticalStudGeo(runEndPlane, [-studDepth, 0, studWidth], runEndFootLength - (studWidth * 2) - studDepth, studDepth, studWidth, false, 'runENdDoorVerticalStudR2', runRoofPitch, heightOfRunEndWall - (studThicknessAtRunAngle * 2)),
+    verticalStudGeo(runEndPlane, [coopLength - studDepth, 0, studWidth], studWidth, studDepth, studWidth, true, 'runEndEdgeCornerVerticalStudL', runRoofPitch, heightOfRunEndWall - (studThicknessAtRunAngle * 2)),
+    verticalStudGeo(runEndPlane, [-studDepth, 0, studWidth], studWidth, studDepth, studWidth, false, 'runEndEdgeCornerVerticalStudR', runRoofPitch, heightOfRunEndWall - (studThicknessAtRunAngle * 2)),
+    studWithoutAngles(runEndPlane, [
+  -studDepth + runEndFootLength - studWidth,
+  0,
+  studWidth
+], [
+  studWidth,
+  runDoorHeight - studWidth,
+  -studDepth
+], 'runEndDoorHeaderSupportR'),
+    studWithoutAngles(runEndPlane, [
+  -studDepth + coopLength - runEndFootLength,
+  0,
+  studWidth
+], [
+  studWidth,
+  runDoorHeight - studWidth,
+  -studDepth
+], 'runEndDoorHeaderSupportl'),
+    studWithoutAngles(runEndPlane, [
+  -studDepth + runEndFootLength - studWidth,
+  0,
+  runDoorHeight
+], [
+  runDoorWidth + studWidth * 2,
+  studDepth,
+  -studWidth
+], 'runEndDoorHeader1'),
+    studWithoutAngles(runEndPlane, [
+  -studDepth + runEndFootLength - studWidth,
+  studWidth - studDepth,
+  runDoorHeight
+], [
+  runDoorWidth + studWidth * 2,
+  studDepth,
+  -studWidth
+], 'runEndDoorHeader1'),
+    studWithoutAngles(runEndPlane, [studWidth, 0, studWidth], [
+  runEndFootLength - (studWidth * 3) - (studDepth * 2),
+  studDepth,
+  -studWidth
+], 'runEndBottomRunWallBraceR'),
+    studWithoutAngles(runEndPlane, [studWidth, 0, runHorzBraceHeight], [
+  runEndFootLength - (studWidth * 3) - (studDepth * 2),
+  studDepth,
+  -studWidth
+], 'runEndMiddleRunWallBraceR'),
+    studWithoutAngles(runEndPlane, [
+  runEndFootLength + runDoorWidth + studWidth * 2,
+  0,
+  studWidth
+], [
+  runEndFootLength - (studWidth * 3) - (studDepth * 2),
+  studDepth,
+  -studWidth
+], 'runEndBottomRunWallBraceL'),
+    studWithoutAngles(runEndPlane, [
+  runEndFootLength + runDoorWidth + studWidth * 2,
+  0,
+  runHorzBraceHeight
+], [
+  runEndFootLength - (studWidth * 3) - (studDepth * 2),
+  studDepth,
+  -studWidth
+], 'runEndMiddleRunWallBraceL'),
+    pitchedStud2("runPitchedStudR1", runEndPlane, [
+  studWidth,
+  0,
+  heightOfRunEndWall - (studThicknessAtRunAngle * 2) - studTallSideThicknessAtRunAngle + tan(runRoofPitchR) * (studDepth + studWidth)
+], studDepth, studWidth, runPitchedBraceLen, runRoofPitch),
+    pitchedStud2("runEndPitchedStudL1", runEndPlane, [
+  coopLength - (studDepth * 2) - studWidth,
+  0,
+  heightOfRunEndWall - (studThicknessAtRunAngle * 2) + tan(runRoofPitchR) * (studDepth + studWidth)
+], studDepth, studWidth, runPitchedBraceLen, 180 - runRoofPitch)
+  ]
+  return runEndWallBits
+}
+
+// example, uncomment to check, but should be left comment
+// otherwise causes problem importing elsewhere
+// aGroupOfStudForCreatingCutList = runEnd()
