@@ -25,16 +25,12 @@ KCL samples conform to a set of style guidelines to ensure consistency and reada
 When you submit a PR to add or modify KCL samples, images and STEP files will be generated and added to the repository automatically.
 
 ---
-#### [3d-boaty](3d-boaty/main.kcl) ([step](step/3d-boaty.step)) ([screenshot](screenshots/3d-boaty.png))
-[![3d-boaty](screenshots/3d-boaty.png)](3d-boaty/main.kcl)
 #### [color-cube](color-cube/main.kcl) ([step](step/color-cube.step)) ([screenshot](screenshots/color-cube.png))
 [![color-cube](screenshots/color-cube.png)](color-cube/main.kcl)
 #### [enclosure](enclosure/main.kcl) ([step](step/enclosure.step)) ([screenshot](screenshots/enclosure.png))
 [![enclosure](screenshots/enclosure.png)](enclosure/main.kcl)
 #### [focusrite-scarlett-mounting-bracket](focusrite-scarlett-mounting-bracket/main.kcl) ([step](step/focusrite-scarlett-mounting-bracket.step)) ([screenshot](screenshots/focusrite-scarlett-mounting-bracket.png))
 [![focusrite-scarlett-mounting-bracket](screenshots/focusrite-scarlett-mounting-bracket.png)](focusrite-scarlett-mounting-bracket/main.kcl)
-#### [food-service-spatula](food-service-spatula/main.kcl) ([step](step/food-service-spatula.step)) ([screenshot](screenshots/food-service-spatula.png))
-[![food-service-spatula](screenshots/food-service-spatula.png)](food-service-spatula/main.kcl)
 #### [gear-rack](gear-rack/main.kcl) ([step](step/gear-rack.step)) ([screenshot](screenshots/gear-rack.png))
 [![gear-rack](screenshots/gear-rack.png)](gear-rack/main.kcl)
 #### [gridfinity-baseplate-magnets](gridfinity-baseplate-magnets/main.kcl) ([step](step/gridfinity-baseplate-magnets.step)) ([screenshot](screenshots/gridfinity-baseplate-magnets.png))
@@ -47,7 +43,3 @@ When you submit a PR to add or modify KCL samples, images and STEP files will be
 [![gridfinity-bins](screenshots/gridfinity-bins.png)](gridfinity-bins/main.kcl)
 #### [kitt](kitt/main.kcl) ([step](step/kitt.step)) ([screenshot](screenshots/kitt.png))
 [![kitt](screenshots/kitt.png)](kitt/main.kcl)
-#### [router-template-cross-bar](router-template-cross-bar/main.kcl) ([step](step/router-template-cross-bar.step)) ([screenshot](screenshots/router-template-cross-bar.png))
-[![router-template-cross-bar](screenshots/router-template-cross-bar.png)](router-template-cross-bar/main.kcl)
-#### [router-template-slate](router-template-slate/main.kcl) ([step](step/router-template-slate.step)) ([screenshot](screenshots/router-template-slate.png))
-[![router-template-slate](screenshots/router-template-slate.png)](router-template-slate/main.kcl)
