@@ -77,13 +77,14 @@ spatulaProfile = flipperProfile
 flipper = extrude(spatulaProfile, length = flipperThickness)
 
 // fillet the edges of the flipper
-fillet({
+fillet(
+  flipper,
   radius = flipperFilletRadius,
   tags = [
     getNextAdjacentEdge(backEdge),
     getPreviousAdjacentEdge(backEdge)
   ]
-}, flipper)
+)
 
 // create a sketch on the "XZ" plane offset by half the thickness
 sketch001 = startSketchOn(offsetPlane("XZ", offset = -handleWidth / 2))
@@ -102,13 +103,14 @@ handleProfile = startProfileAt([0.0, flipperThickness], sketch001)
 handle = extrude(handleProfile, length = handleWidth)
 
 // fillet the bend of the spatula handle
-fillet({
+fillet(
+  handle,
   radius = 4,
   tags = [
     getNextAdjacentEdge(handleBottomEdge),
     getNextAdjacentEdge(handleTopEdge)
   ]
-}, handle)
+)
 
 // define a plane which is at the end of the handle
 handlePlane = {

@@ -94,7 +94,7 @@ singleBinFill = startSketchOn("XY")
   |> xLineTo(profileStartX(%), %, $line002)
   |> close(tag = $line003)
   |> extrude(length = height)
-  |> fillet({
+  |> fillet(
        radius = firstStep,
        tags = [
          getNextAdjacentEdge(line000),
@@ -102,7 +102,7 @@ singleBinFill = startSketchOn("XY")
          getNextAdjacentEdge(line002),
          getPreviousAdjacentEdge(line002)
        ]
-     }, %)
+     )
 
 magCutout000 = startSketchOn(singleBinFill, "start")
   |> circle({
@@ -170,7 +170,7 @@ binTop = startSketchOn(offsetPlane("XY", offset = height))
   |> xLineTo(profileStartX(%), %, $line012)
   |> close(tag = $line013)
   |> extrude(length = binHeight * countBinHeight)
-  |> fillet({
+  |> fillet(
        radius = cornerRadius,
        tags = [
          getNextAdjacentEdge(line010),
@@ -178,5 +178,5 @@ binTop = startSketchOn(offsetPlane("XY", offset = height))
          getNextAdjacentEdge(line012),
          getPreviousAdjacentEdge(line012)
        ]
-     }, %)
+     )
   |> shell(faces = ["end"], thickness = binThk)
