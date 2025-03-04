@@ -1,0 +1,29 @@
+import variables from "vars.kcl"
+import pitchedStud, flatten, verticalStudGeo, studWithoutAngles from "studUtils.kcl"
+
+v = variables()
+
+fn vertStudsBack(index) {
+  position = index * v.interStudDistance
+  return [
+    verticalStudGeo(v.backPlane, [0, 0, v.studWidth], position, v.studWidth, v.studDepth, false, 'vertStudsBackWall', v.coopRoofPitch, v.coopStartHeight),
+    verticalStudGeo(v.backPlane, [0, v.coopWidth, v.studWidth], position, v.studWidth, v.studDepth, true, 'vertStudsBackWall', v.coopRoofPitch, v.coopStartHeight)
+  ]
+}
+
+export fn coopBack(plane) {
+  outsideStuds = [
+    pitchedStud(plane, false),
+    pitchedStud(plane, true),
+    verticalStudGeo(plane, [0, 0, v.studWidth], v.studWidth, v.studDepth, v.studWidth, false, 'backWallCornerStudL', v.coopRoofPitch, v.coopStartHeight),
+    verticalStudGeo(plane, [0, v.coopWidth, v.studWidth], v.studWidth, v.studDepth, v.studWidth, true, 'backWallCornerStudL', v.coopRoofPitch, v.coopStartHeight),
+    studWithoutAngles(plane, [0, 0, 0], [v.coopWidth, v.studWidth, -v.studDepth], 'backBaseOrFoot')
+  ]
+  vertStuds = flatten(  map([0 .. v.studCountBack], vertStudsBack))
+
+  return flatten([outsideStuds, vertStuds])
+}
+
+// example, uncomment to check, but should be left comment
+// otherwise causes problem importing elsewhere
+// aGroupOfStudForCreatingCutList = coopBack(v.backPlane)
