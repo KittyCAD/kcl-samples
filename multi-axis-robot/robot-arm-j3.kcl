@@ -41,10 +41,10 @@ sketch018 = startSketchOn(extrude017, 'END')
      }, %, $referenceEdge6)
 
 extrude018 = extrude(sketch018, length = 0.15)
-  |> fillet({
+  |> fillet(
        radius = 0.1,
        tags = [getOppositeEdge(referenceEdge6)]
-     }, %)
+     )
 
 // Draw Bolt Pattern on J3 Robot Arm
 sketch019 = startSketchOn(extrude018, 'END')

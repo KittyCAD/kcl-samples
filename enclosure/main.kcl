@@ -25,7 +25,7 @@ sketch001 = startSketchOn('XY')
   |> line(endAbsolute = [profileStartX(%), profileStartY(%)], tag = $rectangleSegmentD001)
   |> close()
 extrude001 = extrude(sketch001, length = height)
-  |> fillet({
+  |> fillet(
        radius = wallThickness * 4,
        tags = [
          getNextAdjacentEdge(rectangleSegmentA001),
@@ -33,7 +33,7 @@ extrude001 = extrude(sketch001, length = height)
          getNextAdjacentEdge(rectangleSegmentC001),
          getNextAdjacentEdge(rectangleSegmentD001)
        ]
-     }, %)
+     )
 
   // Apply a shell to the enclosure base to create the internal storage
   |> shell(
@@ -129,7 +129,7 @@ sketch003 = startSketchOn('XY')
        radius = holeDia
      }, %), %)
 extrude003 = extrude(sketch003, length = wallThickness)
-  |> fillet({
+  |> fillet(
        radius = wallThickness * 4,
        tags = [
          getNextAdjacentEdge(rectangleSegmentA002),
@@ -137,7 +137,7 @@ extrude003 = extrude(sketch003, length = wallThickness)
          getNextAdjacentEdge(rectangleSegmentC002),
          getNextAdjacentEdge(rectangleSegmentD002)
        ]
-     }, %)
+     )
 
 // Define lid inner and sealing surfaces
 sketch004 = startSketchOn(extrude003, 'END')
@@ -185,7 +185,7 @@ sketch004 = startSketchOn(extrude003, 'END')
        radius = holeDia + wallThickness
      }, %), %)
 extrude004 = extrude(sketch004, length = wallThickness)
-  |> fillet({
+  |> fillet(
        radius = wallThickness * 3,
        tags = [
          getNextAdjacentEdge(rectangleSegmentA003),
@@ -193,4 +193,4 @@ extrude004 = extrude(sketch004, length = wallThickness)
          getNextAdjacentEdge(rectangleSegmentC003),
          getNextAdjacentEdge(rectangleSegmentD003)
        ]
-     }, %)
+     )
