@@ -1,5 +1,7 @@
 # kcl-samples
 
+**This has been moved to [KittyCAD/modeling-app/public/kcl-samples](https://github.com/KittyCAD/modeling-app/tree/main/public/kcl-samples)**
+
 KittyCAD Language (KCL) is our language for defining geometry and working with our Geometry Engine efficiently.
 
 This repository includes a mixture of simple and complex models demonstrating the features and syntax of KCL.
