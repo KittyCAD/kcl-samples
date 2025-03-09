@@ -31,8 +31,6 @@ When you submit a PR to add or modify KCL samples, images and STEP files will be
 [![3d-boaty](screenshots/3d-boaty.png)](3d-boaty/main.kcl)
 #### [80-20-rail](80-20-rail/main.kcl) ([step](step/80-20-rail.step)) ([screenshot](screenshots/80-20-rail.png))
 [![80-20-rail](screenshots/80-20-rail.png)](80-20-rail/main.kcl)
-#### [a-parametric-bearing-pillow-block](a-parametric-bearing-pillow-block/main.kcl) ([step](step/a-parametric-bearing-pillow-block.step)) ([screenshot](screenshots/a-parametric-bearing-pillow-block.png))
-[![a-parametric-bearing-pillow-block](screenshots/a-parametric-bearing-pillow-block.png)](a-parametric-bearing-pillow-block/main.kcl)
 #### [ball-bearing](ball-bearing/main.kcl) ([step](step/ball-bearing.step)) ([screenshot](screenshots/ball-bearing.png))
 [![ball-bearing](screenshots/ball-bearing.png)](ball-bearing/main.kcl)
 #### [bracket](bracket/main.kcl) ([step](step/bracket.step)) ([screenshot](screenshots/bracket.png))
