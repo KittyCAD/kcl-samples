@@ -18,7 +18,7 @@ jobs:
   check-kcl-header:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Check KCL files for header comment block and blank line
         run: |

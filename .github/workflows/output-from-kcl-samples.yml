@@ -27,7 +27,7 @@ jobs:
                 private-key: ${{ secrets.KCL_SAMPLES_BOT_PRIVATE_KEY }}
 
             - name: Checkout repo
-              uses: actions/checkout@v4
+              uses: actions/checkout@v6
 
             - name: Set up Python 3.11
               uses: actions/setup-python@v5
