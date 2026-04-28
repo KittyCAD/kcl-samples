@@ -1,0 +1,208 @@
+import variables from "vars.kcl"
+import pitchedStud, flatten, verticalStudGeo, studWithoutAngles from "studUtils.kcl"
+
+v = variables()
+
+export fn coopOutsideWall(plane) {
+  fixedStuds = [
+    studWithoutAngles(plane, [0, 0, 0], [
+  v.coopFrameLength,
+  v.studWidth,
+  -v.studDepth
+], 'outsideWallFrameBase'),
+    studWithoutAngles(plane, [
+  v.coopFrameLength - (v.studWidth * 3),
+  0,
+  v.studWidth
+], [
+  v.studWidth,
+  v.nestingBoxHeight - v.studWidth,
+  -v.studDepth
+], 'outsideWallNestingHeaderSupportStudR'),
+    studWithoutAngles(plane, [
+  v.coopStorageLength + v.studWidth * 2,
+  0,
+  v.studWidth
+], [
+  v.studWidth,
+  v.nestingBoxHeight - v.studWidth,
+  -v.studDepth
+], 'outsideWallNestingHeaderSupportStudl'),
+    studWithoutAngles(plane, [
+  v.coopFrameLength - (v.studWidth * 2),
+  0,
+  v.studWidth
+], [
+  v.studWidth,
+  v.nestingBoxHeight - v.studWidth + v.studDepth,
+  -v.studDepth
+], 'outsideWallNestingHeaderUpperSupportStudR1'),
+    studWithoutAngles(plane, [
+  v.coopStorageLength + v.studWidth,
+  0,
+  v.studWidth
+], [
+  v.studWidth,
+  v.nestingBoxHeight - v.studWidth + v.studDepth,
+  -v.studDepth
+], 'outsideWallNestingHeaderUpperSupportStudL1'),
+    studWithoutAngles(plane, [
+  v.coopFrameLength - v.studWidth,
+  0,
+  v.studWidth
+], [
+  v.studWidth,
+  v.nestingBoxHeight - v.studWidth + v.studDepth,
+  -v.studDepth
+], 'outsideWallNestingHeaderUpperSupportStudR2'),
+    studWithoutAngles(plane, [v.coopStorageLength, 0, v.studWidth], [
+  v.studWidth,
+  v.nestingBoxHeight + v.studDepth + v.windowHeight,
+  -v.studDepth
+], 'outsideWallStorageCoopTransitionVerticalStud'),
+    studWithoutAngles(plane, [
+  v.coopStorageLength + v.studWidth * 2,
+  0,
+  v.nestingBoxHeight
+], [
+  v.coopFrameLength - v.coopStorageLength - (4 * v.studWidth),
+  v.studDepth,
+  -v.studWidth
+], 'outsideWallNestingheader1'),
+    studWithoutAngles(plane, [
+  v.coopStorageLength + v.studWidth * 2,
+  -v.studDepth + v.studWidth,
+  v.nestingBoxHeight
+], [
+  v.coopFrameLength - v.coopStorageLength - (4 * v.studWidth),
+  v.studDepth,
+  -v.studWidth
+], 'outsideWallNestingheader2'),
+    studWithoutAngles(plane, [
+  v.coopStorageLength + v.studWidth,
+  0,
+  v.nestingBoxHeight + v.studDepth
+], [
+  v.coopFrameLength - v.coopStorageLength - v.studWidth,
+  v.studWidth,
+  -v.studDepth
+], 'outsideWallWindowSectionBase'),
+    studWithoutAngles(plane, [
+  v.coopStorageLength,
+  0,
+  v.nestingBoxHeight + v.studDepth + v.windowHeight + v.studWidth
+], [
+  v.coopFrameLength - v.coopStorageLength,
+  v.studWidth,
+  -v.studDepth
+], 'outsideWallWindowHeader1'),
+    studWithoutAngles(plane, [
+  v.coopStorageLength,
+  0,
+  v.nestingBoxHeight + v.studDepth + v.windowHeight + v.studWidth * 2
+], [
+  v.coopFrameLength - v.coopStorageLength,
+  v.studWidth,
+  -v.studDepth
+], 'outsideWallwindowHeader2'),
+    studWithoutAngles(plane, [0, 0, v.coopFrameHeight - v.studWidth], [
+  v.coopFrameLength,
+  v.studWidth,
+  -v.studDepth
+], 'outsideWallFrameTop1'),
+    studWithoutAngles(plane, [
+  0,
+  0,
+  v.coopFrameHeight - (v.studWidth * 2)
+], [
+  v.coopFrameLength,
+  v.studWidth,
+  -v.studDepth
+], 'outsideWallFrameTop1'),
+    studWithoutAngles(plane, [0, 0, v.studWidth], [
+  v.studWidth,
+  v.coopFrameHeight - (v.studWidth * 3),
+  -v.studDepth
+], 'outsideWallFrameEdgeL'),
+    studWithoutAngles(plane, [
+  v.coopStorageLength - v.studWidth,
+  0,
+  v.studWidth
+], [
+  v.studWidth,
+  v.coopFrameHeight - (v.studWidth * 3),
+  -v.studDepth
+], 'outsideWallstorageDoorVertStudR'),
+    studWithoutAngles(plane, [
+  v.coopFrameLength - v.studWidth,
+  0,
+  v.nestingBoxHeight + v.studDepth + v.studWidth
+], [
+  v.studWidth,
+  v.windowHeight,
+  -v.studDepth
+], 'outsideWallWindowEdgeVertStud'),
+    studWithoutAngles(plane, [
+  v.coopFrameLength - v.studWidth,
+  0,
+  v.nestingBoxHeight + v.studDepth + v.studWidth + v.windowHeight + v.studWidth * 2
+], [
+  v.studWidth,
+  v.coopFrameHeight - (v.nestingBoxHeight + v.studDepth + v.studWidth + v.windowHeight + v.studWidth * 4),
+  -v.studDepth
+], 'outsideWallTopRightEdgeSupport')
+  ]
+
+  vertStudDistance = v.coopLength - v.coopStorageLength - (v.studWidth * 3)
+  vertStudCount = ceil(vertStudDistance / v.interStudDistance)
+  vertStudRemainder = vertStudDistance - ((vertStudCount - 1) * v.interStudDistance)
+  assert(vertStudDistance > v.windowCount * (v.windowWidth + v.studWidth * 2), 'windows will not fit, you either need a longer coop, less windows, or more narrow windows')
+  fn vertStudPlacer(index) {
+    position = v.interStudDistance * index - (vertStudRemainder / 2)
+    return studWithoutAngles(plane, [
+      v.coopStorageLength + position,
+      0,
+      v.nestingBoxHeight + v.studDepth + v.studWidth + v.windowHeight + v.studWidth * 2
+    ], [
+      v.studWidth,
+      v.coopFrameHeight - (v.nestingBoxHeight + v.studDepth + v.studWidth + v.windowHeight + v.studWidth * 4),
+      -v.studDepth
+    ], 'outsideWallTopVerticalStuds')
+  }
+  topVertStuds = map([1 .. vertStudCount - 1], vertStudPlacer)
+  vertStudDistanceForWindows = v.coopLength - v.coopStorageLength - (v.studWidth * 4)
+  windownPositionInterval = vertStudDistanceForWindows / (v.windowCount + 1)
+  fn windowStudPlacer(index) {
+    position = windownPositionInterval * index
+    return [
+      studWithoutAngles(plane, [
+  v.coopStorageLength + position - v.studWidth - (v.windowWidth / 2),
+  0,
+  v.nestingBoxHeight + v.studDepth + v.studWidth
+], [
+  v.studWidth,
+  v.windowHeight,
+  -v.studDepth
+], 'outsideWallWindowEdgeStud'),
+      studWithoutAngles(plane, [
+  v.coopStorageLength + position - v.studWidth + v.windowWidth / 2,
+  0,
+  v.nestingBoxHeight + v.studDepth + v.studWidth
+], [
+  v.studWidth,
+  v.windowHeight,
+  -v.studDepth
+], 'outsideWallWindowEdgeStud')
+    ]
+  }
+  windowEdgeStuds = flatten(  map([1 .. v.windowCount], windowStudPlacer))
+  return flatten([
+    fixedStuds,
+    windowEdgeStuds,
+    topVertStuds
+  ])
+}
+
+// example, uncomment to check, but should be left comment
+// otherwise causes problem importing elsewhere
+// aGroupOfStudForCreatingCutList = coopOutsideWall(v.outsideWallPlane)

@@ -1,0 +1,98 @@
+import variables from "vars.kcl"
+import pitchedStud, flatten, verticalStudGeo, studWithoutAngles from "studUtils.kcl"
+
+v = variables()
+
+fn vertStudsBetweenSideAndDoorFn(index) {
+  position = index * v.interStudDistance
+  return [
+    verticalStudGeo(v.frontPlane, [0, 0, v.studWidth], position, v.studWidth, v.studDepth, false, 'vertStudsBetweenSideAndDoorFront', v.coopRoofPitch, v.coopStartHeight),
+    verticalStudGeo(v.frontPlane, [0, v.coopWidth, v.studWidth], position, v.studWidth, v.studDepth, true, 'vertStudsBetweenSideAndDoorFront', v.coopRoofPitch, v.coopStartHeight)
+  ]
+}
+
+fn vertStudsOverDoorFn(index) {
+  position = index * v.interStudDistance + v.coopFrontFootWidth + 100
+  finalPosition = min(position, v.coopWidthHalf - v.studWidth)
+  return [
+    verticalStudGeo(v.frontPlane, [0, 0, v.coopDoorHeight + v.studDepth], finalPosition, v.studWidth, v.studDepth, false, 'vertStudsOverDoorFront', v.coopRoofPitch, v.coopStartHeight),
+    verticalStudGeo(v.frontPlane, [
+  0,
+  v.coopWidth,
+  v.coopDoorHeight + v.studDepth
+], finalPosition, v.studWidth, v.studDepth, true, "vertStudsOverMainDoor", v.coopRoofPitch, v.coopStartHeight)
+  ]
+}
+
+export fn coopFront(plane) {
+  outsideStuds = [
+    pitchedStud(plane, false),
+    pitchedStud(plane, true),
+    verticalStudGeo(plane, [0, 0, v.studWidth], v.studWidth, v.studDepth, v.studWidth, false, 'frontCornerStudL', v.coopRoofPitch, v.coopStartHeight),
+    verticalStudGeo(plane, [0, v.coopWidth, v.studWidth], v.studWidth, v.studDepth, v.studWidth, true, 'frontCornerStudL', v.coopRoofPitch, v.coopStartHeight),
+    verticalStudGeo(plane, [0, 0, v.studWidth], v.coopFrontFootWidth - (v.studWidth * 2), v.studWidth, v.studDepth, false, 'lFrontDoorVertStud', v.coopRoofPitch, v.coopStartHeight),
+    verticalStudGeo(plane, [0, v.coopWidth, v.studWidth], v.coopFrontFootWidth - (v.studWidth * 2), v.studWidth, v.studDepth, true, 'rFrontDoorVertStud', v.coopRoofPitch, v.coopStartHeight),
+    studWithoutAngles(plane, [0, 0, 0], [
+  v.coopFrontFootWidth,
+  v.studWidth,
+  -v.studDepth
+], 'frontFootL'),
+    studWithoutAngles(plane, [
+  0,
+  v.coopWidth - v.coopFrontFootWidth,
+  0
+], [
+  v.coopFrontFootWidth,
+  v.studWidth,
+  -v.studDepth
+], 'frontFootR'),
+    studWithoutAngles(plane, [
+  0,
+  v.coopFrontFootWidth - v.studWidth,
+  v.studWidth
+], [
+  v.studWidth,
+  v.coopDoorHeight - v.studWidth,
+  -v.studDepth
+], 'frontDoorSupportUnderHeaderL'),
+    studWithoutAngles(plane, [
+  0,
+  v.coopWidth - v.coopFrontFootWidth,
+  v.studWidth
+], [
+  v.studWidth,
+  v.coopDoorHeight - v.studWidth,
+  -v.studDepth
+], 'frontDoorSupportUnderHeaderR'),
+    studWithoutAngles(plane, [
+  0,
+  v.coopFrontFootWidth - v.studWidth,
+  v.coopDoorHeight + 0
+], [
+  v.coopDoorWidth + 2 * v.studWidth,
+  v.studDepth,
+  -v.studWidth
+], 'frontDoorHeader1'),
+    studWithoutAngles(plane, [
+  -v.studDepth + v.studWidth,
+  v.coopFrontFootWidth - v.studWidth,
+  v.coopDoorHeight
+], [
+  v.coopDoorWidth + 2 * v.studWidth,
+  v.studDepth,
+  -v.studWidth
+], 'frontDoorHeader2')
+  ]
+  vertStudsBetweenSideAndDoor = flatten(  map([0 .. v.studCountBetweenSideAndDoor], vertStudsBetweenSideAndDoorFn))
+
+  vertStudsOverDoor = flatten(  map([0 .. v.studCountOverDoor], vertStudsOverDoorFn))
+  return flatten([
+    outsideStuds,
+    vertStudsBetweenSideAndDoor,
+    vertStudsOverDoor
+  ])
+}
+
+// example, uncomment to check, but should be left comment
+// otherwise causes problem importing elsewhere
+// aGroupOfStudForCreatingCutList = coopFront(v.frontPlane)

@@ -1,0 +1,45 @@
+export fn rafterBrace(plane, origin, angle, length, width, depth) {
+  xComponent = depth / tan(toRadians(angle))
+  shortSideLength = length - (xComponent * 2)
+  sketch001 = startSketchOn({
+         plane = {
+           origin = [
+             plane.plane.origin[0] + origin[0],
+             plane.plane.origin[1] + origin[1],
+             plane.plane.origin[2] + origin[2]
+           ],
+           xAxis = plane.plane.xAxis,
+           yAxis = plane.plane.yAxis,
+           zAxis = plane.plane.zAxis
+         }
+       })
+    |> startProfileAt([shortSideLength / 2 + xComponent, 0], %)
+    |> angledLineOfYLength({ length = depth, angle = 180 - angle }, %)
+    |> xLine(-shortSideLength, %)
+    |> angledLineOfYLength({ length = depth, angle = 180 + angle }, %)
+    |> lineTo([profileStartX(%), profileStartY(%)], %)
+    |> close(%)
+    |> extrude(width, %)
+  return {
+    // stud = extrude002,
+    // safeCutLength = safeCutLength,
+    lengthBeforeAngles = shortSideLength,
+    name = "rafterBrace",
+    studType = [width, "by", depth],
+    angleRelevantWidth = depth,
+    endCut1 = 90 - angle,
+    endCut2 = 90 - angle
+  }
+}
+
+// angle = 23
+// length = 800
+// depth = 90
+// rafter({
+//   plane = {
+//     origin = [0, 0, 0],
+//     xAxis = [1, 0, 0],
+//     yAxis = [0, 0, 1],
+//     zAxis = [0, 1, 0]
+//   }
+// }, [0, 0, 0], angle, length, 35, depth)
